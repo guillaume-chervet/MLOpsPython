@@ -93,7 +93,13 @@ class TestStringMethods(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 ```
-You can now code and debug your first unit test.
+
+You can run unit test manually
+```bash
+python -m unittest tests.extraction_test
+```
+
+You can now code and debug from PyCharm your first unit test.
 
 Now you can commit then push your code on github.
 
