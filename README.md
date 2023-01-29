@@ -99,7 +99,16 @@ You can run unit test manually
 python -m unittest tests.extraction_test
 ```
 
-You can now code and debug from PyCharm your first unit test.
+You can now code and debug a real unit test for extraction.py from PyCharm your first unit test.
+
+Coverage
+```bash
+pip install coverage
+coverage run -m unittest tests.extraction_test 
+#--omit tests
+coverage report
+coverage html
+```
 
 Now you can commit then push your code on github.
 
