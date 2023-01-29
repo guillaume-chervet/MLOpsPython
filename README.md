@@ -95,3 +95,7 @@ if __name__ == '__main__':
 ```
 You can now code and debug your first unit test.
 
+Now you can commit then push your code on github.
+
+We are going to create a github action to run unit tests on each commit.
+
