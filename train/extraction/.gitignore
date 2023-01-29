@@ -1,0 +1,5 @@
+dataset-cats-dogs-others/
+.coverage
+htmlcov/
+extracted_images/
+.idea/
