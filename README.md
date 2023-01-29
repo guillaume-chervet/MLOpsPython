@@ -1,7 +1,7 @@
 # MLOpsPython
 
 
-First, create git name "MLOpsPython" on your own github account
+First, create git name "MLOpsPython" on your own github account.
 
 ```bash
 git clone https://github.com/yourusername/MLOpsPython
@@ -10,7 +10,7 @@ mkdir train
 cd train
 ```
 
-Initialize extraction step
+Initialize extraction step.
 ```bash
 mkdir extraction
 cd extraction
@@ -62,4 +62,6 @@ for path in files:
                         f.write(bytes.getbuffer())
 ```
 
-Clean code using PyCharm shorcut
+Clean code using PyCharm shorcut.
+
+
