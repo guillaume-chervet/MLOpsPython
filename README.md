@@ -104,8 +104,7 @@ You can now code and debug a real unit test for extraction.py from PyCharm your 
 Coverage
 ```bash
 pip install coverage
-coverage run -m unittest tests.extraction_test 
-#--omit tests
+coverage run -m unittest tests.extraction_test  #--omit tests
 coverage report
 coverage html
 ```
