@@ -15,7 +15,7 @@ Initialize extraction step
 mkdir extraction
 cd extraction
 git clone https://github.com/guillaume-chervet/dataset-cats-dogs-others
-echo "dataset-cats-dogs-others"   > .gitignore 
+echo "dataset-cats-dogs-others" > .gitignore 
 ```
 
 Create requirements.txt
@@ -24,7 +24,7 @@ echo "pymupdf===1.21.1"   > requirements.txt
 pip install –r requirements.txt
 ```
 
-extraction.py
+Create extraction.py
 ```python
 from io import BytesIO
 from pathlib import Path
@@ -61,3 +61,5 @@ for path in files:
                     with open(images_directory_path + "\\" + fn, "wb") as f:
                         f.write(bytes.getbuffer())
 ```
+
+Clean code using PyCharm shorcut
