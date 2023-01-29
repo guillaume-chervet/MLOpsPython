@@ -1,5 +1,8 @@
 # MLOpsPython
 
+Set up Python python 3.10.9 on your laptop. You can use venv, conda, etc.
+
+Download PyCharm Pro: https://www.jetbrains.com/pycharm/
 
 First, create git name "MLOpsPython" on your own github account.
 
