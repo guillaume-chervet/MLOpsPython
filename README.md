@@ -93,5 +93,5 @@ class TestStringMethods(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 ```
-You can now code your first unit test
+You can now code and debug your first unit test.
 
