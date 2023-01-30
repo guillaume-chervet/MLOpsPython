@@ -2,7 +2,7 @@ import shutil
 import unittest
 from pathlib import Path
 
-from train.extraction.extraction import extract_images
+from extraction import extract_images
 
 BASE_PATH = Path(__file__).resolve().parent
 
