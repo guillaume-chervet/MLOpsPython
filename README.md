@@ -23,13 +23,13 @@ echo "dataset-cats-dogs-others" > .gitignore
 
 Create requirements.txt
 ```bash
-echo "pymupdf===1.21.1"   > requirements.txt
-pip install –r requirements.txt
+echo "pymupdf===1.21.1" > requirements.txt
+pip install ()r requirements.txt
 ```
 
 Create extraction.py
-```python
-from io import BytesIO
+```bash
+echo 'from io import BytesIO
 from pathlib import Path
 import fitz
 from fitz import Document, Pixmap
@@ -62,7 +62,7 @@ for path in files:
                     bytes = BytesIO(convert_pixmap_to_rgb(pix).tobytes())
                     fn = path.stem + "_page" + str(i) + "_index" + str(j) + ".png"
                     with open(images_directory_path + "\\" + fn, "wb") as f:
-                        f.write(bytes.getbuffer())
+                        f.write(bytes.getbuffer())' > extraction.py
 ```
 
 Clean code using PyCharm shorcut.
@@ -71,30 +71,22 @@ Create a tests directory and create a extraction_test.py file.
 
 ```bash
 mkdir tests
+cd tests
 ```
 
 extraction_test.py
-```python
-import unittest
+```bash
+echo "import unittest
 
 class TestStringMethods(unittest.TestCase):
 
     def test_upper(self):
-        self.assertEqual('foo'.upper(), 'FOO')
-
-    def test_isupper(self):
-        self.assertTrue('FOO'.isupper())
-        self.assertFalse('Foo'.isupper())
-
-    def test_split(self):
-        s = 'hello world'
-        self.assertEqual(s.split(), ['hello', 'world'])
-        # check that s.split fails when the separator is not a string
-        with self.assertRaises(TypeError):
-            s.split(2)
+        value = 'foo'.upper()
+        expected = 'FOO'
+        self.assertEqual(value, expected)
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main()" > extraction_test.py
 ```
 
 You can run unit test manually
