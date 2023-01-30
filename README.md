@@ -9,6 +9,13 @@ First, create git name "MLOpsPython" on your own github account.
 ```bash
 git clone https://github.com/yourusername/MLOpsPython
 cd MLOpsPython
+# Exclude Pycharm local files from git
+echo ".idea" > .gitignore 
+```
+
+```bash
+git clone https://github.com/yourusername/MLOpsPython
+cd MLOpsPython
 mkdir train
 cd train
 ```
