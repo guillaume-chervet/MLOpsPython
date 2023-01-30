@@ -18,7 +18,8 @@ Initialize extraction step.
 mkdir extraction
 cd extraction
 git clone https://github.com/guillaume-chervet/dataset-cats-dogs-others
-echo "dataset-cats-dogs-others" > .gitignore 
+echo "dataset-cats-dogs-others
+extracted_images" > .gitignore 
 ```
 
 Create requirements.txt
@@ -43,7 +44,7 @@ def convert_pixmap_to_rgb(pixmap) -> Pixmap:
         return fitz.Pixmap(fitz.csRGB, pixmap)
 
 pdfs_directory_path = ".\dataset-cats-dogs-others"
-images_directory_path = ".\images"
+images_directory_path = ".\extracted_images"
 
 Path(images_directory_path).mkdir(parents=True, exist_ok=True)
 files = [p for p in Path(pdfs_directory_path).iterdir() if p.is_file()]
