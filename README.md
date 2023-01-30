@@ -32,7 +32,7 @@ extracted_images" > .gitignore
 Create requirements.txt
 ```bash
 echo "pymupdf===1.21.1" > requirements.txt
-pip install ()r requirements.txt
+pip install -r requirements.txt
 ```
 
 Create extraction.py
@@ -106,7 +106,7 @@ You can now code and debug a real unit test for extraction.py from PyCharm your 
 
 Coverage
 ```bash
-pip install coverage
+pip install coverage===7.1.0
 coverage run -m unittest tests.extraction_test  #--omit tests
 coverage report
 coverage html
