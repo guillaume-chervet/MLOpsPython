@@ -1,8 +1,40 @@
 # MLOpsPython
 
-Set up Python python 3.10.9 on your laptop. You can use venv, conda, etc.
+Competences
+- Code / Debug
+- Test Driven Development
+- Clean Code, Inversion Of Dependence, Functional Programing
+- Build & Publish packages
+- Git
+- Linux Bash
+- Docker
+- Kubernetes
+
+Tools
+- Pycharm (https://www.jetbrains.com/pycharm/)
+- Python, pip, PipEnv, Conda
+- Git & Github & Github Action
+- AzureML (https://azure.microsoft.com/fr-fr/free/students/)
+- Docker
+- Kubernetes & OpenShift
+
+## Introduction
+
+The name of our company: MLOps
+
+Today a team of indexers receive 10,000 PDF files a day containing either cats or dogs or something else.
+They must manually open each PDF to classify them.
+
+We are going to automate this process. We will use a machine learning model to classify PDF files and expose it as a REST API. It will work in real time.
+![project_workflow.png](documentation%2Fproject_workflow.png)
+
+## Setup
+
+Set up Python python 3.11.x on your laptop. You can use venv, conda, etc.
 
 Download PyCharm Pro: https://www.jetbrains.com/pycharm/
+
+## First step: extract image from pdf
 
 First, create git name "MLOpsPython" on your own github account.
 
@@ -73,7 +105,10 @@ for path in files:
                         f.write(bytes.getbuffer())' > extraction.py
 ```
 
-Clean code using PyCharm shorcut.
+The code bellow is very ugly. It not only does not follow the best practices.
+It is hard to maintain and to test.
+So we need to clean the code using Pycharm shortcut (https://www.jetbrains.com/help/pycharm/mastering-keyboard-shortcuts.html)
+
 
 Create a tests directory and create a extraction_test.py file.
 
@@ -108,7 +143,15 @@ Coverage
 ```bash
 pip install coverage===7.1.0
 coverage run -m unittest tests.extraction_test  #--omit tests
+```
+
+To have a console feedback
+```bash
 coverage report
+```
+
+To have an html feedback
+```bash
 coverage html
 ```
 
