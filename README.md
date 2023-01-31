@@ -7,6 +7,7 @@ Competences
 - Build & Publish packages
 - Git
 - Linux Bash
+- REST API
 - Docker
 - Kubernetes
 
