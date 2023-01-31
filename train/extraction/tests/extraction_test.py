@@ -7,7 +7,7 @@ from extraction import extract_images
 BASE_PATH = Path(__file__).resolve().parent
 
 
-class TestStringMethods(unittest.TestCase):
+class TestExtraction(unittest.TestCase):
     output_directory = BASE_PATH / 'output'
     input_directory = BASE_PATH / 'input'
 

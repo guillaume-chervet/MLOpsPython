@@ -35,8 +35,6 @@ Set up Python python 3.11.x on your laptop. You can use venv, conda, etc.
 
 Download PyCharm Pro: https://www.jetbrains.com/pycharm/
 
-## First step: extract image from pdf
-
 First, create git name "MLOpsPython" on your own github account.
 
 ```bash
@@ -45,10 +43,10 @@ cd MLOpsPython
 # Exclude Pycharm local files from git
 echo ".idea" > .gitignore 
 ```
+## First step: extract image from pdf
 
+### Clean code principle
 ```bash
-git clone https://github.com/yourusername/MLOpsPython
-cd MLOpsPython
 mkdir train
 cd train
 ```
@@ -68,8 +66,9 @@ echo "pymupdf===1.21.1" > requirements.txt
 pip install -r requirements.txt
 ```
 
-Create extraction.py
+Create extraction.py and __init__.py (so extraction folder is python module)
 ```bash
+echo 'print("init module extraction")' > __init__.py
 echo 'from io import BytesIO
 from pathlib import Path
 import fitz
@@ -110,12 +109,15 @@ The code bellow is very ugly. It not only does not follow the best practices.
 It is hard to maintain and to test.
 So we need to clean the code using Pycharm shortcut (https://www.jetbrains.com/help/pycharm/mastering-keyboard-shortcuts.html)
 
+### First Unit Test
+https://docs.python.org/3/library/unittest.html
 
 Create a tests directory and create a extraction_test.py file.
 
 ```bash
 mkdir tests
 cd tests
+echo 'print("init module extraction.tests")' > __init__.py
 ```
 
 extraction_test.py
@@ -135,6 +137,7 @@ if __name__ == '__main__':
 
 You can run unit test manually
 ```bash
+# run from extraction directory
 python -m unittest tests.extraction_test
 ```
 
@@ -142,19 +145,29 @@ You can now code and debug a real unit test for extraction.py from PyCharm your 
 
 Coverage
 ```bash
+# run from extraction directory
 pip install coverage===7.1.0
-coverage run -m unittest tests.extraction_test  #--omit tests
+coverage run -m unittest tests.extraction_test
+
 ```
 
 To have a console feedback
 ```bash
+# run from extraction directory
 coverage report
+echo '
+.coverage' >> .gitignore
 ```
 
 To have an html feedback
 ```bash
+# run from extraction directory
 coverage html
+echo '
+htmlcov' >> .gitignore
 ```
+
+### Code Quality: Black & Flake8
 
 Now you can commit then push your code on github.
 
