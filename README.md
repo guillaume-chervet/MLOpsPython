@@ -69,6 +69,17 @@ We will use the following project structure. We will use mono-repository git in 
 
 ![code_organization.PNG](documentation%2Fcode_organization.PNG)
 
+## ML Libraries/Technologies choice
+
+Technologies choices have a huge impact on your development cost.
+You cannot use a hundred of libraries and expect to have a good result in a short time.
+It will be a nightmare to maintain and to debug.
+
+Enterprises use **Technologies RADAR** to manage and maintain their technologies choice :
+https://github.com/axa-group/radar
+
+![ml_libraries_choices.PNG](documentation%2Fml_libraries_choices.PNG)
+
 ## Step 1: Extract images from PDF files
 [step_1_extraction.md](step_1_extraction.md)
 
