@@ -35,6 +35,6 @@ jobs:
     - name: Run unit tests
       working-directory: train/extraction
       run: |
-        install -r requirements.txt
-        coverage run -m unittest tests.extraction_test
-        coverage report
+        pipenv install
+        pipenv run coverage run -m unittest tests.extraction_test
+        pipenv run coverage report
