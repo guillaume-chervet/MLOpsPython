@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import "./App.css";
 
-
 function App() {
   const [file, setFile] = useState(null);
   const [type, setType] = useState(null);
