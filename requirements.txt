@@ -1,0 +1,7 @@
+black==21.6b0
+flake8==3.9.2
+pre-commit==2.13.0
+nb_black==1.0.7
+azureml-core==1.33.0
+azureml-pipeline==1.33.0
+pathos==0.2.8

@@ -1,5 +1,10 @@
 ## First step: extract image from pdf
 
+In this step, we will setup the project background:
+- Code good pratices (clean code unit test)
+- Continuous integration via Github Action
+- AzureML
+
 ### Clean code principle
 ```bash
 mkdir train
