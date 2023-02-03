@@ -180,6 +180,6 @@ az ad sp create-for-rbac --name "myML2" --role contributor \
                             --scopes /subscriptions//9d42c9d4-85ab-429d-afb4-4d77f309078c/resourceGroups/azure-ml \
                             --sdk-auth
 
-Insert generated secret a githuAction secret AZURE_CREDENTIALS
+Insert generated secret a githuAction secret AZUREML_CREDENTIALS
 
 https://learn.microsoft.com/en-us/azure/machine-learning/how-to-github-actions-machine-learning?tabs=userlevel#step-2-authenticate-with-azure
