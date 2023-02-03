@@ -1,4 +1,4 @@
-name: Python Coninuous Integration
+name: Python Continuous Integration
 on:
   push:
     branches: [ "main" ]
