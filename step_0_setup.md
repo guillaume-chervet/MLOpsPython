@@ -87,12 +87,13 @@ git add .
 commit -m "Initial commit"
 git push origin main
 ```
-Now you can commit then push your code on github.
+
+We create our first github action to check code quality with Flake8 and Black.
 ```bash
 mkdir .github/workflows
 cd .github/workflows
 echo '
-name: Python Coninuous Integration
+name: Python Cotinuous Integration
 on:
   push:
     branches: [ "main" ]
@@ -126,46 +127,4 @@ jobs:
 ' > python-ci.yml
 ```
 
-## 10. Add pre-commit hook
-https://pre-commit.com/
-
-We install pre-commit in our local environment
-```bash
-pipenv install pre-commit===3.0.3 --dev
-```
-
-```bash
-echo '
-name: Python Coninuous Integration
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-permissions:
-  contents: read
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.11"
-    - name: Install dependencies
-      working-directory: train/extraction
-      run: |
-        python -m pip install --upgrade pip
-        pip install --user pipenv
-    - name: Format with Black
-      run: |
-        pipenv install --dev
-        pipenv run black .
-        pipenv run black . --check
-    - name: Lint with flake8
-      run: |
-        pipenv install --dev
-        pipenv run flake8 .
-' > python-ci.yml
-```
+Now we can project our main branch on github and check the result of the github action.

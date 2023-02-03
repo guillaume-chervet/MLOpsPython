@@ -5,7 +5,7 @@ In this step, we will setup the project background:
 - Continuous integration via Github Action
 - AzureML
 
-### Clean code principle
+### 1. Clean code principle
 ```bash
 mkdir train
 cd train
@@ -16,14 +16,14 @@ Initialize extraction step.
 mkdir extraction
 cd extraction
 git clone https://github.com/guillaume-chervet/dataset-cats-dogs-others
-echo "dataset-cats-dogs-others
+echo "dataset-cats-dogs-others/
 extracted_images" > .gitignore 
 ```
 
-Create requirements.txt
+Create a virtual environment
 ```bash
-echo "pymupdf===1.21.1" > requirements.txt
-pip install -r requirements.txt
+pipenv install
+pipenv install "pymupdf===1.21.1"
 ```
 
 Create extraction.py and __init__.py (so extraction folder is python module)
@@ -69,7 +69,7 @@ The code bellow is very ugly. It not only does not follow the best practices.
 It is hard to maintain and to test. We cannot accept that in production.
 So we need to clean the code using Pycharm shortcut (https://www.jetbrains.com/help/pycharm/mastering-keyboard-shortcuts.html)
 
-### First Unit Test
+### 2. First Unit Test
 https://docs.python.org/3/library/unittest.html
 
 Create a tests directory and create a extraction_test.py file.
@@ -98,7 +98,7 @@ if __name__ == '__main__':
 You can run unit test manually
 ```bash
 # run from extraction directory
-python -m unittest tests.extraction_test
+pipenv run python -m unittest tests.extraction_test
 ```
 
 You can now code and debug a real unit test for extraction.py from PyCharm your first unit test.
@@ -106,15 +106,15 @@ You can now code and debug a real unit test for extraction.py from PyCharm your 
 Coverage
 ```bash
 # run from extraction directory
-pip install coverage===7.1.0
-coverage run -m unittest tests.extraction_test
+pipenv run install coverage===7.1.0 --dev
+pipenv run coverage run -m unittest tests.extraction_test
 
 ```
 
 To have a console feedback
 ```bash
 # run from extraction directory
-coverage report
+pipenv run coverage report
 echo '
 .coverage' >> .gitignore
 ```
@@ -122,10 +122,53 @@ echo '
 To have a html feedback
 ```bash
 # run from extraction directory
-coverage html
+pipenv run coverage html
 echo '
 htmlcov' >> .gitignore
 ```
 
-### Setup AzureML
+### 3. Update Continuous Integration
+
+Update Github Action pipeline to run unit test.
+```yaml
+name: Python Coninuous Integration
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      working-directory: train/extraction
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user pipenv
+    - name: Format with Black
+      run: |
+        pipenv install --dev
+        pipenv run black train
+        pipenv run black train --check
+    - name: Lint with flake8
+      run: |
+        pipenv install --dev
+        pipenv run flake8 .
+    - name: Run unit tests
+      working-directory: train/extraction
+      run: |
+        pipenv install --dev
+        pipenv run coverage run -m unittest tests.extraction_test
+        pipenv run coverage report
+```
+
+### 4. Setup AzureML
 
