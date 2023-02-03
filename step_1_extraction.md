@@ -175,11 +175,11 @@ jobs:
 ### 4. Setup AzureML
 
 Create a service principal with the az ad sp create-for-rbac command in the Azure CLI. Run this command with Azure Cloud Shell in the Azure portal or by selecting the Try it button.
-
-az ad sp create-for-rbac --name "myML2" --role contributor \
-                            --scopes /subscriptions//9d42c9d4-85ab-429d-afb4-4d77f309078c/resourceGroups/azure-ml \
+```bash
+az ad sp create-for-rbac --name "myML" --role contributor \
+                            --scopes /subscriptions/<subscription-id>/resourceGroups/<group-name> \
                             --sdk-auth
-
-Insert generated secret a githuAction secret AZUREML_CREDENTIALS
+```
+Insert generated secret a githuAction secret AZURE_CREDENTIALS
 
 https://learn.microsoft.com/en-us/azure/machine-learning/how-to-github-actions-machine-learning?tabs=userlevel#step-2-authenticate-with-azure
