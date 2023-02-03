@@ -1,0 +1,10 @@
+---
+repos:
+  - repo: https://github.com/python/black.git
+    hooks:
+      - id: black
+        language_version: python3
+  - repo: https://github.com/pycqa/flake8.git
+    hooks:
+      - id: flake8
+        language_version: python3

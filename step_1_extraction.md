@@ -127,13 +127,5 @@ echo '
 htmlcov' >> .gitignore
 ```
 
-### Code Quality: Black & Flake8
-
-### Continuous Integration with Github Action
-
-Now you can commit then push your code on github.
-
-We are going to create a github action to run unit tests on each commit.
-
 ### Setup AzureML
 

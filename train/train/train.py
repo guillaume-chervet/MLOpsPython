@@ -122,7 +122,12 @@ def run_test_harness():
     )
     # fit model
     history = model.fit_generator(
-        train_it, steps_per_epoch=len(train_it), validation_data=test_it, validation_steps=len(test_it), epochs=10, verbose=1
+        train_it,
+        steps_per_epoch=len(train_it),
+        validation_data=test_it,
+        validation_steps=len(test_it),
+        epochs=10,
+        verbose=1,
     )
     # evaluate model
     evaluate_it = datagen.flow_from_directory(

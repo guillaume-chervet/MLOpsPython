@@ -5,10 +5,10 @@ name = "pypi"
 
 [packages]
 
-
 [dev-packages]
-flake8 = "===6.0.0"
 black = "===23.1.0"
+flake8 = "===6.0.0"
+pre-commit = "===3.0.3"
 
 [requires]
 python_version = "3.11"

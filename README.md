@@ -47,16 +47,6 @@ The deliverable is:
 - Versioned data
 - Versioned code
 
-## Setup
-
-Set up Python python 3.11.x on your laptop. You can use venv, conda, etc.
-
-Download PyCharm Pro: https://www.jetbrains.com/pycharm/
-
-First, create git name "MLOpsPython" on your own github account.
-
-
-
 ```bash
 git clone https://github.com/yourusername/MLOpsPython
 cd MLOpsPython
@@ -80,7 +70,7 @@ https://github.com/axa-group/radar
 
 ![ml_libraries_choices.PNG](documentation%2Fml_libraries_choices.PNG)
 
-## Step : Setup your environment
+## Step : Setup
 [step_0_setup.md](step_0_setup.md)
 
 ## Step 1: Extract images from PDF files

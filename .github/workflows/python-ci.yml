@@ -23,14 +23,12 @@ jobs:
     - name: Format with Black
       run: |
         pipenv install --dev
-        #pipenv sync --dev
         pipenv run black train
         pipenv run black train --check
     - name: Lint with flake8
       run: |
         pipenv install --dev
-        #pipenv sync --dev
-        pipenv run flake8 . --exit-zero
+        pipenv run flake8 .
     - name: Run unit tests
       working-directory: train/extraction
       run: |
