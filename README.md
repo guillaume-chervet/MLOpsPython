@@ -47,13 +47,6 @@ The deliverable is:
 - Versioned data
 - Versioned code
 
-```bash
-git clone https://github.com/yourusername/MLOpsPython
-cd MLOpsPython
-# Exclude Pycharm local files from git
-echo ".idea" > .gitignore 
-```
-
 ## Project structure
 We will use the following project structure. We will use mono-repository git in order to work together. It will help to retrain a model and deploy it in production from one manual action maximum.
 

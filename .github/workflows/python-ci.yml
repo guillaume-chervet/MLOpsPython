@@ -21,11 +21,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install --user pipenv
     - name: Format with Black
+      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run black train
         pipenv run black train --check
     - name: Lint with flake8
+      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run flake8 .

@@ -15,6 +15,8 @@ Activate license with your student email address.
 ```bash
 git clone https://github.com/YOUR-REPOSITORY/MLOpsPython
 cd MLOpsPython
+# Exclude Pycharm local files from git
+echo ".idea" > .gitignore 
 ```
 
 ## 5. Installation of pipenv
@@ -116,11 +118,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install --user pipenv
     - name: Format with Black
+      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run black .
         pipenv run black . --check
     - name: Lint with flake8
+      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run flake8 .

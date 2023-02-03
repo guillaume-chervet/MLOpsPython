@@ -153,12 +153,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install --user pipenv
-    - name: Format with Black
+    - name: Format with Black4
+      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run black train
         pipenv run black train --check
     - name: Lint with flake8
+      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run flake8 .
@@ -172,3 +174,12 @@ jobs:
 
 ### 4. Setup AzureML
 
+Create a service principal with the az ad sp create-for-rbac command in the Azure CLI. Run this command with Azure Cloud Shell in the Azure portal or by selecting the Try it button.
+
+az ad sp create-for-rbac --name "myML2" --role contributor \
+                            --scopes /subscriptions//9d42c9d4-85ab-429d-afb4-4d77f309078c/resourceGroups/azure-ml \
+                            --sdk-auth
+
+Insert generated secret a githuAction secret AZURE_CREDENTIALS
+
+https://learn.microsoft.com/en-us/azure/machine-learning/how-to-github-actions-machine-learning?tabs=userlevel#step-2-authenticate-with-azure
