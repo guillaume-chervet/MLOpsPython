@@ -24,7 +24,7 @@ jobs:
     - name: Lint with flake8
       run: |
         pipenv install
-        pipenv shell
+        #pipenv shell
         pipenv run black train
         pipenv run black train --check
         # stop the build if there are Python syntax errors or undefined names
