@@ -129,6 +129,43 @@ jobs:
 ## 10. Add pre-commit hook
 https://pre-commit.com/
 
+We install pre-commit in our local environment
 ```bash
-pipenv install pre-commit --dev
+pipenv install pre-commit===3.0.3 --dev
+```
+
+```bash
+echo '
+name: Python Coninuous Integration
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      working-directory: train/extraction
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user pipenv
+    - name: Format with Black
+      run: |
+        pipenv install --dev
+        pipenv run black .
+        pipenv run black . --check
+    - name: Lint with flake8
+      run: |
+        pipenv install --dev
+        pipenv run flake8 .
+' > python-ci.yml
 ```
