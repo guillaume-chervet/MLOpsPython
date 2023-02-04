@@ -23,7 +23,18 @@ ml_client = MLClient(
 
 # Retrieve an already attached Azure Machine Learning Compute.
 cluster_name = "guillaume-cpu"
-print(ml_client.compute.get(cluster_name))
+#print(ml_client.compute.get(cluster_name))
+cluster_basic = AmlCompute(
+    name="guillaume-cpu",
+    type="amlcompute",
+    size="Standard_D4s_v3",
+    location="northeurope",
+    min_instances=0,
+    max_instances=1,
+    idle_time_before_scale_down=60,
+)
+ml_client.begin_create_or_update(cluster_basic).result()
+
 
 
 from src.components import train_model, score_data, eval_model

@@ -17,7 +17,7 @@ Tools
 - Git & Github & Github Action
 - AzureML (https://azure.microsoft.com/fr-fr/free/students/)
 - Docker
-- Kubernetes & OpenShift
+- Kubernetes & OpenShift or Azure
 
 ## Introduction
 
