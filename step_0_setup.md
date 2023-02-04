@@ -95,7 +95,7 @@ We create our first github action to check code quality with Flake8 and Black.
 mkdir .github/workflows
 cd .github/workflows
 echo '
-name: Python Cotinuous Integration
+name: Python Continuous Integration
 on:
   push:
     branches: [ "main" ]
@@ -131,4 +131,14 @@ jobs:
 ' > python-ci.yml
 ```
 
-Now we can project our main branch on github and check the result of the github action.
+Now we can protect your "main" branch on github. Add a security constrain, that your code must pass the CI before merging.
+
+```bash
+git checkout -b test-pullrequest
+# modify your code to make your test fail
+git add .
+git commit -m "Test pull request"
+git push
+```
+
+Now you can create a pull request on github. You can see that your CI is running. You can see now your main branch is protected. You main code must be always in deliverable in production.
