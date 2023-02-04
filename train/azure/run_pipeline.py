@@ -34,7 +34,7 @@ cluster_basic = AmlCompute(
     min_instances=0,
     max_instances=1,
     idle_time_before_scale_down=60,
-    tier="low_priority",
+    #tier="low_priority",
 )
 ml_client.begin_create_or_update(cluster_basic).result()
 
