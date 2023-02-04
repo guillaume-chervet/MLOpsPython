@@ -131,7 +131,7 @@ htmlcov' >> .gitignore
 
 Update Github Action pipeline to run unit test.
 ```yaml
-name: Python Coninuous Integration
+name: Python Continuous Integration
 on:
   push:
     branches: [ "main" ]
@@ -174,12 +174,39 @@ jobs:
 
 ### 4. Setup AzureML
 
+Follow instruction with the teacher.
+
+### 5. Setup link bewteen AzureML and Github Action
+
+https://learn.microsoft.com/en-us/azure/machine-learning/how-to-github-actions-machine-learning?tabs=userlevel#step-2-authenticate-with-azure
+
 Create a service principal with the az ad sp create-for-rbac command in the Azure CLI. Run this command with Azure Cloud Shell in the Azure portal or by selecting the Try it button.
 ```bash
 az ad sp create-for-rbac --name "myML" --role contributor \
                             --scopes /subscriptions/<subscription-id>/resourceGroups/<group-name> \
                             --sdk-auth
 ```
-Insert generated secret a githuAction secret AZURE_CREDENTIALS
+In the example above, replace the placeholders with your subscription ID, resource group name, and app name. The output is a JSON object with the role assignment credentials that provide access to your App Service app similar to below. Copy this JSON object for later.
 
-https://learn.microsoft.com/en-us/azure/machine-learning/how-to-github-actions-machine-learning?tabs=userlevel#step-2-authenticate-with-azure
+```json
+{
+    "clientId": "<GUID>",
+    "clientSecret": "<GUID>",
+    "subscriptionId": "<GUID>",
+    "tenantId": "<GUID>",
+    (...)
+  }
+  ```
+
+Create secrets in Github Action
+
+1. In GitHub, go to your repository.
+
+2. Select Security > Secrets and variables > Actions.
+
+3. Select New repository secret.
+
+3. Paste the entire JSON output from the Azure CLI command into the secret's value field. Give the secret the name AZUREML_CREDENTIALS.
+
+5. Select Add secret.
+
