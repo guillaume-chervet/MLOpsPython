@@ -210,3 +210,15 @@ Create secrets in Github Action
 
 5. Select Add secret.
 
+### 6. Create your first dataset on AzureML
+
+1. Download Azure Storage Explorer : https://azure.microsoft.com/en-us/products/storage/storage-explorer/
+
+2. Copy local blob to azureML Storage:
+```bash
+$env:AZCOPY_CRED_TYPE = "Anonymous";
+$env:AZCOPY_CONCURRENCY_VALUE = "AUTO";
+./azcopy.exe copy "C:\github\MLOpsPython\train\extraction\dataset-cats-dogs-others\" "https://catsdogs5378403836.blob.core.windows.net/raw-data/?sv=2021-10-04&se=2023-03-07T17%3A17%3A58Z&sr=c&sp=rwl&sig=15An06ligcG%2BxfUiAo5rrjUA9W1TMBt6eTEgwojrLoU%3D" --overwrite=prompt --from-to=LocalBlob --blob-type Detect --follow-symlinks --put-md5 --follow-symlinks --disable-auto-decoding=false --recursive --log-level=INFO;
+$env:AZCOPY_CRED_TYPE = "";
+$env:AZCOPY_CONCURRENCY_VALUE = "";
+```
