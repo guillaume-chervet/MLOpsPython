@@ -48,7 +48,7 @@ custom_path = "azureml://datastores/workspaceblobstore/paths/custom_path/${{name
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(input_data):
     extraction = extraction_step(
-        training_data=input_data
+        pdfs_input=input_data
     )
 
     return {
