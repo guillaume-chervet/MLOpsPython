@@ -8,7 +8,7 @@ from mldesigner import command_component, Input, Output
     environment="./env.yaml",
 )
 def extraction_step(
-    pdfs_input: Input(type="uri_folder"),
+    pdfs_input: Input(type="uri_file"),
     images_output: Output(type="uri_folder"),
 ):
     from .extraction import extract_images
