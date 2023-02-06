@@ -58,7 +58,7 @@ def azureml_pipeline(input_data):
 
 pipeline_job = azureml_pipeline(
     input_data=Input(
-        path="azureml:raw_data_cats_dogs_others:1", type="uri_folder"
+        path="azureml:cats_dogs_others:1", type="uri_folder"
     )
 )
 # example how to change path of output on pipeline level
