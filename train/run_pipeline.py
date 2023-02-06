@@ -52,7 +52,7 @@ def azureml_pipeline(input_data):
     )
 
     return {
-        "extraction_output": extraction.outputs.model_output,
+        "extraction_output": extraction.outputs.images_output,
     }
 
 
@@ -62,7 +62,7 @@ pipeline_job = azureml_pipeline(
     )
 )
 # example how to change path of output on pipeline level
-pipeline_job.outputs.model_output = Output(
+pipeline_job.outputs.extraction_output = Output(
     type="uri_folder", mode="rw_mount", path=custom_path
 )
 
