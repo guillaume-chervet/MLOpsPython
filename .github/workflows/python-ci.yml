@@ -43,6 +43,6 @@ jobs:
         creds: ${{secrets.AZUREML_CREDENTIALS}}
     - name: run train/azure/run_pipeline.py
       run: |
-          pipenv install azure-ai-ml azure.identity mldesigner
+          pipenv install azure-ai-ml azure.identity mldesigner azureml-mlflow
           pipenv run python run_pipeline.py
       working-directory: train
