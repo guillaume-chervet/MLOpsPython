@@ -3,7 +3,7 @@
 ## 1. Download ans install python python 3.11.x on your laptop. 
 https://www.python.org/downloads/
 
-It is a goog pratice to always use the lastest version with supports: 
+It is a good pratice to always use the lastest version with supports: 
 https://endoflife.date/python
 
 ##  2. Download PyCharm Pro 
