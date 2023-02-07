@@ -1,6 +1,6 @@
 # Setup
 
-## 1. Install python python 3.11.x on your laptop. You can use venv, conda, etc.
+## 1. Download ans install python python 3.11.x on your laptop. 
 https://www.python.org/downloads/
 
 ##  2. Download PyCharm Pro 
