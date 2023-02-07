@@ -16,7 +16,7 @@ Activate license with your student email address.
 git clone https://github.com/YOUR-REPOSITORY/MLOpsPython
 cd MLOpsPython
 # Exclude Pycharm local files from git
-echo ".idea" > .gitignore 
+echo '.idea' > .gitignore 
 ```
 
 ## 5. Installation of pipenv
