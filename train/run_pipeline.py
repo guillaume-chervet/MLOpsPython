@@ -58,12 +58,14 @@ def azureml_pipeline(input_data):
 
 pipeline_job = azureml_pipeline(
     input_data=Input(
-        path="azureml:cats_dogs_others:1", type=AssetTypes.URI_FOLDER
+        path="azureml:cats_dogs_others:1", type="uri_folder"
+       # path="azureml:cats_dogs_others:1", type=AssetTypes.URI_FOLDER
     )
 )
 # example how to change path of output on pipeline level
 pipeline_job.outputs.extraction_output = Output(
-    type=AssetTypes.URI_FOLDER, mode=InputOutputModes.RO_MOUNT, path=custom_path
+    type="uri_folder", mode="rw_mount", path=custom_path
+   # type=AssetTypes.URI_FOLDER, mode=InputOutputModes.RO_MOUNT, path=custom_path
 )
 
 pipeline_job = ml_client.jobs.create_or_update(
