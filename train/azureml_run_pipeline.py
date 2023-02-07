@@ -51,6 +51,7 @@ def azureml_pipeline(input_data):
         pdfs_input=input_data
     )
 
+
     return {
         "extraction_output": extraction.outputs.images_output,
     }

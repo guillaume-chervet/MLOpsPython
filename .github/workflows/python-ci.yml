@@ -44,5 +44,5 @@ jobs:
     - name: run train/azure/run_pipeline.py
       run: |
           pipenv install azure-ai-ml azure.identity mldesigner azureml-mlflow
-          pipenv run python run_pipeline.py
+          pipenv run python azureml_run_pipeline.py
       working-directory: train

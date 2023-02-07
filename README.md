@@ -63,7 +63,7 @@ https://github.com/axa-group/radar
 
 ![ml_libraries_choices.PNG](documentation%2Fml_libraries_choices.PNG)
 
-## Step : Setup
+## Step 0 : Setup
 [step_0_setup.md](step_0_setup.md)
 
 ## Step 1: Extract images from PDF files
