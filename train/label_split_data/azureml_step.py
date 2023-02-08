@@ -4,7 +4,7 @@ from mldesigner import command_component, Input, Output
 
 @command_component(
     display_name="Label And Split Data",
-    environment="./env.yaml",
+    environment="./environment.conda.yaml",
 )
 def label_split_data_step(
     labels_input: Input(type="uri_folder"),

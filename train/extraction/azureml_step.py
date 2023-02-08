@@ -5,7 +5,7 @@ from mldesigner import command_component, Input, Output
 
 @command_component(
     display_name="Extraction",
-    environment="./env.yaml",
+    environment="./environment.conda.yaml",
 )
 def extraction_step(
     pdfs_input: Input(type="uri_folder"),
