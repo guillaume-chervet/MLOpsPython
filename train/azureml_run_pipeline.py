@@ -4,6 +4,9 @@ from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 from azure.ai.ml import MLClient, Input, Output
 from azure.ai.ml.dsl import pipeline
 from azure.ai.ml.constants import AssetTypes, InputOutputModes
+
+from train.label_split_data.azureml_step import label_split_data_step
+
 try:
     credential = DefaultAzureCredential()
     # Check if given credential can get token successfully.
@@ -39,30 +42,35 @@ cluster_basic = AmlCompute(
 ml_client.begin_create_or_update(cluster_basic).result()
 
 
-
 from extraction.azureml_step import extraction_step
 
 custom_path = "azureml://datastores/workspaceblobstore/paths/custom_path/${{name}}/"
 
 # define a pipeline with component
 @pipeline(default_compute=cluster_name)
-def azureml_pipeline(input_data):
+def azureml_pipeline(pdfs_input_data, labels_input_data):
     extraction = extraction_step(
-        pdfs_input=input_data
+        pdfs_input=pdfs_input_data
     )
 
+    label_split_data = label_split_data_step(
+        images_input=extraction.outputs.images_output,
+        labels_input=labels_input_data)
 
     return {
-        "extraction_output": extraction.outputs.images_output,
+        "split_images_output": label_split_data.outputs.split_images_output,
     }
 
 
 pipeline_job = azureml_pipeline(
-    input_data=Input(
+    pdfs_input_data=Input(
         path="azureml:cats_dogs_others:1", type="uri_folder"
-       # path="azureml:cats_dogs_others:1", type=AssetTypes.URI_FOLDER
+    ),
+    labels_input_data=Input(
+        path="azureml:cats_dogs_others_labels:1", type="uri_folder"
     )
 )
+
 # example how to change path of output on pipeline level
 pipeline_job.outputs.extraction_output = Output(
     type="uri_folder", mode="rw_mount", path=custom_path

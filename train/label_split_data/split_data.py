@@ -5,7 +5,7 @@ from typing import Any
 import numpy as np
 
 
-def split_data(input_labels_path: Path, input_images_directory: Path, output_directory: Path) -> list[str | Any]:
+def label_split_data(input_labels_path: Path, input_images_directory: Path, output_directory: Path) -> list[str | Any]:
     Path(output_directory).mkdir(parents=True, exist_ok=True)
     with open(input_labels_path) as json_file:
         label_data = json.load(json_file)

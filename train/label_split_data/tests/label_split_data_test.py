@@ -7,7 +7,7 @@ from split_data import split_data
 BASE_PATH = Path(__file__).resolve().parent
 
 
-class LabelTest(unittest.TestCase):
+class LabelSplitDataTest(unittest.TestCase):
     output_directory = BASE_PATH / "output"
     input_directory = BASE_PATH / "input"
     input_images_directory = input_directory / "images"
@@ -17,7 +17,7 @@ class LabelTest(unittest.TestCase):
         if self.output_directory.is_dir():
             shutil.rmtree(str(self.output_directory))
 
-    def test_label(self):
+    def test_label_split_data(self):
 
         path_results = split_data(self.input_labels_path, self.input_images_directory, self.output_directory)
         expected = ['train/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e1_page1_index0.png',
