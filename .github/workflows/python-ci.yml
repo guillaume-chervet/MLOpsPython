@@ -37,7 +37,7 @@ jobs:
         pipenv install --dev
         pipenv run coverage run -m unittest tests.extraction_test
         pipenv run coverage report
-    - name: Run unit tests
+    - name: Run unit tests Label Split Data
       working-directory: train/label_split_data
       run: |
         pipenv install --dev
