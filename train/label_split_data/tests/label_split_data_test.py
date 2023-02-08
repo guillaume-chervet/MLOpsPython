@@ -19,7 +19,8 @@ class LabelSplitDataTest(unittest.TestCase):
 
     def test_label_split_data(self):
 
-        path_results = label_split_data(self.input_labels_path, self.input_images_directory, self.output_directory)
+        label_split_data_result = label_split_data(self.input_labels_path, self.input_images_directory, self.output_directory)
+
         expected = ['train/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e1_page1_index0.png',
                     'test/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e9_page1_index0.png',
                     'evaluate/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e9_page3_index0.png',
@@ -29,8 +30,12 @@ class LabelSplitDataTest(unittest.TestCase):
                     'train/others/other_0a0e5d35-ef01-4239-af60-81f2357a6ab9_page0_index0.png',
                     'test/others/other_0a0e5d35-ef01-4239-af60-81f2357a6ab9_page2_index0.png',
                     'evaluate/others/other_0a0e5d35-ef01-4239-af60-81f2357a6ab9_page1_index0.png']
-        for path_result in path_results:
+        for path_result in label_split_data_result.path_results:
             self.assertIn(path_result, expected)
+
+        self.assertEqual(label_split_data_result.number_file_train_by_label, 1)
+        self.assertEqual(label_split_data_result.number_file_test_by_label, 1)
+        self.assertEqual(label_split_data_result.number_file_evaluate_by_label, 1)
 
 
 if __name__ == '__main__':

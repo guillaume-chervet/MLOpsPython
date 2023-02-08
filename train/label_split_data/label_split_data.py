@@ -1,15 +1,25 @@
 import json
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 
 
+@dataclass
+class LabelSplitDataResult:
+    number_file_train_by_label: int
+    number_file_test_by_label: int
+    number_file_evaluate_by_label: int
+    path_results: list[str | Any]
+
+
 def label_split_data(input_labels_path: Path,
                      input_images_directory: Path,
                      output_directory: Path,
+                     number_file_by_label=3,
                      ratio_train: float = 0.4,
-                     ratio_test: float = 0.3) -> list[str | Any]:
+                     ratio_test: float = 0.3) -> LabelSplitDataResult:
     Path(output_directory).mkdir(parents=True, exist_ok=True)
     with open(input_labels_path) as json_file:
         label_data = json.load(json_file)
@@ -20,14 +30,14 @@ def label_split_data(input_labels_path: Path,
     for annotation in label_data["annotations"]:
         filename = annotation["fileName"]
         label = annotation["annotation"]["label"]
-        split_paths[label].append(filename)
+        if len(split_paths[label]) < number_file_by_label:
+            split_paths[label].append(filename)
 
-    number_file_limit_by_label = 3
-    number_file_train = int(number_file_limit_by_label * ratio_train)
-    number_file_test = int(number_file_limit_by_label * ratio_test)
+    number_file_train = int(number_file_by_label * ratio_train)
+    number_file_test = int(number_file_by_label * ratio_test)
     path_results = []
     for label in labels:
-        if number_file_limit_by_label > len(split_paths[label]):
+        if number_file_by_label != len(split_paths[label]):
             raise Exception("Not enough files for label " + label)
 
         splitted = np.split(split_paths[label], [number_file_train, number_file_test + number_file_train])
@@ -41,4 +51,9 @@ def label_split_data(input_labels_path: Path,
                 destination_path.write_bytes(source_path.read_bytes())
                 path_result = split_directory_name + "/" + label + "s" + "/" + output_filename
                 path_results.append(path_result)
-    return path_results
+
+    return LabelSplitDataResult(
+        number_file_train_by_label=number_file_train,
+        number_file_test_by_label=number_file_test,
+        number_file_evaluate_by_label=number_file_by_label - number_file_train - number_file_test,
+        path_results=path_results)

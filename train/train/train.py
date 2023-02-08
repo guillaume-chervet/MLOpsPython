@@ -92,6 +92,3 @@ def run_test_harness(input_directory: Path, output_directory: Path):
     summarize_diagnostics(history, output_directory)
     model.save(str(output_directory / "final_model.h5"))
 
-
-# entry point, run the test harness
-#run_test_harness()
