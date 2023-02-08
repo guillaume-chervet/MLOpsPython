@@ -5,7 +5,11 @@ from typing import Any
 import numpy as np
 
 
-def label_split_data(input_labels_path: Path, input_images_directory: Path, output_directory: Path) -> list[str | Any]:
+def label_split_data(input_labels_path: Path,
+                     input_images_directory: Path,
+                     output_directory: Path,
+                     ratio_train: float = 0.4,
+                     ratio_test: float = 0.3) -> list[str | Any]:
     Path(output_directory).mkdir(parents=True, exist_ok=True)
     with open(input_labels_path) as json_file:
         label_data = json.load(json_file)
@@ -18,8 +22,6 @@ def label_split_data(input_labels_path: Path, input_images_directory: Path, outp
         label = annotation["annotation"]["label"]
         split_paths[label].append(filename)
 
-    ratio_train = 0.5
-    ratio_test = 0.5
     number_file_limit_by_label = 3
     number_file_train = int(number_file_limit_by_label * ratio_train)
     number_file_test = int(number_file_limit_by_label * ratio_test)
