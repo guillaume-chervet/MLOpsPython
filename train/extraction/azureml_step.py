@@ -13,5 +13,7 @@ def extraction_step(
 ):
     from extraction import extract_images
     import mlflow
-    mlflow.log_metric("Final test loss", 0)
-    extract_images(pdfs_input, images_output)
+
+    result = extract_images(pdfs_input, images_output)
+    mlflow.log_metric("number_files_input", result.number_files_input)
+    mlflow.log_metric("number_images_output", result.number_images_output)

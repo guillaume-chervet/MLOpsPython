@@ -14,6 +14,13 @@
       "annotation": {
         "label": "other"
       }
+    },{
+      "nameIdentifier": "10AEEF6AECA724E1276878E0A2968A4BE79031BEF118BB3E3403C43B059E12C7",
+      "createDate": 638113618602482400,
+      "fileName": "0a0e5d35-ef01-4239-af60-81f2357a6ab9_page2_index0.png",
+      "annotation": {
+        "label": "other"
+      }
     },
     {
       "nameIdentifier": "10AEEF6AECA724E1276878E0A2968A4BE79031BEF118BB3E3403C43B059E12C7",
@@ -21,6 +28,14 @@
       "fileName": "0a0e5d35-ef01-4239-af60-81f2357a6ab9_page1_index0.png",
       "annotation": {
         "label": "other"
+      }
+    },
+    {
+      "nameIdentifier": "10AEEF6AECA724E1276878E0A2968A4BE79031BEF118BB3E3403C43B059E12C7",
+      "createDate": 638113618602482400,
+      "fileName": "0a2bc279-8a6b-49fd-9857-d047351cd5e1_page1_index0.png",
+      "annotation": {
+        "label": "cat"
       }
     },
     {
@@ -51,6 +66,14 @@
       "nameIdentifier": "10AEEF6AECA724E1276878E0A2968A4BE79031BEF118BB3E3403C43B059E12C7",
       "createDate": 638113618602482400,
       "fileName": "0a2bc279-8a6b-49fd-9857-d047351cd5e9_page4_index0.png",
+      "annotation": {
+        "label": "dog"
+      }
+    },
+    {
+      "nameIdentifier": "10AEEF6AECA724E1276878E0A2968A4BE79031BEF118BB3E3403C43B059E12C7",
+      "createDate": 638113618602482400,
+      "fileName": "0a2bc279-8a6b-49fd-9857-d047351cd5e10_page4_index0.png",
       "annotation": {
         "label": "dog"
       }

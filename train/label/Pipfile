@@ -4,9 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-azure-ai-ml = "*"
-"azure.identity" = "*"
-mldesigner = "*"
+numpy = "*"
 
 [dev-packages]
 

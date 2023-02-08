@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from io import BytesIO
 from pathlib import Path
 
@@ -14,9 +15,16 @@ def convert_pixmap_to_rgb(pixmap) -> Pixmap:
         return fitz.Pixmap(fitz.csRGB, pixmap)
 
 
-def extract_images(pdfs_directory_path: str, images_directory_path: str):
+@dataclass
+class ExtractImagesResult:
+    number_files_input: int
+    number_images_output: int
+
+
+def extract_images(pdfs_directory_path: str, images_directory_path: str) -> ExtractImagesResult:
     pdfs = [p for p in Path(pdfs_directory_path).iterdir() if p.is_file()]
     Path(images_directory_path).mkdir(parents=True, exist_ok=True)
+    number_images_output = 0
     for pdf_path in pdfs:
         with open(pdf_path, "rb") as pdf_stream:
             pdf_bytes = pdf_stream.read()
@@ -29,8 +37,11 @@ def extract_images(pdfs_directory_path: str, images_directory_path: str):
                     image_pix = fitz.Pixmap(document, xref)
                     image_bytes_io = BytesIO(convert_pixmap_to_rgb(image_pix).tobytes())
                     filename = "{0}_page{1}_index{2}.png".format(pdf_path.stem, str(index), str(index_image))
+                    number_images_output = number_images_output + 1
                     with open(Path(images_directory_path) / filename, "wb") as file_stream:
                         file_stream.write(image_bytes_io.getbuffer())
+
+    return ExtractImagesResult(number_files_input=len(pdfs), number_images_output=number_images_output)
 
 
 if __name__ == "__main__":
