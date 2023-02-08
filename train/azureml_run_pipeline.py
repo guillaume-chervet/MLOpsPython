@@ -5,7 +5,6 @@ from azure.ai.ml import MLClient, Input, Output
 from azure.ai.ml.dsl import pipeline
 from azure.ai.ml.constants import AssetTypes, InputOutputModes
 
-from train.label_split_data.azureml_step import label_split_data_step
 
 try:
     credential = DefaultAzureCredential()
@@ -43,6 +42,7 @@ ml_client.begin_create_or_update(cluster_basic).result()
 
 
 from extraction.azureml_step import extraction_step
+from label_split_data.azureml_step import label_split_data_step
 
 custom_path = "azureml://datastores/workspaceblobstore/paths/custom_path/${{name}}/"
 
