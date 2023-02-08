@@ -9,7 +9,7 @@ conda_file:
     - defaults
   dependencies:
     - python=3.11
-    - pip=21.2.2
+    - pip=22.3.1
     - pip:
       - mldesigner==0.1.0b4
       - pymupdf===1.21.1
