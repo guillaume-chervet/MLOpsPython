@@ -1,58 +1,5 @@
 # https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-to-classify-photos-of-dogs-and-cats/
 
-# organize dataset into a useful structure
-from os import makedirs
-from os import listdir
-from shutil import copyfile
-from random import seed
-from random import random
-
-# create directories
-dataset_home = "../train/dataset_dogs_vs_cats/"
-subdirs = ["train/", "test/", "evaluate/"]
-for subdir in subdirs:
-    # create label subdirectories
-    labeldirs = ["dogs/", "cats/", "others/"]
-    for labldir in labeldirs:
-        newdir = dataset_home + subdir + labldir
-        makedirs(newdir, exist_ok=True)
-# seed random number generator
-seed(1)
-# define ratio of pictures to use for validation
-val_ratio = 0.25
-number_file_limit = 10000
-# copy training dataset images into subdirectories
-src_directory = "../train/dogs-vs-cats/train/"
-for file in listdir(src_directory):
-    src = src_directory + "/" + file
-    dst_dir = "train/"
-    current_number_file_limit = number_file_limit
-    r = random()
-    if r < val_ratio:
-        if r <= float(val_ratio / 2):
-            dst_dir = "test/"
-        if r > float(val_ratio / 2):
-            dst_dir = "evaluate/"
-        current_number_file_limit = int(number_file_limit * val_ratio)
-    if file.startswith("cat"):
-        directory = dataset_home + dst_dir + "cats/"
-        dst = directory + file
-        if len(listdir(directory)) > current_number_file_limit:
-            continue
-        copyfile(src, dst)
-    elif file.startswith("dog"):
-        directory = dataset_home + dst_dir + "dogs/"
-        dst = directory + file
-        if len(listdir(directory)) > current_number_file_limit:
-            continue
-        copyfile(src, dst)
-    elif file.startswith("other"):
-        directory = dataset_home + dst_dir + "others/"
-        dst = directory + file
-        if len(listdir(directory)) > current_number_file_limit:
-            continue
-        copyfile(src, dst)
-
 # vgg16 model used for transfer learning on the dogs and cats dataset
 import sys
 from matplotlib import pyplot

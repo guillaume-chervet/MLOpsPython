@@ -2,7 +2,7 @@ import shutil
 import unittest
 from pathlib import Path
 
-from split_data import split_data
+from label_split_data import label_split_data
 
 BASE_PATH = Path(__file__).resolve().parent
 
