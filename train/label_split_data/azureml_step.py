@@ -13,7 +13,7 @@ def label_split_data_step(
 ):
     from label_split_data import label_split_data
     #import mlflow
-
-    label_split_data(Path(labels_input), Path(images_input), Path(split_images_output))
+    labels_files_path = Path(labels_input) / "cats_dogs_others_classification-annotations.json"
+    label_split_data(labels_files_path, Path(images_input), Path(split_images_output))
     #mlflow.log_metric("number_files_input", result.number_files_input)
     #mlflow.log_metric("number_images_output", result.number_images_output)
