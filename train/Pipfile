@@ -7,6 +7,12 @@ name = "pypi"
 azure-ai-ml = "*"
 "azure.identity" = "*"
 mldesigner = "*"
+matplotlib = "*"
+keras = "*"
+numpy = "*"
+tensorflow = "*"
+scipy = "*"
+opencv-contrib-python-headless = "==4.7.0.68"
 
 [dev-packages]
 

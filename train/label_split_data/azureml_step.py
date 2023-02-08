@@ -17,6 +17,14 @@ def label_split_data_step(
     number_file_by_label = 16
     ratio_train: float = 0.4
     ratio_test: float = 0.3
+
+    params = {
+        "number_file_by_label": number_file_by_label,
+        "ratio_train": ratio_train,
+        "ratio_test": ratio_test
+    }
+
+    mlflow.log_params(params)
     labels_files_path = Path(labels_input) / "cats_dogs_others_classification-annotations.json"
     label_split_data_result = label_split_data(labels_files_path,
                                                Path(images_input),
