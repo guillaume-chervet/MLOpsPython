@@ -14,7 +14,7 @@ jobs:
     - name: Set up Python 3.11
       uses: actions/setup-python@v3
       with:
-        python-version: "3.11"
+        python-version: "3.11.1"
     - name: Install dependencies
       working-directory: train/extraction
       run: |
