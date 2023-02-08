@@ -72,7 +72,7 @@ pipeline_job = azureml_pipeline(
     )
 )
 
-pipeline_job.outputs.split_images_output = Output(
+pipeline_job.outputs.model_output = Output(
     type="uri_folder", mode="rw_mount", path=custom_path
 )
 
