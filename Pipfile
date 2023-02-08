@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+opencv-contrib-python-headless = "==4.7.0.68"
 
 [dev-packages]
 black = "===23.1.0"

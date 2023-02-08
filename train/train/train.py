@@ -1,7 +1,8 @@
 # https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-to-classify-photos-of-dogs-and-cats/
 
 # vgg16 model used for transfer learning on the dogs and cats dataset
-import sys
+from pathlib import Path
+
 from matplotlib import pyplot
 from keras.applications.vgg16 import VGG16
 from keras.models import Model
@@ -34,7 +35,7 @@ def define_model():
 
 
 # plot diagnostic learning curves
-def summarize_diagnostics(history):
+def summarize_diagnostics(history, output_directory: Path):
     # plot loss
     pyplot.subplot(211)
     pyplot.title("Cross Entropy Loss")
@@ -46,14 +47,13 @@ def summarize_diagnostics(history):
     pyplot.plot(history.history["accuracy"], color="blue", label="train")
     pyplot.plot(history.history["val_accuracy"], color="orange", label="test")
     # save plot to file
-    filename = sys.argv[0].split("/")[-1]
-    plot_filename = "../train/" + filename + "_plot.png"
+    plot_filename = output_directory / "model_plot.png"
     pyplot.savefig(plot_filename)
     pyplot.close()
 
 
 # run the test harness for evaluating a model
-def run_test_harness():
+def run_test_harness(input_directory: Path, output_directory: Path):
     # define model
     model = define_model()
     # create data generator
@@ -62,10 +62,10 @@ def run_test_harness():
     datagen.mean = [123.68, 116.779, 103.939]
     # prepare iterator
     train_it = datagen.flow_from_directory(
-        "../train/dataset_dogs_vs_cats/train/", class_mode="binary", batch_size=64, target_size=(224, 224)
+         str(input_directory / "train"), class_mode="binary", batch_size=64, target_size=(224, 224)
     )
     test_it = datagen.flow_from_directory(
-        "../train/dataset_dogs_vs_cats/test/", class_mode="binary", batch_size=64, target_size=(224, 224)
+        str(input_directory / "test"), class_mode="binary", batch_size=64, target_size=(224, 224)
     )
     # fit model
     history = model.fit_generator(
@@ -78,13 +78,13 @@ def run_test_harness():
     )
     # evaluate model
     evaluate_it = datagen.flow_from_directory(
-        "../train/dataset_dogs_vs_cats/evaluate/", class_mode="binary", batch_size=64, target_size=(224, 224)
+        str(input_directory / "evaluate"), class_mode="binary", batch_size=64, target_size=(224, 224)
     )
     _, acc = model.evaluate_generator(evaluate_it, steps=len(evaluate_it), verbose=0)
     print("> %.3f" % (acc * 100.0))
     # learning curves
-    summarize_diagnostics(history)
-    model.save("../train/final_model.h5")
+    summarize_diagnostics(history, output_directory)
+    model.save(str(output_directory / "final_model.h5"))
 
 
 # entry point, run the test harness

@@ -3,4 +3,4 @@ keras
 numpy
 tensorflow
 scipy
-opencv-contrib-python-headless===4.5.2.52
+opencv-contrib-python-headless==4.7.0.68
