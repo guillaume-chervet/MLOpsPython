@@ -19,7 +19,7 @@ def label_split_data(input_labels_path: Path,
                      output_directory: Path,
                      number_file_by_label=3,
                      ratio_train: float = 0.4,
-                     ratio_test: float = 0.3) -> LabelSplitDataResult:
+                     ratio_test: float = 0.4) -> LabelSplitDataResult:
     Path(output_directory).mkdir(parents=True, exist_ok=True)
     with open(input_labels_path) as json_file:
         label_data = json.load(json_file)
