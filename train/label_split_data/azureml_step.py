@@ -11,7 +11,7 @@ def label_split_data_step(
     images_input: Input(type="uri_folder"),
     split_images_output: Output(type="uri_folder"),
 ):
-    from train.label_split_data.split_data import label_split_data
+    from label_split_data.split_data import label_split_data
     #import mlflow
 
     label_split_data(Path(labels_input), Path(images_input), Path(split_images_output))

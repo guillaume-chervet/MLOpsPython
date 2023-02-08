@@ -31,11 +31,17 @@ jobs:
       run: |
         pipenv install --dev
         pipenv run flake8 .
-    - name: Run unit tests
+    - name: Run unit tests Extraction
       working-directory: train/extraction
       run: |
         pipenv install --dev
         pipenv run coverage run -m unittest tests.extraction_test
+        pipenv run coverage report
+    - name: Run unit tests
+      working-directory: train/label_split_data
+      run: |
+        pipenv install --dev
+        pipenv run coverage run -m unittest tests.label_split_data_test
         pipenv run coverage report
     - name: azure login
       uses: azure/login@v1
