@@ -1,9 +1,7 @@
-# import required libraries
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 
 from azure.ai.ml import MLClient, Input, Output
 from azure.ai.ml.dsl import pipeline
-from azure.ai.ml.constants import AssetTypes, InputOutputModes
 
 
 try:
@@ -46,7 +44,6 @@ from label_split_data.azureml_step import label_split_data_step
 
 custom_path = "azureml://datastores/workspaceblobstore/paths/custom_path/${{name}}/"
 
-# define a pipeline with component
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(pdfs_input_data, labels_input_data):
     extraction = extraction_step(
@@ -71,15 +68,12 @@ pipeline_job = azureml_pipeline(
     )
 )
 
-# example how to change path of output on pipeline level
-pipeline_job.outputs.extraction_output = Output(
+pipeline_job.outputs.split_images_output = Output(
     type="uri_folder", mode="rw_mount", path=custom_path
-   # type=AssetTypes.URI_FOLDER, mode=InputOutputModes.RO_MOUNT, path=custom_path
 )
 
 pipeline_job = ml_client.jobs.create_or_update(
     pipeline_job, experiment_name="cats_dos_others_pipeline"
 )
 
-# Wait until the job completes
 ml_client.jobs.stream(pipeline_job.name)
