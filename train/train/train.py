@@ -62,10 +62,16 @@ def run_test_harness(input_directory: Path, output_directory: Path):
     datagen.mean = [123.68, 116.779, 103.939]
     # prepare iterator
     train_it = datagen.flow_from_directory(
-         str(input_directory / "train"), class_mode="binary", batch_size=64, target_size=(224, 224)
+        str(input_directory / "train"),
+        class_mode="binary",
+        batch_size=64,
+        target_size=(224, 224)
     )
     test_it = datagen.flow_from_directory(
-        str(input_directory / "test"), class_mode="binary", batch_size=64, target_size=(224, 224)
+        str(input_directory / "test"),
+        class_mode="binary",
+        batch_size=64,
+        target_size=(224, 224)
     )
     # fit model
     history = model.fit_generator(
@@ -88,4 +94,4 @@ def run_test_harness(input_directory: Path, output_directory: Path):
 
 
 # entry point, run the test harness
-run_test_harness()
+#run_test_harness()

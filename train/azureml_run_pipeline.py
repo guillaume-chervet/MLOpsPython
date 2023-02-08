@@ -41,6 +41,7 @@ ml_client.begin_create_or_update(cluster_basic).result()
 
 from extraction.azureml_step import extraction_step
 from label_split_data.azureml_step import label_split_data_step
+from train.azureml_step import train_step
 
 custom_path = "azureml://datastores/workspaceblobstore/paths/custom_path/${{name}}/"
 
@@ -54,8 +55,11 @@ def azureml_pipeline(pdfs_input_data, labels_input_data):
         images_input=extraction.outputs.images_output,
         labels_input=labels_input_data)
 
+    train_data = train_step(
+        split_images_input=label_split_data.outputs.split_images_output)
+
     return {
-        "split_images_output": label_split_data.outputs.split_images_output,
+        "model_output": train_data.outputs.model_output,
     }
 
 
