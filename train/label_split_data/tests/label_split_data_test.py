@@ -19,7 +19,7 @@ class LabelSplitDataTest(unittest.TestCase):
 
     def test_label_split_data(self):
 
-        path_results = split_data(self.input_labels_path, self.input_images_directory, self.output_directory)
+        path_results = label_split_data(self.input_labels_path, self.input_images_directory, self.output_directory)
         expected = ['train/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e1_page1_index0.png',
                     'test/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e9_page1_index0.png',
                     'evaluate/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e9_page3_index0.png',
