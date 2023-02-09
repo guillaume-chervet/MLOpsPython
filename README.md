@@ -1,5 +1,7 @@
 # MLOpsPython
 
+A real demo of Deep Learning project with preprocessing from development to production. 
+
 Competences
 - Code / Debug
 - UnitTest, Test Driven Development principles
