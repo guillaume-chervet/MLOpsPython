@@ -107,7 +107,7 @@ on:
 permissions:
   contents: read
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -121,13 +121,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install --user pipenv
     - name: Format with Black
-      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run black .
         pipenv run black . --check
     - name: Lint with flake8
-      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run flake8 .

@@ -140,7 +140,7 @@ on:
 permissions:
   contents: read
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -154,16 +154,27 @@ jobs:
         python -m pip install --upgrade pip
         pip install --user pipenv
     - name: Format with Black4
-      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run black train
         pipenv run black train --check
     - name: Lint with flake8
-      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run flake8 .
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      working-directory: train/extraction
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user pipenv
     - name: Run unit tests
       working-directory: train/extraction
       run: |
