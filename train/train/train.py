@@ -1,5 +1,5 @@
 # https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-to-classify-photos-of-dogs-and-cats/
-
+from dataclasses import dataclass
 # vgg16 model used for transfer learning on the dogs and cats dataset
 from pathlib import Path
 
@@ -47,13 +47,21 @@ def summarize_diagnostics(history, output_directory: Path):
     pyplot.plot(history.history["accuracy"], color="blue", label="train")
     pyplot.plot(history.history["val_accuracy"], color="orange", label="test")
     # save plot to file
-    plot_filename = output_directory / "model_plot.png"
-    pyplot.savefig(plot_filename)
+    plot_filepath = output_directory / "model_plot.png"
+    pyplot.savefig(plot_filepath)
     pyplot.close()
+    return plot_filepath
+
+@dataclass
+class ModelResult:
+    evaluate_accuracy_percentage: int
+    summary_image_path: Path
+    model_path: Path
 
 
 # run the test harness for evaluating a model
-def run_test_harness(input_directory: Path, output_directory: Path):
+def run_test_harness(input_directory: Path, output_directory: Path, batch_size=64, epochs=10) -> ModelResult:
+    Path(output_directory).mkdir(parents=True, exist_ok=True)
     # define model
     model = define_model()
     # create data generator
@@ -64,13 +72,13 @@ def run_test_harness(input_directory: Path, output_directory: Path):
     train_it = datagen.flow_from_directory(
         str(input_directory / "train"),
         class_mode="binary",
-        batch_size=64,
+        batch_size=batch_size,
         target_size=(224, 224)
     )
     test_it = datagen.flow_from_directory(
         str(input_directory / "test"),
         class_mode="binary",
-        batch_size=64,
+        batch_size=batch_size,
         target_size=(224, 224)
     )
     # fit model
@@ -79,16 +87,18 @@ def run_test_harness(input_directory: Path, output_directory: Path):
         steps_per_epoch=len(train_it),
         validation_data=test_it,
         validation_steps=len(test_it),
-        epochs=10,
+        epochs=epochs,
         verbose=1,
     )
     # evaluate model
     evaluate_it = datagen.flow_from_directory(
-        str(input_directory / "evaluate"), class_mode="binary", batch_size=64, target_size=(224, 224)
+        str(input_directory / "evaluate"), class_mode="binary", batch_size=batch_size, target_size=(224, 224)
     )
-    _, acc = model.evaluate_generator(evaluate_it, steps=len(evaluate_it), verbose=0)
-    print("> %.3f" % (acc * 100.0))
+    _, acc = model.evaluate_generator(evaluate_it, steps=len(evaluate_it), verbose=1)
+    evaluate_accuracy_percentage = acc * 100.0
+    print("> %.3f" % (evaluate_accuracy_percentage))
     # learning curves
-    summarize_diagnostics(history, output_directory)
-    model.save(str(output_directory / "final_model.h5"))
-
+    summary_image_path = summarize_diagnostics(history, output_directory)
+    model_path = output_directory / "final_model.h5"
+    model.save(str(model_path))
+    return ModelResult(evaluate_accuracy_percentage, summary_image_path, model_path)

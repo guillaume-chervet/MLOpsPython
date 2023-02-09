@@ -14,7 +14,7 @@ def label_split_data_step(
     from label_split_data import label_split_data
     import mlflow
 
-    number_file_by_label = 16
+    number_file_by_label = 10
     ratio_train: float = 0.4
     ratio_test: float = 0.3
 

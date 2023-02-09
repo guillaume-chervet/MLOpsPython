@@ -12,6 +12,7 @@ class LabelSplitDataResult:
     number_file_test_by_label: int
     number_file_evaluate_by_label: int
     path_results: list[str | Any]
+    number_labeled_data: int
 
 
 def label_split_data(input_labels_path: Path,
@@ -20,6 +21,10 @@ def label_split_data(input_labels_path: Path,
                      number_file_by_label=3,
                      ratio_train: float = 0.4,
                      ratio_test: float = 0.4) -> LabelSplitDataResult:
+
+    if ratio_test + ratio_test > 1:
+        raise Exception("sum of ratio must be inferior or equal to 1")
+
     Path(output_directory).mkdir(parents=True, exist_ok=True)
     with open(input_labels_path) as json_file:
         label_data = json.load(json_file)
@@ -27,7 +32,8 @@ def label_split_data(input_labels_path: Path,
     split_paths = {"cat": [], "dog": [], "other": []}
     labels = ["cat", "dog", "other"]
     split_directory_names = ["train", "test", "evaluate"]
-    for annotation in label_data["annotations"]:
+    annotations = label_data["annotations"]
+    for annotation in annotations:
         filename = annotation["fileName"]
         label = annotation["annotation"]["label"]
         if len(split_paths[label]) < number_file_by_label:
@@ -56,4 +62,5 @@ def label_split_data(input_labels_path: Path,
         number_file_train_by_label=number_file_train,
         number_file_test_by_label=number_file_test,
         number_file_evaluate_by_label=number_file_by_label - number_file_train - number_file_test,
-        path_results=path_results)
+        path_results=path_results,
+        number_labeled_data=len(annotations))
