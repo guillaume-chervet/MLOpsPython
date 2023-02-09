@@ -1,6 +1,6 @@
 # MLOpsPython
 
-A real demo of Deep Learning project with preprocessing from development to production. 
+A real demo of Deep Learning project with preprocessing from development to production. Production is a real time REST API.
 
 Competences
 - Code / Debug
