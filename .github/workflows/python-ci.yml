@@ -58,7 +58,7 @@ jobs:
       working-directory: train/train
       run: |
         pipenv install --dev
-        pipenv run coverage run -m unittest tests.train_test
+        pipenv run -m unittest tests.train_test
         pipenv run coverage report
     - name: azure login
       uses: azure/login@v1
