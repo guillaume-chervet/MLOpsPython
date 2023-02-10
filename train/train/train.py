@@ -8,8 +8,8 @@ from keras.applications.vgg16 import VGG16
 from keras.models import Model
 from keras.layers import Dense
 from keras.layers import Flatten
-from tensorflow.keras.optimizers import SGD
-import tensorflow
+from keras.optimizers import SGD
+import keras
 from keras.preprocessing.image import ImageDataGenerator
 
 
@@ -29,7 +29,7 @@ def define_model():
     # compile model
     opt = SGD(lr=0.001, momentum=0.9)
     model.compile(
-        optimizer=opt, loss=tensorflow.keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=["accuracy"]
+        optimizer=opt, loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=["accuracy"]
     )
     return model
 

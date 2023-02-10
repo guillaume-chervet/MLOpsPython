@@ -28,7 +28,7 @@ https://pipenv.pypa.io/
 
 ```bash
 pip install --user pipenv
-pipenv --python 3.11.1
+pipenv install --python 3.11.1
 ```
 
 ## 6. Configure Pipenv with PyCharm Python Interpreter
