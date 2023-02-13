@@ -1,7 +1,10 @@
 # Setup
 
-## 1. Install python python 3.11.x on your laptop. You can use venv, conda, etc.
+## 1. Download ans install python python 3.11.x on your laptop. 
 https://www.python.org/downloads/
+
+It is a good pratice to always use the lastest version with supports: 
+https://endoflife.date/python
 
 ##  2. Download PyCharm Pro 
 https://www.jetbrains.com/pycharm/
@@ -16,7 +19,7 @@ Activate license with your student email address.
 git clone https://github.com/YOUR-REPOSITORY/MLOpsPython
 cd MLOpsPython
 # Exclude Pycharm local files from git
-echo ".idea" > .gitignore 
+echo '.idea' > .gitignore 
 ```
 
 ## 5. Installation of pipenv
@@ -25,7 +28,7 @@ https://pipenv.pypa.io/
 
 ```bash
 pip install --user pipenv
-pipenv --python 3.11.1
+pipenv install --python 3.11.1
 ```
 
 ## 6. Configure Pipenv with PyCharm Python Interpreter
@@ -104,7 +107,7 @@ on:
 permissions:
   contents: read
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -118,13 +121,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install --user pipenv
     - name: Format with Black
-      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run black .
         pipenv run black . --check
     - name: Lint with flake8
-      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run flake8 .

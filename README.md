@@ -1,5 +1,7 @@
 # MLOpsPython
 
+A real demo of Deep Learning project with preprocessing from development to production using code, ops and Machine Learning best practices. Production is a real time REST API.
+
 Competences
 - Code / Debug
 - UnitTest, Test Driven Development principles
@@ -15,7 +17,7 @@ Tools
 - Pycharm (https://www.jetbrains.com/pycharm/)
 - Python, pip, PipEnv, Conda
 - Git & Github & Github Action
-- AzureML (https://azure.microsoft.com/fr-fr/free/students/)
+- AzureML (https://azure.microsoft.com/fr-fr/free/students?WT.mc_id=DOP-MVP-5003370)
 - Docker
 - Kubernetes & OpenShift or Azure
 
@@ -63,7 +65,7 @@ https://github.com/axa-group/radar
 
 ![ml_libraries_choices.PNG](documentation%2Fml_libraries_choices.PNG)
 
-## Step : Setup
+## Step 0 : Setup
 [step_0_setup.md](step_0_setup.md)
 
 ## Step 1: Extract images from PDF files

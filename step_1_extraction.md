@@ -105,7 +105,7 @@ You can now code and debug a real unit test for extraction.py from PyCharm your 
 
 Coverage
 ```bash
-# run from extraction directory
+# run from ./train/extraction directory
 pipenv run install coverage===7.1.0 --dev
 pipenv run coverage run -m unittest tests.extraction_test
 
@@ -113,7 +113,7 @@ pipenv run coverage run -m unittest tests.extraction_test
 
 To have a console feedback
 ```bash
-# run from extraction directory
+# run from ./train/extraction directory
 pipenv run coverage report
 echo '
 .coverage' >> .gitignore
@@ -121,7 +121,7 @@ echo '
 
 To have a html feedback
 ```bash
-# run from extraction directory
+# run from ./train/extraction directory
 pipenv run coverage html
 echo '
 htmlcov' >> .gitignore
@@ -140,7 +140,7 @@ on:
 permissions:
   contents: read
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -154,16 +154,27 @@ jobs:
         python -m pip install --upgrade pip
         pip install --user pipenv
     - name: Format with Black4
-      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run black train
         pipenv run black train --check
     - name: Lint with flake8
-      continue-on-error: true
       run: |
         pipenv install --dev
         pipenv run flake8 .
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      working-directory: train/extraction
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user pipenv
     - name: Run unit tests
       working-directory: train/extraction
       run: |
@@ -178,9 +189,19 @@ Follow instruction with the teacher.
 
 ### 5. Setup link bewteen AzureML and Github Action
 
-https://learn.microsoft.com/en-us/azure/machine-learning/how-to-github-actions-machine-learning?tabs=userlevel#step-2-authenticate-with-azure
+https://learn.microsoft.com/en-us/azure/machine-learning/how-to-github-actions-machine-learning?tabs=userlevel#step-2-authenticate-with-azure?WT.mc_id=DOP-MVP-5003370
 
-Create a service principal with the az ad sp create-for-rbac command in the Azure CLI. Run this command with Azure Cloud Shell in the Azure portal or by selecting the Try it button.
+Download and install azure-cli from : 
+
+https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli&WT.mc_id=DOP-MVP-5003370
+
+```bash
+# Log to azure
+az login
+# set the subscription
+az account set -s <subscription-id>
+
+# Create a service principal with the az ad sp create-for-rbac command in the Azure CLI. Run this command with Azure Cloud Shell in the Azure portal or by selecting the Try it button.
 ```bash
 az ad sp create-for-rbac --name "myML" --role contributor \
                             --scopes /subscriptions/<subscription-id>/resourceGroups/<group-name> \
@@ -206,19 +227,48 @@ Create secrets in Github Action
 
 3. Select New repository secret.
 
-3. Paste the entire JSON output from the Azure CLI command into the secret's value field. Give the secret the name AZUREML_CREDENTIALS.
+4. Paste the entire JSON output from the Azure CLI command into the secret's value field. Give the secret the name AZUREML_CREDENTIALS.
 
 5. Select Add secret.
 
 ### 6. Create your first dataset on AzureML
+1. Download Azure Storage Explorer : 
 
-1. Download Azure Storage Explorer : https://azure.microsoft.com/en-us/products/storage/storage-explorer/
+https://azure.microsoft.com/en-us/products/storage/storage-explorer?WT.mc_id=DOP-MVP-5003370
 
-2. Copy local blob to azureML Storage:
+Follow teacher instruction and connect with your Azure account.
+2. Install AzureML extension to az cli : 
+
+https://learn.microsoft.com/en-us/azure/machine-learning/how-to-configure-cli?WT.mc_id=DOP-MVP-5003370
+
 ```bash
-$env:AZCOPY_CRED_TYPE = "Anonymous";
-$env:AZCOPY_CONCURRENCY_VALUE = "AUTO";
-./azcopy.exe copy "C:\github\MLOpsPython\train\extraction\dataset-cats-dogs-others\" "https://catsdogs5378403836.blob.core.windows.net/raw-data/?sv=2021-10-04&se=2023-03-07T17%3A17%3A58Z&sr=c&sp=rwl&sig=15An06ligcG%2BxfUiAo5rrjUA9W1TMBt6eTEgwojrLoU%3D" --overwrite=prompt --from-to=LocalBlob --blob-type Detect --follow-symlinks --put-md5 --follow-symlinks --disable-auto-decoding=false --recursive --log-level=INFO;
-$env:AZCOPY_CRED_TYPE = "";
-$env:AZCOPY_CONCURRENCY_VALUE = "";
+az extension add -n ml
 ```
+
+3. Create a "Folder" asset: 
+
+https://learn.microsoft.com/en-us/azure/machine-learning/how-to-create-data-assets?WT.mc_id=DOP-MVP-5003370
+
+```bash
+# run from ./train/extraction directory
+echo '
+$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+
+# Supported paths include:
+# local: ./<path>
+# blob:  https://<account_name>.blob.core.windows.net/<container_name>/<path>
+# ADLS gen2: abfss://<file_system>@<account_name>.dfs.core.windows.net/<path>/
+# Datastore: azureml://datastores/<data_store_name>/paths/<path>
+type: uri_folder
+name: cats_dogs_others
+description: Cats Dogs and Others
+path: ./dataset-cats-dogs-others
+' > dataset-cats-dogs-others.yml
+``` 
+
+Now you can create and upload your first dataset:
+```bash
+# run from ./train/extraction directory
+az ml data create -f dataset-cats-dogs-others.yml
+``` 
+

@@ -1,0 +1,17 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
+image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
+name: extraction_environment
+conda_file:
+  name: default_environment
+  channels:
+    - defaults
+  dependencies:
+    - python=3.10
+    #- pip=22.3.1
+    - pip:
+      - mldesigner==0.1.0b4
+      - pymupdf===1.21.1
+      - mlflow
+      - azureml-mlflow

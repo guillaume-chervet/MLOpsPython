@@ -4,11 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-opencv-contrib-python-headless = "==4.7.0.68"
+numpy = "===1.24.0"
 
 [dev-packages]
-black = "===23.1.0"
-flake8 = "===6.0.0"
+coverage = "===7.1.0"
 
 [requires]
 python_version = "3.11"

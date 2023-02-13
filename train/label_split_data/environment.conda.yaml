@@ -1,0 +1,17 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
+image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
+name: label_split_data_environment
+conda_file:
+  name: default_environment
+  channels:
+    - defaults
+  dependencies:
+    - python=3.10
+    #- pip=22.3.1
+    - pip:
+      - mldesigner==0.1.0b4
+      - numpy==1.21.2
+      - mlflow
+      - azureml-mlflow

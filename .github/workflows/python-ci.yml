@@ -7,6 +7,28 @@ on:
 permissions:
   contents: read
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11.1"
+    - name: Install dependencies
+      working-directory: train/extraction
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user pipenv
+    - name: Format with Black
+      run: |
+        pipenv install --dev
+        pipenv run black train
+        pipenv run black train --check
+    - name: Lint with flake8
+      run: |
+        pipenv install --dev
+        pipenv run flake8 .
   build:
     runs-on: ubuntu-latest
     steps:
@@ -14,26 +36,35 @@ jobs:
     - name: Set up Python 3.11
       uses: actions/setup-python@v3
       with:
-        python-version: "3.11"
+        python-version: "3.11.1"
     - name: Install dependencies
       working-directory: train/extraction
       run: |
         python -m pip install --upgrade pip
         pip install --user pipenv
-    - name: Format with Black
-      continue-on-error: true
-      run: |
-        pipenv install --dev
-        pipenv run black train
-        pipenv run black train --check
-    - name: Lint with flake8
-      continue-on-error: true
-      run: |
-        pipenv install --dev
-        pipenv run flake8 .
-    - name: Run unit tests
+    - name: Run unit tests Extraction
       working-directory: train/extraction
       run: |
         pipenv install --dev
         pipenv run coverage run -m unittest tests.extraction_test
         pipenv run coverage report
+    - name: Run unit tests Label Split Data
+      working-directory: train/label_split_data
+      run: |
+        pipenv install --dev
+        pipenv run coverage run -m unittest tests.label_split_data_test
+        pipenv run coverage report
+    - name: Run unit tests Train
+      working-directory: train/train
+      run: |
+        pipenv install --dev
+        pipenv run python -m unittest tests.train_test
+    - name: azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZUREML_CREDENTIALS}}
+    - name: run train/azure/run_pipeline.py
+      run: |
+          pipenv install azure-ai-ml azure.identity mldesigner azureml-mlflow
+          pipenv run python azureml_run_pipeline.py
+      working-directory: train

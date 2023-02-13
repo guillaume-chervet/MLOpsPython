@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-opencv-contrib-python-headless = "==4.7.0.68"
+azure-ai-ml = "*"
+"azure.identity" = "*"
+mldesigner = "*"
 
 [dev-packages]
-black = "===23.1.0"
-flake8 = "===6.0.0"
 
 [requires]
 python_version = "3.11"
