@@ -3,7 +3,7 @@ print(
 )
 from pathlib import Path
 
-raise Exception("Oops")
+raise Exception("Test")
 
 package_dir = Path(__file__).parent.absolute()
 print(package_dir)
