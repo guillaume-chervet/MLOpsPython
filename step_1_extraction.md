@@ -245,7 +245,7 @@ https://learn.microsoft.com/en-us/azure/machine-learning/how-to-configure-cli?WT
 az extension add -n ml
 ```
 
-2. Create a "Folder" asset: 
+3. Create a "Folder" asset: 
 
 https://learn.microsoft.com/en-us/azure/machine-learning/how-to-create-data-assets?WT.mc_id=DOP-MVP-5003370
 
