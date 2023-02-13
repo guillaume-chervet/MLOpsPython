@@ -89,7 +89,7 @@ https://black.readthedocs.io/en/stable/integrations/editors.html
 Now you can commit then push your code on github.
 ```bash
 git add . 
-commit -m "Initial commit"
+git commit -m "Initial commit"
 git push origin main
 ```
 
