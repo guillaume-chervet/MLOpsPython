@@ -63,7 +63,7 @@ We will label cats-dogs-other dataset together using ecotag:
 
 https://axaguildev-ecotag.azurewebsites.net
 
-Ecotag is an Open Source tool avalable here : 
+Ecotag is an Open Source tool available here : 
 
 https://github.com/AxaGuilDEv/react-oidc
 
