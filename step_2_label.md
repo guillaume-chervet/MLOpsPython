@@ -2,42 +2,42 @@
 
 ![1-paradigm-shift.PNG](documentation%2Flabelling%2F1-paradigm-shift.PNG)
 
-Il y a trois gros changement de paradigmen a comprendre pour réaliser des IA.
+There are three big paradigm shifts to understand to achieve AI.
 ![2-paradigm-shift-skills.PNG](documentation%2Flabelling%2F2-paradigm-shift-skills.PNG)
 
-La premier c'est que l'on travaille différament.
-En informatique classique, on nous donne des règles et quelque données d'entrée avec cela un développeur on code un algortihme qui permet de récupérer les réponses.
-En Machine Learning, il nous faut de la données d'entrées + des réponses. Par qu'un peu des 100 ène, des milliers voires des millions d'exemple. AVec cela un développeur écrit du code qui permet de générer les règles, ce que l'on appel une IA. EN terme informatique on parle de modèle IA que l'on exécute (infére).
+The first is that we work differently.
+In classical computer science, we are given rules and some input data with that a developer codes an algorithm that allows us to retrieve the answers.
+
+In Machine Learning, we need input data + answers. By a little of the 100 ene, thousands or even millions of examples. This is a developer who writes code that generates the rules, which is called an AI. In computer terms we speak of an AI model that we execute (infere).
 
 ![3-paradigm-shift-skills.PNG](documentation%2Flabelling%2F3-paradigm-shift-skills.PNG)
 
-En production cela fonctionne pareil. On reçoit de a data on exécute les alrgorithme et on obtien un resultat.
-
+In production it works the same. We receive from a data we execute the algorithm and we get a result.
 
 ![4-paradigm-shift-data.PNG](documentation%2Flabelling%2F4-paradigm-shift-data.PNG)
 
-La data c'est de l'or pour les entreprises.
-Avant on parlais de modèle IA centrique car on n'était pas sûr de pouvoir réaliser les modèles IA associé aux problématiques.
-Aujourd'hui pour la plupart des entreprise ce n'est plus un problème. on sais que l'on va pouvoir réaliser l'IA.
-Ce qui fait la différence que 'on va pouvoire réaliser un projet ou pas c'est la données.
-- la quantité
-- la qualité des entrées et de réponses.
+Data is gold for companies.
+Before we talked about a centered AI model because we were not sure we could make the AI models associated with the problems.
+Today for most companies this is no longer a problem. we know that we will be able to realize AI.
+What makes the difference that we will be able to carry out a project or not is the data.
+- the quantity
+- the quality of inputs and responses.
 
 ![5-paradigm-shift-alive.PNG](documentation%2Flabelling%2F5-paradigm-shift-alive.PNG)
 
-La données: c'est vivant, c'est vivant dans le sens ou le monde bouge, évolue, la données évolue.
-Vous connaissez cette nouvelle carte d'identité ?
-Nous on sais la lire et s'adapter rapidement même si on ne la jamais vu, mais une IA non, il va falloir l'éduquer, l'entrainer a lire cette carte d'identitée.
-Le changement c'est permanant, l'entrainement des IA est quelque chose qui es quotidient qui doit continuer jour apres jour.
+Data: it is alive, it is alive in the sense that the world moves, evolves, data evolves.
+You know this new identity card?
+We know how to read it and adapt quickly even if we have never seen it, but an AI no, we will have to educate it, train it to read this identity card.
+Change is permanent, AI training is something that is daily that must continue day after day.
 
 ![5-paradim-shift-alive.PNG](documentation%2Flabelling%2F5-paradim-shift-alive.PNG)
-Dans un workflow complexe ou l'on chaîne plusieurs algorithmes IA, ou la sortie de l'algorithme précédent influe sur l'entrée du suivant.
-Il faut comprende que si on n'a au total par exemple 8 étapes avec 8 IA qui s'enchaine.
-Si chaque étape doit être entrainer avec 10 000 entrées et 10 000 sorties.
+In a complex workflow where several AI algorithms are chained, or the output of the previous algorithm influences the input of the next.
+It must be understood that if we have a total of for example 8 steps with 8 AI that chains itself.
+If each stage must be trained with 10,000 entries and 10,000 outputs.
 
-il vous faudra environ 80 000 annotations a chaque fois que vous voulez réentrainer vos IA avec de nouvelles données.
+You'll need about 80,000 annotations each time you want to retrain your AIs with new data.
 
-La phase d'annotation est une étape important qui doit être réaliser de manière industriel.
+The annotation phase is an important step that must be carried out industrially.
 
 ### Labelling
 In this step we will learn about importance of data quality and labelling process.
@@ -68,9 +68,10 @@ Ecotag is an Open Source tool avalable here :
 https://github.com/AxaGuilDEv/react-oidc
 
 ![Ecotag.png](documentation%2FEcotag.png)
+
 ### Data drift
 
 You will encounter a lot of kind of drift.
 Monitoring data drift is mandatory to go to production.
 
-- Exemple controle qualité, changement ampoule en production. 
+- Example quality control, change bulb in production.

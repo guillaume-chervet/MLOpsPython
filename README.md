@@ -17,7 +17,7 @@ Tools
 - Pycharm (https://www.jetbrains.com/pycharm/)
 - Python, pip, PipEnv, Conda
 - Git & Github & Github Action
-- AzureML (https://azure.microsoft.com/fr-fr/free/students/)
+- AzureML (https://azure.microsoft.com/fr-fr/free/students?WT.mc_id=DOP-MVP-5003370)
 - Docker
 - Kubernetes & OpenShift or Azure
 
