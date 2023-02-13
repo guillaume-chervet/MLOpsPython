@@ -3,7 +3,7 @@
 ## 1. Download ans install python python 3.11.x on your laptop. 
 https://www.python.org/downloads/
 
-It is a good pratice to always use the lastest version with supports: 
+It is a good practice to always use the lastest version with supports: 
 https://endoflife.date/python
 
 ##  2. Download PyCharm Pro 
@@ -95,8 +95,10 @@ git push origin main
 
 We create our first github action to check code quality with Flake8 and Black.
 ```bash
-mkdir .github/workflows
-cd .github/workflows
+mkdir .github
+cd .github
+mkdir workflows
+cd workflows
 echo '
 name: Python Continuous Integration
 on:
@@ -116,7 +118,6 @@ jobs:
       with:
         python-version: "3.11"
     - name: Install dependencies
-      working-directory: train/extraction
       run: |
         python -m pip install --upgrade pip
         pip install --user pipenv
