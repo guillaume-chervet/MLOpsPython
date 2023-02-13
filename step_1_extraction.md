@@ -263,12 +263,12 @@ type: uri_folder
 name: cats_dogs_others
 description: Cats Dogs and Others
 path: ./dataset-cats-dogs-others
-' > cats-dogs-others.yml
+' > dataset-cats-dogs-others.yml
 ``` 
 
 Now you can create and upload your first dataset:
 ```bash
 # run from ./train/extraction directory
-az ml data create -f cats-dogs-others.yml
+az ml data create -f dataset-cats-dogs-others.yml
 ``` 
 
