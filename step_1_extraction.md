@@ -17,7 +17,7 @@ mkdir extraction
 cd extraction
 git clone https://github.com/guillaume-chervet/dataset-cats-dogs-others
 echo "dataset-cats-dogs-others/
-extracted_images" > .gitignore 
+extracted_images/" > .gitignore 
 ```
 
 Create a virtual environment
