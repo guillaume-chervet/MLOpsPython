@@ -48,8 +48,8 @@ images_directory_path = ".\extracted_images"
 Path(images_directory_path).mkdir(parents=True, exist_ok=True)
 files = [p for p in Path(pdfs_directory_path).iterdir() if p.is_file()]
 for path in files:
-    with open(path, "rb") as str:
-        with fitz.open(stream=str.read(), filetype="pdf") as d:
+    with open(path, "rb") as strm:
+        with fitz.open(stream=strm.read(), filetype="pdf") as d:
             file_images = []
             nb = len(d) - 1
             for i in range(nb):
