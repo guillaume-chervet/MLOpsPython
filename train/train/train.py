@@ -8,7 +8,7 @@ from keras.applications.vgg16 import VGG16
 from keras.models import Model
 from keras.layers import Dense
 from keras.layers import Flatten
-from keras.optimizers import SGD
+from tensorflow.keras.optimizers import SGD
 import keras
 from keras.preprocessing.image import ImageDataGenerator
 

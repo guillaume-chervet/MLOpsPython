@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = "===1.24.0"
-matplotlib = "===3.6.3"
-keras = "===2.11.0"
-tensorflow = "===2.11.0"
-scipy = "===1.10.0"
+numpy = "==1.23.5"
+matplotlib = "==3.7.0"
+keras = "==2.12.0rc0"
+tensorflow = "==2.12.0rc0"
+scipy = "*"
 opencv-contrib-python-headless = "==4.7.0.68"
 
 [dev-packages]
