@@ -45,20 +45,25 @@ jobs:
     - name: Run unit tests Extraction
       working-directory: train/extraction
       run: |
-        pipenv install --dev
+        pipenv install
         pipenv run coverage run -m unittest tests.extraction_test
         pipenv run coverage report
     - name: Run unit tests Label Split Data
       working-directory: train/label_split_data
       run: |
-        pipenv install --dev
+        pipenv install
         pipenv run coverage run -m unittest tests.label_split_data_test
         pipenv run coverage report
     - name: Run unit tests Train
       working-directory: train/train
       run: |
-        pipenv install --dev
+        pipenv install
         pipenv run python -m unittest tests.train_test
+    - name: Run unit tests Evaluate
+      working-directory: train/evaluate
+      run: |
+        pipenv install
+        pipenv run python -m unittest tests.evaluate_test
     - name: azure login
       uses: azure/login@v1
       with:
