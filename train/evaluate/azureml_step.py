@@ -18,7 +18,7 @@ def evaluate_step(
 ):
     from evaluate import evaluate
 
-    evaluate(loggin=logging, Path(model_input), Path(images_input),
+    evaluate(logging, Path(model_input), Path(images_input),
              Path(model_output), Path(integration_output))
 
 
