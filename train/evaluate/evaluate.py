@@ -5,12 +5,12 @@ from pathlib import Path
 from model_pillow import Model
 
 
-def evaluate(logging, input_directory:Path, output_directory:Path, integration_output:Path):
-    model_path = input_directory / "final_model.h5"
+def evaluate(logging, input_model_directory:Path, input_images_directory:Path, output_directory:Path, integration_output:Path):
+    model_path = input_model_directory / "final_model.h5"
     model = Model(logging, str(model_path))
 
     results = []
-    cats_directory = input_directory / "evaluate"
+    cats_directory = input_images_directory / "evaluate"
     for path in cats_directory.glob("**/*"):
         if path.is_dir():
             continue

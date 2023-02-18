@@ -2,7 +2,9 @@ from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 
 from azure.ai.ml import MLClient, Input, Output
 from azure.ai.ml.dsl import pipeline
-
+from azure.ai.ml.entities import Model
+from azure.ai.ml.constants import AssetTypes
+from azure.ai.ml.entities import Data
 
 try:
     credential = DefaultAzureCredential()
@@ -42,6 +44,7 @@ ml_client.begin_create_or_update(cluster_basic).result()
 from extraction.azureml_step import extraction_step
 from label_split_data.azureml_step import label_split_data_step
 from train.azureml_step import train_step
+from evaluate.azureml_step import evaluate_step
 
 custom_path = "azureml://datastores/workspaceblobstore/paths/custom_path/${{name}}/"
 
@@ -58,6 +61,30 @@ def azureml_pipeline(pdfs_input_data, labels_input_data):
     train_data = train_step(
         split_images_input=label_split_data.outputs.split_images_output)
 
+    evaluate_data = evaluate_step(model_input=train_data.outputs.model_output,
+                                  images_input=label_split_data.outputs.split_images_output)
+
+    file_model = Model(
+        path=evaluate_data.outputs.model_output + "/final_model.h5",
+        type=AssetTypes.CUSTOM_MODEL,
+        name="cats-dogs-others",
+        description="Model created from azureML.",
+    )
+    ml_client.models.create_or_update(file_model)
+
+
+    credit_data = Data(
+        name="creditcard_defaults",
+        path=evaluate_data.outputs.model_output,
+        type="uri_folder",
+        description="Dataset for credit card defaults",
+        tags={"source_type": "web", "source": "UCI ML Repo"},
+        version="1.0.0",
+    )
+    credit_data = ml_client.data.create_or_update(credit_data)
+    print(
+        f"Dataset with name {credit_data.name} was registered to workspace, the dataset version is {credit_data.version}"
+    )
     return {
         "model_output": train_data.outputs.model_output,
     }
