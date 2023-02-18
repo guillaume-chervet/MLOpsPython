@@ -65,7 +65,7 @@ def azureml_pipeline(pdfs_input_data, labels_input_data):
                                   images_input=label_split_data.outputs.split_images_output)
 
     file_model = Model(
-        path=evaluate_data.outputs.model_output + "/final_model.h5",
+        path=evaluate_data.outputs.model_output,
         type=AssetTypes.CUSTOM_MODEL,
         name="cats-dogs-others",
         description="Model created from azureML.",
