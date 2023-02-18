@@ -51,13 +51,13 @@ Important points :
 - Feeback loop is a good way to have pre-label set up
 - Data/Reponse must always be verified by human
 
-How do you label the zoning of this image ?
+How do you classify the image bellow ?
 
-//TODO add image
+![labelling_rules.png](documentation%2Flabelling%2Flabelling_rules.png)
 
-How to you re-transcribe this sound ?
+How do you classify the image bellow ?
 
-//TODO add sound
+![labelling_rules-1.png](documentation%2Flabelling%2Flabelling_rules-1.png)
 
 We will label cats-dogs-other dataset together using ecotag:
 
