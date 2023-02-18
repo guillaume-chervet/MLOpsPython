@@ -46,7 +46,6 @@ from label_split_data.azureml_step import label_split_data_step
 from train.azureml_step import train_step
 from evaluate.azureml_step import evaluate_step
 
-custom_path = "azureml://datastores/workspaceblobstore/paths/custom_path/${{name}}/"
 
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(pdfs_input_data, labels_input_data):
@@ -64,29 +63,9 @@ def azureml_pipeline(pdfs_input_data, labels_input_data):
     evaluate_data = evaluate_step(model_input=train_data.outputs.model_output,
                                   images_input=label_split_data.outputs.split_images_output)
 
-    file_model = Model(
-        path=evaluate_data.outputs.model_output,
-        type=AssetTypes.CUSTOM_MODEL,
-        name="cats-dogs-others",
-        description="Model created from azureML.",
-    )
-    ml_client.models.create_or_update(file_model)
-
-
-    credit_data = Data(
-        name="creditcard_defaults",
-        path=evaluate_data.outputs.model_output,
-        type="uri_folder",
-        description="Dataset for credit card defaults",
-        tags={"source_type": "web", "source": "UCI ML Repo"},
-        version="1.0.0",
-    )
-    credit_data = ml_client.data.create_or_update(credit_data)
-    print(
-        f"Dataset with name {credit_data.name} was registered to workspace, the dataset version is {credit_data.version}"
-    )
     return {
-        "model_output": train_data.outputs.model_output,
+        "model_output": evaluate_data.outputs.model_output,
+        "integration_output": evaluate_data.outputs.integration_output,
     }
 
 
@@ -99,8 +78,13 @@ pipeline_job = azureml_pipeline(
     )
 )
 
+custom_model_path = "azureml://datastores/workspaceblobstore/paths/models/cats-dogs-others/"
 pipeline_job.outputs.model_output = Output(
-    type="uri_folder", mode="rw_mount", path=custom_path
+    type="uri_folder", mode="rw_mount", path=custom_model_path
+)
+custom_integration_path = "azureml://datastores/workspaceblobstore/paths/integration/cats-dogs-others/"
+pipeline_job.outputs.integration_output = Output(
+    type="uri_folder", mode="rw_mount", path=custom_integration_path
 )
 
 pipeline_job = ml_client.jobs.create_or_update(
@@ -108,3 +92,25 @@ pipeline_job = ml_client.jobs.create_or_update(
 )
 
 ml_client.jobs.stream(pipeline_job.name)
+
+file_model = Model(
+        path=custom_model_path,
+        type=AssetTypes.CUSTOM_MODEL,
+        name="cats-dogs-others",
+        description="Model created from azureML.",
+    )
+ml_client.models.create_or_update(file_model)
+
+
+credit_data = Data(
+    name="cats-dogs-others-integration",
+    path=custom_integration_path,
+    type="uri_folder",
+    description="Dataset for credit card defaults",
+    tags={"source_type": "web", "source": "UCI ML Repo"},
+    version="1.0.0",
+)
+credit_data = ml_client.data.create_or_update(credit_data)
+print(
+    f"Dataset with name {credit_data.name} was registered to workspace, the dataset version is {credit_data.version}"
+)
