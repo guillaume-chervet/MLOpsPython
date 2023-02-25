@@ -525,6 +525,7 @@ path: ./dataset-cats-dogs-others
 Now you can create and upload your first dataset:
 ```bash
 # run from ./train/extraction directory
-az ml data create -f dataset-cats-dogs-others.yml
+az login
+az ml data create -f dataset-cats-dogs-others.yml --resource-group <resource-group> --workspace-name <workspace-name>
 ``` 
 
