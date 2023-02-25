@@ -421,7 +421,7 @@ conda_file:
 5. Create empty Pipfile in train directory like "./train/Pipfile" then run
 ```bash
 # run from ./train directory
-pipenv install azure-ai-ml==1.4.0 mldesigner==0.1.0b11
+pipenv install azure-ai-ml==1.4.0 mldesigner==0.1.0b11 azure.identity==1.12.0
 ```
 
 6. Now you can run your first AzureML pipeline
@@ -430,7 +430,7 @@ pipenv install azure-ai-ml==1.4.0 mldesigner==0.1.0b11
 pipenv run python azureml_run_dumb_pipeline.py
 ```
 
-### 5. Setup link bewteen AzureML and Github Action
+### 5. Run AzureML Pipeline from Github Action
 
 https://learn.microsoft.com/en-us/azure/machine-learning/how-to-github-actions-machine-learning?tabs=userlevel#step-2-authenticate-with-azure?WT.mc_id=DOP-MVP-5003370
 
