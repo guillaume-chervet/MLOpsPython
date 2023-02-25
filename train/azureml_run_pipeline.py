@@ -105,7 +105,7 @@ credit_data = Data(
     type="uri_folder",
     description="Dataset for credit card defaults",
     tags={"source_type": "web", "source": "UCI ML Repo"},
-    version="1.0.0",
+    #version="1.0.0",
 )
 credit_data = ml_client.data.create_or_update(credit_data)
 print(
