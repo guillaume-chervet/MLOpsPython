@@ -42,7 +42,7 @@ def train_model(
     display_name="Score",
     # init customer environment with conda YAML
     # the YAML file shall be put under your code folder.
-    environment="./env.yaml",
+    environment="./environment.conda.yaml",
     # specify your code folder, default code folder is current file's parent
     # code='.'
 )
@@ -72,7 +72,7 @@ def score_data(
     (Path(score_output) / "score").write_text("scored with {}".format(model))
 
 
-@command_component(display_name="Evaluate", environment="./env.yaml")
+@command_component(display_name="Evaluate", environment="./environment.conda.yaml")
 def eval_model(
     scoring_result: Input(type="uri_folder"), eval_output: Output(type="uri_folder")
 ):

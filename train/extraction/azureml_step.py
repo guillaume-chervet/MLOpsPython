@@ -2,7 +2,6 @@
 from mldesigner import command_component, Input, Output
 
 
-
 @command_component(
     display_name="Extraction",
     environment="./environment.conda.yaml",

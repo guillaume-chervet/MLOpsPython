@@ -34,7 +34,7 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZUREML_CREDENTIALS}}
-    - name: run train/azure/run_pipeline.py
+    - name: run train/azure/run_pipeline.py.py
       run: |
           pip install azure-ai-ml azure.identity mldesigner
           python run_pipeline.py

@@ -12,12 +12,9 @@ input_labels_path = input_directory / "labels" / "labels.json"
 
 class LabelSplitDataTest(unittest.TestCase):
 
-
-    def tearDown(self):
+    def test_label_split_data(self):
         if output_directory.is_dir():
             shutil.rmtree(str(output_directory))
-
-    def test_label_split_data(self):
         label_split_data_result = label_split_data(input_labels_path, input_images_directory, output_directory)
         expected = ['train/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e1_page1_index0.png',
                     'test/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e9_page1_index0.png',

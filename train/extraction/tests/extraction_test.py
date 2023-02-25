@@ -10,11 +10,9 @@ input_directory = BASE_PATH / "input"
 
 class TestExtraction(unittest.TestCase):
 
-    def tearDown(self):
+    def test_pdfs_images_should_be_extracted(self):
         if output_directory.is_dir():
             shutil.rmtree(str(output_directory))
-
-    def test_pdfs_images_should_be_extracted(self):
         result = extract_images(str(input_directory), str(output_directory))
         expected_number_files_input = 2
         self.assertEqual(result.number_files_input, expected_number_files_input)

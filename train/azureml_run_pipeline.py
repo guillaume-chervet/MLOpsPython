@@ -24,8 +24,6 @@ ml_client = MLClient(
 )
 
 # Retrieve an already attached Azure Machine Learning Compute.
-#cluster_name = "guillaume-cpu-low"
-#print(ml_client.compute.get(cluster_name))
 cluster_name = "guillaume-cpu-low"
 from azure.ai.ml.entities import AmlCompute
 cluster_basic = AmlCompute(
@@ -36,7 +34,6 @@ cluster_basic = AmlCompute(
     min_instances=0,
     max_instances=1,
     idle_time_before_scale_down=60,
-    #tier="low_priority",
 )
 ml_client.begin_create_or_update(cluster_basic).result()
 

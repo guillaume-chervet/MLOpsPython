@@ -1,6 +1,0 @@
-matplotlib
-keras
-numpy
-tensorflow
-scipy
-opencv-contrib-python-headless==4.7.0.68
