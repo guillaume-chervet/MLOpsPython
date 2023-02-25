@@ -522,6 +522,17 @@ path: ./dataset-cats-dogs-others
 ' > dataset-cats-dogs-others.yml
 ``` 
 
+Before uploading our data, we need to remove .git directory from our dataset. This is because AzureML will try to upload the .git directory and fail. To do this, run the following command:
+
+```bash
+# run from ./train/extraction directory
+# on Linux
+rm -rf dataset-cats-dogs-others/.git
+# on Windows
+rmdir /s /q dataset-cats-dogs-others\.git
+```
+
+
 Now you can create and upload your first dataset:
 ```bash
 # run from ./train/extraction directory
@@ -529,3 +540,6 @@ az login
 az ml data create -f dataset-cats-dogs-others.yml --resource-group <resource-group> --workspace-name <workspace-name>
 ``` 
 
+### 7. Adapt your pipeline 
+
+Now adapt the pipeline to your extraction step and your new uploaded dataset.
