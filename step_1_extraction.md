@@ -7,6 +7,7 @@ In this step, we will setup the project background:
 
 ### 1. Clean code principle
 ```bash
+# run from you project root directory
 mkdir train
 cd train
 ```
