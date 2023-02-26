@@ -13,6 +13,7 @@ cd train
 
 Initialize extraction step.
 ```bash
+# run from ./train directory
 mkdir extraction
 cd extraction
 git clone https://github.com/guillaume-chervet/dataset-cats-dogs-others
@@ -22,12 +23,14 @@ extracted_images/" > .gitignore
 
 Create a virtual environment
 ```bash
+# run from ./train/extraction directory
 pipenv install
 pipenv install "pymupdf===1.21.1"
 ```
 
 Create extraction.py and __init__.py (so extraction folder is python module)
 ```bash
+# run from ./train/extraction directory
 echo 'print("init module extraction")' > __init__.py
 echo 'from io import BytesIO
 from pathlib import Path
@@ -75,6 +78,7 @@ https://docs.python.org/3/library/unittest.html
 Create a tests directory and create a extraction_test.py file.
 
 ```bash
+# run from ./train/extraction directory
 mkdir tests
 cd tests
 echo 'print("init module extraction.tests")' > __init__.py
@@ -82,6 +86,7 @@ echo 'print("init module extraction.tests")' > __init__.py
 
 extraction_test.py
 ```bash
+# run from ./train/extraction directory
 echo "import unittest
 
 class TestStringMethods(unittest.TestCase):
@@ -97,7 +102,7 @@ if __name__ == '__main__':
 
 You can run unit test manually
 ```bash
-# run from extraction directory
+# run from ./train/extraction directory
 pipenv run python -m unittest tests.extraction_test
 ```
 
