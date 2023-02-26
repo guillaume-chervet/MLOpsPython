@@ -204,7 +204,7 @@ Now your azure ML workspace is created. You can access to it from the Azure port
 ### 5. Create your first AzureML pipeline
 
 1. Create azureml_run_dumb_pipeline.py in train directory like "./train/azureml_run_dumb_pipeline.py"
-and replace <subscription-id> <resource-group-name> <workspace-name> and <cluster-name> by your own values.
+and replace subscription-id resource-group-name workspace-name and cluster-name by your own values.
 <cluster-name> can be your firstname-lastname (for example: "guillaume-chervet")
 
 ```python 
