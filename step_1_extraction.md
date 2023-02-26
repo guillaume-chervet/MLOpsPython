@@ -194,7 +194,8 @@ Follow instruction with the teacher.
        1 Set as "abonnement": Azure for Students
        2 Set as "groupe de ressource": cats-dogs-others-resource
        3 Set as "nom de l'espace de travail": cats-dogs-others
-       4 Validate   
+       4 Set as "région": North Europe
+       5 Validate   
         
 ![create-azure-ml-workspace.png](documentation%2Fextraction%2Fcreate-azure-ml-workspace.png)
 
