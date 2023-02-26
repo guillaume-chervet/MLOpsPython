@@ -214,6 +214,7 @@ and replace subscription-id resource-group-name workspace-name and cluster-name 
 cluster-name can be your firstname-lastname (for example: "guillaume-chervet")
 
 ```python 
+# ./train/azureml_run_dumb_pipeline.py
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 
 from azure.ai.ml import MLClient, Input, Output
@@ -313,7 +314,7 @@ mkdir dumb
 
 3. Create a components.py file in dumb directory
 ```python
-# run from ./train/dumb directory
+# ./train/dumb/components.py
 from pathlib import Path
 from random import randint
 from uuid import uuid4
@@ -410,7 +411,7 @@ def eval_model(
 
 4. Create a environment.conda.yaml file in dumb directory
 ```yaml
-# run from ./train/dumb directory
+# ./train/dumb/environment.conda.yaml
 image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
 name: mldesigner_environment
 conda_file:
