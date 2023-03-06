@@ -1,6 +1,6 @@
 # Setup
 
-## 1. Download ans install python python 3.11.x on your laptop. 
+## 1. Download ans install python 3.11.x on your laptop. 
 https://www.python.org/downloads/
 
 It is a good practice to always use the lastest version with supports: 
