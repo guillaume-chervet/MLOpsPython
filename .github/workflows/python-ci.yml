@@ -75,8 +75,13 @@ jobs:
          echo "remove *.egg-info"
          find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
          
-         cd ../../
-         cd train/evaluate/
+         # For Pipenv we rename the package to mlopspython-inference-0.0.0-py3-none-any.whl
+         cd dist/
+         cp *.whl ../../train/evaluate/packages/
+         cd ../../train/evaluate/packages/
+         mv mlopspython-inference-$PACKAGES_HASH_CLEAN-py3-none-any.whl mlopspython-inference-0.0.0-py3-none-any.whl
+         
+         cd ../
         
          # Update package version in environment.conda.yaml
          key="./packages/mlopspython-inference-0.0.0-py3-none-any.whl"
@@ -84,13 +89,7 @@ jobs:
          value="mlopspython-inference==$PACKAGES_HASH_CLEAN"
          escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
          sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
-        
-         # Update package version in Pipfile
-         value='"==$PACKAGES_HASH_CLEAN"'
-         escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
-         key="{file = "./packages/mlopspyhton-inference-0.0.0-py3-none-any.whl"}"
-         escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
-         sed -i "s/$escappedKey/$escappedValue/g" Pipfile
+
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       continue-on-error: true
