@@ -72,16 +72,16 @@ jobs:
          echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
          python setup.py sdist bdist_wheel
          echo "remove *.egg-info"
-         find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
+         #find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
          cd dist
-         # cp *.whl ../../../train/evaluate/packages
-         # cd ../../../
-         # cd train/evaluate/
-         # key="./packages/mlopspython-inference-0.0.0-py3-none-any.whl"
-         # escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
-         # value="mlopspython-inference==$PACKAGES_HASH_CLEAN"
-         # escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
-         # sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
+         cp *.whl ../../../train/evaluate/packages
+         cd ../../../
+         cd train/evaluate/
+         key="./packages/mlopspython-inference-0.0.0-py3-none-any.whl"
+         escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
+         value="mlopspython-inference==$PACKAGES_HASH_CLEAN"
+         escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
+         sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       with:
