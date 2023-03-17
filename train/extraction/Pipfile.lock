@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4ed9b260aaa1089a2ec3ca62597f56d16fbce251d605e4763d494d9059289ead"
+            "sha256": "e0b596f92b4aec367c9558c79ece3244f9fd46f69cc2b25f2d2e011b981709f9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -17,6 +17,13 @@
         ]
     },
     "default": {
+        "mlopspython-extraction": {
+            "file": "./packages/mlopspython_extraction-0.0.0-py3-none-any.whl",
+            "hashes": [
+                "sha256:72363b178d755d6c6fb78096b2908b097f5fa2349709f7e0fbfa4666e85b9bcc"
+            ],
+            "version": "==0.0.0"
+        },
         "pymupdf": {
             "hashes": [
                 "sha256:06860a8e60ba14f25aac5db90803d59b1a2fdac24c2b65dc6f9876ff36df586e",
@@ -50,8 +57,8 @@
                 "sha256:fdba6bf77d1d3cd57ea93181c494f4b138523000ff74b25c523be7dce0058ac9",
                 "sha256:ff7d01cb563c3ca18880ba6a2661351f07b8a54f6599272be2e3568524e5e721"
             ],
-            "index": "pypi",
-            "version": "===1.21.1"
+            "markers": "python_version >= '3.7'",
+            "version": "==1.21.1"
         }
     },
     "develop": {

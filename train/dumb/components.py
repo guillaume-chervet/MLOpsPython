@@ -1,16 +1,19 @@
 from pathlib import Path
-from random import randint
 from uuid import uuid4
 
 # mldesigner package contains the command_component which can be used to define component from a python function
 from mldesigner import command_component, Input, Output
 
+URI_FILE = "uri_file"
+
+URI_FOLDER = "uri_folder"
+
 
 @command_component()
 def train_model(
-    training_data: Input(type="uri_file"),
+    training_data: Input(type=URI_FILE),
     max_epochs: int,
-    model_output: Output(type="uri_folder"),
+    model_output: Output(type=URI_FOLDER),
     learning_rate=0.02,
 ):
     """A dummy train component.
@@ -47,9 +50,9 @@ def train_model(
     # code='.'
 )
 def score_data(
-    model_input: Input(type="uri_folder"),
-    test_data: Input(type="uri_file"),
-    score_output: Output(type="uri_folder"),
+    model_input: Input(type=URI_FOLDER),
+    test_data: Input(type=URI_FILE),
+    score_output: Output(type=URI_FOLDER),
 ):
     """A dummy score component."""
 
@@ -74,7 +77,7 @@ def score_data(
 
 @command_component(display_name="Evaluate", environment="./environment.conda.yaml")
 def eval_model(
-    scoring_result: Input(type="uri_folder"), eval_output: Output(type="uri_folder")
+    scoring_result: Input(type=URI_FOLDER), eval_output: Output(type=URI_FOLDER)
 ):
     """A dummy evaluate component."""
 

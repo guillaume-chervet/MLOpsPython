@@ -2,21 +2,24 @@ from pathlib import Path
 
 from mldesigner import command_component, Input, Output
 
+URI_FOLDER = "uri_folder"
+
+
 @command_component(
     display_name="Label Split Data",
     environment="./environment.conda.yaml",
 )
 def label_split_data_step(
-    labels_input: Input(type="uri_folder"),
-    images_input: Input(type="uri_folder"),
-    split_images_output: Output(type="uri_folder"),
+    labels_input: Input(type=URI_FOLDER),
+    images_input: Input(type=URI_FOLDER),
+    split_images_output: Output(type=URI_FOLDER),
 ):
     from label_split_data import label_split_data
     import mlflow
 
-    number_file_by_label = 10
-    ratio_train: float = 0.4
-    ratio_test: float = 0.3
+    number_file_by_label = 3200
+    ratio_train: float = 0.7
+    ratio_test: float = 0.2
 
     params = {
         "number_file_by_label": number_file_by_label,

@@ -15,3 +15,4 @@ conda_file:
       - pymupdf===1.21.1
       - mlflow
       - azureml-mlflow
+      - ./packages/mlopspython_extraction-0.0.0-py3-none-any.whl

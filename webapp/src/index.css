@@ -14,7 +14,7 @@ code {
 
 
 button{
-  font-size: 1.6em;
+  font-size: 1em;
   padding: 0.1em;
   margin: 0.1em;
 }
@@ -25,6 +25,15 @@ input{
   margin: 0.1em;
 }
 
+.prediction{
+  font-size: 1.4em;
+}
+
+
+.feedback{
+  color: grey;
+  font-size: 0.9em;
+}
 
 select{
    font-size: 1.6em;
@@ -46,4 +55,8 @@ p{
 
 body{
   text-align: center;
+}
+
+table{
+  with: 100%;
 }

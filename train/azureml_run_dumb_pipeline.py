@@ -1,13 +1,16 @@
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
-
+from azure.ai.ml.entities import AmlCompute
 from azure.ai.ml import MLClient, Input, Output
 from azure.ai.ml.dsl import pipeline
+
+from dumb.components import train_model, score_data, eval_model
 
 try:
     credential = DefaultAzureCredential()
     # Check if given credential can get token successfully.
     credential.get_token("https://management.azure.com/.default")
 except Exception as ex:
+    print(ex)
     # Fall back to InteractiveBrowserCredential in case DefaultAzureCredential not work
     credential = InteractiveBrowserCredential()
 
@@ -22,7 +25,7 @@ ml_client = MLClient(
 
 # Retrieve an already attached Azure Machine Learning Compute.
 cluster_name = "teacher-cpu-low"
-from azure.ai.ml.entities import AmlCompute
+
 cluster_basic = AmlCompute(
     name=cluster_name,
     type="amlcompute",
@@ -33,9 +36,6 @@ cluster_basic = AmlCompute(
     idle_time_before_scale_down=60,
 )
 ml_client.begin_create_or_update(cluster_basic).result()
-
-
-from dumb.components import train_model, score_data, eval_model
 
 custom_path = "azureml://datastores/workspaceblobstore/paths/custom_path/${{name}}/"
 

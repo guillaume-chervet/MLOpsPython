@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 
 import "./App.css";
+import convertPdfToImagesAsync from "./pdf";
+
+const Feedback = ({ feedback, handleFeedback, index }) => {
+   return(!feedback[index.toString()] ? <p className="feedback">Do you agree with that result ?
+   <button onClick={()=> handleFeedback(index)} type="button">Yes</button><button  onClick={()=> handleFeedback(index)} type="button">No</button>
+   </p>: <p className="feedback">Thank you for your feedback</p>);
+}
 
 function App() {
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [type, setType] = useState(null);
-  const [url, setUrl] = useState(null);
-  const [prediction, setPrediction] = useState(null);
-  const [feedback, setFeedback] = useState(null);
+  const [predictions, setPredictions] = useState([]);
+  const [feedback, setFeedback] = useState({});
 
   const UPLOAD_ENDPOINT =
-    "http://localhost:8064/upload-integration";
+    "http://localhost:8000/upload";
 
   const uploadFile = async file => {
     const formData = new FormData();
@@ -36,49 +42,61 @@ function App() {
   const handleOnChange = async e => {
     const file = e.target.files[0];
     e.target.value = null;
-    setFile(file);
-    const objectURL = URL.createObjectURL(file);
-    setUrl(objectURL);
-    setPrediction(null);
-    setFeedback(null);
+    if (file.name.endsWith(".pdf")) {
+      convertPdfToImagesAsync()(file).then(files => {
+        files.pop();
+        setFiles(files);
+      });
+    } else{
+      const objectURL = URL.createObjectURL(file);
+      setFiles([objectURL]);
+    }
+    setPredictions(null);
+    setFeedback({});
     let res = await uploadFile(file);
-    setPrediction(res)
+    setPredictions(res)
   };
 
-  const handleFeedback = e => {
-    setFeedback(true);
+  const handleFeedback = index => {
+    setFeedback({...feedback, [index.toString()]: true});
   };
 
   const handleType = e => {
     setType(e.target.value);
-    setPrediction(null);
-    setFeedback(null);
-    setFile(null);
-    setUrl(null);
+    setPredictions([]);
+    setFeedback({});
+    setFiles([]);
+  }
+
+  function handleClick() {
+    setPredictions([]);
+    setFeedback({});
+    setFiles([]);
   }
 
   return (
       <>
     <form >
       <h1>Production environment</h1>
-      <input type="file" onChange={handleOnChange}  />
+      <input type="file" onClick={handleClick} onChange={handleOnChange}  />
       <select  value={type} onChange={handleType} >
         <option value="pillow">Pillow</option>
         <option value="opencv">Opencv</option>
       </select>
     </form>
-
-    { url && <img src={url} alt={"selected image"}  style={{maxWidth: "400px", maxHeight: "400px"}} />}
-        {prediction && <>
-          <p style={{fontSize:"2em", "padding": "0.4em", "margin": "0em", color:"white", "backgroundColor": "brown", "textAlign": "center"}}>It's a <b>{prediction.prediction}</b></p>
-
-
-          { feedback === true ? <p>Thank you!</p>  : <> <label>Do you agree with that result ?</label>
-        <button onClick={handleFeedback} type="button">Yes</button><button  onClick={handleFeedback} type="button">No</button>
-          </>}
-        </>
-        }
-
+        <table>
+          <tbody>
+        {files.map((file, index) =>{
+          return (<tr>
+            <td> <img  src={file} alt="pdf page"  style={{maxWidth: "400px"}}/></td>
+            <td>{predictions && predictions.length > 0 ? <p className="prediction"> It is a {predictions[index].prediction}
+            </p> : <p className="prediction"> Loading ... </p>}
+              {predictions && predictions.length && <Feedback feedback={feedback} handleFeedback={handleFeedback} index={index}  />}
+            </td>
+          </tr>)
+        })}
+          </tbody>
+      </table>
 
         </>
 

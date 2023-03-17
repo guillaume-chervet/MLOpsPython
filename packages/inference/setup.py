@@ -7,9 +7,9 @@ with open("requirements.txt") as f:
 setuptools.setup(
     name="mlopspython-inference",
     version=version.VERSION,
-    packages=["inference"],
+    packages=["mlopspython_inference"],
     package_dir={"": "src"},
-    package_data={"inference": ["*"]},
+    package_data={"mlopspython_inference": ["*"]},
     install_requires=requirements,
     author="Guillaume Chervet",
     include_package_data=True,

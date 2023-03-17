@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  cat_dogs_others:
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile
+      args:
+        buildImage: python:3.11.2
+        runtimeImage: python:3.11.2
+    image: local.io/catsdogsothers:local
+    restart: "no"
+    user: "1001001"
+    ports:
+      - 8000:5000
+    depends_on:
+      - base-function

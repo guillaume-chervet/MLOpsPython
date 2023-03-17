@@ -1,0 +1,24 @@
+[
+        {
+            "type": "callapi",
+            "enabled": true,
+            "enabledSaveImages": false,
+            "fileDirectory": "${files_directory}$/data/mlcli",
+            "outputDirectoryJsons": "${output_directory}$/jsons",
+            "outputDirectoryImages": "${output_directory}$/images",
+            "numberParallel": 1,
+            "isSaveResultOnError": true,
+            "stopAfterNumberFiles": 100,
+            "numberRetryOnHttp500": 1,
+            "url": "https://webapp-cdo.azurewebsites.net/upload"
+        },
+        {
+            "type": "compare",
+            "enabled": true,
+            "onFileNotFound": "warning",
+            "leftDirectory": "${files_directory}$/data/ground_truth",
+            "rightDirectory": "${output_directory}$/jsons",
+            "outputDirectory": "${output_directory}$",
+            "fileName": "compare-cdo-{start-date}.json"
+	    }
+]
