@@ -10,7 +10,7 @@ def extraction_step(
     pdfs_input: Input(type="uri_folder"),
     images_output: Output(type="uri_folder"),
 ):
-    from extraction import extract_images
+    from mlopspython_extraction.extraction import extract_images
     import mlflow
 
     result = extract_images(pdfs_input, images_output)

@@ -1,1 +1,2 @@
 ./packages/mlopspyhton_inference-0.0.0-py3-none-any.whl
+./packages/mlopspyhton_extraction-0.0.0-py3-none-any.whl

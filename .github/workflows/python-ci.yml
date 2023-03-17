@@ -37,6 +37,37 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.11.1"
+    - name: Build packages
+      run: |
+         python -m pip install --upgrade pip
+         python -m pip install --upgrade setuptools wheel
+         
+         # For Pipenv build mlopspython-extraction-0.0.0-py3-none-any.whl then copy it to train/extraction/packages
+         cd packages/extraction
+         python setup.py sdist bdist_wheel
+         cd dist/
+         cp *.whl ../../../train/extraction/packages/
+         cd ../
+         rm -rf dist/
+        
+         # Generate Hash of files in package and inject it in version.py then build package
+         PACKAGE_HASH=$(find . -type f -exec md5sum {} + | LC_ALL=C sort | md5sum)
+         PACKAGE_HASH_FINAL=$(echo $PACKAGE_HASH | sed 's/[ *-]//g')
+         PACKAGES_HASH_CLEAN=$(echo $PACKAGE_HASH_FINAL | sed 's/[^0-9]*//g')
+         echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
+         echo "build package with version $PACKAGES_HASH_CLEAN"
+         python setup.py sdist bdist_wheel
+         echo "remove *.egg-info"
+         find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
+         cd ../../
+         
+         # Update package version in environment.conda.yaml
+         cd train/evaluate
+         key="./packages/mlopspython-extraction-0.0.0-py3-none-any.whl"
+         escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
+         value="mlopspython-extraction==$PACKAGES_HASH_CLEAN"
+         escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
+         sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
     - name: Install dependencies
       working-directory: train/extraction
       run: |
