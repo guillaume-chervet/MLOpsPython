@@ -99,8 +99,8 @@ jobs:
         verbose: true
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
-        continue-on-error: true
     - name: Run unit tests Evaluate
+      if: always()
       working-directory: train/evaluate
       run: |
         pipenv install --dev
