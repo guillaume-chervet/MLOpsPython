@@ -80,9 +80,9 @@ jobs:
          escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
          sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
     - name: Publish package
-      working-directory: packages/inference
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       with:
+        working-directory: packages/inference
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
     - name: Run unit tests Evaluate
