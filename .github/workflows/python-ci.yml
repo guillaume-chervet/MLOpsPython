@@ -59,6 +59,25 @@ jobs:
       run: |
         pipenv install --dev
         pipenv run python -m unittest tests.train_test
+    - name: Build packages
+      working-directory: packages/inference
+      run: |
+         python -m pip install --upgrade pip
+         python -m pip install --upgrade setuptools wheel
+        # cd ${{ dependency.packageDirectory }}
+         PACKAGE_HASH=$(find . -type f -exec md5sum {} + | LC_ALL=C sort | md5sum)
+         PACKAGE_HASH_FINAL=$(echo $PACKAGE_HASH | sed 's/[ *-]//g')
+         PACKAGES_HASH_CLEAN=$(echo $PACKAGE_HASH_FINAL | sed 's/[^0-9]*//g')
+         echo $PACKAGE_HASH_FINAL
+         echo PACKAGES_HASH_CLEAN
+         echo 'VERSION = "'PACKAGES_HASH_CLEAN'"' > version.py
+         
+         python setup.py sdist bdist_wheel
+         echo "remove *.egg-info"
+         find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
+         cd dist/
+         #cp *.whl ${{ dependency.packageDestination }}
+         #echo "Python Package succefully copied to ${{ dependency.packageDestination }}"
     - name: Run unit tests Evaluate
       working-directory: train/evaluate
       run: |
