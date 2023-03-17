@@ -74,6 +74,8 @@ jobs:
          echo "remove *.egg-info"
          find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
          cd dist/
+         cp *.whl ../../train/train/packages
+         ls ../../train/train/packages
     - name: Run unit tests Evaluate
       working-directory: train/evaluate
       run: |

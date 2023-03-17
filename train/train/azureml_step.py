@@ -1,7 +1,17 @@
 from pathlib import Path
-
+from azure.ai.ml.entities import Environment, BuildContext
 from mldesigner import command_component, Input, Output
 
+#def create_environment(ml_client):
+#    env_docker_conda = Environment(
+#        image="mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04",
+#        conda_file="./environment.conda.yaml",
+#        name="docker-image-plus-conda-example",
+#        description="Environment created from a Docker image plus Conda environment.",
+#    )
+#    ml_client.environments.create_or_update(env_docker_conda)
+#
+#    return environment
 
 @command_component(
     display_name="Train",
