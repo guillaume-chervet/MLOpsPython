@@ -79,6 +79,7 @@ jobs:
          cd dist/
          cp *.whl ../../../train/evaluate/packages/
          cd ../../../train/evaluate/packages/
+         ls
          mv mlopspython-inference-$PACKAGES_HASH_CLEAN-py3-none-any.whl mlopspython-inference-0.0.0-py3-none-any.whl
          
          cd ../
