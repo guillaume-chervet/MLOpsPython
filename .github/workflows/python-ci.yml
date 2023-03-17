@@ -93,6 +93,7 @@ jobs:
          sed -i "s/$escappedKey/$escappedValue/g" Pipfile
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+      continue-on-error: true
       with:
         packages_dir: packages/inference/dist
         skip-existing: true
@@ -100,7 +101,6 @@ jobs:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
     - name: Run unit tests Evaluate
-      if: always()
       working-directory: train/evaluate
       run: |
         pipenv install --dev
