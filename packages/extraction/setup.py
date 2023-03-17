@@ -7,9 +7,9 @@ with open("requirements.txt") as f:
 setuptools.setup(
     name="mlopspython-extraction",
     version=version.VERSION,
-    packages=["extraction"],
+    packages=["mlopspython_extraction"],
     package_dir={"": "src"},
-    package_data={"extraction": ["*"]},
+    package_data={"mlopspython_extraction": ["*"]},
     install_requires=requirements,
     author="Guillaume Chervet",
     include_package_data=True,
