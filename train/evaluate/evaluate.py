@@ -1,8 +1,7 @@
 import json
-import logging
 from pathlib import Path
 
-from model_pillow import Model
+from mlopspython_inference.model_pillow import Model
 
 
 def evaluate(logging, input_model_directory:Path, input_images_directory:Path, output_directory:Path, integration_output:Path):
