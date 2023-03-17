@@ -21,6 +21,6 @@ setuptools.setup(
     platforms='POSIX',
     classifiers=["Programming Language :: Python :: 3 :: Only",
                  "Programming Language :: Python :: 3.11",
-                 "Topic :: MLOps :: Python :: Inference",
+                 "Topic :: MLOps",
                  ]
 )
