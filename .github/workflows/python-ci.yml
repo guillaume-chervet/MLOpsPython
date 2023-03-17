@@ -85,7 +85,7 @@ jobs:
          escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
          sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
         
-        # Update package version in Pipfile
+         # Update package version in Pipfile
          value='"==$PACKAGES_HASH_CLEAN"'
          escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
          key="{file = "./packages/mlopspyhton-inference-0.0.0-py3-none-any.whl"}"
