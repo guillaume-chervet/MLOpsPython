@@ -2,7 +2,7 @@ import shutil
 import unittest
 from pathlib import Path
 
-from extraction import extract_images
+from mlopspython_extraction.model_pillow import extract_images
 
 BASE_PATH = Path(__file__).resolve().parent
 output_directory = BASE_PATH / "output"
