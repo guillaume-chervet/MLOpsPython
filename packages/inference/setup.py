@@ -14,4 +14,13 @@ setuptools.setup(
     author="Guillaume Chervet",
     include_package_data=True,
     python_requires=">=3.8",
+    author_email="guillaume.chervet@gmail.com",
+    url='https://github.com/guillaume-chervet/MLOpsPython',
+    description="Inference package for MLOpsPython project",
+    long_description="Inference package for MLOpsPython project",
+    platforms='POSIX',
+    classifiers=["Programming Language :: Python :: 3 :: Only",
+                 "Programming Language :: Python :: 3.11",
+                 "Topic :: MLOps :: Python :: Inference",
+                 ]
 )
