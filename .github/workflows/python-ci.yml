@@ -64,6 +64,7 @@ jobs:
       run: |
          python -m pip install --upgrade pip
          python -m pip install --upgrade setuptools wheel
+        
          PACKAGE_HASH=$(find . -type f -exec md5sum {} + | LC_ALL=C sort | md5sum)
          PACKAGE_HASH_FINAL=$(echo $PACKAGE_HASH | sed 's/[ *-]//g')
          PACKAGES_HASH_CLEAN=$(echo $PACKAGE_HASH_FINAL | sed 's/[^0-9]*//g')
