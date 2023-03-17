@@ -10,6 +10,7 @@ keras = "==2.12.0rc0"
 tensorflow = "==2.12.0rc0"
 scipy = "*"
 opencv-contrib-python-headless = "==4.7.0.68"
+inference = {file = "./packages/mlopspyhton-inference-0.0.0-py3-none-any.whl"}
 
 [dev-packages]
 coverage = "===7.1.0"

@@ -5,5 +5,5 @@ pip install -e packages/inference
 cd packages/inference/
 python setup.py sdist bdist_wheel
 cd dist
-cp *.whl ../../../train/train/packages
+cp *.whl ../../../train/evaluate/packages
 cd ../../../

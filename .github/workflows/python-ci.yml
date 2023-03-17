@@ -73,7 +73,10 @@ jobs:
          python setup.py sdist bdist_wheel
          echo "remove *.egg-info"
          find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
-         cd ../../train/evaluate/
+         cd dist
+         cp *.whl ../../../train/evaluate/packages
+         cd ../../../
+         cd train/evaluate/
          key="./packages/mlopspython-inference-0.0.0-py3-none-any.whl"
          escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
          value="mlopspython-inference==$PACKAGES_HASH_CLEAN"
