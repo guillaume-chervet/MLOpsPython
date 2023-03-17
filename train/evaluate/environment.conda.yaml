@@ -20,3 +20,4 @@ conda_file:
       - opencv-contrib-python-headless==4.7.0.68
       - mlflow
       - azureml-mlflow
+      - ./packages/mlopspython-inference-0.0.0-py3-none-any.whl

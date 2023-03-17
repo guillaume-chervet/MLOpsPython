@@ -5,7 +5,7 @@ with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 setuptools.setup(
-    name="inference",
+    name="mlopspython-inference",
     version=version.VERSION,
     packages=["inference"],
     package_dir={"": "src"},
