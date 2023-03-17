@@ -65,26 +65,27 @@ jobs:
          python -m pip install --upgrade pip
          python -m pip install --upgrade setuptools wheel
         
+         # Generate Hash of files in package and inject it in version.py
          PACKAGE_HASH=$(find . -type f -exec md5sum {} + | LC_ALL=C sort | md5sum)
          PACKAGE_HASH_FINAL=$(echo $PACKAGE_HASH | sed 's/[ *-]//g')
          PACKAGES_HASH_CLEAN=$(echo $PACKAGE_HASH_FINAL | sed 's/[^0-9]*//g')
-         echo $PACKAGE_HASH_FINAL
-         echo $PACKAGES_HASH_CLEAN
          echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
+         echo "build package with version $PACKAGES_HASH_CLEAN"
          python setup.py sdist bdist_wheel
          echo "remove *.egg-info"
-         #find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
-         cd dist
-         #cp *.whl ../../../train/evaluate/packages
-         cd ../../../
+         find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
+         
+         cd ../../
          cd train/evaluate/
         
+         # Update package version in environment.conda.yaml
          key="./packages/mlopspython-inference-0.0.0-py3-none-any.whl"
          escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
          value="mlopspython-inference==$PACKAGES_HASH_CLEAN"
          escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
          sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
         
+        # Update package version in Pipfile
          value='"==$PACKAGES_HASH_CLEAN"'
          escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
          key="{file = "./packages/mlopspyhton-inference-0.0.0-py3-none-any.whl"}"
@@ -94,7 +95,7 @@ jobs:
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       with:
         packages_dir: packages/inference/dist
-        #skip-existing: true
+        skip-existing: true
         verbose: true
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
