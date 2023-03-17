@@ -69,7 +69,7 @@ jobs:
          PACKAGES_HASH_CLEAN=$(echo $PACKAGE_HASH_FINAL | sed 's/[^0-9]*//g')
          echo $PACKAGE_HASH_FINAL
          echo $PACKAGES_HASH_CLEAN
-         echo 'VERSION = "'PACKAGES_HASH_CLEAN'"' > version.py
+         echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
          python setup.py sdist bdist_wheel
          echo "remove *.egg-info"
          find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
