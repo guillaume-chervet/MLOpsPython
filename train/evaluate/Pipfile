@@ -4,12 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = "==1.23.5"
-matplotlib = "==3.7.0"
-keras = "==2.12.0rc0"
-tensorflow = "==2.12.0rc0"
+matplotlib = "==3.7.1"
 scipy = "*"
-opencv-contrib-python-headless = "==4.7.0.68"
 mlopspython-inference = {file = "./packages/mlopspython_inference-0.0.0-py3-none-any.whl"}
 
 [dev-packages]

@@ -1,5 +1,4 @@
 numpy==1.23.5
-matplotlib==3.7.0
 keras==2.12.0rc0
 tensorflow==2.12.0rc0
 opencv-contrib-python-headless==4.7.0.68
