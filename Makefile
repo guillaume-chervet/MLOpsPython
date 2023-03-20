@@ -7,7 +7,7 @@ cd packages/inference/
 python setup.py sdist bdist_wheel
 cd dist
 cp *.whl ../../../train/evaluate/packages
-cp *.whl ../../../production/packages
+cp *.whl ../../../production/api/packages
 cd ../../../
 
 pip install -e packages/extraction
@@ -16,5 +16,5 @@ cd packages/extraction/
 python setup.py sdist bdist_wheel
 cd dist
 cp *.whl ../../../train/extraction/packages
-cp *.whl ../../../production/packages
+cp *.whl ../../../production/api/packages
 cd ../../../

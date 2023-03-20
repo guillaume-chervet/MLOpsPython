@@ -1,5 +1,5 @@
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
-
+from azure.ai.ml.entities import AmlCompute
 from azure.ai.ml import MLClient, Input, Output
 from azure.ai.ml.dsl import pipeline
 
@@ -22,7 +22,7 @@ ml_client = MLClient(
 
 # Retrieve an already attached Azure Machine Learning Compute.
 cluster_name = "teacher-cpu-low"
-from azure.ai.ml.entities import AmlCompute
+
 cluster_basic = AmlCompute(
     name=cluster_name,
     type="amlcompute",

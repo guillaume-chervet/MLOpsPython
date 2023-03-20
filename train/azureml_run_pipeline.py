@@ -6,6 +6,13 @@ from azure.ai.ml.entities import Model
 from azure.ai.ml.constants import AssetTypes
 from azure.ai.ml.entities import Data
 
+from extraction.azureml_step import extraction_step
+from label_split_data.azureml_step import label_split_data_step
+from train.azureml_step import train_step
+from evaluate.azureml_step import evaluate_step
+
+URI_FOLDER = "uri_folder"
+
 try:
     credential = DefaultAzureCredential()
     # Check if given credential can get token successfully.
@@ -38,12 +45,6 @@ cluster_basic = AmlCompute(
 ml_client.begin_create_or_update(cluster_basic).result()
 
 
-from extraction.azureml_step import extraction_step
-from label_split_data.azureml_step import label_split_data_step
-from train.azureml_step import train_step
-from evaluate.azureml_step import evaluate_step
-
-
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(pdfs_input_data, labels_input_data):
     extraction = extraction_step(
@@ -68,20 +69,20 @@ def azureml_pipeline(pdfs_input_data, labels_input_data):
 
 pipeline_job = azureml_pipeline(
     pdfs_input_data=Input(
-        path="azureml:cats_dogs_others:1", type="uri_folder"
+        path="azureml:cats_dogs_others:1", type=URI_FOLDER
     ),
     labels_input_data=Input(
-        path="azureml:cats_dogs_others_labels:1", type="uri_folder"
+        path="azureml:cats_dogs_others_labels:1", type=URI_FOLDER
     )
 )
 
 custom_model_path = "azureml://datastores/workspaceblobstore/paths/models/cats-dogs-others/"
 pipeline_job.outputs.model_output = Output(
-    type="uri_folder", mode="rw_mount", path=custom_model_path
+    type=URI_FOLDER, mode="rw_mount", path=custom_model_path
 )
 custom_integration_path = "azureml://datastores/workspaceblobstore/paths/integration/cats-dogs-others/"
 pipeline_job.outputs.integration_output = Output(
-    type="uri_folder", mode="rw_mount", path=custom_integration_path
+    type=URI_FOLDER, mode="rw_mount", path=custom_integration_path
 )
 
 pipeline_job = ml_client.jobs.create_or_update(
@@ -102,10 +103,9 @@ ml_client.models.create_or_update(file_model)
 credit_data = Data(
     name="cats-dogs-others-integration",
     path=custom_integration_path,
-    type="uri_folder",
+    type=URI_FOLDER,
     description="Dataset for credit card defaults",
     tags={"source_type": "web", "source": "UCI ML Repo"},
-    #version="1.0.0",
 )
 credit_data = ml_client.data.create_or_update(credit_data)
 print(
