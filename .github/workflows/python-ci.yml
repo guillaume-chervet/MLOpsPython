@@ -107,3 +107,8 @@ jobs:
           pipenv install
           pipenv run python azureml_run_pipeline.py
       working-directory: train
+    - name: download model
+      run: |
+          az ml model download --name cats-dogs-others --resource-group azure-ml
+              --workspace-name cats-dogs
+      working-directory: production/api
