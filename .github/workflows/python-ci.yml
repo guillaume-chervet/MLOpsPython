@@ -44,26 +44,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install --user pipenv
-    - name: Build packages
+    - name: Build packages extraction
       run: |
          chmod +x ./bin/build_package.sh
          ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction
-         #python -m pip install --upgrade pip
-         #python -m pip install --upgrade setuptools wheel
-         #
-         #cwd=$(pwd)
-         #
-         ## Generate Hash of files in package and inject it in version.py then build package
-         #PACKAGES_HASH_CLEAN=$(python ./bin/directory_hash.py ./packages/extraction)
-         #cd packages/extraction     
-         #echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
-         #echo "build package with version $PACKAGES_HASH_CLEAN"
-         #python setup.py sdist bdist_wheel
-         #cd cwd
-         #
-         ## Update package version in env files
-         #python ./bin/replace_in_file.py ./train/extraction/Pipfile  
-         #python ./bin/replace_in_file.py ./train/extraction/environment.conda.yaml
     - name: Publish package extraction
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       continue-on-error: true
@@ -93,42 +77,10 @@ jobs:
       run: |
         pipenv install --dev
         pipenv run python -m unittest tests.train_test
-    - name: Build packages
+    - name: Build package inference
       run: |
-         python -m pip install --upgrade pip
-         python -m pip install --upgrade setuptools wheel
-         PACKAGES_HASH_CLEAN=$(python ./bin/directory_hash.py ./packages/inference)
-         # For Pipenv build mlopspython-inference-0.0.0-py3-none-any.whl then copy it to train/evaluate/packages
-         cd packages/inference
-         #python setup.py sdist bdist_wheel
-         #cd dist/
-         #cp *.whl ../../../train/evaluate/packages/
-         #cd ../
-         #rm -rf dist/
-        
-         # Generate Hash of files in package and inject it in version.py then build package
-         #PACKAGE_HASH=$(find . -type f -exec md5sum {} + | LC_ALL=C sort | md5sum)
-         #PACKAGE_HASH_FINAL=$(echo $PACKAGE_HASH | sed 's/[ *-]//g')
-         #PACKAGES_HASH_CLEAN=$(echo $PACKAGE_HASH_FINAL | sed 's/[^0-9]*//g')
-        
-         
-         echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
-         echo "build package with version $PACKAGES_HASH_CLEAN"
-         python setup.py sdist bdist_wheel
-         echo "remove *.egg-info"
-         find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
-         cd ../../
-         
-         # Update package version in environment.conda.yaml
-         python ./bin/replace_in_file.py ./train/evaluate/Pipfile "{file = \"./packages/mlopspython_inference-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
-         python ./bin/replace_in_file.py ./train/evaluate/environment.conda.yaml ./packages/mlopspython_inference-0.0.0-py3-none-any.whl "mlopspython-inference===$PACKAGES_HASH_CLEAN"
-         #cd train/evaluate
-         #key="./packages/mlopspython-inference-0.0.0-py3-none-any.whl"
-         #escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
-         #value="mlopspython-inference==$PACKAGES_HASH_CLEAN"
-         #escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
-         #sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
-
+        chmod +x ./bin/build_package.sh
+        ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference
     - name: Publish package inference
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       continue-on-error: true
