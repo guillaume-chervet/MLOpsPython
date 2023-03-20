@@ -5,6 +5,7 @@ from azure.ai.ml.dsl import pipeline
 from azure.ai.ml.entities import Model
 from azure.ai.ml.constants import AssetTypes
 from azure.ai.ml.entities import Data
+from azure.ai.ml.entities import AmlCompute
 
 from extraction.azureml_step import extraction_step
 from label_split_data.azureml_step import label_split_data_step
@@ -18,6 +19,7 @@ try:
     # Check if given credential can get token successfully.
     credential.get_token("https://management.azure.com/.default")
 except Exception as ex:
+    print(ex)
     # Fall back to InteractiveBrowserCredential in case DefaultAzureCredential not work
     credential = InteractiveBrowserCredential()
 
@@ -32,7 +34,7 @@ ml_client = MLClient(
 
 # Retrieve an already attached Azure Machine Learning Compute.
 cluster_name = "guillaume-cpu-low"
-from azure.ai.ml.entities import AmlCompute
+
 cluster_basic = AmlCompute(
     name=cluster_name,
     type="amlcompute",

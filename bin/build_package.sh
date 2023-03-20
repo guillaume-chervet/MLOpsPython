@@ -11,11 +11,11 @@ cwd=$(pwd)
 
 # Generate Hash of files in package and inject it in version.py then build package
 PACKAGES_HASH_CLEAN=$(python ./bin/directory_hash.py ./$package_directory)
-cd package_directory
+cd $package_directory
 echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
 echo "build package with version $PACKAGES_HASH_CLEAN"
 python setup.py sdist bdist_wheel
-cd cwd
+cd $cwd
 
 # Update package version in env files
 python ./bin/replace_in_file.py ./$train_directory/Pipfile "{file = \"./packages/$package_key-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
