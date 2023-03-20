@@ -46,7 +46,7 @@ jobs:
          python -m pip install --upgrade setuptools wheel
          
          # For Pipenv build mlopspython-extraction-0.0.0-py3-none-any.whl then copy it to train/extraction/packages
-         #cd packages/extraction
+         cd packages/extraction
          #python setup.py sdist bdist_wheel
          #cd dist/
          #cp *.whl ../../../train/extraction/packages/
