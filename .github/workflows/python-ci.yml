@@ -44,7 +44,7 @@ jobs:
       run: |
          python -m pip install --upgrade pip
          python -m pip install --upgrade setuptools wheel
-         PACKAGES_HASH_CLEAN = $((python ./bin/directory_hash.py ./packages/extraction) 2> &1)
+         PACKAGES_HASH_CLEAN = $(python ./bin/directory_hash.py ./packages/extraction)
          # For Pipenv build mlopspython-extraction-0.0.0-py3-none-any.whl then copy it to train/extraction/packages
          cd packages/extraction
          #python setup.py sdist bdist_wheel
