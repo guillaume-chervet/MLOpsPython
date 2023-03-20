@@ -46,12 +46,12 @@ jobs:
          python -m pip install --upgrade setuptools wheel
          
          # For Pipenv build mlopspython-extraction-0.0.0-py3-none-any.whl then copy it to train/extraction/packages
-         cd packages/extraction
-         python setup.py sdist bdist_wheel
-         cd dist/
-         cp *.whl ../../../train/extraction/packages/
-         cd ../
-         rm -rf dist/
+         #cd packages/extraction
+         #python setup.py sdist bdist_wheel
+         #cd dist/
+         #cp *.whl ../../../train/extraction/packages/
+         #cd ../
+         #rm -rf dist/
         
          # Generate Hash of files in package and inject it in version.py then build package
          PACKAGE_HASH=$(find . -type f -exec md5sum {} + | LC_ALL=C sort | md5sum)
@@ -65,12 +65,15 @@ jobs:
          cd ../../
          
          # Update package version in environment.conda.yaml
-         cd train/evaluate
-         key="./packages/mlopspython-extraction-0.0.0-py3-none-any.whl"
-         escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
-         value="mlopspython-extraction==$PACKAGES_HASH_CLEAN"
-         escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
-         sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
+         ./bin/replace_in_file ./train/extraction/Pipfile "{file = \"./packages/mlopspython_extraction-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
+         ./bin/replace_in_file ./train/extraction/environment.conda.yaml ./packages/mlopspython_extraction-0.0.0-py3-none-any.whl "mlopspython-extraction===$PACKAGES_HASH_CLEAN"
+        
+         #cd train/evaluate
+         #key="./packages/mlopspython-extraction-0.0.0-py3-none-any.whl"
+         #escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
+         #value="mlopspython-extraction==$PACKAGES_HASH_CLEAN"
+         #escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
+         #sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
     - name: Publish package extraction
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       continue-on-error: true
@@ -104,11 +107,11 @@ jobs:
          
          # For Pipenv build mlopspython-inference-0.0.0-py3-none-any.whl then copy it to train/evaluate/packages
          cd packages/inference
-         python setup.py sdist bdist_wheel
-         cd dist/
-         cp *.whl ../../../train/evaluate/packages/
-         cd ../
-         rm -rf dist/
+         #python setup.py sdist bdist_wheel
+         #cd dist/
+         #cp *.whl ../../../train/evaluate/packages/
+         #cd ../
+         #rm -rf dist/
         
          # Generate Hash of files in package and inject it in version.py then build package
          PACKAGE_HASH=$(find . -type f -exec md5sum {} + | LC_ALL=C sort | md5sum)
@@ -122,12 +125,14 @@ jobs:
          cd ../../
          
          # Update package version in environment.conda.yaml
-         cd train/evaluate
-         key="./packages/mlopspython-inference-0.0.0-py3-none-any.whl"
-         escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
-         value="mlopspython-inference==$PACKAGES_HASH_CLEAN"
-         escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
-         sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
+         ./bin/replace_in_file ./train/extraction/Pipfile "{file = \"./packages/lopspython_inference-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
+         ./bin/replace_in_file ./train/extraction/environment.conda.yaml ./packages/lopspython_inference-0.0.0-py3-none-any.whl "mlopspython-inference===$PACKAGES_HASH_CLEAN"
+         #cd train/evaluate
+         #key="./packages/mlopspython-inference-0.0.0-py3-none-any.whl"
+         #escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
+         #value="mlopspython-inference==$PACKAGES_HASH_CLEAN"
+         #escappedValue=$(printf '%s\n' "$value" | sed -e 's/[]\/$*.^[]/\\&/g');
+         #sed -i "s/$escappedKey/$escappedValue/g" environment.conda.yaml
 
     - name: Publish package inference
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
