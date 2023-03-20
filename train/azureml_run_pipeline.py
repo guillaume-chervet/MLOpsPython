@@ -5,6 +5,7 @@ from azure.ai.ml.dsl import pipeline
 from azure.ai.ml.entities import Model
 from azure.ai.ml.constants import AssetTypes
 from azure.ai.ml.entities import Data
+from azure.ai.ml.entities import AmlCompute
 
 from extraction.azureml_step import extraction_step
 from label_split_data.azureml_step import label_split_data_step
@@ -33,7 +34,7 @@ ml_client = MLClient(
 
 # Retrieve an already attached Azure Machine Learning Compute.
 cluster_name = "guillaume-cpu-low"
-from azure.ai.ml.entities import AmlCompute
+
 cluster_basic = AmlCompute(
     name=cluster_name,
     type="amlcompute",

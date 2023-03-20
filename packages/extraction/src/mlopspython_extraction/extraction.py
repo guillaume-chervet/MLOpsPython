@@ -45,6 +45,6 @@ def extract_images(pdfs_directory_path: str, images_directory_path: str) -> Extr
 
 
 if __name__ == "__main__":
-    pdfs_directory_path = ".\dataset-cats-dogs-others"
-    images_directory_path = ".\extracted_images"
+    pdfs_directory_path = ".\\dataset-cats-dogs-others"
+    images_directory_path = ".\\extracted_images"
     extract_images(pdfs_directory_path, images_directory_path)
