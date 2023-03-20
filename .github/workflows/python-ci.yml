@@ -65,8 +65,8 @@ jobs:
          cd ../../
          
          # Update package version in environment.conda.yaml
-         ./bin/replace_in_file ./train/extraction/Pipfile "{file = \"./packages/mlopspython_extraction-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
-         ./bin/replace_in_file ./train/extraction/environment.conda.yaml ./packages/mlopspython_extraction-0.0.0-py3-none-any.whl "mlopspython-extraction===$PACKAGES_HASH_CLEAN"
+         python ./bin/replace_in_file.py ./train/extraction/Pipfile "{file = \"./packages/mlopspython_extraction-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
+         python ./bin/replace_in_file.py ./train/extraction/environment.conda.yaml ./packages/mlopspython_extraction-0.0.0-py3-none-any.whl "mlopspython-extraction===$PACKAGES_HASH_CLEAN"
         
          #cd train/evaluate
          #key="./packages/mlopspython-extraction-0.0.0-py3-none-any.whl"
@@ -125,8 +125,8 @@ jobs:
          cd ../../
          
          # Update package version in environment.conda.yaml
-         ./bin/replace_in_file ./train/extraction/Pipfile "{file = \"./packages/lopspython_inference-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
-         ./bin/replace_in_file ./train/extraction/environment.conda.yaml ./packages/lopspython_inference-0.0.0-py3-none-any.whl "mlopspython-inference===$PACKAGES_HASH_CLEAN"
+         python ./bin/replace_in_file.py ./train/extraction/Pipfile "{file = \"./packages/lopspython_inference-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
+         python ./bin/replace_in_file.py ./train/extraction/environment.conda.yaml ./packages/lopspython_inference-0.0.0-py3-none-any.whl "mlopspython-inference===$PACKAGES_HASH_CLEAN"
          #cd train/evaluate
          #key="./packages/mlopspython-inference-0.0.0-py3-none-any.whl"
          #escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
