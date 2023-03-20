@@ -20,3 +20,11 @@ cd cwd
 # Update package version in env files
 python ./bin/replace_in_file.py ./$train_directory/Pipfile "{file = \"./packages/$package_key-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
 python ./bin/replace_in_file.py ./$train_directory/environment.conda.yaml ./packages/$package_key-0.0.0-py3-none-any.whl "$package_value===$PACKAGES_HASH_CLEAN"
+
+if [ -f ./$train_directory/Pipfile.lock ];
+then
+echo "Pipfile.lock exist so removed"
+rm -f ./$train_directory/Pipfile.lock
+else
+echo "Pipfile.lock is not exist"
+fi
