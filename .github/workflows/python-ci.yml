@@ -83,6 +83,9 @@ jobs:
         verbose: true
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Wait 10 seconds
+      run: |
+        sleep 10
     - name: Run unit tests Extraction
       working-directory: train/extraction
       run: |
@@ -127,8 +130,8 @@ jobs:
          cd ../../
          
          # Update package version in environment.conda.yaml
-         python ./bin/replace_in_file.py ./train/extraction/Pipfile "{file = \"./packages/lopspython_inference-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
-         python ./bin/replace_in_file.py ./train/extraction/environment.conda.yaml ./packages/lopspython_inference-0.0.0-py3-none-any.whl "mlopspython-inference===$PACKAGES_HASH_CLEAN"
+         python ./bin/replace_in_file.py ./train/evaluate/Pipfile "{file = \"./packages/lopspython_inference-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
+         python ./bin/replace_in_file.py ./train/evaluate/environment.conda.yaml ./packages/lopspython_inference-0.0.0-py3-none-any.whl "mlopspython-inference===$PACKAGES_HASH_CLEAN"
          #cd train/evaluate
          #key="./packages/mlopspython-inference-0.0.0-py3-none-any.whl"
          #escappedKey=$(printf '%s\n' "$key" | sed -e 's/[]\/$*.^[]/\\&/g');
@@ -145,6 +148,9 @@ jobs:
         verbose: true
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
+    - name: Wait 10 seconds
+      run: |
+        sleep 10
     - name: Run unit tests Evaluate
       working-directory: train/evaluate
       run: |

@@ -10,5 +10,6 @@ with open(args[1], 'r') as file:
 with open(args[1], 'w') as file:
     file.write(filedata)
 
+print("---------------------------")
 print(filedata)
-print("Done")
+print("--------Done---------------")
