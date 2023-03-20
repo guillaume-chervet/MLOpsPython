@@ -1,13 +1,16 @@
 from pathlib import Path
 from mldesigner import command_component, Input, Output
 
+URI_FOLDER = "uri_folder"
+
+
 @command_component(
     display_name="Train",
     environment="./environment.conda.yaml",
 )
 def train_step(
-        split_images_input: Input(type="uri_folder"),
-        model_output: Output(type="uri_folder"),
+        split_images_input: Input(type=URI_FOLDER),
+        model_output: Output(type=URI_FOLDER),
 ):
     from train import run_test_harness
     import mlflow

@@ -4,6 +4,7 @@ from pathlib import Path
 
 from mldesigner import command_component, Input, Output
 
+URI_FOLDER = "uri_folder"
 
 
 @command_component(
@@ -11,10 +12,10 @@ from mldesigner import command_component, Input, Output
     environment="./environment.conda.yaml",
 )
 def evaluate_step(
-    model_input: Input(type="uri_folder"),
-    images_input: Input(type="uri_folder"),
-    model_output: Output(type="uri_folder"),
-    integration_output: Output(type="uri_folder"),
+    model_input: Input(type=URI_FOLDER),
+    images_input: Input(type=URI_FOLDER),
+    model_output: Output(type=URI_FOLDER),
+    integration_output: Output(type=URI_FOLDER),
 ):
     from evaluate import evaluate
 

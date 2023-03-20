@@ -18,6 +18,7 @@ try:
     # Check if given credential can get token successfully.
     credential.get_token("https://management.azure.com/.default")
 except Exception as ex:
+    print(ex)
     # Fall back to InteractiveBrowserCredential in case DefaultAzureCredential not work
     credential = InteractiveBrowserCredential()
 
