@@ -47,7 +47,7 @@ jobs:
     - name: Build packages
       run: |
         
-         ./bin/build_package.sh packages/extraction train/extraction "{file = \"./packages/mlopspython_extraction-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\"" ./packages/mlopspython_extraction-0.0.0-py3-none-any.whl "mlopspython-extraction===$PACKAGES_HASH_CLEAN"
+         ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction
          #python -m pip install --upgrade pip
          #python -m pip install --upgrade setuptools wheel
          #

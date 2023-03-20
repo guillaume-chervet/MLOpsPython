@@ -1,10 +1,8 @@
 
 package_directory=$1
 train_directory=$2
-pipfile_key=$3
-pipfile_value=$4
-conda_key=$5
-conda_value=$6
+package_key=$3
+package_value=$4
 
 python -m pip install --upgrade pip
 python -m pip install --upgrade setuptools wheel
@@ -20,5 +18,5 @@ python setup.py sdist bdist_wheel
 cd cwd
 
 # Update package version in env files
-python ./bin/replace_in_file.py ./$train_directory/Pipfile $pipfile_key $pipfile_value
-python ./bin/replace_in_file.py ./$train_directory/environment.conda.yaml $conda_key $conda_value
+python ./bin/replace_in_file.py ./$train_directory/Pipfile "{file = \"./packages/$package_key-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
+python ./bin/replace_in_file.py ./$train_directory/environment.conda.yaml ./packages/$package_key-0.0.0-py3-none-any.whl "$package_value===$PACKAGES_HASH_CLEAN"
