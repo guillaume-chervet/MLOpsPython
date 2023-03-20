@@ -44,7 +44,7 @@ jobs:
       run: |
          python -m pip install --upgrade pip
          python -m pip install --upgrade setuptools wheel
-         
+         PACKAGES_HASH_CLEAN = $((python ./bin/directory_hash.py ./packages/extraction) 2> &1)
          # For Pipenv build mlopspython-extraction-0.0.0-py3-none-any.whl then copy it to train/extraction/packages
          cd packages/extraction
          #python setup.py sdist bdist_wheel
@@ -54,14 +54,14 @@ jobs:
          #rm -rf dist/
         
          # Generate Hash of files in package and inject it in version.py then build package
-         PACKAGE_HASH=$(find . -type f -exec md5sum {} + | LC_ALL=C sort | md5sum)
-         PACKAGE_HASH_FINAL=$(echo $PACKAGE_HASH | sed 's/[ *-]//g')
-         PACKAGES_HASH_CLEAN=$(echo $PACKAGE_HASH_FINAL | sed 's/[^0-9]*//g')
+         #PACKAGE_HASH=$(find . -type f -exec md5sum {} + | LC_ALL=C sort | md5sum)
+         #PACKAGE_HASH_FINAL=$(echo $PACKAGE_HASH | sed 's/[ *-]//g')
+         #PACKAGES_HASH_CLEAN=$(echo $PACKAGE_HASH_FINAL | sed 's/[^0-9]*//g')
          echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
          echo "build package with version $PACKAGES_HASH_CLEAN"
          python setup.py sdist bdist_wheel
-         echo "remove *.egg-info"
-         find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
+         #echo "remove *.egg-info"
+         #find . -type d -name "*.egg-info" -print0 | xargs -0 /bin/rm -rf "{}"
          cd ../../
          
          # Update package version in environment.conda.yaml
@@ -104,7 +104,7 @@ jobs:
       run: |
          python -m pip install --upgrade pip
          python -m pip install --upgrade setuptools wheel
-         PACKAGES_HASH_CLEAN = $((python ./bin/directory_hash.py ./packages/extraction) 2> &1)
+         PACKAGES_HASH_CLEAN = $((python ./bin/directory_hash.py ./packages/inference) 2> &1)
          # For Pipenv build mlopspython-inference-0.0.0-py3-none-any.whl then copy it to train/evaluate/packages
          cd packages/inference
          #python setup.py sdist bdist_wheel
