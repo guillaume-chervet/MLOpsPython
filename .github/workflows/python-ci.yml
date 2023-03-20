@@ -42,22 +42,24 @@ jobs:
         pip install --user pipenv
     - name: Build packages
       run: |
-         python -m pip install --upgrade pip
-         python -m pip install --upgrade setuptools wheel
         
-         cwd=$(pwd)
-        
-         # Generate Hash of files in package and inject it in version.py then build package
-         PACKAGES_HASH_CLEAN=$(python ./bin/directory_hash.py ./packages/extraction)
-         cd packages/extraction     
-         echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
-         echo "build package with version $PACKAGES_HASH_CLEAN"
-         python setup.py sdist bdist_wheel
-         cd cwd
-         
-         # Update package version in env files
-         python ./bin/replace_in_file.py ./train/extraction/Pipfile "{file = \"./packages/mlopspython_extraction-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\""
-         python ./bin/replace_in_file.py ./train/extraction/environment.conda.yaml ./packages/mlopspython_extraction-0.0.0-py3-none-any.whl "mlopspython-extraction===$PACKAGES_HASH_CLEAN"
+         ./bin/build_packages.sh packages/extraction train/extraction "{file = \"./packages/mlopspython_extraction-0.0.0-py3-none-any.whl\"}" "\"===$PACKAGES_HASH_CLEAN\"" ./packages/mlopspython_extraction-0.0.0-py3-none-any.whl "mlopspython-extraction===$PACKAGES_HASH_CLEAN"
+         #python -m pip install --upgrade pip
+         #python -m pip install --upgrade setuptools wheel
+         #
+         #cwd=$(pwd)
+         #
+         ## Generate Hash of files in package and inject it in version.py then build package
+         #PACKAGES_HASH_CLEAN=$(python ./bin/directory_hash.py ./packages/extraction)
+         #cd packages/extraction     
+         #echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
+         #echo "build package with version $PACKAGES_HASH_CLEAN"
+         #python setup.py sdist bdist_wheel
+         #cd cwd
+         #
+         ## Update package version in env files
+         #python ./bin/replace_in_file.py ./train/extraction/Pipfile  
+         #python ./bin/replace_in_file.py ./train/extraction/environment.conda.yaml
     - name: Publish package extraction
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       continue-on-error: true
