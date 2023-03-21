@@ -6,6 +6,10 @@ It must have :
 - Same python version
 - Idealy same Operating System
 
+### Remove code from your repository and replace it with the code from this repository
+
+![image](https://user-images.githubusercontent.com/52236059/226585078-0d7cd2dd-b0b5-43bd-bcaa-3b5c6550bbbe.png)
+
 ### Create your account in pip
 https://pypi.org/
 
