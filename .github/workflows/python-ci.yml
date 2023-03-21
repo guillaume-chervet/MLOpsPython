@@ -57,9 +57,9 @@ jobs:
         verbose: true
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
-    - name: Wait 10 seconds
+    - name: Wait 30 seconds
       run: |
-        sleep 10
+        sleep 30
     - name: Run unit tests Extraction
       working-directory: train/extraction
       run: |
@@ -90,9 +90,9 @@ jobs:
         verbose: true
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
-    - name: Wait 10 seconds
+    - name: Wait 30 seconds
       run: |
-        sleep 10
+        sleep 30
     - name: Run unit tests Evaluate
       working-directory: train/evaluate
       run: |
