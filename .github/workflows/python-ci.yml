@@ -47,7 +47,7 @@ jobs:
     - name: Build packages extraction
       run: |
          chmod +x ./bin/build_package.sh
-         ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction
+         ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction guillaume.chervet ${{ secrets.PYPI_API_TOKEN }}
     - name: Publish package extraction
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       continue-on-error: true
@@ -80,7 +80,7 @@ jobs:
     - name: Build package inference
       run: |
         chmod +x ./bin/build_package.sh
-        ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference
+        ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference guillaume.chervet ${{ secrets.PYPI_API_TOKEN }}
     - name: Publish package inference
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
       continue-on-error: true
