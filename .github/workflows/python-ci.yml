@@ -109,5 +109,6 @@ jobs:
       working-directory: train
     - name: download model
       run: |
+          az extension add -n ml
           az ml model download --name cats-dogs-others --version 14 --resource-group azure-ml --workspace-name cats-dogs
       working-directory: production/api
