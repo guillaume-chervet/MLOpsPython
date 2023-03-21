@@ -3,8 +3,8 @@ package_directory=$1
 train_directory=$2
 package_key=$3
 package_value=$4
-pip_user=$5
-pip_token=$6
+#pip_user=$5
+#pip_token=$6
 
 python -m pip install --upgrade pip
 python -m pip install --upgrade setuptools wheel
@@ -17,8 +17,8 @@ cd $package_directory
 echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
 echo "build package with version $PACKAGES_HASH_CLEAN"
 python setup.py sdist bdist_wheel
-python -m pip install --upgrade twine
-python -m twine upload -u $pip_user -p $pip_token dist/*
+# python -m pip install --upgrade twine
+# python -m twine upload -u $pip_user -p $pip_token dist/*
 cd $cwd
 
 # Update package version in env files
@@ -32,4 +32,4 @@ rm -f ./$train_directory/Pipfile.lock
 else
 echo "Pipfile.lock is not exist"
 fi
-sleep 30
+#sleep 30
