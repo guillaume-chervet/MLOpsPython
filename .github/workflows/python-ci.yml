@@ -48,18 +48,6 @@ jobs:
       run: |
          chmod +x ./bin/build_package.sh
          ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction __token__ ${{ secrets.PYPI_API_TOKEN }}
-    - name: Publish package extraction
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-      continue-on-error: true
-      with:
-        packages_dir: packages/extraction/dist
-        skip-existing: true
-        verbose: true
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
-    - name: Wait 30 seconds
-      run: |
-        sleep 30
     - name: Run unit tests Extraction
       working-directory: train/extraction
       run: |
@@ -81,18 +69,6 @@ jobs:
       run: |
         chmod +x ./bin/build_package.sh
         ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference __token__ ${{ secrets.PYPI_API_TOKEN }}
-    - name: Publish package inference
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-      continue-on-error: true
-      with:
-        packages_dir: packages/inference/dist
-        skip-existing: true
-        verbose: true
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
-    - name: Wait 30 seconds
-      run: |
-        sleep 30
     - name: Run unit tests Evaluate
       working-directory: train/evaluate
       run: |
