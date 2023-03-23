@@ -99,17 +99,18 @@ file_model = Model(
         name="cats-dogs-others",
         description="Model created from azureML.",
     )
-ml_client.models.create_or_update(file_model)
+saved_model = ml_client.models.create_or_update(file_model)
 
+print(f"Model with name {saved_model.name} was registered to workspace, the model version is {saved_model.version}.")
 
-credit_data = Data(
+integration_dataset = Data(
     name="cats-dogs-others-integration",
     path=custom_integration_path,
     type=URI_FOLDER,
     description="Dataset for credit card defaults",
     tags={"source_type": "web", "source": "UCI ML Repo"},
 )
-credit_data = ml_client.data.create_or_update(credit_data)
+integration_dataset = ml_client.data.create_or_update(integration_dataset)
 print(
-    f"Dataset with name {credit_data.name} was registered to workspace, the dataset version is {credit_data.version}"
+    f"Dataset with name {integration_dataset.name} was registered to workspace, the dataset version is {integration_dataset.version}"
 )
