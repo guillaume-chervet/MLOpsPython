@@ -17,8 +17,9 @@ cd $package_directory
 echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
 echo "build package with version $PACKAGES_HASH_CLEAN"
 python setup.py sdist bdist_wheel
-# python -m pip install --upgrade twine
-# python -m twine upload -u $pip_user -p $pip_token dist/*
+python -m pip install --upgrade twine
+python -m twine upload -u $PYPI_API_USER -p $PYPI_API_TOKEN dist/*
+
 cd $cwd
 
 # Update package version in env files
@@ -32,4 +33,4 @@ rm -f ./$train_directory/Pipfile.lock
 else
 echo "Pipfile.lock is not exist"
 fi
-#sleep 30
+sleep 30
