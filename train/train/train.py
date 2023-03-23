@@ -60,7 +60,7 @@ class ModelResult:
 
 
 # run the test harness for evaluating a model
-def run_test_harness(input_directory: Path, output_directory: Path, batch_size=64, epochs=10) -> ModelResult:
+def run_test_harness(input_directory: Path, output_directory: Path, batch_size=64, epochs=7) -> ModelResult:
     Path(output_directory).mkdir(parents=True, exist_ok=True)
     # define model
     model = define_model()

@@ -74,7 +74,7 @@ pipeline_job = azureml_pipeline(
         path="azureml:cats_dogs_others:1", type=URI_FOLDER
     ),
     labels_input_data=Input(
-        path="azureml:cats_dogs_others_labels:1", type=URI_FOLDER
+        path="azureml:cats_dogs_others_labels:2", type=URI_FOLDER
     )
 )
 
