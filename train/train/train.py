@@ -22,7 +22,7 @@ def define_model():
         layer.trainable = False
     # add new classifier layers
     flat1 = Flatten()(model.layers[-1].output)
-    class1 = Dense(128, activation="relu", kernel_initializer="he_uniform")(flat1)
+    class1 = Dense(256, activation="relu", kernel_initializer="he_uniform")(flat1)
     output = Dense(3, activation="sigmoid")(class1)
     # define new model
     model = Model(inputs=model.inputs, outputs=output)
