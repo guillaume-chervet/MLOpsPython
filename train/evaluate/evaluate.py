@@ -4,25 +4,37 @@ from pathlib import Path
 from mlopspython_inference.model_pillow import Model
 
 
-def evaluate(logging, input_model_directory:Path, input_images_directory:Path, output_directory:Path, integration_output:Path):
+def evaluate(logging, input_model_directory: Path, input_images_directory: Path, output_directory: Path,
+             integration_output: Path):
     model_path = input_model_directory / "final_model.h5"
     model = Model(logging, str(model_path))
 
+    statistics = {
+                  "ok": 0,
+                  "ko": 0,
+                  "total": 0
+                 }
     results = []
-    cats_directory = input_images_directory / "evaluate"
-    for path in cats_directory.glob("**/*"):
+    tests_directory = input_images_directory / "evaluate"
+    for path in tests_directory.glob("**/*"):
         if path.is_dir():
             continue
         model_result = model.execute(str(path))
 
         prediction = model_result["prediction"]
         prediction_truth = path.parent.name.lower().replace("s", "")
+        status = prediction_truth == prediction.lower()
+        statistics["ok" if status else "ko"] += 1
         result = {"filename": path.name,
-                  "ok": prediction_truth == prediction.lower(),
+                  "ok": status,
                   "prediction": prediction,
                   "prediction_truth": prediction_truth,
                   "values": model_result["values"]}
         results.append(result)
+    statistics["total"] = statistics["ok"] + statistics["ko"]
+
+    with open(output_directory / "statistics.json", 'w') as file_stream:
+        json.dump(statistics, file_stream, indent=4)
 
     with open(output_directory / "predictions.json", 'w') as file_stream:
         json.dump(results, file_stream, indent=4)
@@ -32,7 +44,7 @@ def evaluate(logging, input_model_directory:Path, input_images_directory:Path, o
 
     mlcli_directory = integration_output / "mlcli"
     mlcli_directory.mkdir(parents=True, exist_ok=True)
-    for source_path in cats_directory.glob("**/*"):
+    for source_path in tests_directory.glob("**/*"):
         if source_path.is_dir():
             continue
         destination_path = mlcli_directory / source_path.name
