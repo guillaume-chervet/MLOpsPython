@@ -24,12 +24,12 @@ def define_model():
     drop1 = keras.layers.Dropout(0.2)(model.layers[-1].output)
     flat1 = Flatten()(drop1)
     class1 = Dense(128, activation="relu", kernel_initializer="he_uniform")(flat1)
-    class2 = Dense(42, activation="relu", kernel_initializer="he_uniform")(class1)
-    output = Dense(3, activation="sigmoid")(class2)
+    #class2 = Dense(42, activation="relu", kernel_initializer="he_uniform")(class1)
+    output = Dense(3, activation="sigmoid")(class1)
     # define new model
     model = Model(inputs=model.inputs, outputs=output)
     # compile model
-    opt = SGD(lr=0.0008, momentum=0.8)
+    opt = SGD(lr=0.0002, momentum=0.2)
     model.compile(
         optimizer=opt, loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=["accuracy"]
     )
