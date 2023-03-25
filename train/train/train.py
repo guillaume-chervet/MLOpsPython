@@ -21,13 +21,15 @@ def define_model():
     for layer in model.layers:
         layer.trainable = False
     # add new classifier layers
-    flat1 = Flatten()(model.layers[-1].output)
-    class1 = Dense(256, activation="relu", kernel_initializer="he_uniform")(flat1)
-    output = Dense(3, activation="sigmoid")(class1)
+    drop1 = keras.layers.Dropout(0.2)(model.layers[-1].output)
+    flat1 = Flatten()(drop1)
+    class1 = Dense(128, activation="relu", kernel_initializer="he_uniform")(flat1)
+    class2 = Dense(42, activation="relu", kernel_initializer="he_uniform")(class1)
+    output = Dense(3, activation="sigmoid")(class2)
     # define new model
     model = Model(inputs=model.inputs, outputs=output)
     # compile model
-    opt = SGD(lr=0.001, momentum=0.9)
+    opt = SGD(lr=0.0008, momentum=0.8)
     model.compile(
         optimizer=opt, loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=["accuracy"]
     )
