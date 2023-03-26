@@ -34,7 +34,7 @@ def define_model():
     #    optimizer=opt, loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=["accuracy"]
     #)
     model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
     return model
 
