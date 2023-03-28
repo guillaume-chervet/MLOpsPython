@@ -12,6 +12,8 @@ from label_split_data.azureml_step import label_split_data_step
 from train.azureml_step import train_step
 from evaluate.azureml_step import evaluate_step
 
+import json
+
 URI_FOLDER = "uri_folder"
 
 try:
@@ -114,3 +116,12 @@ integration_dataset = ml_client.data.create_or_update(integration_dataset)
 print(
     f"Dataset with name {integration_dataset.name} was registered to workspace, the dataset version is {integration_dataset.version}"
 )
+
+output_data= {
+    "model_version": saved_model.version,
+    "model_name": saved_model.name,
+    "integration_dataset_name": integration_dataset.name,
+    "integration_dataset_version": integration_dataset.version
+}
+
+print(json.dumps(output_data))
