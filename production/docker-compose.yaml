@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+ # redis:
+ #   image: dvaew1afahubacr02.azurecr.io/externals/data/redislabs/rejson:1.0.8
+ #   ports:
+ #     - 6379:6379
+  base-function:
+    build:
+      context: ./base_function
+      dockerfile: ./Dockerfile
+      args:
+        baseImage: axaguildev/build-ubi8-python3.8:pr-1
+    image: local.io/base-function:local
+
+  cat_dogs_others:
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile
+      args:
+        buildImage: local.io/base-function:local
+        runtimeImage: axaguildev/build-ubi8-python3.8:pr-1
+    image: local.io/catsdogsothers:local
+    restart: "no"
+    user: "1001001"
+    ports:
+      - 8064:5000
+    depends_on:
+      - base-function
+    environment:
+      - http_timeout=300
+      - url_gateway=http://{function_name}:8080
+      - client_url_file=http://localhost:5011/{id}
+      - api_debug_file=true
+      - redis_host=redis
+      - redis_port=6379
+      - redis_expire_time=120
+      - oidc_enabled=false
+      - USE_DYNATRACE_COLLECTOR=false
+      - EXPORTER_DYNATRACE_ENDPOINT=https://dynatraces/api/v2/otlp/v1/traces
+      - EXPORTER_DYNATRACE_TOKEN="dynatrace_token"
+      - OTEL_PYTHON_FASTAPI_EXCLUDED_URLS=version,health,metrics,docs*
+      - EXPORTER_JAEGER_ENDPOINT=http://jaeger-collector:14268/api/traces?format=jaeger.thrift
+      - PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python

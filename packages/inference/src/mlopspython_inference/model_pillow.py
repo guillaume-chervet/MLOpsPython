@@ -1,3 +1,5 @@
+from io import BytesIO
+
 import numpy as np
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from keras.models import load_model
@@ -5,7 +7,7 @@ from pathlib import Path
 
 
 # load and prepare the image
-def load_image(filename: str):
+def load_image(filename: str|BytesIO):
     # load the image
     img = load_img(filename, target_size=(224, 224))
     # convert to array
@@ -26,7 +28,7 @@ class Model:
         self.logger = logging.getLogger(__name__)
         self.model = load_model(model_path)
 
-    def execute(self, filepath):
+    def execute(self, filepath:str|BytesIO):
         img = load_image(filepath)
         result = self.model.predict(img)
         values = [float(result[0][0]), float(result[0][1]), float(result[0][2])]
