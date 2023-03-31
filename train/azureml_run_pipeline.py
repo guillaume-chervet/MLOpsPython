@@ -117,7 +117,7 @@ print(
     f"Dataset with name {integration_dataset.name} was registered to workspace, the dataset version is {integration_dataset.version}"
 )
 
-output_data= {
+output_data = {
     "model_version": saved_model.version,
     "model_name": saved_model.name,
     "integration_dataset_name": integration_dataset.name,
