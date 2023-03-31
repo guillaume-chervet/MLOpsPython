@@ -16,8 +16,6 @@ def json_to_dict(json_string):
 
 
 last_line = get_last_line(filename)
-print("last_line")
-print(last_line)
 dict_obj = json_to_dict(last_line)
 
 
