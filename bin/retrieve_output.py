@@ -19,4 +19,4 @@ last_line = get_last_line(filename)
 dict_obj = json_to_dict(last_line)
 
 
-print(dict_obj['accuracy'])
+print(dict_obj[json_property_name])
