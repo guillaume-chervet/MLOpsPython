@@ -87,5 +87,5 @@ jobs:
     - name: download model
       run: |
           az extension add -n ml
-          MODEL_VERSION = $(python bin/retrieve_output.py ./train/train_output.txt model_version)
+          MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
           az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
