@@ -10,7 +10,4 @@ class Model:
         self.model = ModelPillow(logging, str(model_path))
 
     def execute(self, file, filename, settings=None):
-        with open(filename, "wb") as stream:
-            stream.write(file.getbuffer())
-
-        return self.model.execute(filename)
+        return self.model.execute(file)

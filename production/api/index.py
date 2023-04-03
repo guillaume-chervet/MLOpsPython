@@ -13,23 +13,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from core.tracing import init_tracing
-from core.async_middleware import RequestContextLogMiddleware
 from core.base_app_settings import BaseAppSettings
-from core.http_service_factory import HttpServiceFactory
-from core.http_singleton import SingletonAiohttp
 from core.log import Logging
 from core.model.app_settings import AppSettings
-from core.model.model_factory import ModelFactory
-from core.post_processing.post_processing import PostProcessing
-from core.post_processing.post_processing_app_settings import PostProcessingAppSettings
-from core.pre_processing.pre_processing import PreProcessing
-from core.pre_processing.pre_processing_app_settings import PreProcessingAppSettings
 from core.process import Process
-from core.redis import Redis
-from core.scrub import scrub, add_url
 from core.version import VERSION
-from core.async_middleware import get_is_debug
+from core.model.model import Model
 
 logging = Logging()
 logger = logging.getLogger(__name__)
@@ -47,22 +36,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(RequestContextLogMiddleware)
 
 app_settings = AppSettings(logging)
-model = ModelFactory(logging, app_settings).create()
-http_service_factory = HttpServiceFactory(logging)
-redis = Redis()
-post_processing = PostProcessing(logging, PostProcessingAppSettings(logging), redis, http_service_factory)
-pre_processing = PreProcessing(logging, PreProcessingAppSettings(logging), redis)
+model = Model(logging, app_settings)
 base_app_settings = BaseAppSettings(logging)
-process = Process(logging, redis, model, pre_processing, post_processing, base_app_settings, get_is_debug)
-
-init_tracing(base_app_settings, app)
-
-
-async def on_shutdown():
-    await SingletonAiohttp.close()
+process = Process(logging, model)
 
 
 @app.on_event("startup")
@@ -113,35 +91,15 @@ async def upload_internal_async(file: UploadFile = File(...), settings_list: Lis
     result = await process.process_document_async(file_bytes, filename, settings)
     return result
 
-
-@app.post("/upload-integration")
-async def upload_integration(file: UploadFile = File(...), settings: List[UploadFile] = File([])):
-    result = await upload_internal_async(file, settings)
-    return scrub(result)
-
-
 @app.post("/upload")
 async def upload(file: UploadFile = File(...)):
     result = await upload_internal_async(file, [])
-    return add_url(result, base_app_settings.client_url_file)
+    return result
 
 
 class Item(BaseModel):
     id: str
     settings: Optional[Dict[str, Union[None, str, float, Dict[str, float]]]] = None
-
-
-@app.post("/{path:path}")
-async def process_data(item: Item):
-    file, filename = process.get_file_byid(item.id)
-    if item.settings is None:
-        settings = {"file_id": item.id, "version": VERSION}
-    else:
-        settings = item.settings.copy()
-        settings["file_id"] = item.id
-        settings["version"] = VERSION
-    return await process.process_document_async(file, filename, settings)
-
 
 logger.info('application starting using version: %s', VERSION)
 

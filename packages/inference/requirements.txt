@@ -1,4 +1,6 @@
 numpy==1.23.5
-keras==2.12.0rc0
-tensorflow==2.12.0rc0
+keras==2.12.0
+tensorflow==2.12.0
 opencv-contrib-python-headless==4.7.0.68
+fastapi==0.95.0
+asyncio==3.4.3

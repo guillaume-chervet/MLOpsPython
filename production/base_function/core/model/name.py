@@ -1,1 +1,0 @@
-NAME = "APP_NAME"

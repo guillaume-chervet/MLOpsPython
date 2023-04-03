@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 
 import "./App.css";
+import convertPdfToImagesAsync from "./pdf";
 
 function App() {
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [type, setType] = useState(null);
   const [url, setUrl] = useState(null);
-  const [prediction, setPrediction] = useState(null);
+  const [predictions, setPredictions] = useState([]);
   const [feedback, setFeedback] = useState(null);
 
   const UPLOAD_ENDPOINT =
-    "http://localhost:8064/upload-integration";
+    "http://localhost:8000/upload";
 
   const uploadFile = async file => {
     const formData = new FormData();
@@ -36,13 +37,16 @@ function App() {
   const handleOnChange = async e => {
     const file = e.target.files[0];
     e.target.value = null;
-    setFile(file);
+    convertPdfToImagesAsync()(file).then(files => {
+            files.pop();
+            setFiles(files);
+        });
     const objectURL = URL.createObjectURL(file);
     setUrl(objectURL);
-    setPrediction(null);
+    setPredictions(null);
     setFeedback(null);
     let res = await uploadFile(file);
-    setPrediction(res)
+    setPredictions(res)
   };
 
   const handleFeedback = e => {
@@ -51,9 +55,16 @@ function App() {
 
   const handleType = e => {
     setType(e.target.value);
-    setPrediction(null);
+    setPredictions([]);
     setFeedback(null);
-    setFile(null);
+    setFiles([]);
+    setUrl(null);
+  }
+
+  function handleClick() {
+    setPredictions([]);
+    setFeedback(null);
+    setFiles([]);
     setUrl(null);
   }
 
@@ -61,23 +72,19 @@ function App() {
       <>
     <form >
       <h1>Production environment</h1>
-      <input type="file" onChange={handleOnChange}  />
+      <input type="file" onClick={handleClick} onChange={handleOnChange}  />
       <select  value={type} onChange={handleType} >
         <option value="pillow">Pillow</option>
         <option value="opencv">Opencv</option>
       </select>
     </form>
+        {files.map((file, index) => <div className="container" key={index}><img  src={file} alt="pdf page"
+                                                           style={{maxWidth: "200px"}}/>
+          {predictions && predictions.length > 0 ? <p> It is a {predictions[index].prediction} </p> : <p> Loading ... </p>}
 
-    { url && <img src={url} alt={"selected image"}  style={{maxWidth: "400px", maxHeight: "400px"}} />}
-        {prediction && <>
-          <p style={{fontSize:"2em", "padding": "0.4em", "margin": "0em", color:"white", "backgroundColor": "brown", "textAlign": "center"}}>It's a <b>{prediction.prediction}</b></p>
-
-
-          { feedback === true ? <p>Thank you!</p>  : <> <label>Do you agree with that result ?</label>
-        <button onClick={handleFeedback} type="button">Yes</button><button  onClick={handleFeedback} type="button">No</button>
-          </>}
-        </>
-        }
+        <p>Do you agree with that result ?
+        <button onClick={handleFeedback} type="button">Yes</button><button  onClick={handleFeedback} type="button">No</button></p>
+        </div>)}
 
 
         </>

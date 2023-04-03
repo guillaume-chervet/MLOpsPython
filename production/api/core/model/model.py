@@ -1,4 +1,4 @@
-from .model_cv import Model as ModelCv
+#from .model_cv import Model as ModelCv
 from .model_pillow import Model as ModelPillow
 from mlopspython_extraction.extraction import extract_images_stream
 
@@ -17,4 +17,6 @@ class Model:
 			#else:
 			prediction= self.model_pillow.execute(image_stream.image_bytes_io, filename, settings)
 			predictions.append(prediction)
+		print("predictions")
+		print(predictions)
 		return predictions

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@axa-fr/react-oidc": "6.16.10",
+    "cuid": "3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1"

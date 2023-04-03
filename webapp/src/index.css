@@ -14,7 +14,7 @@ code {
 
 
 button{
-  font-size: 1.6em;
+  font-size: 1em;
   padding: 0.1em;
   margin: 0.1em;
 }
@@ -25,6 +25,11 @@ input{
   margin: 0.1em;
 }
 
+.container{
+  border-color: gray;
+  border-style: solid;
+  border-width: 1px;
+}
 
 select{
    font-size: 1.6em;
