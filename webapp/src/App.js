@@ -3,12 +3,17 @@ import React, { useState } from "react";
 import "./App.css";
 import convertPdfToImagesAsync from "./pdf";
 
+const Feedback = ({ feedback, handleFeedback, index }) => {
+   return(!feedback[index.toString()] ? <p className="feedback">Do you agree with that result ?
+   <button onClick={()=> handleFeedback(index)} type="button">Yes</button><button  onClick={()=> handleFeedback(index)} type="button">No</button>
+   </p>: <p className="feedback">Thank you for your feedback</p>);
+}
+
 function App() {
   const [files, setFiles] = useState([]);
   const [type, setType] = useState(null);
-  const [url, setUrl] = useState(null);
   const [predictions, setPredictions] = useState([]);
-  const [feedback, setFeedback] = useState(null);
+  const [feedback, setFeedback] = useState({});
 
   const UPLOAD_ENDPOINT =
     "http://localhost:8000/upload";
@@ -41,31 +46,27 @@ function App() {
             files.pop();
             setFiles(files);
         });
-    const objectURL = URL.createObjectURL(file);
-    setUrl(objectURL);
     setPredictions(null);
-    setFeedback(null);
+    setFeedback({});
     let res = await uploadFile(file);
     setPredictions(res)
   };
 
-  const handleFeedback = e => {
-    setFeedback(true);
+  const handleFeedback = index => {
+    setFeedback({...feedback, [index.toString()]: true});
   };
 
   const handleType = e => {
     setType(e.target.value);
     setPredictions([]);
-    setFeedback(null);
+    setFeedback({});
     setFiles([]);
-    setUrl(null);
   }
 
   function handleClick() {
     setPredictions([]);
-    setFeedback(null);
+    setFeedback({});
     setFiles([]);
-    setUrl(null);
   }
 
   return (
@@ -78,14 +79,19 @@ function App() {
         <option value="opencv">Opencv</option>
       </select>
     </form>
-        {files.map((file, index) => <div className="container" key={index}><img  src={file} alt="pdf page"
-                                                           style={{maxWidth: "200px"}}/>
-          {predictions && predictions.length > 0 ? <p> It is a {predictions[index].prediction} </p> : <p> Loading ... </p>}
-
-        <p>Do you agree with that result ?
-        <button onClick={handleFeedback} type="button">Yes</button><button  onClick={handleFeedback} type="button">No</button></p>
-        </div>)}
-
+        <table>
+          <tbody>
+        {files.map((file, index) =>{
+          return (<tr>
+            <td> <img  src={file} alt="pdf page"  style={{maxWidth: "400px"}}/></td>
+            <td>{predictions && predictions.length > 0 ? <p className="prediction"> It is a {predictions[index].prediction}
+            </p> : <p className="prediction"> Loading ... </p>}
+              {predictions && predictions.length && <Feedback feedback={feedback} handleFeedback={handleFeedback} index={index}  />}
+            </td>
+          </tr>)
+        })}
+          </tbody>
+      </table>
 
         </>
 

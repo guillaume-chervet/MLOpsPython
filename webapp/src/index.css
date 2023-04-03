@@ -25,10 +25,14 @@ input{
   margin: 0.1em;
 }
 
-.container{
-  border-color: gray;
-  border-style: solid;
-  border-width: 1px;
+.prediction{
+  font-size: 1.4em;
+}
+
+
+.feedback{
+  color: grey;
+  font-size: 0.9em;
 }
 
 select{
@@ -51,4 +55,8 @@ p{
 
 body{
   text-align: center;
+}
+
+table{
+  with: 100%;
 }
