@@ -27,14 +27,15 @@ BASE_PATH = Path(__file__).resolve().parent
 class Model:
 	def __init__(self, logging, app_settings):
 		self.logger = logging.getLogger(__name__)
-		self.model = load_model(str(BASE_PATH / 'final_model.h5'))
+		model_path = (str(BASE_PATH / "cats-dogs-others" / "cats-dogs-others" / 'final_model.h5'))
+		self.model = load_model(model_path)
 
 	def execute(self, file, filename, settings=None):
 		img = load_image(file)
 		# predict the class
 		result = self.model.predict(img)
-		values = [float(result[0][0]),float(result[0][1]),float(result[0][2])]
+		values = [float(result[0][0]), float(result[0][1]), float(result[0][2])]
 		print("prediction_values")
 		switcher = ['Cat', 'Dog', 'Other']
 		prediction = np.argmax(result[0])
-		return {"prediction": switcher[prediction], "values": values}
+		return { "prediction": switcher[prediction], "values": values }

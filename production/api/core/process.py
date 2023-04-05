@@ -1,6 +1,5 @@
 from starlette.concurrency import run_in_threadpool
 from functools import partial
-
 from .model.model import Model
 import asyncio
 
@@ -15,6 +14,7 @@ class Process:
     async def process_document_async(self, file, filename, settings=None):
         logger = self.logger
         logger.debug('before execute model %s', filename)
+
         if settings is not None:
             logger.debug('settings found')
             logger.debug(settings)
