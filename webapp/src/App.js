@@ -43,7 +43,6 @@ function App() {
     const file = e.target.files[0];
     e.target.value = null;
     if (file.name.endsWith(".pdf")) {
-
       convertPdfToImagesAsync()(file).then(files => {
         files.pop();
         setFiles(files);

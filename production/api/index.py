@@ -92,8 +92,8 @@ async def upload_internal_async(file: UploadFile = File(...), settings_list: Lis
     return result
 
 @app.post("/upload")
-async def upload(file: UploadFile = File(...)):
-    result = await upload_internal_async(file, [])
+async def upload(file: UploadFile = File(...), settings: List[UploadFile] = File([])):
+    result = await upload_internal_async(file, settings)
     return result
 
 

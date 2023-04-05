@@ -18,17 +18,21 @@ class Model:
 
         predictions = []
 
+        type = "pillow"
+        if "type" in settings:
+            type = settings["type"]
+
         mime_type = get_mime_type(filename)
         if mime_type == "application/pdf":
             stream = file.read()
             for image_stream in extract_images_stream(stream):
-                if settings["type"] == "opencv":
+                if type == "opencv":
                     prediction = self.model_cv.execute(stream, filename, settings)
                 else:
                     prediction = self.model_pillow.execute(image_stream.image_bytes_io, filename, settings)
                 predictions.append(prediction)
         elif mime_type in ['image/png', 'image/jpeg', 'image/bmp']:
-            if settings["type"] == "opencv":
+            if type == "opencv":
                 prediction = self.model_cv.execute(file, filename, settings)
             else:
                 prediction = self.model_pillow.execute(file, filename, settings)
