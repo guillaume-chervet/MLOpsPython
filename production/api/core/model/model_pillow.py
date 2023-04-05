@@ -1,3 +1,4 @@
+import io
 from pathlib import Path
 from mlopspython_inference.model_pillow import Model as ModelPillow
 
@@ -10,4 +11,4 @@ class Model:
         self.model = ModelPillow(logging, str(model_path))
 
     def execute(self, file, filename, settings=None):
-        return self.model.execute(file)
+        return self.model.execute(io.BytesIO(file.read()))

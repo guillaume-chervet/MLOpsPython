@@ -42,10 +42,16 @@ function App() {
   const handleOnChange = async e => {
     const file = e.target.files[0];
     e.target.value = null;
-    convertPdfToImagesAsync()(file).then(files => {
-            files.pop();
-            setFiles(files);
-        });
+    if (file.name.endsWith(".pdf")) {
+
+      convertPdfToImagesAsync()(file).then(files => {
+        files.pop();
+        setFiles(files);
+      });
+    } else{
+      const objectURL = URL.createObjectURL(file);
+      setFiles([objectURL]);
+    }
     setPredictions(null);
     setFeedback({});
     let res = await uploadFile(file);

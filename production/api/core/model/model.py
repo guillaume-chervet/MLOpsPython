@@ -4,12 +4,8 @@ from mlopspython_extraction.extraction import extract_images_stream
 import mimetypes
 
 
-def get_mime_type(self, filepath: str) -> str:
-    try:
-        return mimetypes.guess_type(filepath, strict=False)[0]
-    except Exception as e:
-        self.loger.error(f"Error while getting mime type {e}")
-    return "application/octet-stream"
+def get_mime_type(filepath: str) -> str:
+    return mimetypes.guess_type(filepath, strict=False)[0]
 
 
 class Model:
@@ -21,9 +17,10 @@ class Model:
         print(settings)
 
         predictions = []
-        stream = file.read()
+
         mime_type = get_mime_type(filename)
         if mime_type == "application/pdf":
+            stream = file.read()
             for image_stream in extract_images_stream(stream):
                 if settings["type"] == "opencv":
                     prediction = self.model_cv.execute(stream, filename, settings)
@@ -32,9 +29,9 @@ class Model:
                 predictions.append(prediction)
         elif mime_type in ['image/png', 'image/jpeg', 'image/bmp']:
             if settings["type"] == "opencv":
-                prediction = self.model_cv.execute(stream, filename, settings)
+                prediction = self.model_cv.execute(file, filename, settings)
             else:
-                prediction = self.model_pillow.execute(stream, filename, settings)
+                prediction = self.model_pillow.execute(file, filename, settings)
             predictions.append(prediction)
 
         print("predictions")

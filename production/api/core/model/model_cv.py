@@ -7,7 +7,7 @@ import cv2
 # load and prepare the image
 def load_image(file):
 	# load the image
-	img_array = np.asarray(bytearray(file.read()), dtype=np.uint8)
+	img_array = np.asarray(bytearray(file), dtype=np.uint8)
 	local_file = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
 	img = cv2.resize(local_file, (224, 224), interpolation=cv2.INTER_CUBIC)
 	# convert to array
@@ -31,7 +31,7 @@ class Model:
 		self.model = load_model(model_path)
 
 	def execute(self, file, filename, settings=None):
-		img = load_image(file)
+		img = load_image(file.read())
 		# predict the class
 		result = self.model.predict(img)
 		values = [float(result[0][0]), float(result[0][1]), float(result[0][2])]
