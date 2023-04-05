@@ -11,6 +11,7 @@ from extraction.azureml_step import extraction_step
 from label_split_data.azureml_step import label_split_data_step
 from train.azureml_step import train_step
 from evaluate.azureml_step import evaluate_step
+import uuid
 
 import json
 
@@ -80,11 +81,14 @@ pipeline_job = azureml_pipeline(
     )
 )
 
-custom_model_path = "azureml://datastores/workspaceblobstore/paths/models/cats-dogs-others/"
+
+azure_blob = "azureml://datastores/workspaceblobstore/paths/"
+experience_id = str(uuid.uuid4())
+custom_model_path = azure_blob + "models/cats-dogs-others/" + experience_id + "/"
 pipeline_job.outputs.model_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_model_path
 )
-custom_integration_path = "azureml://datastores/workspaceblobstore/paths/integration/cats-dogs-others/"
+custom_integration_path = azure_blob + "/integration/cats-dogs-others/" + experience_id + "/"
 pipeline_job.outputs.integration_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_integration_path
 )
