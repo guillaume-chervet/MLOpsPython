@@ -39,7 +39,7 @@ class ExtractImagesResult:
 
 
 def extract_images(pdfs_directory_path: str, images_directory_path: str) -> ExtractImagesResult:
-    pdfs = [p for p in Path(pdfs_directory_path).iterdir() if p.is_file()]
+    pdfs = [p for p in Path(pdfs_directory_path).iterdir() if p.is_file() and p.suffix == ".pdf"]
     Path(images_directory_path).mkdir(parents=True, exist_ok=True)
     number_images_output = 0
     for pdf_path in pdfs:
