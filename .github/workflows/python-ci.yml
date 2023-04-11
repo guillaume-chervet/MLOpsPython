@@ -154,7 +154,7 @@ jobs:
       run: |
           az extension add -n ml
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
-          echo "MODEL_VERSION=pr-$MODEL_VERSION" >> $GITHUB_OUTPUT
+          echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
           # az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
   build_docker:
     needs: [train, tags]
@@ -165,6 +165,7 @@ jobs:
       image_build_args: ""
       image_context: ./production/api
       image_file: "./production/api/Dockerfile"
+      model_version: ${{ needs.train.outputs.MODEL_VERSION }}
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

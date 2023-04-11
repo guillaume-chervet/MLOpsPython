@@ -18,6 +18,9 @@ on:
       image_file:
         required: true
         type: string
+      model_version:
+        required: true
+        type: string
     secrets:
       DOCKER_USERNAME:
         required: true
@@ -42,6 +45,18 @@ jobs:
     - name: Setup Project
       run: |
         chmod +x ./Makefile
+
+    - name: azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZUREML_CREDENTIALS}}
+
+    - name: download model
+      run: |
+        az extension add -n ml
+        MODEL_VERSION=${{ inputs.image_version }}
+        cd production/api/core/model
+        az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
