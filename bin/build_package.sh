@@ -39,4 +39,3 @@ rm -f ./$train_directory/Pipfile.lock
 else
 echo "Pipfile.lock is not exist"
 fi
-sleep 30
