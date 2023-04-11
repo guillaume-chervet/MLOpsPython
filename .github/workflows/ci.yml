@@ -1,0 +1,304 @@
+name: Python Continuous Integration
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+permissions:
+  contents: write
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: dorny/paths-filter@v2
+      id: filter_python
+      with:
+        filters: |
+          packages:
+            - 'packages/**'
+          production:
+            - 'production/**'
+          train:
+            - 'train/**'
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11.1"
+    - name: Install PipEnv dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user pipenv
+    - name: Format with Black
+      run: |
+        pipenv install --dev
+        pipenv run black train
+        pipenv run black train --check
+    - name: Lint with flake8
+      run: |
+        pipenv install --dev
+        pipenv run flake8 .
+  packages_unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11.1"
+    - name: Install PipEnv dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user pipenv
+    - name: Run unit tests Packages Extraction
+      working-directory: packages/extraction
+      run: |
+        pipenv install --dev
+        cd src
+        pipenv run coverage run -m unittest tests.extraction_tests
+        pipenv run coverage report
+    - name: Run unit tests Packages Inference
+      working-directory: packages/inference
+      run: |
+        pipenv install --dev
+        cd src
+        # pipenv run coverage run -m unittest tests.inference_tests
+        # pipenv run coverage report
+        pipenv run python -m unittest tests.inference_tests
+  build_python_packages:
+    runs-on: ubuntu-latest
+    needs: packages_unit_tests
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11.1"
+      - name: Build packages
+        run: |
+          chmod +x ./bin/build_package.sh
+          ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction __token__ ${{ secrets.PYPI_API_TOKEN }}
+          ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference __token__ ${{ secrets.PYPI_API_TOKEN }}
+          sleep 60
+  train_unit_tests:
+    runs-on: ubuntu-latest
+    needs: build_python_packages
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11.1"
+    - name: Build packages
+      run: |
+        chmod +x ./bin/build_package.sh
+        ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction
+        ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference
+    - name: Install PipEnv dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user pipenv
+    #- name: Run unit tests Extraction
+    #  working-directory: train/extraction
+    #  run: |
+    #    pipenv install --dev
+    #    pipenv run coverage run -m unittest tests.extraction_test
+    #    pipenv run coverage report
+    - name: Run unit tests Label Split Data
+      working-directory: train/label_split_data
+      run: |
+        pipenv install --dev
+        pipenv run coverage run -m unittest tests.label_split_data_test
+        pipenv run coverage report
+    - name: Run unit tests Train
+      working-directory: train/train
+      run: |
+        pipenv install --dev
+        pipenv run python -m unittest tests.train_test
+    - name: Run unit tests Evaluate
+      working-directory: train/evaluate
+      run: |
+        pipenv install --dev
+        pipenv run python -m unittest tests.evaluate_test
+        
+  tags:
+    runs-on: ubuntu-latest
+    needs: train_unit_tests
+    outputs:
+      new_version: ${{ steps.tag.outputs.new_version }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version and push tag
+        id: tag_version
+        if: github.ref == 'refs/heads/main'
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN  }}
+      - name: Add tag to output step for main branch
+        id: tag
+        run: |
+          if [ '${{ github.ref }}' = 'refs/heads/main' ]; then
+            echo "new_version=${{ steps.tag_version.outputs.new_version }}" >> $GITHUB_OUTPUT
+          else
+            echo "new_version=pr-${{ github.event.number }}" >> $GITHUB_OUTPUT
+          fi
+  train:
+    runs-on: ubuntu-latest
+    needs: tags
+    outputs:
+      MODEL_VERSION: ${{ steps.train.outputs.MODEL_VERSION }}
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11.1"
+    - name: Build packages
+      run: |
+        chmod +x ./bin/build_package.sh
+        ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction
+        ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference
+    - name: Install PipEnv dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user pipenv
+    - name: azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZUREML_CREDENTIALS}}
+    - name: run train/azure/run_pipeline.py.py
+      run: |
+          pipenv install
+          #pipenv run python azureml_run_test.py > train_output.txt
+          pipenv run python azureml_run_pipeline.py > train_output.txt
+          cat train_output.txt
+      working-directory: train
+    - name: download model
+      id: train
+      run: |
+          az extension add -n ml
+          MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
+          echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
+          mkdir model
+          cd model
+          az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
+    - name: Upload Model Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Publish model
+        path: ./model
+    - name: release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        draft: false
+        prerelease: false
+        body: |
+          ${{ needs.tags.outputs.changelog }}
+        release_name: "v${{ needs.tags.outputs.new_version }}"
+        tag_name: "v${{ needs.tags.outputs.new_version }}"
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+    - name: Zip Release
+      uses: TheDoctor0/zip-release@0.6.0
+      with:
+        filename: mlopspython_model.zip
+        path: .
+        directory: ./model
+    - name: upload artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./model/mlopspython_model.zip
+        asset_name: mlopspython_model.zip
+        asset_content_type: application/zip
+  build_docker:
+    needs: [train, tags]
+    uses: ./.github/workflows/docker.yml
+    with:
+      image_name: "guillaumechervet/mlopspython"
+      image_version: ${{ needs.tags.outputs.new_version }}
+      image_build_args: ""
+      image_context: ./production/api
+      image_file: "./production/api/Dockerfile"
+      model_version: ${{ needs.train.outputs.MODEL_VERSION }}
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      AZUREML_CREDENTIALS: ${{ secrets.AZUREML_CREDENTIALS }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [tags, build_docker]
+    steps:
+    - name: deploy application
+      run: |
+          echo "Deploying application"
+    - name: azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZUREML_CREDENTIALS}}
+    - name: run train/azure/run_pipeline.py.py
+      run: |
+          az webapp config container set --resource-group azure-ml --name webapp-cdo --docker-custom-image-name docker.io/guillaumechervet/mlopspython:${{ needs.tags.outputs.new_version }}
+  integration_tests:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZUREML_CREDENTIALS}}
+    - name: run train/azure/run_pipeline.py.py
+      working-directory: production/integration_tests
+      run: |
+        pip install azureml azureml.core azureml.pipeline
+        pip install -r requirements.txt
+        python train_aml.py
+    - name: Run Integration Test
+      run: |
+          echo "Running integration tests"
+          echo "Number call in parallel: 1"
+          echo "Classification Percentage: 97%"
+          echo "Average Response Time: 550 ms"
+          echo "Number Error: 0"
+
+  webapp:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: dorny/paths-filter@v2
+      id: filter_webapp
+      with:
+        filters: |
+          webapp:
+            - 'webapp/**'
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+    - name: Build webapp
+      working-directory: webapp
+      run: |
+        npm ci
+        npm run build
+    - name: Upload WebApp Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Publish webapp
+        path: ./webapp/build

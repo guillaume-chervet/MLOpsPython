@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+jupyter = "*"
 
 [dev-packages]
 black = "===23.1.0"

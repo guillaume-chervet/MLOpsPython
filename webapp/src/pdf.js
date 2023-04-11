@@ -6,7 +6,7 @@ let promiseCache = null;
 const convertPdfToImagesAsync = (sources = [`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.min.js`], workerSrc = "") => (file, scale = 2) => {
     if (promiseCache == null) {
         promiseCache = loadScripts(sources).then(() => {
-            pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
+            window.pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
         });
     }
     return promiseCache.then(() => _convertPdfToImagesAsync(window.pdfjsLib, workerSrc, file, scale));
