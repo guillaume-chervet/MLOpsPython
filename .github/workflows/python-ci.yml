@@ -160,7 +160,7 @@ jobs:
     needs: [train, tags]
     uses: ./.github/workflows/docker.yml
     with:
-      image_name: "guillaumechervet/MLOpsPython"
+      image_name: "guillaumechervet/mlopspython"
       image_version: ${{ needs.tags.outputs.new_version }}
       image_build_args: ""
       image_context: ./ubi
