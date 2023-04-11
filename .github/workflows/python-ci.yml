@@ -30,7 +30,25 @@ jobs:
       run: |
         pipenv install --dev
         pipenv run flake8 .
-  build:
+  build_python_packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11.1"
+      - name: Build packages extraction
+        run: |
+          chmod +x ./bin/build_package.sh
+          ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction __token__ ${{ secrets.PYPI_API_TOKEN }}
+      - name: Build package inference
+        run: |
+          chmod +x ./bin/build_package.sh
+          ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference __token__ ${{ secrets.PYPI_API_TOKEN }}
+  unit_tests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -40,14 +58,14 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.11.1"
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install --user pipenv
     - name: Build packages extraction
       run: |
-         chmod +x ./bin/build_package.sh
-         ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction __token__ ${{ secrets.PYPI_API_TOKEN }}
+        chmod +x ./bin/build_package.sh
+        ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction
+    - name: Build package inference
+      run: |
+        chmod +x ./bin/build_package.sh
+        ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference
     - name: Run unit tests Extraction
       working-directory: train/extraction
       run: |
@@ -65,15 +83,22 @@ jobs:
       run: |
         pipenv install --dev
         pipenv run python -m unittest tests.train_test
-    - name: Build package inference
-      run: |
-        chmod +x ./bin/build_package.sh
-        ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference __token__ ${{ secrets.PYPI_API_TOKEN }}
     - name: Run unit tests Evaluate
       working-directory: train/evaluate
       run: |
         pipenv install --dev
         pipenv run python -m unittest tests.evaluate_test
+  train:
+    runs-on: ubuntu-latest
+    needs: unit_tests
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11.1"
     - name: azure login
       uses: azure/login@v1
       with:
@@ -89,3 +114,26 @@ jobs:
           az extension add -n ml
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
           az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
+
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    needs: unit_tests
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11.1"
+  integration_tests:
+    runs-on: ubuntu-latest
+    needs: unit_tests
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11.1"
