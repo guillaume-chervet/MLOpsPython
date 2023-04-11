@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ "main" ]
 permissions:
-  contents: read, write
+  contents: write
 jobs:
   lint:
     runs-on: ubuntu-latest
