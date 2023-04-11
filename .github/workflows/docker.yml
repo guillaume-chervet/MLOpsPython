@@ -26,6 +26,8 @@ on:
         required: true
       DOCKER_PASSWORD:
         required: true
+      AZUREML_CREDENTIALS:
+        required: true
 
 jobs:
   build:
