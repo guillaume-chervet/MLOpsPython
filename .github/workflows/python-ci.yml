@@ -163,7 +163,7 @@ jobs:
       image_name: "guillaumechervet/mlopspython"
       image_version: ${{ needs.tags.outputs.new_version }}
       image_build_args: ""
-      image_context: ./ubi
+      image_context: ./production/api
       image_file: "./Dockerfile"
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
