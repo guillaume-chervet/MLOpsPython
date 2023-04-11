@@ -30,8 +30,20 @@ jobs:
       run: |
         pipenv install --dev
         pipenv run flake8 .
+  packages_unit_tests:
+    runs-on: ubuntu-latest
+    needs: build_docker
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11.1"
   build_python_packages:
     runs-on: ubuntu-latest
+    needs: packages_unit_tests
     steps:
       - uses: actions/checkout@v3
         with:
@@ -46,7 +58,7 @@ jobs:
           ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction __token__ ${{ secrets.PYPI_API_TOKEN }}
           ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference __token__ ${{ secrets.PYPI_API_TOKEN }}
           sleep 60
-  unit_tests:
+  train_unit_tests:
     runs-on: ubuntu-latest
     needs: build_python_packages
     steps:
@@ -90,7 +102,7 @@ jobs:
         pipenv run python -m unittest tests.evaluate_test
   tags:
     runs-on: ubuntu-latest
-    needs: unit_tests
+    needs: train_unit_tests
     outputs:
       new_version: ${{ steps.tag.outputs.new_version }}
     steps:
@@ -146,7 +158,7 @@ jobs:
           echo "MODEL_VERSION=pr-$MODEL_VERSION" >> $GITHUB_OUTPUT
           # az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
   build_docker:
-    needs: train
+    needs: [train, tags]
     uses: ./.github/workflows/docker.yml
     with:
       image_name: "guillaumechervet/MLOpsPython"
