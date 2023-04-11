@@ -164,7 +164,7 @@ jobs:
       image_version: ${{ needs.tags.outputs.new_version }}
       image_build_args: ""
       image_context: ./production/api
-      image_file: "./Dockerfile"
+      image_file: "./production/api/Dockerfile"
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -189,7 +189,7 @@ jobs:
           namespace: ${{ secrets.OPENSHIFT_NAMESPACE }}
   integration_tests:
     runs-on: ubuntu-latest
-    needs: build_docker
+    needs: deploy
     steps:
     - uses: actions/checkout@v3
       with:
