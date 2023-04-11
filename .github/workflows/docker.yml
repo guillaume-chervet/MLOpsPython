@@ -34,6 +34,15 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11.1"
+
+    - name: Setup Project
+      run: |
+        chmod +x ./Makefile
+
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
       with:
