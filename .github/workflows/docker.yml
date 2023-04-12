@@ -56,6 +56,11 @@ jobs:
 
     - name: download model
       run: |
+        cd production/api/core
+        echo "VERSION = '${{ inputs.image_version }}'" > version.py
+
+    - name: download model
+      run: |
         az extension add -n ml
         MODEL_VERSION=${{ inputs.model_version }}
         cd production/api/core/model
