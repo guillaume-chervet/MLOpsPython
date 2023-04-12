@@ -153,6 +153,7 @@ jobs:
           cat train_output.txt
       working-directory: train
     - name: download model
+      id: train
       run: |
           az extension add -n ml
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
