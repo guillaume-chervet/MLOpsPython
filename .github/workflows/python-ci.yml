@@ -123,6 +123,8 @@ jobs:
   train:
     runs-on: ubuntu-latest
     needs: tags
+    outputs:
+      MODEL_VERSION: ${{ steps.train.outputs.MODEL_VERSION }}
     steps:
     - uses: actions/checkout@v3
       with:
