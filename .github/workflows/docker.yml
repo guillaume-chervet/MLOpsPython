@@ -47,6 +47,7 @@ jobs:
     - name: Setup Project
       run: |
         chmod +x ./Makefile
+        ./Makefile
 
     - name: azure login
       uses: azure/login@v1
