@@ -56,7 +56,7 @@ jobs:
     - name: download model
       run: |
         az extension add -n ml
-        MODEL_VERSION=${{ inputs.image_version }}
+        MODEL_VERSION=${{ inputs.model_version }}
         cd production/api/core/model
         az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
 
