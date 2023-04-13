@@ -184,13 +184,9 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZUREML_CREDENTIALS}}
-    - name: Azure WebApp
-      uses: Azure/webapps-deploy@v2.2.9
-      with:
-        app-name: "mlopspython-cdo"
-        images: docker.io/guillaumechervet/mlopspython:${{ needs.tags.outputs.new_version }}
-        resource-group-name: mlopspython
-    
+    - name: run train/azure/run_pipeline.py.py
+      run: |
+          az webapp config container set --resource-group mlopspython --name mlopspython-cdo --docker-custom-image-name docker.io/guillaumechervet/mlopspython:${{ needs.tags.outputs.new_version }}
   integration_tests:
     runs-on: ubuntu-latest
     needs: deploy
