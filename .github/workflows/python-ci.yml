@@ -94,11 +94,13 @@ jobs:
       run: |
         pipenv install --dev
         pipenv run python -m unittest tests.train_test
+        pipenv run coverage report
     - name: Run unit tests Evaluate
       working-directory: train/evaluate
       run: |
         pipenv install --dev
         pipenv run python -m unittest tests.evaluate_test
+        pipenv run coverage report
   tags:
     runs-on: ubuntu-latest
     needs: train_unit_tests
