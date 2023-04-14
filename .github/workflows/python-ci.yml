@@ -195,6 +195,15 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - name: azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZUREML_CREDENTIALS}}
+    - name: run train/azure/run_pipeline.py.py
+      working-directory: production/integration_tests
+      run: |
+        pip install -r requirements.txt
+        python train_aml.py
     - name: Run Integration Test
       run: |
           echo "Running integration tests"

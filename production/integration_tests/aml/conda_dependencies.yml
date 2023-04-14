@@ -1,0 +1,22 @@
+# Conda environment specification. The dependencies defined in this file will
+# be automatically provisioned for managed runs. These include runs against
+# the localdocker, remotedocker, and cluster compute targets.
+
+# Note that this file is NOT used to automatically manage dependencies for the
+# local compute target. To provision these dependencies locally, run:
+# conda env update --file conda_dependencies.yml
+
+# Details about the Conda environment file format:
+# https://conda.io/docs/using/envs.html#create-environment-file-by-hand
+
+name: license-integration
+      
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8
+  - pip=21.1.3
+  - pip:
+      - azureml-defaults==1.32.0
+      - numpy==1.23.0
+  
