@@ -202,7 +202,7 @@ jobs:
     - name: run train/azure/run_pipeline.py.py
       working-directory: production/integration_tests
       run: |
-        pip install azureml azureml.core
+        pip install azureml azureml.core azureml.pipeline
         pip install -r requirements.txt
         python train_aml.py
     - name: Run Integration Test
