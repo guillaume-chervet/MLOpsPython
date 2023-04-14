@@ -1,1 +1,1 @@
-ml-cli-azureml-pipeline==0.0.35
+ml-cli-azureml-pipeline==0.0.41
