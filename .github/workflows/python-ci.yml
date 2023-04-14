@@ -187,7 +187,7 @@ jobs:
         creds: ${{secrets.AZUREML_CREDENTIALS}}
     - name: run train/azure/run_pipeline.py.py
       run: |
-          az webapp config container set --resource-group mlopspython --name mlopspython-cdo --docker-custom-image-name docker.io/guillaumechervet/mlopspython:${{ needs.tags.outputs.new_version }}
+          az webapp config container set --resource-group azure-ml --name webapp-cdo --docker-custom-image-name docker.io/guillaumechervet/mlopspython:${{ needs.tags.outputs.new_version }}
   integration_tests:
     runs-on: ubuntu-latest
     needs: deploy
