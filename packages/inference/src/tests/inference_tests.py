@@ -10,7 +10,7 @@ input_directory = BASE_PATH / "input"
 
 class TestInference(unittest.TestCase):
 
-    def test_todo(self):
+    def test_inference(self):
         model = Model(logging, str(input_directory / "model" / "final_model.h5"))
         inference_result = model.execute(str(input_directory / "images" / "cat.png"))
 
