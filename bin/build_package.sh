@@ -18,7 +18,7 @@ echo 'VERSION = "'$PACKAGES_HASH_CLEAN'"' > version.py
 echo "build package with version $PACKAGES_HASH_CLEAN"
 python setup.py sdist bdist_wheel
 
-if [ $pip_token = '__token__' ]; then
+if [ $pip_user = '__token__' ]; then
   python -m pip install --upgrade twine
   python -m twine upload -u $pip_user -p $pip_token dist/*
 else
