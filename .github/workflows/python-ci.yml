@@ -45,15 +45,15 @@ jobs:
       run: |
         pip install -r requirements.txt
         cd src
-        pipenv run coverage run -m unittest tests.extraction_tests
-        pipenv run coverage report
+        pip run coverage run -m unittest tests.extraction_tests
+        pip run coverage report
     - name: Run unit tests Packages Inference
       working-directory: packages/inference
       run: |
         pip install -r requirements.txt
         cd src
-        pipenv run coverage run -m unittest tests.inference_tests
-        pipenv run coverage report
+        pip run coverage run -m unittest tests.inference_tests
+        pip run coverage report
   build_python_packages:
     runs-on: ubuntu-latest
     needs: packages_unit_tests
