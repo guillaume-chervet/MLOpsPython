@@ -196,6 +196,33 @@ jobs:
       with:
         name: Publish model
         path: ./model
+    - name: release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        draft: false
+        prerelease: false
+        body: |
+          ${{ needs.tags.outputs.changelog }}
+        release_name: "v${{ needs.tags.outputs.new_version }}"
+        tag_name: "v${{ needs.tags.outputs.new_version }}"
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+    - name: Zip Release
+      uses: TheDoctor0/zip-release@0.6.0
+      with:
+        filename: mlopspython_model.zip
+        path: .
+        directory: ./model
+    - name: upload artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./model/mlopspython_model.zip
+        asset_name: mlopspython_model.zip
+        asset_content_type: application/zip
   build_docker:
     needs: [train, tags]
     uses: ./.github/workflows/docker.yml
@@ -261,6 +288,9 @@ jobs:
         filters: |
           webapp:
             - 'webapp/**'
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '18'
     - name: Build webapp
       working-directory: webapp
       run: |
