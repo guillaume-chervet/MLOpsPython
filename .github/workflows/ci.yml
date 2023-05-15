@@ -14,7 +14,7 @@ jobs:
       with:
         fetch-depth: 0
     - uses: dorny/paths-filter@v2
-      id: filter
+      id: filter_python
       with:
         filters: |
           packages:
@@ -244,10 +244,9 @@ jobs:
 
   webapp:
     runs-on: ubuntu-latest
-    needs: deploy
     steps:
     - uses: dorny/paths-filter@v2
-      id: filter
+      id: filter_webapp
       with:
         filters: |
           webapp:
