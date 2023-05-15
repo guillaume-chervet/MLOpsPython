@@ -188,7 +188,14 @@ jobs:
           az extension add -n ml
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
           echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
-          # az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
+          mkdir model
+          cd model
+          az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
+    - name: Upload Model Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Publish model
+        path: ./model
   build_docker:
     needs: [train, tags]
     uses: ./.github/workflows/docker.yml

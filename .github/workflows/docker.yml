@@ -100,8 +100,3 @@ jobs:
         tags: ${{ inputs.image_name }}:${{ inputs.image_version }}
         labels: ${{ steps.meta.outputs.labels }}
 
-    - name: Upload Model Build Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: Publish webapp
-        path: ./production/api/core/model/cats-dogs-others
