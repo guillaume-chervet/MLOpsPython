@@ -245,6 +245,9 @@ jobs:
   webapp:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: dorny/paths-filter@v2
       id: filter_webapp
       with:
@@ -256,3 +259,8 @@ jobs:
       run: |
         npm ci
         npm run build
+    - name: Upload WebApp Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Publish webapp
+        path: ./webapp/build
