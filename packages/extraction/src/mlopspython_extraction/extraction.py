@@ -52,9 +52,3 @@ def extract_images(pdfs_directory_path: str, images_directory_path: str) -> Extr
                 file_stream.write(image_stream.image_bytes_io.getbuffer())
 
     return ExtractImagesResult(number_files_input=len(pdfs), number_images_output=number_images_output)
-
-
-if __name__ == "__main__":
-    pdfs_directory_path = ".\\dataset-cats-dogs-others"
-    images_directory_path = ".\\extracted_images"
-    extract_images(pdfs_directory_path, images_directory_path)
