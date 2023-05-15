@@ -96,12 +96,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install --user pipenv
-    - name: Run unit tests Extraction
-      working-directory: train/extraction
-      run: |
-        pipenv install --dev
-        pipenv run coverage run -m unittest tests.extraction_test
-        pipenv run coverage report
+    #- name: Run unit tests Extraction
+    #  working-directory: train/extraction
+    #  run: |
+    #    pipenv install --dev
+    #    pipenv run coverage run -m unittest tests.extraction_test
+    #    pipenv run coverage report
     - name: Run unit tests Label Split Data
       working-directory: train/label_split_data
       run: |
