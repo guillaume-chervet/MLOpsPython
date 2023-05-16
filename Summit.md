@@ -1,15 +1,17 @@
 # Summit AXA
 
-Welcome abord the MLOpsPython team !
+Welcome aboard the MLOpsPython team !
 
 You will contribute to the MLOpsPython project.
 
 First you need to send you GitHub username to Guillaume Chervet send it at :
 - to: guillaume.chervet@gmail.com.
 - title: my github username for MLOPsPython team
-- body: my github username is: [your github username]
+- body: youremail@tot.com (email to connect to AzureML)
 
-Then you will receive an invitation to join the MLOpsPython team.
+Then you will receive 2 invitation to join the :
+- Github MLOpsPython team.
+- AzureML CatsDogsOthers project : https://ml.azure.com/home (you should see project name: Cats-Dogs)
 
 ## 1. Introduction
 
