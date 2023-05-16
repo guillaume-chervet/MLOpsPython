@@ -42,7 +42,7 @@ cd MLOpsPython
 ./makefile
 
 # Download the model from here :
-# https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.0.32/mlopspython_model.zip
+# https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.0.36/mlopspython_model.zip
 # Unzip it 
 curl -L https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.0.32/mlopspython_model.zip --output model.zip
 unzip model.zip -d ./production/api/core
