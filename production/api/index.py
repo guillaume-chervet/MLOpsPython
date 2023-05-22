@@ -1,5 +1,6 @@
 import io
 import json
+import sys
 from typing import Dict, Optional, Union, List
 
 import uvicorn
@@ -104,4 +105,10 @@ class Item(BaseModel):
 logger.info('application starting using version: %s', VERSION)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    args = sys.argv
+    port = 5000
+    if len(args) > 1:
+        port_string = args[1]
+        port = int(port_string)
+
+    uvicorn.run(app, host="0.0.0.0", port=port)

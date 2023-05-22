@@ -34,13 +34,13 @@ https://webapp-cdo.azurewebsites.net/health
 
 ## 3. Getting Started on your laptop
 
-Initialize python part
+Initialize API python part
 ```sh
 git clone https://www.github.com/guillaume-chervet/MLOpsPython
 # on Windows you need to use use gitbash
 cd MLOpsPython
 chmod +x Makefile
-./makefile
+./Makefile
 
 # Download the model from here :
 # https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.0.36/mlopspython_model.zip
@@ -48,17 +48,29 @@ chmod +x Makefile
 curl -L https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.0.32/mlopspython_model.zip --output model.zip
 unzip model.zip -d ./production/api/core/model
 rm model.zip
+```
 
+Run the project with docker-compose
+```sh
+# From Root folder
 cd production
 docker-compose up
 
-# Check that everything works here: http://localhost:5000/health
-# You should be able to call http://localhost:5000/upload with your postman
+# Check that everything works here: http://localhost:8000/health
+# You should be able to call http://localhost:8000/upload with your postman
 # Then, you can open the project with Pycharm Pro
+```
+
+Fallback if you do not have docker
+```sh
+# From Root folder
+cd production/api
+python index.py 8000
 ```
 
 Initialize frontend part
 ```sh
+# From Root folder
 cd webapp
 # you need install nodejs >= 18 : https://nodejs.org/en/download/
 npm install
