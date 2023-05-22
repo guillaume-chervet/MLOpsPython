@@ -5,7 +5,7 @@ Welcome aboard the MLOpsPython team !
 You will contribute to the MLOpsPython project.
 
 First you need to send you GitHub username to Guillaume Chervet send it at :
-- to: guillaume.chervet@gmail.com.
+- to: guillaume.chervet@gmail.com
 - title: my github username for MLOPsPython team
 - body: youremail@tot.com (email to connect to AzureML)
 

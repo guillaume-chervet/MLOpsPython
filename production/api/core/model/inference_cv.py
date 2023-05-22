@@ -27,7 +27,7 @@ BASE_PATH = Path(__file__).resolve().parent
 class Inference:
 	def __init__(self, logging, app_settings):
 		self.logger = logging.getLogger(__name__)
-		model_path = (str(BASE_PATH / "cats-dogs-others" / "cats-dogs-others" / 'final_model.h5'))
+		model_path = (str(BASE_PATH / 'final_model.h5'))
 		self.model = load_model(model_path)
 
 	def execute(self, file, filename, settings=None):
