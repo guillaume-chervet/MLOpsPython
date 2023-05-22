@@ -39,6 +39,7 @@ Initialize python part
 git clone https://www.github.com/guillaume-chervet/MLOpsPython
 # on Windows you need to use use gitbash
 cd MLOpsPython
+chmod +x Makefile
 ./makefile
 
 # Download the model from here :
