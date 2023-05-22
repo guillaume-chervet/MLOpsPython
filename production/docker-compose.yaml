@@ -13,5 +13,3 @@ services:
     user: "1001001"
     ports:
       - 8000:5000
-    depends_on:
-      - base-function
