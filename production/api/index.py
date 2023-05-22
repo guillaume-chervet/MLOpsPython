@@ -18,7 +18,7 @@ from core.log import Logging
 from core.model.app_settings import AppSettings
 from core.process import Process
 from core.version import VERSION
-from core.model.model import Model
+from core.model.inference import Inference
 
 logging = Logging()
 logger = logging.getLogger(__name__)
@@ -38,15 +38,15 @@ app.add_middleware(
 )
 
 app_settings = AppSettings(logging)
-model = Model(logging, app_settings)
+inference = Inference(logging, app_settings)
 base_app_settings = BaseAppSettings(logging)
-process = Process(logging, model)
+process = Process(logging, inference)
 
 
 @app.on_event("startup")
 def startup_event():
-    if hasattr(model, "startup"):
-        model.startup()
+    if hasattr(inference, "startup"):
+        inference.startup()
 
 
 @app.exception_handler(StarletteHTTPException)

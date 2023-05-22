@@ -47,12 +47,14 @@ chmod +x Makefile
 # Unzip it 
 curl -L https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.0.32/mlopspython_model.zip --output model.zip
 unzip model.zip -d ./production/api/core
+rm model.zip
 
 cd production
 docker-compose up
 
-# You should be able to call http://localhost:8000/upload with your postman
-# Now you can open the project with Pycharm Pro
+# Check that everything works here: http://localhost:5000/health
+# You should be able to call http://localhost:5000/upload with your postman
+# Then, you can open the project with Pycharm Pro
 ```
 
 Initialize frontend part
