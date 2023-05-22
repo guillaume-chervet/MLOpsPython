@@ -197,6 +197,7 @@ jobs:
           # find files recursively and copy them to the current directory root
           find ./ -name '*.h5' -exec cp "{}" ./  \;
           find ./ -name '*.json' -exec cp "{}" ./  \;
+          rm -r ./cats-dogs-others
     - name: Upload Model Build Artifact
       uses: actions/upload-artifact@v2
       with:

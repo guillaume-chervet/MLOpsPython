@@ -45,7 +45,7 @@ chmod +x Makefile
 # Download the model from here :
 # https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.0.36/mlopspython_model.zip
 # Unzip it 
-curl -L https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.0.32/mlopspython_model.zip --output model.zip
+curl -L https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.0.40/mlopspython_model.zip --output model.zip
 unzip model.zip -d ./production/api/core/model
 rm model.zip
 ```

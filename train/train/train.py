@@ -29,7 +29,7 @@ def define_model():
     # define new model
     model = Model(inputs=model.inputs, outputs=output)
     # compile model
-    opt = SGD(lr=0.0002, momentum=0.8)
+    #opt = SGD(lr=0.0002, momentum=0.8)
     #model.compile(
     #    optimizer=opt, loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=["accuracy"]
     #)

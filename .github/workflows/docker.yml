@@ -67,6 +67,7 @@ jobs:
         az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
         # find files recursively and copy them to the current directory root
         find ./ -name '*.h5' -exec cp "{}" ./  \;
+        rm -r ./cats-dogs-others
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
       with:
