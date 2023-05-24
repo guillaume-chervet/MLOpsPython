@@ -5,7 +5,7 @@ from mlopspython_inference.inference_pillow import Inference as InferencePillow,
 BASE_PATH = Path(__file__).resolve().parent
 
 class Inference:
-    def __init__(self, logging, app_settings, model_loader: ModelLoader):
+    def __init__(self, logging, app_settings):
         self.logger = logging.getLogger(__name__)
         model_path = (str(BASE_PATH / 'final_model.h5'))
         self.inference = InferencePillow(logging, ModelLoader(str(model_path)))

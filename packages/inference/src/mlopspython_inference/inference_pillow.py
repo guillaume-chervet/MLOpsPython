@@ -28,11 +28,11 @@ class IModelLoader:
         raise NotImplementedError()
 
 
-class ModelLoader:
+class ModelLoader(IModelLoader):
     def __init__(self, model_path: str):
         self.model_path = model_path
 
-    def load(self, model_path: str):
+    def load(self):
         return load_model(self.model_path)
 
 
