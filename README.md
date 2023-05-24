@@ -31,6 +31,19 @@ They must manually open each PDF to classify them.
 We are going to automate this process. We will use a machine learning model to classify PDF files and expose it as a REST API. It will work in real time.
 ![project_workflow.png](documentation%2Fproject_workflow.png)
 
+![Supervised_Learning.PNG](documentation%2FSupervised_Learning.PNG)
+
+### Why MLOps ?
+
+Many projects does ship to production due to many constrains:
+ - Expensive 
+ - More complex
+ - More actors
+
+![Triangle_actors.PNG](documentation%2FTriangle_actors.PNG)
+
+![MLOps_boxes.PNG](documentation%2FMLOps_boxes.PNG)
+
 ### What is MLOps?
 
 MLOps is involved in the entire life cycle of an AI project. This is all that will allow your AI project to go into production and then keep your project in production.
@@ -48,6 +61,8 @@ The model must be **reproducible**.
 The deliverable is:
 - Versioned data
 - Versioned code
+
+![MLOps_graal.PNG](documentation%2FMLOps_graal.PNG)
 
 ## Project structure
 We will use the following project structure. We will use mono-repository git in order to work together. It will help to retrain a model and deploy it in production from one manual action maximum.
