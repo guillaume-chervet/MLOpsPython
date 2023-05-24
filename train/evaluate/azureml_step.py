@@ -18,8 +18,13 @@ def evaluate_step(
     integration_output: Output(type=URI_FOLDER),
 ):
     from evaluate import evaluate
+    import mlflow
 
-    evaluate(logging, Path(model_input), Path(images_input),
+    statistics = evaluate(logging, Path(model_input), Path(images_input),
              Path(model_output), Path(integration_output))
+
+    mlflow.log_metric("ok", statistics["ok"])
+    mlflow.log_metric("ko", statistics["ko"])
+    mlflow.log_metric("total", statistics["total"])
 
 

@@ -69,3 +69,4 @@ def evaluate(logging, input_model_directory: Path, input_images_directory: Path,
         truth_filename = Path(filename).stem + "_" + Path(filename).suffix.lower().replace(".", '') + ".json"
         with open(ground_truth_directory / truth_filename, 'w') as file_stream:
             json.dump(data, file_stream, indent=4)
+    return statistics
