@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 # load and prepare the image
-def load_image(filename: str|BytesIO):
+def load_image(filename: str | BytesIO):
     # load the image
     img = load_img(filename, target_size=(224, 224))
     # convert to array
@@ -23,12 +23,25 @@ def load_image(filename: str|BytesIO):
 BASE_PATH = Path(__file__).resolve().parent
 
 
-class Inference:
-    def __init__(self, logging, model_path: str):
-        self.logger = logging.getLogger(__name__)
-        self.model = load_model(model_path)
+class IModelLoader:
+    def load(self):
+        raise NotImplementedError()
 
-    def execute(self, filepath:str|BytesIO):
+
+class ModelLoader:
+    def __init__(self, model_path: str):
+        self.model_path = model_path
+
+    def load(self, model_path: str):
+        return load_model(self.model_path)
+
+
+class Inference:
+    def __init__(self, logging, model_loader: IModelLoader):
+        self.logger = logging.getLogger(__name__)
+        self.model = model_loader.load()
+
+    def execute(self, filepath: str | BytesIO):
         img = load_image(filepath)
         result = self.model.predict(img)
         values = [float(result[0][0]), float(result[0][1]), float(result[0][2])]

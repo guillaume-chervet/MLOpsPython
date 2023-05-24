@@ -11,7 +11,7 @@ class TestProcess(unittest.IsolatedAsyncioTestCase):
     def test_process(self):
         model = Inference(logging, BaseAppSettings(logging))
         dir = "./tests/cats-dogs-others/f2b68110-3b7b-4cc1-98fc-caf451d71ff2/mlcli"
-        dest = "./tests/diff"
+        dest = "./tests/diff2"
         flist = [p for p in Path(dir).iterdir() if p.is_file()]
         for fp in flist:
             with open(fp, "rb") as pdf_stream:
