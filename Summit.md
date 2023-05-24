@@ -13,6 +13,12 @@ Then you will receive 2 invitation to join the :
 - Github MLOpsPython team.
 - AzureML CatsDogsOthers project : https://ml.azure.com/home (you should see project name: Cats-Dogs)
 
+## 0. Prerequisite
+
+- Pycharm (https://www.jetbrains.com/pycharm/)
+- Download and install python 3.11.x on your laptop. 
+https://www.python.org/downloads/
+
 ## 1. Introduction
 
 [README.md](README.md)
