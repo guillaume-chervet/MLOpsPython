@@ -21,7 +21,7 @@ def evaluate(logging, input_model_directory: Path, input_images_directory: Path,
             continue
         model_result = model.execute(str(path))
 
-        prediction = model_result["prediction"]
+        prediction = model_result.prediction
         prediction_truth = path.parent.name.lower().replace("s", "")
         status = prediction_truth == prediction.lower()
         statistics["ok" if status else "ko"] += 1
@@ -29,7 +29,7 @@ def evaluate(logging, input_model_directory: Path, input_images_directory: Path,
                   "ok": status,
                   "prediction": prediction,
                   "prediction_truth": prediction_truth,
-                  "values": model_result["values"]}
+                  "values": model_result.values}
         results.append(result)
     statistics["total"] = statistics["ok"] + statistics["ko"]
 
