@@ -35,7 +35,7 @@ We are going to automate this process. We will use a machine learning model to c
 
 ### Why MLOps ?
 
-Many projects does ship to production due to many constrains:
+Many projects do not ship to production due to many constraints:
  - Expensive 
  - More complex
  - More actors
