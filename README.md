@@ -29,20 +29,23 @@ Today a team of indexers receive 10,000 PDF files a day containing either cats o
 They must manually open each PDF to classify them.
 
 We are going to automate this process. We will use a machine learning model to classify PDF files and expose it as a REST API. It will work in real time.
+
 ![project_workflow.png](documentation%2Fproject_workflow.png)
 
 ![Supervised_Learning.PNG](documentation%2FSupervised_Learning.PNG)
 
 ### Why MLOps ?
 
-Many projects does ship to production due to many constrains:
+Many projects do not ship to production due to many constraints:
  - Expensive 
- - More complex
+ - Complex Data Workflow
  - More actors
 
 ![Triangle_actors.PNG](documentation%2FTriangle_actors.PNG)
 
 ![MLOps_boxes.PNG](documentation%2FMLOps_boxes.PNG)
+
+![Triangle_paint_points.PNG](documentation%2FTriangle_paint_points.PNG)
 
 ### What is MLOps?
 
