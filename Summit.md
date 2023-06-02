@@ -62,7 +62,7 @@ Run the project with docker-compose
 cd production
 docker-compose up
 
-# Check that everything works here: http://localhost:8000/health
+# Check that everything works here: http://localhost:4000/health
 # You should be able to call http://localhost:8000/upload with your postman
 # Then, you can open the project with Pycharm Pro
 ```
