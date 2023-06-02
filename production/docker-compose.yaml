@@ -1,15 +1,24 @@
 version: '3.7'
 
 services:
-  cat_dogs_others:
+  api:
     build:
       context: ./api
       dockerfile: ./Dockerfile
       args:
         buildImage: python:3.11.2
         runtimeImage: python:3.11.2
-    image: local.io/catsdogsothers:local
+    image: local.io/api-catsdogsothers:local
     restart: "no"
     user: "1001001"
     ports:
       - 8000:5000
+  web:
+    build:
+      context: ./webapp
+      dockerfile: ./Dockerfile
+    image: local.io/webapp-catsdogsothers:local
+    restart: "no"
+    #user: "1001001"
+    ports:
+      - 4000:80

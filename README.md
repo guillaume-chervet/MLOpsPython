@@ -21,7 +21,7 @@ Tools
 - Docker
 - Kubernetes & OpenShift or Azure
 
-## Introduction
+## 1. Introduction
 
 The name of our company: MLOps
 
@@ -83,26 +83,35 @@ https://github.com/axa-group/radar
 
 ![ml_libraries_choices.PNG](documentation%2Fml_libraries_choices.PNG)
 
-## Step 0 : Setup
-[step_0_setup.md](step_0_setup.md)
+## 2. Requirements
 
-## Step 1: Extract images from PDF files
-[step_1_extraction.md](step_1_extraction.md)
+Download and install:
+- Pycharm: https://www.jetbrains.com/pycharm/
+- Python 3.11.x : https://www.python.org/downloads/
+- Git: https://git-scm.com/downloads
+- Docker-desktop: https://www.docker.com/products/docker-desktop/
+- Postman: https://www.postman.com/downloads/
+- NodeJS 18.x: https://nodejs.org/en/download/
 
-## Step 2: Label images
-[step_2_label.md](step_2_label.md)
+## 3. Getting Started
 
-## Step 3: Train AI model
-[step_3_train.md](step_3_train.md)
+On windows your have to use "GitBash" only because all commands are linux bash commands.
+```sh
+git clone https://www.github.com/guillaume-chervet/MLOpsPython
 
-## Step 4: Share common code as libraries for production
-[step_4_share.md](step_4_share.md)
+cd MLOpsPython
+chmod +x Makefile
+./Makefile
 
-## Step 5: REST API
-[step_5_rest_api.md](step_5_rest_api.md)
+# Download the model from here :
+# https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.1.0/mlopspython_model.zip
+# Unzip it 
+curl -L https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.1.0/mlopspython_model.zip --output model.zip
+unzip model.zip -d ./production/api/core/model
+rm model.zip
 
-## Step 6: Deploy
-[step_6_deploy.md](step_6_deploy.md)
-
-## Step 7: Integration testing
-[step_7_integration_testing.md](step_7_integration_testing.md)
+cd production
+docker-compose up
+# webapp is now available at : http://localhost:4000
+# api is available at : http://localhost:4000/health
+```
