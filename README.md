@@ -35,6 +35,12 @@ docker-compose up
 # api is available at : http://localhost:4000/health
 ```
 
+a document sample.pdf is available at :
+- "./documentation/postman/sample.pdf"
+
+a postman collection is available at :
+- "./documentation/postman/MLOpsPython.postman_collection.json"
+
 ## Contribute
 
 - [How to run to contribute](./CONTRIBUTING.md)
