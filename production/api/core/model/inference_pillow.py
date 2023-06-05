@@ -1,3 +1,4 @@
+import dataclasses
 import io
 from pathlib import Path
 from mlopspython_inference.inference_pillow import Inference as InferencePillow
@@ -11,4 +12,5 @@ class Inference:
         self.inference = InferencePillow(logging, str(model_path))
 
     def execute(self, file, filename, settings=None):
-        return self.inference.execute(io.BytesIO(file.read()))
+        result = self.inference.execute(io.BytesIO(file.read()))
+        return dataclasses.asdict(result)
