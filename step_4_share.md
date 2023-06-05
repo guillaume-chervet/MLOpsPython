@@ -1,10 +1,10 @@
 ## Fourth step: share python libraries
 
-The data pipeline should be identique between train and production.
+The data pipelines should be identical between train and production.
 It must have :
 - Same code
 - Same python version
-- Idealy same Operating System
+- Ideally same Operating System
 
 ### Remove code from your repository and replace it with the code from this repository
 
