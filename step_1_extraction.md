@@ -29,7 +29,7 @@ pipenv install
 pipenv install "pymupdf===1.21.1"
 ```
 
-Create extraction.py and __init__.py (so extraction folder is python module)
+Create extraction.py and __init__.py (so extraction folder is a python module)
 ```bash
 # run from ./train/extraction directory
 echo 'print("init module extraction")' > __init__.py
@@ -69,14 +69,13 @@ for path in files:
                         f.write(bytes.getbuffer())' > extraction.py
 ```
 
-The code bellow is very ugly. It not only does not follow the best practices.
-It is hard to maintain and to test. We cannot accept that in production.
+The above code is very ugly. Not only does it not follow the best practices but it is also hard to maintain and to test. We cannot accept that in production.
 So we need to clean the code using Pycharm shortcut (https://www.jetbrains.com/help/pycharm/mastering-keyboard-shortcuts.html)
 
 ### 2. First Unit Test
 https://docs.python.org/3/library/unittest.html
 
-Create a tests directory and create a extraction_test.py file.
+Create a tests directory and create an extraction_test.py file.
 
 ```bash
 # run from ./train/extraction directory
@@ -107,7 +106,7 @@ You can run unit test manually
 pipenv run python -m unittest tests.extraction_test
 ```
 
-You can now code and debug a real unit test for extraction.py from PyCharm your first unit test.
+You can now code and debug a real unit test for extraction.py using PyCharm. Here is your first unit test.
 
 Coverage
 ```bash
@@ -210,8 +209,8 @@ Now your azure ML workspace is created. You can access to it from the Azure port
 ### 5. Create your first AzureML pipeline
 
 1. Create azureml_run_dumb_pipeline.py in train directory like "./train/azureml_run_dumb_pipeline.py"
-and replace subscription-id resource-group-name workspace-name and cluster-name by your own values.
-cluster-name can be your firstname-lastname (for example: "guillaume-chervet")
+and replace `subscription-id`, `resource-group-name`, `workspace-name` and `cluster-name` by your own values.
+`cluster-name` can be your firstname-lastname (for example: "guillaume-chervet")
 
 ```python 
 # ./train/azureml_run_dumb_pipeline.py
@@ -426,7 +425,7 @@ conda_file:
       
 ```
 
-5. Create empty Pipfile in train directory like "./train/Pipfile" then run
+5. Create empty Pipfile in train directory like "./train/Pipfile" then run the following command
 ```bash
 # run from ./train directory
 pipenv install azure-ai-ml==1.4.0 mldesigner==0.1.0b11 azure.identity==1.12.0
