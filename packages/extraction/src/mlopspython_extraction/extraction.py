@@ -21,6 +21,7 @@ class ImageResult:
     index_page: int
     index_image: int
 
+
 def extract_images_stream(pdf_bytes) -> Iterable[ImageResult]:
     with fitz.open(stream=pdf_bytes, filetype="pdf") as document:
         number_pages = len(document) - 1
