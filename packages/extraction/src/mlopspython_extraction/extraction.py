@@ -15,11 +15,13 @@ def convert_pixmap_to_rgb(pixmap) -> Pixmap:
     else:
         return fitz.Pixmap(fitz.csRGB, pixmap)
 
+
 @dataclass
 class ImageResult:
     image_bytes_io: BytesIO
     index_page: int
     index_image: int
+
 
 def extract_images_stream(pdf_bytes) -> Iterable[ImageResult]:
     with fitz.open(stream=pdf_bytes, filetype="pdf") as document:
@@ -31,6 +33,7 @@ def extract_images_stream(pdf_bytes) -> Iterable[ImageResult]:
                 image_pix = fitz.Pixmap(document, xref)
                 image_bytes_io = BytesIO(convert_pixmap_to_rgb(image_pix).tobytes())
                 yield ImageResult(image_bytes_io, index_page, index_image)
+
 
 @dataclass
 class ExtractImagesResult:
@@ -46,7 +49,8 @@ def extract_images(pdfs_directory_path: str, images_directory_path: str) -> Extr
         with open(pdf_path, "rb") as pdf_stream:
             pdf_bytes = pdf_stream.read()
         for image_stream in extract_images_stream(pdf_bytes):
-            filename = "{0}_page{1}_index{2}.png".format(pdf_path.stem, str(image_stream.index_page), str(image_stream.index_image))
+            filename = "{0}_page{1}_index{2}.png".format(pdf_path.stem, str(image_stream.index_page),
+                                                         str(image_stream.index_image))
             number_images_output = number_images_output + 1
             with open(Path(images_directory_path) / filename, "wb") as file_stream:
                 file_stream.write(image_stream.image_bytes_io.getbuffer())
