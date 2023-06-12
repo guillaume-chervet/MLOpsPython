@@ -1,13 +1,13 @@
 import json
 from pathlib import Path
 
-from mlopspython_inference.inference_pillow import Inference
+from mlopspython_inference.inference_pillow import Inference, ModelLoader
 
 
 def evaluate(logging, input_model_directory: Path, input_images_directory: Path, output_directory: Path,
              integration_output: Path):
     model_path = input_model_directory / "final_model.h5"
-    model = Inference(logging, str(model_path))
+    model = Inference(logging, ModelLoader(str(model_path)))
 
     statistics = {
                   "ok": 0,
