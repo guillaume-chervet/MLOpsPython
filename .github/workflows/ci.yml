@@ -249,7 +249,7 @@ jobs:
     needs: [train, tags]
     uses: ./.github/workflows/docker.yml
     with:
-      image_name: ${{ env.DOCKER_IMAGE_NAME }}
+      image_name: "guillaumechervet/mlopspython"
       image_version: ${{ needs.tags.outputs.new_version }}
       image_build_args: ""
       image_context: ./production/api
@@ -258,7 +258,7 @@ jobs:
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      AZUREML_CREDENTIALS: ${{ secrets.AZUREML_CREDENTIALS }}
+      AZUREML_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
   deploy:
     runs-on: ubuntu-latest
     needs: [tags, build_docker]
@@ -285,7 +285,7 @@ jobs:
     - name: azure login
       uses: azure/login@v1
       with:
-        creds: ${{secrets.AZUREML_CREDENTIALS}}
+        creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: run train/azure/run_pipeline.py.py
       working-directory: production/integration_tests
       run: |
