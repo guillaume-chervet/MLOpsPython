@@ -276,7 +276,7 @@ jobs:
     - name: run train/azure/run_pipeline.py.py
       run: |
         az appservice plan create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -n ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME}} --is-linux --number-of-workers 1 --sku B1
-        az webapp create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -p {{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} -n ${{ env.AZURE_WEBAPP_NAME }} -i nginx
+        az webapp create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -p ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} -n ${{ env.AZURE_WEBAPP_NAME }} -i nginx
         az webapp config container set --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --docker-custom-image-name docker.io/${{ env.DOCKER_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }}
   integration_tests:
     runs-on: ubuntu-latest
