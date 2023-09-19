@@ -222,6 +222,7 @@ jobs:
     - name: release
       uses: actions/create-release@v1
       id: create_release
+      if: github.ref == 'refs/heads/main'
       with:
         draft: false
         prerelease: false
@@ -317,7 +318,7 @@ jobs:
       with:
         node-version: '18'
     - name: Build webapp
-      working-directory: webapp
+      working-directory: production/webapp
       run: |
         npm ci
         npm run build
@@ -325,4 +326,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Publish webapp
-        path: ./webapp/build
+        path: ./production/webapp/build
