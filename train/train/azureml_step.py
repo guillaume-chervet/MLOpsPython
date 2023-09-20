@@ -14,8 +14,8 @@ def train_step(
 ):
     from train import run_test_harness
     import mlflow
-    batch_size = 64
-    epochs = 10
+    batch_size = 128
+    epochs = 2
     params = {
         "batch_size": batch_size,
         "epochs": epochs,

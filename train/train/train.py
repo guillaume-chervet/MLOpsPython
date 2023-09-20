@@ -21,9 +21,10 @@ def define_model():
     for layer in model.layers:
         layer.trainable = False
     # add new classifier layers
-    drop1 = keras.layers.Dropout(0.2)(model.layers[-1].output)
-    flat1 = Flatten()(drop1)
-    class1 = Dense(128, activation="relu", kernel_initializer="he_uniform")(flat1)
+    output = model.layers[-1].output
+    #drop1 = keras.layers.Dropout(0.2)(model.layers[-1].output)
+    #flat1 = Flatten()(drop1)
+    class1 = Dense(64, activation="relu", kernel_initializer="he_uniform")(output)
     #class2 = Dense(42, activation="relu", kernel_initializer="he_uniform")(class1)
     output = Dense(3, activation="sigmoid")(class1)
     # define new model
