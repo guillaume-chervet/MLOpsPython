@@ -196,10 +196,10 @@ jobs:
           az group create --name ${{ env.AZURE_RESOURCE_GROUP_NAME }} --location ${{ env.AZURE_LOCATION }}
           az ml workspace create -n ${{ env.AZURE_ML_WORKSPACE_NAME }} -g ${{ env.AZURE_RESOURCE_GROUP_NAME }} 
           cwd=$(pwd)
-          cd ./train/extraction
+          cd ./extraction
           ./init_dataset.sh ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} 
           cd $cwd
-          cd ./train/label_split_data
+          cd ./label_split_data
           ./init_dataset.sh ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }}
           cd $cwd
           #pipenv run python azureml_run_test.py > train_output.txt
