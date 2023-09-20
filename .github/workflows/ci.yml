@@ -306,7 +306,7 @@ jobs:
       run: |
           az webapp deployment source delete --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} 
           # az webapp create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -p {{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} -n ${{ env.AZURE_WEBAPP_NAME }} -i nginx
-          az functionapp plan delete --name {{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --yes
+          az functionapp plan delete --name ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --yes
   webapp:
     runs-on: ubuntu-latest
     steps:
