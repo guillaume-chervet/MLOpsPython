@@ -12,7 +12,7 @@ else
   echo "Dataset not found so create it"
   git clone https://github.com/guillaume-chervet/dataset-cats-dogs-others-labels.git
   rm -rf dataset-cats-dogs-others-labels/.git
-  az ml data create -f dataset-cats-dogs-others.yml --resource-group $resource_group --workspace-name $workspace_name
+  az ml data create -f dataset-cats-dogs-others-label.yml --resource-group $resource_group --workspace-name $workspace_name
 
 fi
 
