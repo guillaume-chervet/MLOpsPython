@@ -14,6 +14,7 @@ from evaluate.azureml_step import evaluate_step
 import uuid
 
 import json
+import sys
 
 URI_FOLDER = "uri_folder"
 
@@ -26,13 +27,17 @@ except Exception as ex:
     # Fall back to InteractiveBrowserCredential in case DefaultAzureCredential not work
     credential = InteractiveBrowserCredential()
 
+arguments = sys.argv
+subscription_id = arguments[1]
+resource_group_name = arguments[2]
+workspace_name = arguments[3]
 
 # Get a handle to workspace
 ml_client = MLClient(
     credential=credential,
-    subscription_id="9d42c9d4-85ab-429d-afb4-4d77f309078c",
-    resource_group_name="azure-ml",
-    workspace_name="cats-dogs",
+    subscription_id=subscription_id,
+    resource_group_name=resource_group_name,
+    workspace_name=workspace_name,
 )
 
 # Retrieve an already attached Azure Machine Learning Compute.
