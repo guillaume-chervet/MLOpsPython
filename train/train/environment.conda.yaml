@@ -13,9 +13,9 @@ conda_file:
     - pip:
       - mldesigner==0.1.0b4
       - matplotlib
-      - keras
-      - numpy
-      - tensorflow
+      - keras==2.12.0
+      - numpy==1.23.5
+      - tensorflow==2.12.0
       - scipy
       - opencv-contrib-python-headless==4.7.0.68
       - mlflow
