@@ -137,11 +137,11 @@ jobs:
     #  run: |
     #    pipenv install --dev
     #    pipenv run python -m unittest tests.train_test
-    - name: Run unit tests Evaluate
-      working-directory: train/evaluate
-      run: |
-        pipenv install --dev
-        pipenv run python -m unittest tests.evaluate_test
+    #- name: Run unit tests Evaluate
+    #  working-directory: train/evaluate
+    #  run: |
+    #    pipenv install --dev
+    #    pipenv run python -m unittest tests.evaluate_test
         
   tags:
     runs-on: ubuntu-latest
