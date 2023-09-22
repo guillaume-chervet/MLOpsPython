@@ -6,7 +6,7 @@ from mlopspython_inference.inference_pillow import Inference
 
 def evaluate(logging, input_model_directory: Path, input_images_directory: Path, output_directory: Path,
              integration_output: Path):
-    model_path = input_model_directory / "final_model.h5"
+    model_path = input_model_directory / "final_model.keras"
     model = Inference(logging, str(model_path))
 
     statistics = {

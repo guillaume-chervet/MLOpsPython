@@ -105,6 +105,6 @@ def run_test_harness(input_directory: Path, output_directory: Path, batch_size=6
     print("> %.3f" % (evaluate_accuracy_percentage))
     # learning curves
     summary_image_path = summarize_diagnostics(history, output_directory)
-    model_path = output_directory / "final_model.h5"
+    model_path = output_directory / "final_model.keras"
     model.save(str(model_path))
     return ModelResult(evaluate_accuracy_percentage, summary_image_path, model_path)
