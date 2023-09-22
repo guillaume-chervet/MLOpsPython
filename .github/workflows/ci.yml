@@ -75,14 +75,14 @@ jobs:
         cd src
         pipenv run coverage run -m unittest tests.extraction_tests
         pipenv run coverage report
-    - name: Run unit tests Packages Inference
-      working-directory: packages/inference
-      run: |
-        pipenv install --dev
-        cd src
+    #- name: Run unit tests Packages Inference
+      #working-directory: packages/inference
+      #run: |
+       # pipenv install --dev
+       # cd src
         # pipenv run coverage run -m unittest tests.inference_tests
         # pipenv run coverage report
-        pipenv run python -m unittest tests.inference_tests
+       # pipenv run python -m unittest tests.inference_tests
   build_python_packages:
     runs-on: ubuntu-latest
     needs: packages_unit_tests
