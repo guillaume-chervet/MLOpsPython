@@ -8,10 +8,10 @@ conda_file:
   channels:
     - defaults
   dependencies:
-    - python=3.11.1
+    - python=3.11
     #- pip=22.3.1
     - pip:
-      - mldesigner==0.1.0b4
+      - mldesigner==0.1.0b15
       - matplotlib
       - keras==2.12.0
       - numpy==1.23.5
