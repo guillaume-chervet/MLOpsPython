@@ -8,7 +8,7 @@ from azure.ai.ml.entities import Data
 from azure.ai.ml.entities import AmlCompute
 
 from extraction.azureml_step import extraction_step
-from label_split_data.azureml_step import label_split_data_step
+from label_split_data.azureml_step import label_split_data_step, get_label_split_data_step
 from train.azureml_step import train_step
 from evaluate.azureml_step import evaluate_step
 import uuid
@@ -61,7 +61,7 @@ def azureml_pipeline(pdfs_input_data, labels_input_data):
         pdfs_input=pdfs_input_data
     )
 
-    label_split_data = label_split_data_step(
+    label_split_data = get_label_split_data_step(ml_client)(
         images_input=extraction.outputs.images_output,
         labels_input=labels_input_data)
 
