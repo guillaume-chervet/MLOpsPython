@@ -18,7 +18,7 @@ def get_environment(ml_client):
     return environment
 
 
-def get_label_split_data_step(ml_client):
+def get_label_split_data_step(ml_client) -> callable:
     environment = get_environment(ml_client)
 
     @command_component(
@@ -53,3 +53,5 @@ def get_label_split_data_step(ml_client):
         mlflow.log_metric("number_file_train_by_label", label_split_data_result.number_file_train_by_label)
         mlflow.log_metric("number_file_test_by_label", label_split_data_result.number_file_test_by_label)
         mlflow.log_metric("number_file_evaluate_by_label", label_split_data_result.number_file_evaluate_by_label)
+
+    return label_split_data_step
