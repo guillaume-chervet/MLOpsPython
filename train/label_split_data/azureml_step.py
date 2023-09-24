@@ -18,7 +18,7 @@ def get_environment(ml_client):
     return environment
 
 
-def get_label_split_data_step(ml_client) -> callable:
+def get_label_split_data_step(ml_client):
     environment = get_environment(ml_client)
 
     @command_component(
