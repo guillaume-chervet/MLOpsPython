@@ -8,7 +8,7 @@ from azure.ai.ml.entities import Data
 from azure.ai.ml.entities import AmlCompute
 
 from extraction.azureml_step import extraction_step
-from label_split_data.azureml_step import label_split_data_step, get_label_split_data_step
+from label_split_data.azureml_step import get_label_split_data_step
 from train.azureml_step import train_step
 from evaluate.azureml_step import evaluate_step
 import uuid
