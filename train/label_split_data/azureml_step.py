@@ -10,7 +10,7 @@ def get_environment(ml_client):
     from azure.ai.ml.entities import Environment
 
     environment = Environment(
-        build=BuildContext(path="./label_split_data", dockerfile_path="./label_split_data/Dockerfile"),
+        build=BuildContext(path="./label_split_data", dockerfile_path="./Dockerfile"),
         name="label_split_data_environment",
         description="Environment created from a Docker image plus Conda environment.",
     )
