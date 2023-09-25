@@ -219,7 +219,7 @@ jobs:
           rm -r model
           mkdir model
           cd model
-          az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
+          az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}
           # find files recursively and copy them to the current directory root
           find ./ -name '*.h5' -exec cp "{}" ./  \;
           find ./ -name '*.json' -exec cp "{}" ./  \;
