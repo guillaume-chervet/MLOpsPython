@@ -21,6 +21,12 @@ on:
       model_version:
         required: true
         type: string
+      resource_group:
+        required: true
+        type: string
+      workspace_name:
+        required: true
+        type: string
     secrets:
       DOCKER_USERNAME:
         required: true
@@ -64,7 +70,7 @@ jobs:
         az extension add -n ml
         MODEL_VERSION=${{ inputs.model_version }}
         cd production/api/core/model
-        az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group azure-ml --workspace-name cats-dogs
+        az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group $RESOURCE_GROUP --workspace-name $WORKSPACE_NAME
         # find files recursively and copy them to the current directory root
         find ./ -name '*.h5' -exec cp "{}" ./  \;
         rm -r ./cats-dogs-others
