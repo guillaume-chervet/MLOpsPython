@@ -169,6 +169,8 @@ jobs:
     needs: tags
     outputs:
       MODEL_VERSION: ${{ steps.train.outputs.MODEL_VERSION }}
+      AZURE_RESOURCE_GROUP_NAME: ${{ steps.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
+      AZURE_ML_WORKSPACE_NAME: ${{ steps.train.outputs.AZURE_ML_WORKSPACE_NAME }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -213,6 +215,10 @@ jobs:
       id: train
       run: |
           az extension add -n ml
+          AZURE_RESOURCE_GROUP_NAME=${{ env.AZURE_RESOURCE_GROUP_NAME }}
+          echo "AZURE_RESOURCE_GROUP_NAME=$AZURE_RESOURCE_GROUP_NAME" >> $GITHUB_OUTPUT
+          AZURE_ML_WORKSPACE_NAME=${{ env.AZURE_ML_WORKSPACE_NAME }}
+          echo "AZURE_ML_WORKSPACE_NAME=$AZURE_ML_WORKSPACE_NAME" >> $GITHUB_OUTPUT
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
           echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
           mkdir model
@@ -268,8 +274,8 @@ jobs:
       image_context: ./production/api
       image_file: "./production/api/Dockerfile"
       model_version: ${{ needs.train.outputs.MODEL_VERSION }}
-      resource_group: ${{ env.AZURE_RESOURCE_GROUP_NAME }}
-      workspace_name: ${{ env.AZURE_ML_WORKSPACE_NAME }}
+      resource_group: ${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
+      workspace_name: ${{ needs.train.outputs.AZURE_ML_WORKSPACE_NAME }}
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
