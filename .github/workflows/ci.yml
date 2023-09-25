@@ -83,7 +83,6 @@ jobs:
         #poetry run coverage report
   train_unit_tests:
     runs-on: ubuntu-latest
-    needs: build_python_packages
     steps:
     - uses: actions/checkout@v3
       with:
