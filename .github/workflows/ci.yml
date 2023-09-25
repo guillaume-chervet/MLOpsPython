@@ -102,12 +102,14 @@ jobs:
     - name: Run unit tests Extraction
       working-directory: train/extraction
       run: |
+        poetry lock
         poetry install
         #pipenv run coverage run -m unittest tests.extraction_test
         #pipenv run coverage report
     - name: Run unit tests Label Split Data
       working-directory: train/label_split_data
       run: |
+        poetry lock
         poetry install 
         poetry run coverage run -m unittest tests.label_split_data_test
         poetry run coverage report
