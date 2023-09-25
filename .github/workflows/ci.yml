@@ -124,7 +124,7 @@ jobs:
         
   tags:
     runs-on: ubuntu-latest
-    needs: train_unit_tests
+    needs: [train_unit_tests, packages_unit_tests]
     outputs:
       new_version: ${{ steps.tag.outputs.new_version }}
     steps:
