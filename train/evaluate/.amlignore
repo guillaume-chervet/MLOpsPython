@@ -1,0 +1,4 @@
+/tests
+*.sh
+*.yml
+*.yaml
