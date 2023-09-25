@@ -8,6 +8,7 @@ on:
 
 env:
   PNPM_VERSION: 8.5.1
+  PYTHON_VERSION: 3.11.2
   NODE_VERSION: 18
   AZURE_RESOURCE_GROUP_NAME: "azure-ml-test"
   AZURE_SUBSCRIPTION_ID: "9d42c9d4-85ab-429d-afb4-4d77f309078c"
@@ -37,10 +38,10 @@ jobs:
             - 'production/**'
           train:
             - 'train/**'
-    - name: Set up Python 3.11
+    - name: Set up Python 3.11.1
       uses: actions/setup-python@v3
       with:
-        python-version: "3.11.1"
+        python-version: 3.11.1
     - name: Install PipEnv dependencies
       run: |
         python -m pip install --upgrade pip
@@ -60,10 +61,10 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    - name: Set up Python 3.11
+    - name: Set up Python 3.11.1
       uses: actions/setup-python@v3
       with:
-        python-version: "3.11.1"
+        python-version: 3.11.1
     - name: Install PipEnv dependencies
       run: |
         python -m pip install --upgrade pip
@@ -90,16 +91,18 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Set up Python 3.11
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v3
         with:
-          python-version: "3.11.1"
+          python-version: ${{ env.PYTHON_VERSION }}
       - name: Build packages
         run: |
-          chmod +x ./bin/build_package.sh
-          ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction __token__ ${{ secrets.PYPI_API_TOKEN }}
-          ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference __token__ ${{ secrets.PYPI_API_TOKEN }}
-          sleep 60
+          chmod +x ./Makefile
+          ./Makefile
+          #chmod +x ./bin/build_package.sh
+          #./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction __token__ ${{ secrets.PYPI_API_TOKEN }}
+          #./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference __token__ ${{ secrets.PYPI_API_TOKEN }}
+          #sleep 60
   train_unit_tests:
     runs-on: ubuntu-latest
     needs: build_python_packages
@@ -107,19 +110,22 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    - name: Set up Python 3.11
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v3
       with:
-        python-version: "3.11.1"
-    - name: Build packages
-      run: |
-        chmod +x ./bin/build_package.sh
-        ./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction
-        ./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference
+        python-version: ${{ env.PYTHON_VERSION }}
     - name: Install PipEnv dependencies
       run: |
         python -m pip install --upgrade pip
         pip install --user pipenv
+    - name: Build packages
+      run: |
+        chmod +x ./Makefile
+        ./Makefile
+        #chmod +x ./bin/build_package.sh
+        #./bin/build_package.sh packages/extraction train/extraction mlopspython_extraction mlopspython-extraction
+        #./bin/build_package.sh packages/inference train/evaluate mlopspython_inference mlopspython-inference
+
     - name: Run unit tests Extraction
       working-directory: train/extraction
       run: |

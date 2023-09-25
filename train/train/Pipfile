@@ -10,6 +10,9 @@ keras = "==2.12.0"
 tensorflow = "==2.12.0"
 scipy = "*"
 opencv-contrib-python-headless = "==4.7.0.68"
+mldesigner= "===0.1.0b15"
+mlflow= "===2.7.1"
+azureml-mlflow= "===1.53.0"
 
 [dev-packages]
 coverage = "===7.1.0"
