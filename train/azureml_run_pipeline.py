@@ -7,8 +7,6 @@ from azure.ai.ml.constants import AssetTypes
 from azure.ai.ml.entities import Data
 from azure.ai.ml.entities import AmlCompute
 
-from extraction.azureml_step import extraction_step
-from label_split_data.azureml_step import get_label_split_data_step
 from train.azureml_step import train_step
 from evaluate.azureml_step import evaluate_step
 import uuid
@@ -58,6 +56,7 @@ ml_client.begin_create_or_update(cluster_basic).result()
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
                      labels_input_data: Input(type=URI_FOLDER)):
+    extraction_step = load_component(source="extraction/command.yaml")
     extraction = extraction_step(
         pdfs_input=pdfs_input_data
     )

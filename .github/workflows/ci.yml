@@ -8,7 +8,7 @@ on:
 
 env:
   PNPM_VERSION: 8.5.1
-  PYTHON_VERSION: 3.11.2
+  PYTHON_VERSION: 3.10.11
   NODE_VERSION: 18
   AZURE_RESOURCE_GROUP_NAME: "azure-ml-test"
   AZURE_SUBSCRIPTION_ID: "9d42c9d4-85ab-429d-afb4-4d77f309078c"
@@ -166,6 +166,7 @@ jobs:
       MODEL_VERSION: ${{ steps.train.outputs.MODEL_VERSION }}
       AZURE_RESOURCE_GROUP_NAME: ${{ steps.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
       AZURE_ML_WORKSPACE_NAME: ${{ steps.train.outputs.AZURE_ML_WORKSPACE_NAME }}
+      DOCKER_IMAGE_NAME: ${{ steps.train.outputs.DOCKER_IMAGE_NAME }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -214,6 +215,8 @@ jobs:
           echo "AZURE_RESOURCE_GROUP_NAME=$AZURE_RESOURCE_GROUP_NAME" >> $GITHUB_OUTPUT
           AZURE_ML_WORKSPACE_NAME=${{ env.AZURE_ML_WORKSPACE_NAME }}
           echo "AZURE_ML_WORKSPACE_NAME=$AZURE_ML_WORKSPACE_NAME" >> $GITHUB_OUTPUT
+          DOCKER_IMAGE_NAME = ${{ env.DOCKER_IMAGE_NAME }}
+          echo "DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME" >> $GITHUB_OUTPUT
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
           echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
           mkdir model
@@ -263,7 +266,7 @@ jobs:
     needs: [train, tags]
     uses: ./.github/workflows/docker.yml
     with:
-      image_name: "guillaumechervet/mlopspython"
+      image_name: ${{ needs.train.outputs.DOCKER_IMAGE_NAME }}
       image_version: ${{ needs.tags.outputs.new_version }}
       image_build_args: ""
       image_context: ./production/api

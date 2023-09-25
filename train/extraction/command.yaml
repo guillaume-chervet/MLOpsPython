@@ -1,0 +1,29 @@
+
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+
+name: extraction
+display_name: Label Split Data
+description: Split data into train and test sets
+version: 0.0.1
+is_deterministic: true
+
+inputs:
+  pdfs_input:
+    type: uri_folder
+
+outputs:
+  images_output:
+    type: uri_folder
+
+environment:
+  name: extraction_environment
+  build:
+    path: ./
+
+code: ./
+command: >-
+  python command.py
+  --pdfs_input ${{inputs.pdfs_input}}
+  --images_output ${{outputs.images_output}}
+
