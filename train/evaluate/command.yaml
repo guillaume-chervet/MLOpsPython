@@ -2,30 +2,33 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
 type: command
 
-name: train
-display_name: Train
+name: evaluate
+display_name: Evaluate
 description: Split data into train and test sets
 version: 0.0.1
 is_deterministic: true
 
 inputs:
-  split_images_input:
+  model_input:
     type: uri_folder
-  model_output:
+  images_input:
     type: uri_folder
 
 outputs:
-  split_images_output:
+  model_output:
+    type: uri_folder
+  integration_output:
     type: uri_folder
 
 environment:
-  name: train_environment
+  name: evaluate_environment
   build:
     path: ./
 
 code: ./
 command: >-
   python command.py
-  --split_images_input ${{inputs.split_images_input}}
+  --model_input ${{inputs.model_input}}
+  --images_input ${{inputs.images_input}}
   --model_output ${{outputs.model_output}}
-
+  --integration_output ${{outputs.integration_output}}

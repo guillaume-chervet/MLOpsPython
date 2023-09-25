@@ -7,7 +7,6 @@ from azure.ai.ml.constants import AssetTypes
 from azure.ai.ml.entities import Data
 from azure.ai.ml.entities import AmlCompute
 
-from evaluate.azureml_step import evaluate_step
 import uuid
 
 import json
@@ -68,6 +67,7 @@ def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
     train_data = train_step(
         split_images_input=label_split_data.outputs.split_images_output)
 
+    evaluate_step = load_component(source="evaluate/command.yaml")
     evaluate_data = evaluate_step(model_input=train_data.outputs.model_output,
                                   images_input=label_split_data.outputs.split_images_output)
 

@@ -1,29 +1,26 @@
 import argparse
 from pathlib import Path
+from evaluate import evaluate
 import mlflow
-from train import run_test_harness
 
-parser = argparse.ArgumentParser("train")
-parser.add_argument("--split_images_input", type=str)
+import logging
+
+parser = argparse.ArgumentParser("evaluate")
+parser.add_argument("--model_input", type=str)
+parser.add_argument("--images_input", type=str)
 parser.add_argument("--model_output", type=str)
+parser.add_argument("--integration_output", type=str)
 
 # Get arguments from parser
 args = parser.parse_args()
-split_images_input = args.split_images_input
+model_input = args.model_input
+images_input = args.images_input
 model_output = args.model_output
+integration_output = args.integration_output
 
+statistics = evaluate(logging, Path(model_input), Path(images_input),
+         Path(model_output), Path(integration_output))
 
-
-batch_size = 64
-epochs = 3
-params = {
-    "batch_size": batch_size,
-    "epochs": epochs,
-}
-mlflow.log_params(params)
-
-mlflow.tensorflow.autolog()
-run_test_harness(Path(split_images_input), Path(model_output), batch_size, epochs)
-# mlflow.log_figure()
-# mlflow.log_metric("number_files_input", result.number_files_input)
-# mlflow.log_metric("number_images_output", result.number_images_output)
+mlflow.log_metric("ok", statistics["ok"])
+mlflow.log_metric("ko", statistics["ko"])
+mlflow.log_metric("total", statistics["total"])

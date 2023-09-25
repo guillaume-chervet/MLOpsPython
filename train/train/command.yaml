@@ -11,11 +11,9 @@ is_deterministic: true
 inputs:
   split_images_input:
     type: uri_folder
-  model_output:
-    type: uri_folder
 
 outputs:
-  split_images_output:
+  model_output:
     type: uri_folder
 
 environment:
