@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "mlopspython_extraction"
+version = "0.0.0"
+description = ""
+authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11.2"
+pymupdf = "^1.23.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
