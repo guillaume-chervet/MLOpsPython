@@ -1,6 +1,6 @@
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 
-from azure.ai.ml import MLClient, Input, Output
+from azure.ai.ml import MLClient, Input, Output, load_component
 from azure.ai.ml.dsl import pipeline
 from azure.ai.ml.entities import Model
 from azure.ai.ml.constants import AssetTypes
@@ -56,14 +56,13 @@ ml_client.begin_create_or_update(cluster_basic).result()
 
 
 @pipeline(default_compute=cluster_name)
-def azureml_pipeline(pdfs_input_data, labels_input_data):
+def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
+                     labels_input_data: Input(type=URI_FOLDER)):
     extraction = extraction_step(
         pdfs_input=pdfs_input_data
     )
 
-    label_split_data = get_label_split_data_step(ml_client)(
-        images_input=extraction.outputs.images_output,
-        labels_input=labels_input_data)
+    label_split_data = load_component("label_split_data/command.yaml")
 
     train_data = train_step(
         split_images_input=label_split_data.outputs.split_images_output)
