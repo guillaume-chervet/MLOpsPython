@@ -2,3 +2,4 @@
 *.sh
 *.yml
 *.yaml
+*.ipynb
