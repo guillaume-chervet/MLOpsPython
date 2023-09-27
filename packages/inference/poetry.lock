@@ -220,20 +220,20 @@ files = [
 
 [[package]]
 name = "google-auth"
-version = "2.23.0"
+version = "2.23.1"
 description = "Google Authentication Library"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "google-auth-2.23.0.tar.gz", hash = "sha256:753a26312e6f1eaeec20bc6f2644a10926697da93446e1f8e24d6d32d45a922a"},
-    {file = "google_auth-2.23.0-py2.py3-none-any.whl", hash = "sha256:2cec41407bd1e207f5b802638e32bb837df968bb5c05f413d0fa526fac4cf7a7"},
+    {file = "google-auth-2.23.1.tar.gz", hash = "sha256:d38bdf4fa1e7c5a35e574861bce55784fd08afadb4e48f99f284f1e487ce702d"},
+    {file = "google_auth-2.23.1-py2.py3-none-any.whl", hash = "sha256:9800802266366a2a87890fb2d04923fc0c0d4368af0b86db18edd94a62386ea1"},
 ]
 
 [package.dependencies]
 cachetools = ">=2.0.0,<6.0"
 pyasn1-modules = ">=0.2.1"
 rsa = ">=3.1.4,<5"
-urllib3 = "<2.0"
+urllib3 = ">=2.0.5"
 
 [package.extras]
 aiohttp = ["aiohttp (>=3.6.2,<4.0.0.dev0)", "requests (>=2.20.0,<3.0.0.dev0)"]
@@ -1046,19 +1046,20 @@ files = [
 
 [[package]]
 name = "urllib3"
-version = "1.26.16"
+version = "2.0.5"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
+python-versions = ">=3.7"
 files = [
-    {file = "urllib3-1.26.16-py2.py3-none-any.whl", hash = "sha256:8d36afa7616d8ab714608411b4a3b13e58f463aee519024578e062e141dce20f"},
-    {file = "urllib3-1.26.16.tar.gz", hash = "sha256:8f135f6502756bde6b2a9b28989df5fbe87c9970cecaa69041edcce7f0589b14"},
+    {file = "urllib3-2.0.5-py3-none-any.whl", hash = "sha256:ef16afa8ba34a1f989db38e1dbbe0c302e4289a47856990d0682e374563ce35e"},
+    {file = "urllib3-2.0.5.tar.gz", hash = "sha256:13abf37382ea2ce6fb744d4dad67838eec857c9f4f57009891805e0b5e123594"},
 ]
 
 [package.extras]
-brotli = ["brotli (>=1.0.9)", "brotlicffi (>=0.8.0)", "brotlipy (>=0.6.0)"]
-secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "ipaddress", "pyOpenSSL (>=0.14)", "urllib3-secure-extra"]
-socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
+brotli = ["brotli (>=1.0.9)", "brotlicffi (>=0.8.0)"]
+secure = ["certifi", "cryptography (>=1.9)", "idna (>=2.0.0)", "pyopenssl (>=17.1.0)", "urllib3-secure-extra"]
+socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
+zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "werkzeug"
@@ -1166,5 +1167,5 @@ files = [
 
 [metadata]
 lock-version = "2.0"
-python-versions = "3.10.11"
-content-hash = "679a8b2990b0ea11e899db2edfbc42ad3d77fe0be81a18aa6933dc72bfc059eb"
+python-versions = "3.10.11, <3.11.0"
+content-hash = "674434c5cfc660e3ad0dcaf8c4c300bc7951cabc82efce02f6f97cc3fc970f68"

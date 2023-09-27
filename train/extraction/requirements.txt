@@ -27,7 +27,7 @@ flask==2.3.3 ; python_full_version == "3.10.11"
 fonttools==4.42.1 ; python_full_version == "3.10.11"
 gitdb==4.0.10 ; python_full_version == "3.10.11"
 gitpython==3.1.37 ; python_full_version == "3.10.11"
-google-api-core==2.11.1 ; python_full_version == "3.10.11"
+google-api-core==2.12.0 ; python_full_version == "3.10.11"
 google-auth==2.23.0 ; python_full_version == "3.10.11"
 googleapis-common-protos==1.60.0 ; python_full_version == "3.10.11"
 greenlet==2.0.2 ; python_full_version == "3.10.11" and (platform_machine == "aarch64" or platform_machine == "ppc64le" or platform_machine == "x86_64" or platform_machine == "amd64" or platform_machine == "AMD64" or platform_machine == "win32" or platform_machine == "WIN32")

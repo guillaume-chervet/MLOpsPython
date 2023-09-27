@@ -7,4 +7,4 @@ uvicorn
 python-multipart
 pydantic
 pillow
-opencv-contrib-python-headless==4.7.0.68
+opencv-contrib-python-headless==4.8.0.76

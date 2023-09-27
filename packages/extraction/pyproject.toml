@@ -6,7 +6,7 @@ authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.10.11"
+python = "3.10.11, <3.11.0"
 pymupdf = "^1.23.3"
 
 

@@ -14,7 +14,7 @@ labels_input = args.labels_input
 images_input = args.images_input
 split_images_output = args.split_images_output
 
-number_file_by_label = 3200
+number_file_by_label = 100
 ratio_train: float = 0.7
 ratio_test: float = 0.2
 
