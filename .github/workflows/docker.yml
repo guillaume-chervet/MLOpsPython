@@ -68,6 +68,8 @@ jobs:
       run: |
         az extension add -n ml
         MODEL_VERSION=${{ inputs.model_version }}
+        RESOURCE_GROUP=${{ inputs.resource_group }}
+        WORKSPACE_NAME=${{ inputs.workspace_name }}
         cd production/api/core/model
         az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group $RESOURCE_GROUP --workspace-name $WORKSPACE_NAME
         # find files recursively and copy them to the current directory root
