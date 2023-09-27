@@ -5,7 +5,7 @@ description = ""
 authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "3.10.11, <3.11.0"
+python = "~3.10"
 pymupdf = "1.23.3"
 mlopspython-extraction = {path = "./packages/mlopspython_extraction-0.0.0-py3-none-any.whl"}
 mldesigner = "0.1.0b15"

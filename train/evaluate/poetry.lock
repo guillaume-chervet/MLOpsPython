@@ -1739,9 +1739,9 @@ name = "mlopspython_inference"
 version = "0.0.0"
 description = ""
 optional = false
-python-versions = "==3.10.11"
+python-versions = ">=3.10,<3.11"
 files = [
-    {file = "mlopspython_inference-0.0.0-py3-none-any.whl", hash = "sha256:6aaaf6db3a47623323693c0ac0c2b73a7b2368bb8519ad55f3ed00c7e4286a0b"},
+    {file = "mlopspython_inference-0.0.0-py3-none-any.whl", hash = "sha256:6abf6bec136e51facd3778ba9f832c053c7811acb50d5e6a20b05fb1d607c7a1"},
 ]
 
 [package.dependencies]
@@ -3218,5 +3218,5 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 
 [metadata]
 lock-version = "2.0"
-python-versions = "3.10.11, <3.11.0"
-content-hash = "42e9162555cbf3b613318129216916fba7779efee70eb9d12110181f52fe6ff7"
+python-versions = "~3.10"
+content-hash = "451718ebcb3fef2100714cdc65c02c12ee82ce44b4982474df5082639e157fbe"

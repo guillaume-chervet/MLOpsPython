@@ -1412,9 +1412,9 @@ name = "mlopspython_extraction"
 version = "0.0.0"
 description = ""
 optional = false
-python-versions = "==3.10.11"
+python-versions = ">=3.10,<3.11"
 files = [
-    {file = "mlopspython_extraction-0.0.0-py3-none-any.whl", hash = "sha256:130d03db44c7f9f6fcb5771abbcbd06de2f0b3f12f1d90b654b8e3db0dfa67e5"},
+    {file = "mlopspython_extraction-0.0.0-py3-none-any.whl", hash = "sha256:f61150b5c944dc3bc73d677cd1a0f575ac0404ff9b6c6be85338a1a1349dee91"},
 ]
 
 [package.dependencies]
@@ -2675,5 +2675,5 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 
 [metadata]
 lock-version = "2.0"
-python-versions = "3.10.11, <3.11.0"
-content-hash = "db51684fd1c54ae89651310ce3ee313a66913a2f728172df19cd66ceec788273"
+python-versions = "~3.10"
+content-hash = "1b0042c3a3c7e2a82a3a068562cd0cec18bc795a6a52a871cdc7eb977fb9cf9d"
