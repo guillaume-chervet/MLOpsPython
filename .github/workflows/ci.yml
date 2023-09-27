@@ -200,7 +200,7 @@ jobs:
           echo "AZURE_RESOURCE_GROUP_NAME=$AZURE_RESOURCE_GROUP_NAME" >> $GITHUB_OUTPUT
           AZURE_ML_WORKSPACE_NAME=${{ env.AZURE_ML_WORKSPACE_NAME }}
           echo "AZURE_ML_WORKSPACE_NAME=$AZURE_ML_WORKSPACE_NAME" >> $GITHUB_OUTPUT
-          DOCKER_IMAGE_NAME = ${{ env.DOCKER_IMAGE_NAME }}
+          DOCKER_IMAGE_NAME=${{ env.DOCKER_IMAGE_NAME }}
           echo "DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME" >> $GITHUB_OUTPUT
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
           echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
