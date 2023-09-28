@@ -27,6 +27,10 @@ arguments = sys.argv
 subscription_id = arguments[1]
 resource_group_name = arguments[2]
 workspace_name = arguments[3]
+experiment_id = arguments[4]
+integration_dataset_name = arguments[5]
+integration_dataset_version = arguments[6]
+url = arguments[7]
 
 # Get a handle to workspace
 ml_client = MLClient(
@@ -52,48 +56,29 @@ ml_client.begin_create_or_update(cluster_basic).result()
 
 
 @pipeline(default_compute=cluster_name)
-def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
-                     labels_input_data: Input(type=URI_FOLDER)):
-    extraction_step = load_component(source="extraction/command.yaml")
-    extraction = extraction_step(
-        pdfs_input=pdfs_input_data
+def azureml_pipeline(integration_input_data: Input(type=URI_FOLDER)):
+
+    integration_step = load_component(source="mlcli/command.yaml")
+    integration = integration_step(
+        integration_input_data=integration_input_data
     )
 
-    label_split_data_step = load_component(source="label_split_data/command.yaml")
-    label_split_data = label_split_data_step(labels_input=labels_input_data,
-                                             images_input=extraction.outputs.images_output)
-
-    train_step = load_component(source="train/command.yaml")
-    train_data = train_step(
-        split_images_input=label_split_data.outputs.split_images_output)
-
-    evaluate_step = load_component(source="evaluate/command.yaml")
-    evaluate_data = evaluate_step(model_input=train_data.outputs.model_output,
-                                  images_input=label_split_data.outputs.split_images_output)
-
     return {
-        "model_output": evaluate_data.outputs.model_output,
-        "integration_output": evaluate_data.outputs.integration_output,
+        "integration_output": integration.outputs.integration_output,
     }
 
 
 pipeline_job = azureml_pipeline(
-    pdfs_input_data=Input(
-        path="azureml:cats_dogs_others:1", type=URI_FOLDER
+    integration_input_data=Input(
+        path="azureml:" + integration_dataset_name + ":" + integration_dataset_version , type=URI_FOLDER
     ),
-    labels_input_data=Input(
-        path="azureml:cats_dogs_others_labels:1", type=URI_FOLDER
-    )
 )
 
 
 azure_blob = "azureml://datastores/workspaceblobstore/paths/"
 experience_id = str(uuid.uuid4())
-custom_model_path = azure_blob + "models/cats-dogs-others/" + experience_id + "/"
-pipeline_job.outputs.model_output = Output(
-    type=URI_FOLDER, mode="rw_mount", path=custom_model_path
-)
-custom_integration_path = azure_blob + "/integration/cats-dogs-others/" + experience_id + "/"
+
+custom_integration_path = azure_blob + "/integration-output/cats-dogs-others/" + experience_id + "/"
 pipeline_job.outputs.integration_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_integration_path
 )
@@ -104,18 +89,8 @@ pipeline_job = ml_client.jobs.create_or_update(
 
 ml_client.jobs.stream(pipeline_job.name)
 
-file_model = Model(
-        path=custom_model_path,
-        type=AssetTypes.CUSTOM_MODEL,
-        name="cats-dogs-others",
-        description="Model created from azureML.",
-    )
-saved_model = ml_client.models.create_or_update(file_model)
-
-print(f"Model with name {saved_model.name} was registered to workspace, the model version is {saved_model.version}.")
-
 integration_dataset = Data(
-    name="cats-dogs-others-integration",
+    name="cats-dogs-others-integration-output",
     path=custom_integration_path,
     type=URI_FOLDER,
     description="Dataset for credit card defaults",
@@ -127,11 +102,8 @@ print(
 )
 
 output_data = {
-    "model_version": saved_model.version,
-    "model_name": saved_model.name,
-    "integration_dataset_name": integration_dataset.name,
-    "integration_dataset_version": integration_dataset.version,
-    "experience_id": experience_id,
+    "integration_output_dataset_name": integration_dataset.name,
+    "integration_output_dataset_version": integration_dataset.version
 }
 
 print(json.dumps(output_data))

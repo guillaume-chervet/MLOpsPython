@@ -1,17 +1,14 @@
 [tool.poetry]
-name = "mlopspython_extraction"
+name = "pipeline"
 version = "0.0.0"
 description = ""
 authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "~3.10"
-pymupdf = "1.23.3"
-
-
-[tool.poetry.group.dev.dependencies]
-coverage = "^7.3.1"
+mldesigner = "0.1.0b15"
+azure-ai-ml = "1.10.1"
+"azure.identity" = "1.14.0"
 
 [build-system]
 requires = ["poetry-core"]

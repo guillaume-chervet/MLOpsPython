@@ -1,14 +1,15 @@
 [tool.poetry]
-name = "mlopspython_extraction"
+name = "label_split_data"
 version = "0.0.0"
 description = ""
 authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "~3.10"
-pymupdf = "1.23.3"
-
+mldesigner = "0.1.0b15"
+mlflow = "2.7.1"
+azureml-mlflow = "1.53.0"
+azure-ai-ml = "1.10.1"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.3.1"

@@ -10,7 +10,7 @@
             "isSaveResultOnError": true,
             "stopAfterNumberFiles": 100,
             "numberRetryOnHttp500": 1,
-            "url": "https://webapp-cdo.azurewebsites.net/upload"
+            "url": "${url}$",
         },
         {
             "type": "compare",

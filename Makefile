@@ -28,7 +28,6 @@ cd train/extraction
 poetry export --without-hashes --format=requirements.txt > requirements.txt
 sed -i 's#\(.*\)/packages/mlopspython_extraction-0.0.0-py3-none-any.whl\(.*\)#./packages/mlopspython_extraction-0.0.0-py3-none-any.whl\2#' requirements.txt
 
-
 cd $cwd
 cd train/evaluate
 poetry export --without-hashes --format=requirements.txt > requirements.txt
@@ -37,7 +36,11 @@ sed -i 's#\(.*\)/packages/mlopspython_inference-0.0.0-py3-none-any.whl\(.*\)#./p
 cd $cwd
 cd train/train
 poetry export --without-hashes --format=requirements.txt > requirements.txt
+
 cd $cwd
 cd train/label_split_data
 poetry export --without-hashes --format=requirements.txt > requirements.txt
+
 cd $cwd
+cd production/api
+poetry export --without-hashes --format=requirements.txt > requirements.txt
