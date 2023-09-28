@@ -56,11 +56,12 @@ ml_client.begin_create_or_update(cluster_basic).result()
 
 
 @pipeline(default_compute=cluster_name)
-def azureml_pipeline(integration_input_data: Input(type=URI_FOLDER)):
+def azureml_pipeline(integration_input: Input(type=URI_FOLDER), url_input: Input(type="string")):
 
     integration_step = load_component(source="mlcli/command.yaml")
     integration = integration_step(
-        integration_input_data=integration_input_data
+        integration_input=integration_input,
+        url_input=url_input
     )
 
     return {
@@ -69,9 +70,10 @@ def azureml_pipeline(integration_input_data: Input(type=URI_FOLDER)):
 
 
 pipeline_job = azureml_pipeline(
-    integration_input_data=Input(
+    integration_input=Input(
         path="azureml:" + integration_dataset_name + ":" + integration_dataset_version , type=URI_FOLDER
     ),
+    url_input=Input(url, type="string"),
 )
 
 
@@ -89,21 +91,21 @@ pipeline_job = ml_client.jobs.create_or_update(
 
 ml_client.jobs.stream(pipeline_job.name)
 
-integration_dataset = Data(
+integration_output_dataset = Data(
     name="cats-dogs-others-integration-output",
     path=custom_integration_path,
     type=URI_FOLDER,
     description="Dataset for credit card defaults",
     tags={"source_type": "web", "source": "UCI ML Repo"},
 )
-integration_dataset = ml_client.data.create_or_update(integration_dataset)
+integration_output_dataset = ml_client.data.create_or_update(integration_output_dataset)
 print(
-    f"Dataset with name {integration_dataset.name} was registered to workspace, the dataset version is {integration_dataset.version}"
+    f"Dataset with name {integration_output_dataset.name} was registered to workspace, the dataset version is {integration_output_dataset.version}"
 )
 
 output_data = {
-    "integration_output_dataset_name": integration_dataset.name,
-    "integration_output_dataset_version": integration_dataset.version
+    "integration_output_dataset_name": integration_output_dataset.name,
+    "integration_output_dataset_version": integration_output_dataset.version
 }
 
 print(json.dumps(output_data))

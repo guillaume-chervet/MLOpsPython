@@ -25,3 +25,4 @@ def run_ml_cli(files_directory: str,
                           stderr=subprocess.STDOUT) as process:
         for line in process.stdout:
             print(line.decode('utf8'))
+

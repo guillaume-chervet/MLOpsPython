@@ -9,24 +9,24 @@ version: 0.0.1
 is_deterministic: true
 
 inputs:
-  labels_input:
+  integration_input:
     type: uri_folder
-  images_input:
-    type: uri_folder
+  url_input:
+    type: string
 
 outputs:
-  split_images_output:
+  integration_output:
     type: uri_folder
 
 environment:
-  name: label_split_data_environment
+  name: integration_environment
   build:
     path: ./
 
 code: ./
 command: >-
   python command.py
-  --labels_input ${{inputs.labels_input}}
-  --images_input ${{inputs.images_input}}
-  --split_images_output ${{outputs.split_images_output}}
+  --integration_input ${{inputs.integration_input}}
+  --url_input ${{inputs.url_input}}
+  --integration_output ${{inputs.integration_output}}
 

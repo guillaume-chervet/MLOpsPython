@@ -286,18 +286,29 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user poetry
     - name: azure login
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
-    - name: run train/azure/run_pipeline.py.py
-      working-directory: production/integration_tests
+    - name: Run Integration Test
+      working-directory: production/integration
       run: |
-        pip install azureml azureml.core azureml.pipeline
-        pip install -r requirements.txt
-        python train_aml.py
+        poetry install
+        az extension add -n ml
+        poetry run python azureml_run_pipeline.py ${{ env.AZURE_SUBSCRIPTION_ID }}  ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} "cats-dogs-others-integration" "12" "http://localhost:8000/upload" > integration_output.txt
+        cat integration_output.txt
+
     - name: Run Integration Test
       run: |
+         
           echo "Running integration tests"
           echo "Number call in parallel: 1"
           echo "Classification Percentage: 97%"
