@@ -51,6 +51,7 @@ jobs:
 
     - name: Setup Project
       run: |
+        pip install --user poetry
         chmod +x ./Makefile
         ./Makefile
 
