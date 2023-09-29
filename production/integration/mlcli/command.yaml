@@ -2,8 +2,8 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
 type: command
 
-name: label_split_data
-display_name: Label Split Data
+name: integration
+display_name: Integration
 description: Split data into train and test sets
 version: 0.0.1
 is_deterministic: true
@@ -28,5 +28,5 @@ command: >-
   python command.py
   --integration_input ${{inputs.integration_input}}
   --url_input ${{inputs.url_input}}
-  --integration_output ${{inputs.integration_output}}
+  --integration_output ${{outputs.integration_output}}
 
