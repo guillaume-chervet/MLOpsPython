@@ -279,7 +279,7 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: run train/azure/run_pipeline.py.py
       run: |
-        az appservice plan create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -n ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME}} --is-linux --number-of-workers 1 --sku B1
+        az appservice plan create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -n ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME}} --is-linux --number-of-workers 1 --sku B2
         az webapp create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -p ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} -n ${{ env.AZURE_WEBAPP_NAME }} -i nginx
         az webapp config container set --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --docker-custom-image-name docker.io/${{ env.DOCKER_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }}
   integration_tests:
@@ -306,14 +306,14 @@ jobs:
       run: |
         poetry install
         az extension add -n ml
-        poetry run python azureml_run_pipeline.py \
+        poetry run python azureml_run_pipeline.py 
             --subscription_id ${{ env.AZURE_SUBSCRIPTION_ID }}  \
             --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
             --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} \
             --experiment_id test \
             --integration_dataset_name "cats-dogs-others-integration" \
             --integration_dataset_version 12 \
-            --url "http://localhost:8000/upload > integration_output.txt 
+            --url "http://localhost:8000/upload" > integration_output.txt 
         cat integration_output.txt
 
     - name: Run Integration Test
