@@ -315,7 +315,7 @@ jobs:
       run: |
         poetry install
         az extension add -n ml
-        poetry run python azureml_run_pipeline.py 
+        poetry run python azureml_run_pipeline.py \
             --subscription_id ${{ needs.train.outputs.AZURE_SUBSCRIPTION_ID }}  \
             --resource_group_name ${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }} \
             --workspace_name ${{ needs.train.outputs.AZURE_ML_WORKSPACE_NAME }} \
