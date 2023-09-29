@@ -1,16 +1,35 @@
+import argparse
+
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 
 from azure.ai.ml import MLClient, Input, Output, load_component
 from azure.ai.ml.dsl import pipeline
-from azure.ai.ml.entities import Model
-from azure.ai.ml.constants import AssetTypes
 from azure.ai.ml.entities import Data
 from azure.ai.ml.entities import AmlCompute
+
 
 import uuid
 
 import json
-import sys
+
+parser = argparse.ArgumentParser("integration")
+parser.add_argument("--subscription_id", type=str)
+parser.add_argument("--resource_group_name", type=str)
+parser.add_argument("--workspace_name", type=str)
+parser.add_argument("--experiment_id", type=str)
+parser.add_argument("--integration_dataset_name", type=str)
+parser.add_argument("--integration_dataset_version", type=str)
+parser.add_argument("--url", type=str)
+
+args = parser.parse_args()
+subscription_id = args.subscription_id
+resource_group_name = args.resource_group_name
+workspace_name = args.workspace_name
+experiment_id = args.experiment_id
+integration_dataset_name = args.integration_dataset_name
+integration_dataset_version = args.integration_dataset_version
+url = args.url
+
 
 URI_FOLDER = "uri_folder"
 
@@ -23,14 +42,6 @@ except Exception as ex:
     # Fall back to InteractiveBrowserCredential in case DefaultAzureCredential not work
     credential = InteractiveBrowserCredential()
 
-arguments = sys.argv
-subscription_id = arguments[1]
-resource_group_name = arguments[2]
-workspace_name = arguments[3]
-experiment_id = arguments[4]
-integration_dataset_name = arguments[5]
-integration_dataset_version = arguments[6]
-url = arguments[7]
 
 # Get a handle to workspace
 ml_client = MLClient(

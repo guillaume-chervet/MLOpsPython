@@ -1,3 +1,5 @@
+import argparse
+
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 
 from azure.ai.ml import MLClient, Input, Output, load_component
@@ -10,7 +12,16 @@ from azure.ai.ml.entities import AmlCompute
 import uuid
 
 import json
-import sys
+
+parser = argparse.ArgumentParser("train")
+parser.add_argument("--subscription_id", type=str)
+parser.add_argument("--resource_group_name", type=str)
+parser.add_argument("--workspace_name", type=str)
+
+args = parser.parse_args()
+subscription_id = args.subscription_id
+resource_group_name = args.resource_group_name
+workspace_name = args.workspace_name
 
 URI_FOLDER = "uri_folder"
 
@@ -23,10 +34,7 @@ except Exception as ex:
     # Fall back to InteractiveBrowserCredential in case DefaultAzureCredential not work
     credential = InteractiveBrowserCredential()
 
-arguments = sys.argv
-subscription_id = arguments[1]
-resource_group_name = arguments[2]
-workspace_name = arguments[3]
+
 
 # Get a handle to workspace
 ml_client = MLClient(

@@ -1,7 +1,7 @@
 import argparse
 from mlcli import run_ml_cli
 
-parser = argparse.ArgumentParser("label_split_data")
+parser = argparse.ArgumentParser("integration")
 parser.add_argument("--integration_input", type=str)
 parser.add_argument("--url_input", type=str)
 parser.add_argument("--integration_output", type=str)

@@ -189,7 +189,10 @@ jobs:
           ./init_dataset.sh ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }}
           cd $cwd
           #poetry run python azureml_run_test.py > train_output.txt
-          poetry run python azureml_run_pipeline.py ${{ env.AZURE_SUBSCRIPTION_ID }}  ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} > train_output.txt
+          poetry run python azureml_run_pipeline.py \
+            --subscription_id ${{ env.AZURE_SUBSCRIPTION_ID }}  \
+            --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
+            --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} > train_output.txt
           cat train_output.txt
       working-directory: train
     - name: download model
@@ -303,7 +306,14 @@ jobs:
       run: |
         poetry install
         az extension add -n ml
-        poetry run python azureml_run_pipeline.py ${{ env.AZURE_SUBSCRIPTION_ID }}  ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} "cats-dogs-others-integration" "12" "http://localhost:8000/upload" > integration_output.txt
+        poetry run python azureml_run_pipeline.py \
+            --subscription_id ${{ env.AZURE_SUBSCRIPTION_ID }}  \
+            --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
+            --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} \
+            --experiment_id test \
+            --integration_dataset_name "cats-dogs-others-integration" \
+            --integration_dataset_version 12 \
+            --url "http://localhost:8000/upload > integration_output.txt 
         cat integration_output.txt
 
     - name: Run Integration Test
