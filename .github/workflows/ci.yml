@@ -202,6 +202,8 @@ jobs:
       id: train
       run: |
           az extension add -n ml
+          AZURE_SUBSCRIPTION_ID=${{ env.AZURE_SUBSCRIPTION_ID }}
+          echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID" >> $GITHUB_OUTPUT
           AZURE_RESOURCE_GROUP_NAME=${{ env.AZURE_RESOURCE_GROUP_NAME }}
           echo "AZURE_RESOURCE_GROUP_NAME=$AZURE_RESOURCE_GROUP_NAME" >> $GITHUB_OUTPUT
           AZURE_ML_WORKSPACE_NAME=${{ env.AZURE_ML_WORKSPACE_NAME }}
@@ -213,9 +215,8 @@ jobs:
           INTEGRATION_DATASET_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt integration_dataset_version)
           echo "INTEGRATION_DATASET_VERSION=$INTEGRATION_DATASET_VERSION" >> $GITHUB_OUTPUT
           EXPERIMENT_ID=$(python bin/retrieve_output.py ./train/train_output.txt experiment_id)
-          echo "EXPERIMENT_ID=EXPERIMENT_ID" >> $GITHUB_OUTPUT
-          AZURE_SUBSCRIPTION_ID=${{ env.AZURE_SUBSCRIPTION_ID }}
-          echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID" >> $GITHUB_OUTPUT
+          echo "EXPERIMENT_ID=$EXPERIMENT_ID" >> $GITHUB_OUTPUT
+        
           mkdir model
           rm -r model
           mkdir model
