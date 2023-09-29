@@ -153,6 +153,9 @@ jobs:
       AZURE_RESOURCE_GROUP_NAME: ${{ steps.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
       AZURE_ML_WORKSPACE_NAME: ${{ steps.train.outputs.AZURE_ML_WORKSPACE_NAME }}
       DOCKER_IMAGE_NAME: ${{ steps.train.outputs.DOCKER_IMAGE_NAME }}
+      INTEGRATION_DATASET_VERSION: ${{ steps.train.outputs.INTEGRATION_DATASET_VERSION }}
+      EXPERIMENT_ID: ${{ steps.train.outputs.EXPERIMENT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ steps.train.outputs.AZURE_SUBSCRIPTION_ID }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -207,6 +210,12 @@ jobs:
           echo "DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME" >> $GITHUB_OUTPUT
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
           echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
+          INTEGRATION_DATASET_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt integration_dataset_version)
+          echo "INTEGRATION_DATASET_VERSION=$INTEGRATION_DATASET_VERSION" >> $GITHUB_OUTPUT
+          EXPERIMENT_ID=$(python bin/retrieve_output.py ./train/train_output.txt experiment_id)
+          echo "EXPERIMENT_ID=EXPERIMENT_ID" >> $GITHUB_OUTPUT
+          AZURE_SUBSCRIPTION_ID=${{ env.AZURE_SUBSCRIPTION_ID }}
+          echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID" >> $GITHUB_OUTPUT
           mkdir model
           rm -r model
           mkdir model
@@ -284,7 +293,7 @@ jobs:
         az webapp config container set --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --docker-custom-image-name docker.io/${{ env.DOCKER_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }}
   integration_tests:
     runs-on: ubuntu-latest
-    needs: deploy
+    needs: [deploy, train]
     steps:
     - uses: actions/checkout@v3
       with:
@@ -307,12 +316,12 @@ jobs:
         poetry install
         az extension add -n ml
         poetry run python azureml_run_pipeline.py 
-            --subscription_id ${{ env.AZURE_SUBSCRIPTION_ID }}  \
-            --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
-            --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} \
-            --experiment_id test \
+            --subscription_id ${{ needs.train.outputs.AZURE_SUBSCRIPTION_ID }}  \
+            --resource_group_name ${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }} \
+            --workspace_name ${{ needs.train.outputs.AZURE_ML_WORKSPACE_NAME }} \
+            --experiment_id ${{ needs.train.outputs.EXPERIMENT_ID }} \
             --integration_dataset_name "cats-dogs-others-integration" \
-            --integration_dataset_version 12 \
+            --integration_dataset_version ${{ needs.train.outputs.INTEGRATION_DATASET_VERSION }} \
             --url "http://localhost:8000/upload" > integration_output.txt 
         cat integration_output.txt
 

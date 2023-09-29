@@ -96,12 +96,12 @@ pipeline_job = azureml_pipeline(
 
 
 azure_blob = "azureml://datastores/workspaceblobstore/paths/"
-experience_id = str(uuid.uuid4())
-custom_model_path = azure_blob + "models/cats-dogs-others/" + experience_id + "/"
+experiment_id = str(uuid.uuid4())
+custom_model_path = azure_blob + "models/cats-dogs-others/" + experiment_id + "/"
 pipeline_job.outputs.model_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_model_path
 )
-custom_integration_path = azure_blob + "/integration/cats-dogs-others/" + experience_id + "/"
+custom_integration_path = azure_blob + "/integration/cats-dogs-others/" + experiment_id + "/"
 pipeline_job.outputs.integration_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_integration_path
 )
@@ -139,7 +139,7 @@ output_data = {
     "model_name": saved_model.name,
     "integration_dataset_name": integration_dataset.name,
     "integration_dataset_version": integration_dataset.version,
-    "experience_id": experience_id,
+    "experiment_id": experiment_id,
 }
 
 print(json.dumps(output_data))
