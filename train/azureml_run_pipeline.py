@@ -112,10 +112,15 @@ pipeline_job = ml_client.jobs.create_or_update(
 
 ml_client.jobs.stream(pipeline_job.name)
 
+
+model_name = "cats-dogs-others"
+model_version = str(len(list(ml_client.models.list(model_name))) + 1)
+
 file_model = Model(
+        version=model_version,
         path=custom_model_path,
         type=AssetTypes.CUSTOM_MODEL,
-        name="cats-dogs-others",
+        name=model_name,
         description="Model created from azureML.",
     )
 saved_model = ml_client.models.create_or_update(file_model)
