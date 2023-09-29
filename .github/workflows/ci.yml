@@ -332,7 +332,7 @@ jobs:
             --experiment_id ${{ needs.train.outputs.EXPERIMENT_ID }} \
             --integration_dataset_name "cats-dogs-others-integration" \
             --integration_dataset_version ${{ needs.train.outputs.INTEGRATION_DATASET_VERSION }} \
-            --url "http://localhost:8000/upload" > integration_output.txt 
+            --url "https://webapp-cdo.azurewebsites.net/upload" > integration_output.txt 
         cat integration_output.txt
 
     - name: Run Integration Test

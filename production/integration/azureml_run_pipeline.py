@@ -1,5 +1,6 @@
 import argparse
 
+from azure.ai.ml.constants import AssetTypes
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 
 from azure.ai.ml import MLClient, Input, Output, load_component
@@ -67,7 +68,7 @@ ml_client.begin_create_or_update(cluster_basic).result()
 
 
 @pipeline(default_compute=cluster_name)
-def azureml_pipeline(integration_input: Input(type=URI_FOLDER), url_input: Input(type="string")):
+def azureml_pipeline(integration_input: Input(type=AssetTypes.URI_FOLDER), url_input: Input(type="string")):
 
     integration_step = load_component(source="mlcli/command.yaml")
     integration = integration_step(
@@ -84,7 +85,7 @@ pipeline_job = azureml_pipeline(
     integration_input=Input(
         path="azureml:" + integration_dataset_name + ":" + integration_dataset_version , type=URI_FOLDER
     ),
-    url_input=Input(url, type="string"),
+    url_input=url,
 )
 
 
