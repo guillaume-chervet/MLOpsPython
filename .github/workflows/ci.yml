@@ -315,6 +315,14 @@ jobs:
       run: |
         poetry install
         az extension add -n ml
+        echo "AZURE_RESOURCE_GROUP_NAME=${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }}"
+        echo "AZURE_ML_WORKSPACE_NAME=${{ needs.train.outputs.AZURE_ML_WORKSPACE_NAME }}"
+        echo "MODEL_VERSION=${{ needs.train.outputs.MODEL_VERSION }}"
+        echo "INTEGRATION_DATASET_VERSION=${{ needs.train.outputs.INTEGRATION_DATASET_VERSION }}"
+        echo "EXPERIMENT_ID=${{ needs.train.outputs.EXPERIMENT_ID }}"
+        echo "AZURE_SUBSCRIPTION_ID=${{ needs.train.outputs.AZURE_SUBSCRIPTION_ID }}"
+        echo "DOCKER_IMAGE_NAME=${{ needs.train.outputs.DOCKER_IMAGE_NAME }}"
+        
         poetry run python azureml_run_pipeline.py \
             --subscription_id ${{ needs.train.outputs.AZURE_SUBSCRIPTION_ID }}  \
             --resource_group_name ${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }} \
