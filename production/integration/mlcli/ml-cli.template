@@ -3,7 +3,7 @@
             "type": "callapi",
             "enabled": true,
             "enabledSaveImages": false,
-            "fileDirectory": "${files_directory}$/data/mlcli",
+            "fileDirectory": "${files_directory}$/mlcli",
             "outputDirectoryJsons": "${output_directory}$/jsons",
             "outputDirectoryImages": "${output_directory}$/images",
             "numberParallel": 1,
@@ -16,7 +16,7 @@
             "type": "compare",
             "enabled": true,
             "onFileNotFound": "warning",
-            "leftDirectory": "${files_directory}$/data/ground_truth",
+            "leftDirectory": "${files_directory}$/ground_truth",
             "rightDirectory": "${output_directory}$/jsons",
             "outputDirectory": "${output_directory}$",
             "fileName": "compare-cdo-{start-date}.json"

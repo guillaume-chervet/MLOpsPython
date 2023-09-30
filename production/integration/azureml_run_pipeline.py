@@ -98,7 +98,7 @@ pipeline_job.outputs.integration_output = Output(
 )
 
 pipeline_job = ml_client.jobs.create_or_update(
-    pipeline_job, experiment_name="cats_dos_others_pipeline"
+    pipeline_job, experiment_name="cats_dogs_others_integration_pipeline"
 )
 
 ml_client.jobs.stream(pipeline_job.name)

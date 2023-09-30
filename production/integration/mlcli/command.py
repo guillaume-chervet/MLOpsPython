@@ -15,4 +15,4 @@ integration_output = args.integration_output
 with open("./ml-cli.template") as mlcli_file:
     mlcli_template = mlcli_file.read()
 
-run_ml_cli(integration_input, url_input, integration_output, mlcli_template);
+run_ml_cli(integration_input, integration_output, url_input, mlcli_template);
