@@ -289,9 +289,10 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: run train/azure/run_pipeline.py.py
       run: |
-        az appservice plan create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -n ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME}} --is-linux --number-of-workers 1 --sku B2
-        az webapp create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -p ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} -n ${{ env.AZURE_WEBAPP_NAME }} -i nginx
-        az webapp config container set --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --docker-custom-image-name docker.io/${{ env.DOCKER_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }}
+        az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} --image docker.io/${{ env.DOCKER_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
+        #az appservice plan create -g ${{ env.AZURE_RESOURCE_GROUP_NAME }} -n ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME}} --is-linux --number-of-workers 1 --sku B2
+        #az webapp create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -p ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} -n ${{ env.AZURE_WEBAPP_NAME }} -i nginx
+        #az webapp config container set --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --docker-custom-image-name docker.io/${{ env.DOCKER_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }}
   integration_tests:
     runs-on: ubuntu-latest
     needs: [deploy, train]
@@ -345,7 +346,7 @@ jobs:
           echo "Number Error: 0"
     - name: Delete Environment
       run: |
-          az webapp delete --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} 
+          # az webapp delete --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} 
           # az webapp create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -p {{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} -n ${{ env.AZURE_WEBAPP_NAME }} -i nginx
           # az functionapp plan delete --name ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --yes
   webapp:
