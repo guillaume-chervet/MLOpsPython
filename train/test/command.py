@@ -5,7 +5,7 @@ import mlflow
 
 import logging
 
-parser = argparse.ArgumentParser("evaluate")
+parser = argparse.ArgumentParser("test")
 parser.add_argument("--model_input", type=str)
 parser.add_argument("--images_input", type=str)
 parser.add_argument("--model_output", type=str)

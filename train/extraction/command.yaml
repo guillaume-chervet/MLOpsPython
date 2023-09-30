@@ -4,7 +4,7 @@ type: command
 
 name: extraction
 display_name: Extraction
-description: Split data into train and test sets
+description: Extract images from pdfs
 version: 0.0.1
 is_deterministic: true
 

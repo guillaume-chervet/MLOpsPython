@@ -8,7 +8,7 @@ A real demo of Deep Learning project with preprocessing from development to prod
 
 Requirements, Download and install:
 - Pycharm: https://www.jetbrains.com/pycharm/
-- Python 3.11.1 : https://www.python.org/downloads/
+- Python 3.10 : https://www.python.org/downloads/
 - Git: https://git-scm.com/downloads
 - Docker-desktop: https://www.docker.com/products/docker-desktop/
 - Postman: https://www.postman.com/downloads/

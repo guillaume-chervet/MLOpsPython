@@ -2,9 +2,9 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
 type: command
 
-name: evaluate
-display_name: Evaluate
-description: Split data into train and test sets
+name: test
+display_name: Test
+description: Test model on test set
 version: 0.0.1
 is_deterministic: true
 
@@ -21,7 +21,7 @@ outputs:
     type: uri_folder
 
 environment:
-  name: evaluate_environment
+  name: test_environment
   build:
     path: ./
 

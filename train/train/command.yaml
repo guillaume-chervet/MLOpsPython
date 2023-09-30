@@ -4,7 +4,7 @@ type: command
 
 name: train
 display_name: Train
-description: Split data into train and test sets
+description: Train model on train+evaluate set
 version: 0.0.1
 is_deterministic: true
 

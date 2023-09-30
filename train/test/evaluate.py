@@ -17,7 +17,7 @@ def evaluate(logging, input_model_directory: Path, input_images_directory: Path,
                   "total": 0
                  }
     results = []
-    tests_directory = input_images_directory / "evaluate"
+    tests_directory = input_images_directory / "test"
     for path in tests_directory.glob("**/*"):
         if path.is_dir():
             continue

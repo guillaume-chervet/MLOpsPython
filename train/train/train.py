@@ -96,9 +96,9 @@ def run_test_harness(input_directory: Path, output_directory: Path, batch_size=6
         epochs=epochs,
         verbose=1,
     )
-    # evaluate model
+    # test model
     evaluate_it = datagen.flow_from_directory(
-        str(input_directory / "evaluate"), class_mode="binary", batch_size=batch_size, target_size=(224, 224)
+        str(input_directory / "test"), class_mode="binary", batch_size=batch_size, target_size=(224, 224)
     )
     _, acc = model.evaluate_generator(evaluate_it, steps=len(evaluate_it), verbose=1)
     evaluate_accuracy_percentage = acc * 100.0

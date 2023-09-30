@@ -31,7 +31,7 @@ def label_split_data(input_labels_path: Path,
 
     split_paths = {"cat": [], "dog": [], "other": []}
     labels = ["cat", "dog", "other"]
-    split_directory_names = ["train", "test", "evaluate"]
+    split_directory_names = ["train", "test", "test"]
     annotations = label_data["annotations"]
     for annotation in annotations:
         filename = annotation["fileName"]
