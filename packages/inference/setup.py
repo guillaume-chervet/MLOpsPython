@@ -1,12 +1,11 @@
 import setuptools
-import version
 
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 setuptools.setup(
     name="mlopspython-inference",
-    version=version.VERSION,
+    version="0.0.0",
     packages=["mlopspython_inference"],
     package_dir={"": ""},
     package_data={"mlopspython_inference": ["*"]},
