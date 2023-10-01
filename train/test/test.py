@@ -5,7 +5,7 @@ from mlopspython_inference.inference_pillow import Inference
 
 model_name = "final_model.keras"
 
-def evaluate(logging, input_model_directory: Path, input_images_directory: Path,
+def execute_model_and_generate_integration_test_data(logging, input_model_directory: Path, input_images_directory: Path,
              model_output_directory: Path,
              integration_output_directory: Path):
     model_path = input_model_directory / model_name

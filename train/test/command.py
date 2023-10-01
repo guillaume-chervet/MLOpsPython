@@ -1,6 +1,6 @@
 import argparse
 from pathlib import Path
-from evaluate import evaluate
+from test import execute_model_and_generate_integration_test_data
 import mlflow
 
 import logging
@@ -18,7 +18,7 @@ images_input = args.images_input
 model_output = args.model_output
 integration_output = args.integration_output
 
-statistics = evaluate(logging, Path(model_input), Path(images_input),
+statistics = execute_model_and_generate_integration_test_data(logging, Path(model_input), Path(images_input),
          Path(model_output), Path(integration_output))
 
 mlflow.log_metric("ok", statistics["ok"])
