@@ -40,7 +40,7 @@ tensorflow-io-gcs-filesystem==0.27.0 ; python_version >= "3.8" and python_versio
 tensorflow==2.12.0 ; python_version >= "3.8" and python_version < "3.11"
 termcolor==2.3.0 ; python_version >= "3.8" and python_version < "3.11"
 typing-extensions==4.8.0 ; python_version >= "3.8" and python_version < "3.11"
-urllib3==2.0.5 ; python_version >= "3.8" and python_version < "3.11"
+urllib3==2.0.6 ; python_version >= "3.8" and python_version < "3.11"
 werkzeug==3.0.0 ; python_version >= "3.8" and python_version < "3.11"
 wheel==0.41.2 ; python_version >= "3.8" and python_version < "3.11"
 wrapt==1.14.1 ; python_version >= "3.8" and python_version < "3.11"

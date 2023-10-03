@@ -20,14 +20,10 @@ git clone https://www.github.com/guillaume-chervet/MLOpsPython
 
 cd MLOpsPython
 chmod +x Makefile
-./Makefile
-
-# Download the model from here :
-# https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.1.0/mlopspython_model.zip
-# Unzip it 
-curl -L https://github.com/guillaume-chervet/MLOpsPython/releases/download/v0.1.0/mlopspython_model.zip --output model.zip
-unzip model.zip -d ./production/api/core/model
-rm model.zip
+# If you have poetry installed
+./Makefile poetry 0.1.0
+# Else degraded mode
+./Makefile pip 0.1.0
 
 cd production
 docker-compose up

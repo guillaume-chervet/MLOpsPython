@@ -10,14 +10,12 @@ env:
   PNPM_VERSION: 8.5.1
   PYTHON_VERSION: 3.10.13
   NODE_VERSION: 18
-  AZURE_RESOURCE_GROUP_NAME: "azure-ml-test"
+  AZURE_RESOURCE_GROUP_NAME: "azure-ml-demo"
   AZURE_SUBSCRIPTION_ID: "9d42c9d4-85ab-429d-afb4-4d77f309078c"
   AZURE_LOCATION: "northeurope"
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-test"
-  AZURE_WEBAPP_SERVICE_PLAN_NAME: "webapp-cdo-sp"
   AZURE_WEBAPP_NAME: "webapp-cdo"
   DOCKER_IMAGE_NAME: "guillaumechervet/mlopspython"
-
 
 permissions:
   contents: write
@@ -150,12 +148,8 @@ jobs:
     needs: tags
     outputs:
       MODEL_VERSION: ${{ steps.train.outputs.MODEL_VERSION }}
-      AZURE_RESOURCE_GROUP_NAME: ${{ steps.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
-      AZURE_ML_WORKSPACE_NAME: ${{ steps.train.outputs.AZURE_ML_WORKSPACE_NAME }}
-      DOCKER_IMAGE_NAME: ${{ steps.train.outputs.DOCKER_IMAGE_NAME }}
       INTEGRATION_DATASET_VERSION: ${{ steps.train.outputs.INTEGRATION_DATASET_VERSION }}
       EXPERIMENT_ID: ${{ steps.train.outputs.EXPERIMENT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ steps.train.outputs.AZURE_SUBSCRIPTION_ID }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -202,14 +196,6 @@ jobs:
       id: train
       run: |
           az extension add -n ml
-          AZURE_SUBSCRIPTION_ID=${{ env.AZURE_SUBSCRIPTION_ID }}
-          echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID" >> $GITHUB_OUTPUT
-          AZURE_RESOURCE_GROUP_NAME=${{ env.AZURE_RESOURCE_GROUP_NAME }}
-          echo "AZURE_RESOURCE_GROUP_NAME=$AZURE_RESOURCE_GROUP_NAME" >> $GITHUB_OUTPUT
-          AZURE_ML_WORKSPACE_NAME=${{ env.AZURE_ML_WORKSPACE_NAME }}
-          echo "AZURE_ML_WORKSPACE_NAME=$AZURE_ML_WORKSPACE_NAME" >> $GITHUB_OUTPUT
-          DOCKER_IMAGE_NAME=${{ env.DOCKER_IMAGE_NAME }}
-          echo "DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME" >> $GITHUB_OUTPUT
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
           echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
           INTEGRATION_DATASET_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt integration_dataset_version)
@@ -312,15 +298,6 @@ jobs:
       run: |
         poetry install
         az extension add -n ml
-        echo "AZURE_RESOURCE_GROUP_NAME=${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }}"
-        echo "AZURE_ML_WORKSPACE_NAME=${{ needs.train.outputs.AZURE_ML_WORKSPACE_NAME }}"
-        echo "MODEL_VERSION=${{ needs.train.outputs.MODEL_VERSION }}"
-        echo "INTEGRATION_DATASET_VERSION=${{ needs.train.outputs.INTEGRATION_DATASET_VERSION }}"
-        echo "EXPERIMENT_ID=${{ needs.train.outputs.EXPERIMENT_ID }}"
-        echo "AZURE_SUBSCRIPTION_ID=${{ needs.train.outputs.AZURE_SUBSCRIPTION_ID }}"
-        echo "AZURE_SUBSCRIPTION_ID=${{ env.AZURE_SUBSCRIPTION_ID }}"
-        echo "DOCKER_IMAGE_NAME=${{ env.DOCKER_IMAGE_NAME }}"
-        
         poetry run python azureml_run_pipeline.py \
             --subscription_id ${{ env.AZURE_SUBSCRIPTION_ID }}  \
             --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
@@ -333,9 +310,6 @@ jobs:
     - name: Delete Environment
       run: |
           az container delete --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --yes
-          # az webapp delete --name ${{ env.AZURE_WEBAPP_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} 
-          # az webapp create -g ${{ env.AZURE_RESOURCE_GROUP_NAME}} -p {{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} -n ${{ env.AZURE_WEBAPP_NAME }} -i nginx
-          # az functionapp plan delete --name ${{ env.AZURE_WEBAPP_SERVICE_PLAN_NAME }} --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --yes
   webapp:
     runs-on: ubuntu-latest
     steps:
