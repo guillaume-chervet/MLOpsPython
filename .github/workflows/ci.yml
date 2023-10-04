@@ -250,14 +250,14 @@ jobs:
     needs: [train, tags]
     uses: ./.github/workflows/docker.yml
     with:
-      image_name: ${{ needs.train.outputs.DOCKER_IMAGE_NAME }}
+      image_name: ${{ env.DOCKER_IMAGE_NAME }}
       image_version: ${{ needs.tags.outputs.new_version }}
       image_build_args: ""
       image_context: ./production/api
       image_file: "./production/api/Dockerfile"
       model_version: ${{ needs.train.outputs.MODEL_VERSION }}
-      resource_group: ${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
-      workspace_name: ${{ needs.train.outputs.AZURE_ML_WORKSPACE_NAME }}
+      resource_group: ${{ env.AZURE_RESOURCE_GROUP_NAME }}
+      workspace_name: ${{ env.AZURE_ML_WORKSPACE_NAME }}
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
