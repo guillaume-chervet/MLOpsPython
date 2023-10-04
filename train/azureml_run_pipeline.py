@@ -114,7 +114,10 @@ ml_client.jobs.stream(pipeline_job.name)
 
 
 model_name = "cats-dogs-others"
-model_version = str(len(list(ml_client.models.list(model_name))) + 1)
+try:
+    model_version = str(len(list(ml_client.models.list(model_name))) + 1)
+except:
+    model_version = "1"
 
 file_model = Model(
         version=model_version,
