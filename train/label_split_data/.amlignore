@@ -1,4 +1,5 @@
 /tests
+/dataset-cats-dogs-others-labels
 *.sh
 *.yml
 *.yaml

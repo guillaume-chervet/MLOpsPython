@@ -10,10 +10,10 @@ env:
   PNPM_VERSION: 8.5.1
   PYTHON_VERSION: 3.10.13
   NODE_VERSION: 18
-  AZURE_RESOURCE_GROUP_NAME: "azure-ml-d"
+  AZURE_RESOURCE_GROUP_NAME: "azure-ml-t"
   AZURE_SUBSCRIPTION_ID: "9d42c9d4-85ab-429d-afb4-4d77f309078c"
   AZURE_LOCATION: "northeurope"
-  AZURE_ML_WORKSPACE_NAME: "cats-dogs-d"
+  AZURE_ML_WORKSPACE_NAME: "cats-dogs-t"
   AZURE_WEBAPP_NAME: "webapp-cdo"
   DOCKER_IMAGE_NAME: "guillaumechervet/mlopspython"
 
