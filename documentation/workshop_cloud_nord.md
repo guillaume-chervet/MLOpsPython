@@ -158,16 +158,15 @@ Our team Kanban:
 
 https://github.com/users/guillaume-chervet/projects/1/views/1?layout=board
 
-- Choose a clean code card in the bord
-- Configure Pycharm to be able to debug existing Tests which are not very clean
-- Create a git branch with a specific unique name 
+1. Choose a clean code card in the bord
+2. Configure Pycharm to be able to debug existing Tests which are not very clean
+3. Create a git branch with a specific unique name 
 ```sh
 # Adapt the branch name 
 git checkout -b refactor/my_custom_branch_name
 ```
-- Follow instructions from teacher about clean code and dependency injection
 
-- Once task done, push your code and create a PullRequest from GitHub
+4. Once task done, push your code and create a PullRequest from GitHub
 ```sh
 git add .
 # Please follow a commit convention: https://www.conventionalcommits.org/en/v1.0.0/
