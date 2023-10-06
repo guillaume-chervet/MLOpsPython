@@ -45,7 +45,7 @@ ml_client = MLClient(
 )
 
 # Retrieve an already attached Azure Machine Learning Compute.
-cluster_name = "guillaume-cpu-low"
+cluster_name = "simple-cpu-low"
 
 cluster_basic = AmlCompute(
     name=cluster_name,
