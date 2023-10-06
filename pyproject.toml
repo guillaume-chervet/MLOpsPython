@@ -6,7 +6,8 @@ authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-black = "23.1.0"
+python = ">=3.8,<3.11"
+black = "^23.9.1"
 
 
 [build-system]
