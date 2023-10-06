@@ -28,7 +28,7 @@ chmod +x Makefile
 cd production
 docker-compose up
 # webapp is now available at : http://localhost:4000
-# api is available at : http://localhost:4000/health
+# api is available at : http://localhost:8000/health
 ```
 
 ## Contribute

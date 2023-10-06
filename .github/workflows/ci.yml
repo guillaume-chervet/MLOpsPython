@@ -14,7 +14,8 @@ env:
   AZURE_SUBSCRIPTION_ID: "9d42c9d4-85ab-429d-afb4-4d77f309078c"
   AZURE_LOCATION: "northeurope"
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-yolo"
-  AZURE_WEBAPP_NAME: "webapp-cdo"
+  AZURE_WEBAPP_NAME: "cats-dogs-yolo"
+  DELETE_WEBAPP: "false"
   DOCKER_IMAGE_NAME: "guillaumechervet/mlopspython"
 
 permissions:
@@ -312,7 +313,9 @@ jobs:
         cat integration_output.txt
     - name: Delete Environment
       run: |
-          az container delete --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --yes
+          if [ "${{ env.DELETE_WEBAPP }}" = "true" ]; then
+            az container delete --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --yes
+          fi
   webapp:
     runs-on: ubuntu-latest
     steps:
