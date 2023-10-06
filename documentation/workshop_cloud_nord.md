@@ -43,6 +43,9 @@ Important point:
   - Subscriptions are activated within minutes of the promo code being redeemed.
 - Select **northeurope** region
 
+https://www.microsoftazurepass.com/
+
+Documentation:
 https://www.microsoftazurepass.com/Home/HowTo
 
 ### 2.3. Fork the GitHub project MLOpsPython
