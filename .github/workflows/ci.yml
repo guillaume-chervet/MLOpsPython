@@ -46,12 +46,12 @@ jobs:
         pip install --user poetry
     - name: Format with Black
       run: |
-        poetry install --dev
+        poetry install
         poetry run black train
         poetry run black train --check
     - name: Lint with flake8
       run: |
-        poetry install --dev
+        poetry install
         poetry run flake8 .
   packages_unit_tests:
     runs-on: ubuntu-latest
