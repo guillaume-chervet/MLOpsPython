@@ -21,9 +21,10 @@ def define_model():
     for layer in model.layers:
         layer.trainable = False
     # add new classifier layers
-    drop1 = keras.layers.Dropout(0.2)(model.layers[-1].output)
+    output = model.layers[-1].output
+    drop1 = keras.layers.Dropout(0.2)(output)
     flat1 = Flatten()(drop1)
-    class1 = Dense(128, activation="relu", kernel_initializer="he_uniform")(flat1)
+    class1 = Dense(64, activation="relu", kernel_initializer="he_uniform")(flat1)
     #class2 = Dense(42, activation="relu", kernel_initializer="he_uniform")(class1)
     output = Dense(3, activation="sigmoid")(class1)
     # define new model
@@ -95,15 +96,15 @@ def run_test_harness(input_directory: Path, output_directory: Path, batch_size=6
         epochs=epochs,
         verbose=1,
     )
-    # evaluate model
+    # test model
     evaluate_it = datagen.flow_from_directory(
-        str(input_directory / "evaluate"), class_mode="binary", batch_size=batch_size, target_size=(224, 224)
+        str(input_directory / "test"), class_mode="binary", batch_size=batch_size, target_size=(224, 224)
     )
     _, acc = model.evaluate_generator(evaluate_it, steps=len(evaluate_it), verbose=1)
     evaluate_accuracy_percentage = acc * 100.0
     print("> %.3f" % (evaluate_accuracy_percentage))
     # learning curves
     summary_image_path = summarize_diagnostics(history, output_directory)
-    model_path = output_directory / "final_model.h5"
+    model_path = output_directory / "final_model.keras"
     model.save(str(model_path))
     return ModelResult(evaluate_accuracy_percentage, summary_image_path, model_path)

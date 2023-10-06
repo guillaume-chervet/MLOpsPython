@@ -1,0 +1,7 @@
+/tests
+*.sh
+*.yml
+*.yaml
+*.ipynb
+*.lock
+*.toml

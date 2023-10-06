@@ -1,3 +1,14 @@
-[tool.black]
-max-complexity = 10
-line-length = 122
+[tool.poetry]
+name = "mlopspython"
+version = "0.0.0"
+description = ""
+authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+black = "23.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

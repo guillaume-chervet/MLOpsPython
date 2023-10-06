@@ -18,11 +18,12 @@ class LabelSplitDataResult:
 def label_split_data(input_labels_path: Path,
                      input_images_directory: Path,
                      output_directory: Path,
-                     number_file_by_label=3,
-                     ratio_train: float = 0.4,
-                     ratio_test: float = 0.4) -> LabelSplitDataResult:
+                     number_image_by_label=3,
+                     ratio_number_train_image: float = 0.4,
+                     ratio_number_test_image: float = 0.4,
+                     ) -> LabelSplitDataResult:
 
-    if ratio_test + ratio_test > 1:
+    if ratio_number_test_image + ratio_number_test_image > 1:
         raise Exception("sum of ratio must be inferior or equal to 1")
 
     Path(output_directory).mkdir(parents=True, exist_ok=True)
@@ -31,19 +32,19 @@ def label_split_data(input_labels_path: Path,
 
     split_paths = {"cat": [], "dog": [], "other": []}
     labels = ["cat", "dog", "other"]
-    split_directory_names = ["train", "test", "evaluate"]
+    split_directory_names = ["train", "test", "test"]
     annotations = label_data["annotations"]
     for annotation in annotations:
         filename = annotation["fileName"]
         label = annotation["annotation"]["label"]
-        if len(split_paths[label]) < number_file_by_label:
+        if len(split_paths[label]) < number_image_by_label:
             split_paths[label].append(filename)
 
-    number_file_train = int(number_file_by_label * ratio_train)
-    number_file_test = int(number_file_by_label * ratio_test)
+    number_file_train = int(number_image_by_label * ratio_number_train_image)
+    number_file_test = int(number_image_by_label * ratio_number_test_image)
     path_results = []
     for label in labels:
-        if number_file_by_label != len(split_paths[label]):
+        if number_image_by_label != len(split_paths[label]):
             raise Exception("Not enough files for label " + label)
 
         splitted = np.split(split_paths[label], [number_file_train, number_file_test + number_file_train])
@@ -61,6 +62,6 @@ def label_split_data(input_labels_path: Path,
     return LabelSplitDataResult(
         number_file_train_by_label=number_file_train,
         number_file_test_by_label=number_file_test,
-        number_file_evaluate_by_label=number_file_by_label - number_file_train - number_file_test,
+        number_file_evaluate_by_label=number_image_by_label - number_file_train - number_file_test,
         path_results=path_results,
         number_labeled_data=len(annotations))

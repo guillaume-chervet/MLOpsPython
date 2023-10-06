@@ -1,14 +1,13 @@
 import setuptools
-import version
 
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 setuptools.setup(
     name="mlopspython-extraction",
-    version=version.VERSION,
+    version="0.0.0",
     packages=["mlopspython_extraction"],
-    package_dir={"": "src"},
+    package_dir={"": ""},
     package_data={"mlopspython_extraction": ["*"]},
     install_requires=requirements,
     author="Guillaume Chervet",

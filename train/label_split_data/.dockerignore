@@ -1,0 +1,5 @@
+/tests
+/dataset-cats-dogs-others-labels
+*.ipynb
+*.lock
+*.toml

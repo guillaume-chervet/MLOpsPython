@@ -1,0 +1,29 @@
+
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+
+name: train
+display_name: Train
+description: Train model on train+evaluate set
+version: 0.0.1
+is_deterministic: true
+
+inputs:
+  split_images_input:
+    type: uri_folder
+
+outputs:
+  model_output:
+    type: uri_folder
+
+environment:
+  name: train_environment
+  build:
+    path: ./
+
+code: ./
+command: >-
+  python command.py
+  --split_images_input ${{inputs.split_images_input}}
+  --model_output ${{outputs.model_output}}
+

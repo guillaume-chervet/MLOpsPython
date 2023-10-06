@@ -393,7 +393,7 @@ def score_data(
 def eval_model(
     scoring_result: Input(type="uri_folder"), eval_output: Output(type="uri_folder")
 ):
-    """A dummy evaluate component."""
+    """A dummy test component."""
 
     lines = [
         f"Scoring result path: {scoring_result}",

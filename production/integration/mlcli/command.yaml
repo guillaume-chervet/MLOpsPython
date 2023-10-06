@@ -1,0 +1,32 @@
+
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+
+name: integration
+display_name: Integration
+description: Split data into train and test sets
+version: 0.0.1
+is_deterministic: true
+
+inputs:
+  integration_input:
+    type: uri_folder
+  url_input:
+    type: string
+
+outputs:
+  integration_output:
+    type: uri_folder
+
+environment:
+  name: integration_environment
+  build:
+    path: ./
+
+code: ./
+command: >-
+  python command.py
+  --integration_input ${{inputs.integration_input}}
+  --url_input ${{inputs.url_input}}
+  --integration_output ${{outputs.integration_output}}
+
