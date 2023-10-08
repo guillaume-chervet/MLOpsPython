@@ -50,7 +50,9 @@ https://www.microsoftazurepass.com/Home/HowTo
 
 ### 2.3. Fork the GitHub project MLOpsPython
 
-https://github.com/guillaume-chervet/MLOpsPython
+1. Fork https://github.com/guillaume-chervet/MLOpsPython repository
+2. Go to GitHub Action Tab and activate it !
+3. Clone your new own **MLOpsPython** repository
 
 ### 2.4. Set up Azure Secret for GitHub Action
 
@@ -109,7 +111,7 @@ Inside "./.github/workflows/ci.yml" file
 
 env:
   AZURE_RESOURCE_GROUP_NAME: "azure-ml-<your-name>"
-  AZURE_SUBSCRIPTION_ID: "<subscription-id"
+  AZURE_SUBSCRIPTION_ID: "<subscription-id>"
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-<your-name>"
   AZURE_WEBAPP_NAME: "cats-dogs-<your-name>"
   DOCKER_IMAGE_NAME: "<your-docker-login>/mlopspython"
@@ -132,9 +134,9 @@ This will trigger the GitHub Action.
 
 ## 3. Getting Started on your laptop
 
-Follow "Get Started" section:
+Follow "Get Started" section to run the projet on your laptop :
 
-https://github.com/guillaume-chervet/MLOpsPython
+https://github.com/<your-github-login>/MLOpsPython
 
 ## 4. First Contribution : Images Labelling
 
@@ -150,7 +152,7 @@ Authenticate information :
 https://axaguildev-ecotag.azurewebsites.net/projects/2329f843-fa3d-45df-bec5-08db0799d5b5
 
 For you culture, Ecotag is an awesome Open Source tool available here :
-https://github.com/AxaGuilDEv/react-oidc
+https://github.com/AxaGuilDEv/ecotag
 
 ## 5. Second Contribution : CleanCode & PullRequest
 
@@ -158,9 +160,10 @@ Our team Kanban:
 
 https://github.com/users/guillaume-chervet/projects/1/views/1?layout=board
 
-1. Choose a clean code card in the bord
+1. Choose a clean code card on the bord
 2. Configure Pycharm to be able to debug existing Tests which are not very clean
-3. Create a git branch with a specific unique name 
+3. Create a git branch with a specific unique name
+
 ```sh
 # Adapt the branch name 
 git checkout -b refactor/my_custom_branch_name
@@ -173,3 +176,4 @@ git add .
 git commit -m "refactor(myfonctionnality): commit message"
 git push
 ```
+
