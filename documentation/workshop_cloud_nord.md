@@ -65,6 +65,12 @@ https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure
 ```bash
 # Log to azure
 az login
+
+# az account show
+# >> show your current account
+# az account list
+# >> list all your account
+
 # set the subscription
 az account set -s <subscription-id>
 
