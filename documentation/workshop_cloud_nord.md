@@ -142,7 +142,7 @@ This will trigger the GitHub Action.
 
 Follow "Get Started" section to run the projet on your laptop :
 
-https://github.com/<your-github-login>/MLOpsPython
+https://github.com/your-github-login/MLOpsPython
 
 ## 4. First Contribution : Images Labelling
 
@@ -182,4 +182,3 @@ git add .
 git commit -m "refactor(myfonctionnality): commit message"
 git push
 ```
-
