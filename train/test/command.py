@@ -24,6 +24,7 @@ statistics = execute_model_and_generate_integration_test_data(logging,
                                                               Path(model_input),
                                                               Path(images_input),
                                                               Path(integration_input),
+                                                              Path(model_output),
                                                               Path(integration_output))
 
 mlflow.log_metric("ok", statistics["ok"])

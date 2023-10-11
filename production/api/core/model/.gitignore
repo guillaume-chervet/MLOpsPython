@@ -1,3 +1,5 @@
 cats-dogs-others
 /final_model.h5
 /final_model.keras
+/predictions.json
+/statistics.json
