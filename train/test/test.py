@@ -74,7 +74,7 @@ def execute_model_and_generate_integration_test_data(
     for pdf_source_path in pdfs:
         images = [
             p
-            for p in Path(pdf_source_path.parent / pdf_source_path.stem).iterdir()
+            for p in Path(input_integration_directory / pdf_source_path.stem).iterdir()
             if p.is_file() and p.suffix == ".png"
         ]
         images.sort()
