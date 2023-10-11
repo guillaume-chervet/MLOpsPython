@@ -1,6 +1,3 @@
-[34mUpdating dependencies[39m
-
-[34mWriting lock file[39m
 absl-py==2.0.0 ; python_version >= "3.10" and python_version < "3.11"
 alembic==1.12.0 ; python_version >= "3.10" and python_version < "3.11"
 astunparse==1.6.3 ; python_version >= "3.10" and python_version < "3.11"
