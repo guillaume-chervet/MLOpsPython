@@ -78,7 +78,8 @@ def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
 
     test_step = load_component(source="test/command.yaml")
     test_data = test_step(model_input=train_data.outputs.model_output,
-                                  images_input=label_split_data.outputs.split_images_output)
+                          integration_input=label_split_data.outputs.integration_output,
+                          images_input=label_split_data.outputs.split_images_output)
 
     return {
         "model_output": test_data.outputs.model_output,

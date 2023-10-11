@@ -21,6 +21,7 @@ split_integration_output = args.split_integration_output
 number_file_by_label = 100
 ratio_train: float = 0.7
 ratio_test: float = 0.2
+number_pdfs_integration = 100
 
 params = {"number_file_by_label": number_file_by_label, "ratio_train": ratio_train, "ratio_test": ratio_test}
 
@@ -33,6 +34,7 @@ label_split_data_result = label_split_data(
     Path(split_images_output),
     Path(split_integration_output),
     number_file_by_label,
+    number_pdfs_integration,
     ratio_train,
     ratio_test,
 )

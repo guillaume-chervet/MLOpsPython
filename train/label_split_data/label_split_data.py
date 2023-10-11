@@ -30,25 +30,25 @@ def label_split_data(input_labels_path: Path,
         raise Exception("sum of ratio must be inferior or equal to 1")
 
     Path(output_images_directory).mkdir(parents=True, exist_ok=True)
+    Path(output_integration_directory).mkdir(parents=True, exist_ok=True)
     pdfs = [p for p in Path(input_pdfs_directory).iterdir() if p.is_file() and p.suffix == ".pdf"]
     pdfs.sort()
     images = [p for p in Path(input_images_directory).iterdir() if p.is_file() and p.suffix == ".png"]
     if len(pdfs) > number_pdfs_integration:
         pdfs = pdfs[:number_pdfs_integration]
-    pdf_output_directory = output_images_directory / "integration"
-    Path(pdf_output_directory).mkdir(parents=True, exist_ok=True)
+    pdf_output_directory = output_integration_directory
     pdfs_integration = []
     for pdf in pdfs:
         pdfs_integration.append(pdf.name)
         (pdf_output_directory / pdf.name).write_bytes(pdf.read_bytes())
 
-    for image in images:
-        image_pdf_name = image.name.split("_")[0]
+    for image_path in images:
+        image_pdf_name = image_path.name.split("_")[0]
         if image_pdf_name + ".pdf" not in pdfs_integration:
             continue
         Path(pdf_output_directory / image_pdf_name).mkdir(parents=True, exist_ok=True)
-        image_output_path = pdf_output_directory / image_pdf_name / image.name
-        image_output_path.write_bytes(image.read_bytes())
+        image_output_path = pdf_output_directory / image_pdf_name / image_path.name
+        image_output_path.write_bytes(image_path.read_bytes())
 
 
     with open(input_labels_path) as json_file:

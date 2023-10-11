@@ -13,6 +13,8 @@ inputs:
     type: uri_folder
   images_input:
     type: uri_folder
+  integration_input:
+    type: uri_folder
 
 outputs:
   model_output:
@@ -30,5 +32,6 @@ command: >-
   python command.py
   --model_input ${{inputs.model_input}}
   --images_input ${{inputs.images_input}}
+  --integration_input ${{inputs.integration_input}}
   --model_output ${{outputs.model_output}}
   --integration_output ${{outputs.integration_output}}
