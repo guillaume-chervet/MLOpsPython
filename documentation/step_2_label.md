@@ -1,20 +1,20 @@
 ## Second step: labelling
 
-![1-paradigm-shift.PNG](documentation%2Flabelling%2F1-paradigm-shift.PNG)
+![1-paradigm-shift.PNG](labelling%2F1-paradigm-shift.PNG)
 
 There are three big paradigm shifts to understand to achieve AI.
-![2-paradigm-shift-skills.PNG](documentation%2Flabelling%2F2-paradigm-shift-skills.PNG)
+![2-paradigm-shift-skills.PNG](labelling%2F2-paradigm-shift-skills.PNG)
 
 The first is that we work differently.
 In classical computer science, we are given rules and some input data with that a developer codes an algorithm that allows us to retrieve the answers.
 
 In Machine Learning, we need input data + answers. By a little of the 100 ene, thousands or even millions of examples. This is a developer who writes code that generates the rules, which is called an AI. In computer terms we speak of an AI model that we execute (infere).
 
-![3-paradigm-shift-skills.PNG](documentation%2Flabelling%2F3-paradigm-shift-skills.PNG)
+![3-paradigm-shift-skills.PNG](labelling%2F3-paradigm-shift-skills.PNG)
 
 In production it works the same. We receive from a data we execute the algorithm and we get a result.
 
-![4-paradigm-shift-data.PNG](documentation%2Flabelling%2F4-paradigm-shift-data.PNG)
+![4-paradigm-shift-data.PNG](labelling%2F4-paradigm-shift-data.PNG)
 
 Data is gold for companies.
 Before we talked about a centered AI model because we were not sure we could make the AI models associated with the problems.
@@ -23,14 +23,14 @@ What makes the difference that we will be able to carry out a project or not is 
 - the quantity
 - the quality of inputs and responses.
 
-![5-paradigm-shift-alive.PNG](documentation%2Flabelling%2F5-paradigm-shift-alive.PNG)
+![5-paradigm-shift-alive.PNG](labelling%2F5-paradigm-shift-alive.PNG)
 
 Data: it is alive, it is alive in the sense that the world moves, evolves, data evolves.
 You know this new identity card?
 We know how to read it and adapt quickly even if we have never seen it, but an AI no, we will have to educate it, train it to read this identity card.
 Change is permanent, AI training is something that is daily that must continue day after day.
 
-![5-paradim-shift-alive.PNG](documentation%2Flabelling%2F5-paradim-shift-alive.PNG)
+![5-paradim-shift-alive.PNG](labelling%2F5-paradim-shift-alive.PNG)
 In a complex workflow where several AI algorithms are chained, or the output of the previous algorithm influences the input of the next.
 It must be understood that if we have a total of for example 8 steps with 8 AI that chains itself.
 If each stage must be trained with 10,000 entries and 10,000 outputs.
@@ -53,11 +53,11 @@ Important points :
 
 How do you classify the image bellow ?
 
-![labelling_rules.png](documentation%2Flabelling%2Flabelling_rules.png)
+![labelling_rules.png](labelling%2Flabelling_rules.png)
 
 How do you classify the image bellow ?
 
-![labelling_rules-1.png](documentation%2Flabelling%2Flabelling_rules-1.png)
+![labelling_rules-1.png](labelling%2Flabelling_rules-1.png)
 
 We will label cats-dogs-other dataset together using ecotag:
 
@@ -67,7 +67,7 @@ Ecotag is an Open Source tool available here :
 
 https://github.com/AxaGuilDEv/react-oidc
 
-![Ecotag.png](documentation%2FEcotag.png)
+![Ecotag.png](Ecotag.png)
 
 ### Data drift
 

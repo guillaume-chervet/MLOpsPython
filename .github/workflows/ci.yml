@@ -14,7 +14,8 @@ env:
   AZURE_SUBSCRIPTION_ID: "9d42c9d4-85ab-429d-afb4-4d77f309078c"
   AZURE_LOCATION: "northeurope"
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-yolo"
-  AZURE_WEBAPP_NAME: "webapp-cdo"
+  AZURE_WEBAPP_NAME: "cats-dogs-yolo"
+  DELETE_WEBAPP: "false"
   DOCKER_IMAGE_NAME: "guillaumechervet/mlopspython"
 
 permissions:
@@ -36,23 +37,23 @@ jobs:
             - 'production/**'
           train:
             - 'train/**'
-  #  - name: Set up Python 3.11.1
-  #    uses: actions/setup-python@v3
-  #    with:
-  #      python-version: 3.11.1
-  #  - name: Install PipEnv dependencies
-  #    run: |
-  #      python -m pip install --upgrade pip
-  #      pip install --user pipenv
-  #  - name: Format with Black
-  #    run: |
-  #      poetry install --dev
-  #      poetry run black train
-  #      poetry run black train --check
-  #  - name: Lint with flake8
-  #    run: |
-  #      poetry install --dev
-  #      poetry run flake8 .
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - name: Install Poetry dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install --user poetry
+    - name: Format with Black
+      run: |
+        poetry install
+        poetry run black train
+        poetry run black train --check
+    - name: Lint with flake8
+      run: |
+        poetry install
+        poetry run flake8 .
   packages_unit_tests:
     runs-on: ubuntu-latest
     steps:
@@ -312,7 +313,9 @@ jobs:
         cat integration_output.txt
     - name: Delete Environment
       run: |
-          az container delete --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --yes
+          if [ "${{ env.DELETE_WEBAPP }}" = "true" ]; then
+            az container delete --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --yes
+          fi
   webapp:
     runs-on: ubuntu-latest
     steps:

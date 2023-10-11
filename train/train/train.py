@@ -81,8 +81,8 @@ def run_test_harness(input_directory: Path, output_directory: Path, batch_size=6
         batch_size=batch_size,
         target_size=(224, 224)
     )
-    test_it = datagen.flow_from_directory(
-        str(input_directory / "test"),
+    validation_it = datagen.flow_from_directory(
+        str(input_directory / "evaluate"),
         class_mode="binary",
         batch_size=batch_size,
         target_size=(224, 224)
@@ -91,8 +91,8 @@ def run_test_harness(input_directory: Path, output_directory: Path, batch_size=6
     history = model.fit_generator(
         train_it,
         steps_per_epoch=len(train_it),
-        validation_data=test_it,
-        validation_steps=len(test_it),
+        validation_data=validation_it,
+        validation_steps=len(validation_it),
         epochs=epochs,
         verbose=1,
     )

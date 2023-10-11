@@ -5,26 +5,39 @@ from pathlib import Path
 from label_split_data import label_split_data
 
 BASE_PATH = Path(__file__).resolve().parent
-output_directory = BASE_PATH / "output"
+output_images_directory = BASE_PATH / "output_images"
+output_pdf_directory = BASE_PATH / "output_integration"
 input_directory = BASE_PATH / "input"
 input_images_directory = input_directory / "images"
 input_labels_path = input_directory / "labels" / "labels.json"
+input_pdfs_directory = input_directory / "pdfs"
+
 
 class LabelSplitDataTest(unittest.TestCase):
-
     def test_label_split_data(self):
-        if output_directory.is_dir():
-            shutil.rmtree(str(output_directory))
-        label_split_data_result = label_split_data(input_labels_path, input_images_directory, output_directory)
-        expected = ['train/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e1_page1_index0.png',
-                    'test/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e9_page1_index0.png',
-                    'test/cats/cat_0a2bc279-8a6b-49fd-9857-d047351cd5e9_page3_index0.png',
-                    'train/dogs/dog_0a2bc279-8a6b-49fd-9857-d047351cd5e9_page2_index0.png',
-                    'test/dogs/dog_0a2bc279-8a6b-49fd-9857-d047351cd5e9_page4_index0.png',
-                    'test/dogs/dog_0a2bc279-8a6b-49fd-9857-d047351cd5e10_page4_index0.png',
-                    'train/others/other_0a0e5d35-ef01-4239-af60-81f2357a6ab9_page0_index0.png',
-                    'test/others/other_0a0e5d35-ef01-4239-af60-81f2357a6ab9_page2_index0.png',
-                    'test/others/other_0a0e5d35-ef01-4239-af60-81f2357a6ab9_page1_index0.png']
+        if output_images_directory.is_dir():
+            shutil.rmtree(str(output_images_directory))
+        if output_pdf_directory.is_dir():
+            shutil.rmtree(str(output_pdf_directory))
+        label_split_data_result = label_split_data(
+            input_labels_path,
+            input_images_directory,
+            input_pdfs_directory,
+            output_images_directory,
+            output_pdf_directory,
+            number_pdfs_integration=1,
+        )
+        expected = [
+            "train/cats/cat_b_page1_index0.png",
+            "test/cats/cat_b_page1_index0.png",
+            "evaluate/cats/cat_b_page3_index0.png",
+            "train/dogs/dog_b_page2_index0.png",
+            "test/dogs/dog_b_page4_index0.png",
+            "evaluate/dogs/dog_c_page4_index0.png",
+            "train/others/other_b_page0_index0.png",
+            "test/others/other_b_page2_index0.png",
+            "evaluate/others/other_b_page1_index0.png",
+        ]
         for path_result in label_split_data_result.path_results:
             self.assertIn(path_result, expected)
         self.assertEqual(label_split_data_result.number_file_train_by_label, 1)
@@ -32,5 +45,5 @@ class LabelSplitDataTest(unittest.TestCase):
         self.assertEqual(label_split_data_result.number_file_evaluate_by_label, 1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

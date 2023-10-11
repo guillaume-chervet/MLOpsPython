@@ -5,9 +5,6 @@ services:
     build:
       context: ./api
       dockerfile: ./Dockerfile
-      args:
-        buildImage: python:3.11.2
-        runtimeImage: python:3.11.2
     image: local.io/api-catsdogsothers:local
     restart: "no"
     user: "1001001"

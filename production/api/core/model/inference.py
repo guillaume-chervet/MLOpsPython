@@ -27,7 +27,7 @@ class Inference:
             stream = file.read()
             for image_stream in extract_images_stream(stream):
                 if type == "opencv":
-                    prediction = self.inference_cv.execute(stream, filename, settings)
+                    prediction = self.inference_cv.execute(image_stream.image_bytes_io, filename, settings)
                 else:
                     prediction = self.inference_pillow.execute(image_stream.image_bytes_io, filename, settings)
                 predictions.append(prediction)

@@ -45,7 +45,7 @@ ml_client = MLClient(
 )
 
 # Retrieve an already attached Azure Machine Learning Compute.
-cluster_name = "guillaume-cpu-low"
+cluster_name = "simple-cpu-low"
 
 cluster_basic = AmlCompute(
     name=cluster_name,
@@ -69,6 +69,7 @@ def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
 
     label_split_data_step = load_component(source="label_split_data/command.yaml")
     label_split_data = label_split_data_step(labels_input=labels_input_data,
+                                             pdfs_input=pdfs_input_data,
                                              images_input=extraction.outputs.images_output)
 
     train_step = load_component(source="train/command.yaml")
@@ -77,7 +78,8 @@ def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
 
     test_step = load_component(source="test/command.yaml")
     test_data = test_step(model_input=train_data.outputs.model_output,
-                                  images_input=label_split_data.outputs.split_images_output)
+                          integration_input=label_split_data.outputs.split_integration_output,
+                          images_input=label_split_data.outputs.split_images_output)
 
     return {
         "model_output": test_data.outputs.model_output,
