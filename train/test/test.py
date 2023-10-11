@@ -62,6 +62,14 @@ def execute_model_and_generate_integration_test_data(
     for pdf_source_path in pdfs:
         destination_path = mlcli_directory / pdf_source_path.name
         destination_path.write_bytes(pdf_source_path.read_bytes())
+        settings = {
+            "data": [
+                {"type": "file", "value": pdf_source_path.name},
+                {"key": "type", "value": "pillow"},
+            ]
+        }
+        with open(model_output_directory / (pdf_source_path.stem + ".json"), "w") as file_stream:
+            json.dump(settings, file_stream, indent=4)
 
     for pdf_source_path in pdfs:
         images = [
@@ -94,6 +102,5 @@ def execute_model_and_generate_integration_test_data(
         )
         with open(ground_truth_directory / truth_filename, "w") as file_stream:
             json.dump(data, file_stream, indent=4)
-
 
     return statistics

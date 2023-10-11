@@ -72,7 +72,6 @@ def version():
     return {"version": VERSION}
 
 
-# @trace("process_document")
 async def upload_internal_async(file: UploadFile = File(...), settings_list: List[UploadFile] = File([])):
     filename = file.filename
     file_readed = await file.read()

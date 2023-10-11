@@ -9,6 +9,8 @@ You will contribute to the MLOpsPython project.
 - Pycharm (https://www.jetbrains.com/pycharm/)
 - Download and install python 3.10.x on your laptop. 
 https://www.python.org/downloads/
+- Discord (https://discord.com/)
+  - Connect to **MTG Lille** (Microsoft Tech Community) to chat with the team : https://discord.com/invite/z5XHgeuNMM 
 
 ## 1. Introduction
 
@@ -182,3 +184,8 @@ git add .
 git commit -m "refactor(myfonctionnality): commit message"
 git push
 ```
+
+## 6. Check your API result  
+
+1. Follow document and download ml-cli version 0.53.8 for your OS https://github.com/AxaFrance/ecotag/blob/master/README-ML-CLI.md
+2. 
