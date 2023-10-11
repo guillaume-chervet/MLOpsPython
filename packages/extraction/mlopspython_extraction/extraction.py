@@ -8,7 +8,7 @@ from fitz import Pixmap
 
 
 def convert_pixmap_to_rgb(pixmap) -> Pixmap:
-    """Convert to rgb in order to write on png"""
+    """Convert to rgb in order to write on png""" 
     # check if it is already on rgb
     if pixmap.n < 4:
         return pixmap
