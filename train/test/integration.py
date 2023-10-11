@@ -1,9 +1,10 @@
 import json
 from pathlib import Path
 
-def prepare_integration_data(input_integration_directory, integration_output_directory,
-                             execute):
 
+def prepare_integration_data(
+    input_integration_directory, integration_output_directory, execute
+):
     mlcli_directory = integration_output_directory / "mlcli"
     mlcli_directory.mkdir(parents=True, exist_ok=True)
     pdfs = [
@@ -22,12 +23,20 @@ def prepare_integration_data(input_integration_directory, integration_output_dir
                 {"key": "type", "value": "pillow"},
             ]
         }
-        with open(mlcli_directory / (pdf_source_path.stem + ".json"), "w") as file_stream:
+        with open(
+            mlcli_directory / (pdf_source_path.stem + ".json"), "w"
+        ) as file_stream:
             json.dump(settings, file_stream, indent=4)
     for pdf_source_path in pdfs:
+        print("pdf_source_path: " + str(pdf_source_path))
+        images_path = input_integration_directory / pdf_source_path.stem
+        if not images_path.is_dir():
+            print("images_path not exist: " + str(images_path))
+            continue
+        print("images_path: " + str(images_path))
         images = [
             p
-            for p in Path(input_integration_directory / pdf_source_path.stem).iterdir()
+            for p in images_path.iterdir()
             if p.is_file() and p.suffix == ".png"
         ]
         images.sort()
@@ -48,10 +57,10 @@ def prepare_integration_data(input_integration_directory, integration_output_dir
             "TicksAt": 0,
         }
         truth_filename = (
-                Path(pdf_source_path).stem
-                + "_"
-                + Path(pdf_source_path).suffix.lower().replace(".", "")
-                + ".json"
+            Path(pdf_source_path).stem
+            + "_"
+            + Path(pdf_source_path).suffix.lower().replace(".", "")
+            + ".json"
         )
         with open(ground_truth_directory / truth_filename, "w") as file_stream:
             json.dump(data, file_stream, indent=4)

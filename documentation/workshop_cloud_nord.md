@@ -146,6 +146,10 @@ Follow "Get Started" section to run the projet on your laptop :
 
 https://github.com/your-github-login/MLOpsPython
 
+- Pdfs dataset: https://github.com/guillaume-chervet/dataset-cats-dogs-others
+- Drift dataset: https://github.com/guillaume-chervet/dataset-cats-dogs-others-drift
+- You can test with your own files :)
+
 ## 4. First Contribution : Images Labelling
 
 We need you to annotate 200 images of classification of :
@@ -185,7 +189,23 @@ git commit -m "refactor(myfonctionnality): commit message"
 git push
 ```
 
-## 6. Check your API result  
+## 6. How to check your API result  
 
-1. Follow document and download ml-cli version 0.53.8 for your OS https://github.com/AxaFrance/ecotag/blob/master/README-ML-CLI.md
-2. 
+1. Follow "ml-cli" readme and download "ml-cli" version v0.54.1 for your OS https://github.com/AxaFrance/ecotag/blob/master/README-ML-CLI.md
+2. Adapt task.json file with your own parameters to test your API with:
+   - Pillow
+   - OpenCv
+3. Compare the result using ml-cli web UI
+
+## 7. More AzureML
+
+1. Create a AzureML Compute Instance
+2. Open JupyterLab with Python 3.10 and SDK v2
+3. Clone the AzureML SDK v2 repository
+
+```sh 
+git clone https://github.com/Azure/azureml-examples
+cd azureml-examples/sdk/python
+```
+
+You are ready to go !
