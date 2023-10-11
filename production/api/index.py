@@ -4,7 +4,7 @@ import sys
 from typing import Dict, Optional, Union, List
 
 import uvicorn
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.exception_handlers import (
     http_exception_handler,
     request_validation_exception_handler,
@@ -72,7 +72,11 @@ def version():
     return {"version": VERSION}
 
 
-async def upload_internal_async(file: UploadFile = File(...), settings_list: List[UploadFile] = File([])):
+async def upload_internal_async(
+    file: UploadFile = File(...),
+        settings_list: List[UploadFile] = File([]),
+        type: Optional[str] = Form(None)
+):
     filename = file.filename
     file_readed = await file.read()
     file_bytes = io.BytesIO(file_readed)
@@ -81,19 +85,27 @@ async def upload_internal_async(file: UploadFile = File(...), settings_list: Lis
     if settings_list:
         for file in settings_list:
             file_settings = await file.read()
-            settings = json.loads(file_settings.decode('utf8'))
+            settings = json.loads(file_settings.decode("utf8"))
 
     if settings is None:
         settings = {"version": VERSION}
     else:
         settings["version"]: VERSION
 
+    if type is not None:
+        settings["type"] = type
+
     result = await process.process_document_async(file_bytes, filename, settings)
     return result
 
+
 @app.post("/upload")
-async def upload(file: UploadFile = File(...), settings: List[UploadFile] = File([])):
-    result = await upload_internal_async(file, settings)
+async def upload(
+    file: UploadFile = File(...),
+    settings: List[UploadFile] = File([]),
+    type: Optional[str] = Form(None),
+):
+    result = await upload_internal_async(file, settings, type)
     return result
 
 
@@ -101,7 +113,8 @@ class Item(BaseModel):
     id: str
     settings: Optional[Dict[str, Union[None, str, float, Dict[str, float]]]] = None
 
-logger.info('application starting using version: %s', VERSION)
+
+logger.info("application starting using version: %s", VERSION)
 
 if __name__ == "__main__":
     args = sys.argv

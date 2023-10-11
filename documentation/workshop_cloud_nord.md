@@ -45,10 +45,10 @@ Important point:
   - Subscriptions are activated within minutes of the promo code being redeemed.
 - Select **northeurope** region
 
-https://www.microsoftazurepass.com/
+https://www.microsoftazurepass.com/?WT.mc_id=DOP-MVP-5003370 
 
 Documentation:
-https://www.microsoftazurepass.com/Home/HowTo
+https://www.microsoftazurepass.com/Home/HowTo?WT.mc_id=DOP-MVP-5003370 
 
 ### 2.3. Fork the GitHub project MLOpsPython
 
@@ -191,11 +191,11 @@ git push
 
 ## 6. How to check your API result  
 
-1. Follow "ml-cli" readme and download "ml-cli" version v0.54.1 for your OS https://github.com/AxaFrance/ecotag/blob/master/README-ML-CLI.md
-2. Adapt task.json file with your own parameters to test your API with:
-   - Pillow
-   - OpenCv
-3. Compare the result using ml-cli web UI
+1. Follow "ml-cli" readme and download "ml-cli" version v0.54.2 for your OS https://github.com/AxaFrance/ecotag/blob/master/README-ML-CLI.md
+2. Download https://github.com/guillaume-chervet/dataset-cats-dogs-others-mlcli as a zip and unzip content in "demo" folder
+     - tasks.json should be in demo directory like "./demo/tasks.json"
+4. Adapt tasks.json file to call your API then run ml-cli
+5. Once compare file generated, compare the result using ml-cli web UI
 
 ## 7. More AzureML
 
