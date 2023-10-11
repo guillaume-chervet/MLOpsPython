@@ -6,13 +6,17 @@ from label_split_data import label_split_data
 parser = argparse.ArgumentParser("label_split_data")
 parser.add_argument("--labels_input", type=str)
 parser.add_argument("--images_input", type=str)
+parser.add_argument("--pdfs_input", type=str)
 parser.add_argument("--split_images_output", type=str)
+parser.add_argument("--split_integration_output", type=str)
 
 # Get arguments from parser
 args = parser.parse_args()
 labels_input = args.labels_input
 images_input = args.images_input
+pdfs_input = args.pdfs_input
 split_images_output = args.split_images_output
+split_integration_output = args.split_integration_output
 
 number_file_by_label = 100
 ratio_train: float = 0.7
@@ -25,7 +29,9 @@ labels_files_path = Path(labels_input) / "cats_dogs_others_classification-annota
 label_split_data_result = label_split_data(
     labels_files_path,
     Path(images_input),
+    Path(pdfs_input),
     Path(split_images_output),
+    Path(split_integration_output),
     number_file_by_label,
     ratio_train,
     ratio_test,

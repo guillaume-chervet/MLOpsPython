@@ -13,9 +13,13 @@ inputs:
     type: uri_folder
   images_input:
     type: uri_folder
+  pdfs_input:
+    type: uri_folder
 
 outputs:
   split_images_output:
+    type: uri_folder
+  split_integration_output:
     type: uri_folder
 
 environment:
@@ -28,5 +32,7 @@ command: >-
   python command.py
   --labels_input ${{inputs.labels_input}}
   --images_input ${{inputs.images_input}}
+  --pdfs_input ${{inputs.pdfs_input}}
   --split_images_output ${{outputs.split_images_output}}
+  --split_integration_output ${{outputs.split_integration_output}}
 
