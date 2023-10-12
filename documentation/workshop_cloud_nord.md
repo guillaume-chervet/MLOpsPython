@@ -195,7 +195,25 @@ git push
 2. Download https://github.com/guillaume-chervet/dataset-cats-dogs-others-mlcli as a zip and unzip content in "demo" folder
      - tasks.json should be in demo directory like "./demo/tasks.json"
 4. Adapt tasks.json file to call your API then run ml-cli
-5. Once compare file generated, compare the result using ml-cli web UI
+5. Once compare file generated, compare the result using ml-cli web UI, you can use the script bellow to navigate inside data
+
+```javascript
+try {
+    let body = JSON.parse(rawBodyInput);
+    const simplerBody = body.map((element) => {
+        return {prediction : element.prediction};
+    })
+    // rawBodyOutput can be updated to format data as you need
+    rawBodyOutput = JSON.stringify(simplerBody);
+    // writing "isSkipped=true" will remove the item from the results
+    isSkipped=false;
+} catch(ex) {
+    console.log("Left parsing crash");
+    console.log(ex.toString());
+    rawBodyOutput = rawBodyInput;
+}
+```
+
 
 ## 7. More AzureML
 
