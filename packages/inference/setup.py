@@ -7,7 +7,7 @@ setuptools.setup(
     name="mlopspython-inference",
     version="0.0.0",
     packages=["mlopspython_inference"],
-    package_dir={"": ""},
+    package_dir={"mlopspython_inference": "./mlopspython_inference"},
     package_data={"mlopspython_inference": ["*"]},
     install_requires=requirements,
     author="Guillaume Chervet",
