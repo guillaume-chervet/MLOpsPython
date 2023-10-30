@@ -20,7 +20,7 @@ cp *.whl ../../../production/api/packages
 cd $cwd
 
 echo "Install packages Extraction"
-python -m python -m pip install -e packages/extraction
+python -m pip install -e packages/extraction
 
 cd packages/extraction/
 python setup.py sdist bdist_wheel
