@@ -7,7 +7,7 @@ setuptools.setup(
     name="mlopspython-extraction",
     version="0.0.0",
     packages=["mlopspython_extraction"],
-    package_dir={"": ""},
+    package_dir={"mlopspython_extraction": "./mlopspython_extraction"},
     package_data={"mlopspython_extraction": ["*"]},
     install_requires=requirements,
     author="Guillaume Chervet",
