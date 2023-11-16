@@ -6,6 +6,9 @@ You will contribute to the MLOpsPython project.
 
 ## 0. Prerequisite
 
+- azure cli https://learn.microsoft.com/fr-fr/cli/azure/install-azure-cli
+- github cli https://cli.github.com
+
 - Pycharm (https://www.jetbrains.com/pycharm/)
 - Download and install python 3.10.x on your laptop. 
 https://www.python.org/downloads/
@@ -52,64 +55,19 @@ https://www.microsoftazurepass.com/Home/HowTo?WT.mc_id=DOP-MVP-5003370
 
 ### 2.3. Fork the GitHub project MLOpsPython
 
+Prerequisite to install on your laptop:
+
 1. Fork https://github.com/guillaume-chervet/MLOpsPython repository
 2. Go to GitHub Action Tab and activate it !
 3. Clone your new own **MLOpsPython** repository
 
-### 2.4. Set up Azure Secret for GitHub Action
+Je vous mets à disposition les fichiers de script ci-dessous :
+Copier un de ces deux fichiers disponibles ici https://github.com/guillaume-chervet/... chez vous et exécuter le Powershell (.ps1) si vous êtes sous Windows et le bash (.sh) si vous êtes sous linux ou mac.
 
-https://learn.microsoft.com/en-us/azure/machine-learning/how-to-github-actions-machine-learning?tabs=userlevel#step-2-authenticate-with-azure?WT.mc_id=DOP-MVP-5003370
-
-Download and install azure-cli from : 
-
-https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli&WT.mc_id=DOP-MVP-5003370
-
-```bash
-# Log to azure
-az login
-
-# az account show
-# >> show your current account
-# az account list
-# >> list all your account
-
-# set the subscription
-az account set -s <subscription-id>
-
-# Create a service principal with the az ad sp create-for-rbac command in the Azure CLI. Run this command with Azure Cloud Shell in the Azure portal or by selecting the Try it button.
-```bash
-az ad sp create-for-rbac --name "azure-admin" --role contributor \
-                            --scopes /subscriptions/<subscription-id> \
-                            --sdk-auth
-```
-In the example above, replace the placeholders with your subscription ID, resource group name, and app name. The output is a JSON object with the role assignment credentials that provide access to your App Service app similar to below. Copy this JSON object for later.
-
-```json
-{
-    "clientId": "<GUID>",
-    "clientSecret": "<GUID>",
-    "subscriptionId": "<GUID>",
-    "tenantId": "<GUID>",
-    (...)
-  }
-  ```
-
-Create secrets in Github Action
-
-1. In GitHub, go to your repository.
-2. Select Security > Secrets and variables > Actions.
-3. Select New repository secret.
-4. Paste the entire JSON output from the Azure CLI command into the secret's value field. Give the secret the name AZURE_CREDENTIALS.
+Il se base sur ce super Article réalisé par Alexandre Nédélec que je remercie : https://www.techwatching.dev/posts/sc...
 
 
-### 2.5. Set up Docker Secret for GitHub Action 
 
-Create or login to docker hub account: https://www.docker.com/
-
-1. Generate a new access token (Read & Write): https://hub.docker.com/settings/security
-2. Create a new secret in your GitHub repository :
-   - DOCKER_PASSWORD
-   - DOCKER_USERNAME
 
 ### 2.6. Adapt GitHub Action Parameters
 
@@ -119,10 +77,9 @@ Inside "./.github/workflows/ci.yml" file
 
 env:
   AZURE_RESOURCE_GROUP_NAME: "azure-ml-<your-name>"
-  AZURE_SUBSCRIPTION_ID: "<subscription-id>"
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-<your-name>"
   AZURE_WEBAPP_NAME: "cats-dogs-<your-name>"
-  DOCKER_IMAGE_NAME: "<your-docker-login>/mlopspython"
+  DOCKER_IMAGE_NAME: "robertcarry/mlopspython-<your-name>"
 
 ````
 
