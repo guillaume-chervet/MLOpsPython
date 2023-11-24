@@ -82,6 +82,7 @@ def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
                           images_input=label_split_data.outputs.split_images_output)
 
     return {
+        "extraction_output": extraction.outputs.images_output,
         "model_output": test_data.outputs.model_output,
         "integration_output": test_data.outputs.integration_output,
     }
@@ -99,6 +100,10 @@ pipeline_job = azureml_pipeline(
 
 azure_blob = "azureml://datastores/workspaceblobstore/paths/"
 experiment_id = str(uuid.uuid4())
+custom_extraction_path = azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
+pipeline_job.outputs.model_output = Output(
+    type=URI_FOLDER, mode="rw_mount", path=custom_extraction_path
+)
 custom_model_path = azure_blob + "models/cats-dogs-others/" + experiment_id + "/"
 pipeline_job.outputs.model_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_model_path
@@ -113,6 +118,20 @@ pipeline_job = ml_client.jobs.create_or_update(
 )
 
 ml_client.jobs.stream(pipeline_job.name)
+
+
+integration_dataset = Data(
+    name="cats-dogs-others-extraction",
+    path=custom_integration_path,
+    type=URI_FOLDER,
+    description="Extracted images for cats and dogs and others",
+    version="1",
+    tags={"source_type": "web", "source": "UCI ML Repo"},
+)
+integration_dataset = ml_client.data.create_or_update(integration_dataset)
+print(
+    f"Dataset with name {integration_dataset.name} was registered to workspace, the dataset version is {integration_dataset.version}"
+)
 
 
 model_name = "cats-dogs-others"
@@ -136,7 +155,7 @@ integration_dataset = Data(
     name="cats-dogs-others-integration",
     path=custom_integration_path,
     type=URI_FOLDER,
-    description="Dataset for credit card defaults",
+    description="Integration dataset for cats and dogs and others",
     tags={"source_type": "web", "source": "UCI ML Repo"},
 )
 integration_dataset = ml_client.data.create_or_update(integration_dataset)
