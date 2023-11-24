@@ -99,7 +99,7 @@ This will trigger the GitHub Action.
 
 ## 3. Getting Started on your laptop
 
-Follow "Get Started" section to run the projet on your laptop :
+Follow "Get Started" section to run the project on your laptop :
 
 https://github.com/your-github-login/MLOpsPython
 
