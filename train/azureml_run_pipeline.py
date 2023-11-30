@@ -58,6 +58,11 @@ cluster_basic = AmlCompute(
 )
 ml_client.begin_create_or_update(cluster_basic).result()
 
+extracted_images_dataset_version = "1"
+extracted_images_dataset_name = "cats-dogs-others-extraction"
+list_datasets = ml_client.data.list(extracted_images_dataset_name)
+number_datasets = len(list_datasets)
+print(f"Number of datasets with name {extracted_images_dataset_name} is {number_datasets}")
 
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
@@ -120,7 +125,7 @@ pipeline_job = ml_client.jobs.create_or_update(
 ml_client.jobs.stream(pipeline_job.name)
 
 
-integration_dataset = Data(
+extracted_images_dataset = Data(
     name="cats-dogs-others-extraction",
     path=custom_integration_path,
     type=URI_FOLDER,
@@ -128,9 +133,9 @@ integration_dataset = Data(
     version="1",
     tags={"source_type": "web", "source": "UCI ML Repo"},
 )
-integration_dataset = ml_client.data.create_or_update(integration_dataset)
+extracted_images_dataset = ml_client.data.create_or_update(extracted_images_dataset)
 print(
-    f"Dataset with name {integration_dataset.name} was registered to workspace, the dataset version is {integration_dataset.version}"
+    f"Dataset with name {extracted_images_dataset.name} was registered to workspace, the dataset version is {extracted_images_dataset.version}"
 )
 
 
