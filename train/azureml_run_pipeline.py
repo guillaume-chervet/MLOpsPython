@@ -130,7 +130,7 @@ version_dataset_extraction = len(list(list_datasets))
 if version_dataset_extraction < int(extracted_images_dataset_version):
 
     extracted_images_dataset = Data(
-        name="cats-dogs-others-extraction",
+        name=extracted_images_dataset_name,
         path=custom_extraction_path,
         type=URI_FOLDER,
         description="Extracted images for cats and dogs and others",
