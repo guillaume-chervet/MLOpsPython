@@ -99,7 +99,12 @@ pipeline_job = azureml_pipeline(
 
 azure_blob = "azureml://datastores/workspaceblobstore/paths"
 experiment_id = str(uuid.uuid4())
-
+custom_extraction_path = (
+        azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
+)
+pipeline_job.outputs.model_output = Output(
+    type=URI_FOLDER, mode="rw_mount", path=custom_extraction_path
+)
 custom_model_path = azure_blob + "models/cats-dogs-others/" + experiment_id + "/"
 pipeline_job.outputs.model_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_model_path
@@ -123,12 +128,7 @@ list_datasets = ml_client.data.list(extracted_images_dataset_name)
 version_dataset_extraction = len(list(list_datasets))
 
 if version_dataset_extraction < int(extracted_images_dataset_version):
-    custom_extraction_path = (
-        azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
-    )
-    pipeline_job.outputs.model_output = Output(
-        type=URI_FOLDER, mode="rw_mount", path=custom_extraction_path
-    )
+
     extracted_images_dataset = Data(
         name="cats-dogs-others-extraction",
         path=custom_integration_path,
