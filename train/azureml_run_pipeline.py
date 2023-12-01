@@ -97,7 +97,7 @@ pipeline_job = azureml_pipeline(
 )
 
 
-azure_blob = "azureml://datastores/workspaceblobstore/paths"
+azure_blob = "azureml://datastores/workspaceblobstore/paths/"
 experiment_id = str(uuid.uuid4())
 custom_extraction_path = (
         azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
@@ -110,7 +110,7 @@ pipeline_job.outputs.model_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_model_path
 )
 custom_integration_path = (
-    azure_blob + "/integration/cats-dogs-others/" + experiment_id + "/"
+    azure_blob + "integration/cats-dogs-others/" + experiment_id + "/"
 )
 pipeline_job.outputs.integration_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_integration_path
