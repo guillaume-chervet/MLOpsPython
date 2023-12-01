@@ -35,7 +35,6 @@ except Exception as ex:
     credential = InteractiveBrowserCredential()
 
 
-
 # Get a handle to workspace
 ml_client = MLClient(
     credential=credential,
@@ -51,7 +50,7 @@ cluster_basic = AmlCompute(
     name=cluster_name,
     type="amlcompute",
     size="Standard_D4s_v3",
-    location="northeurope", #az account list-locations -o table
+    location="northeurope",  # az account list-locations -o table
     min_instances=0,
     max_instances=1,
     idle_time_before_scale_down=60,
@@ -62,29 +61,34 @@ extracted_images_dataset_version = "1"
 extracted_images_dataset_name = "cats-dogs-others-extraction"
 list_datasets = ml_client.data.list(extracted_images_dataset_name)
 number_datasets = len(list(list_datasets))
-#print(f"Number of datasets with name {extracted_images_dataset_name} is {number_datasets}")
+# print(f"Number of datasets with name {extracted_images_dataset_name} is {number_datasets}")
+
 
 @pipeline(default_compute=cluster_name)
-def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
-                     labels_input_data: Input(type=URI_FOLDER)):
+def azureml_pipeline(
+    pdfs_input_data: Input(type=URI_FOLDER), labels_input_data: Input(type=URI_FOLDER)
+):
     extraction_step = load_component(source="extraction/command.yaml")
-    extraction = extraction_step(
-        pdfs_input=pdfs_input_data
-    )
+    extraction = extraction_step(pdfs_input=pdfs_input_data)
 
     label_split_data_step = load_component(source="label_split_data/command.yaml")
-    label_split_data = label_split_data_step(labels_input=labels_input_data,
-                                             pdfs_input=pdfs_input_data,
-                                             images_input=extraction.outputs.images_output)
+    label_split_data = label_split_data_step(
+        labels_input=labels_input_data,
+        pdfs_input=pdfs_input_data,
+        images_input=extraction.outputs.images_output,
+    )
 
     train_step = load_component(source="train/command.yaml")
     train_data = train_step(
-        split_images_input=label_split_data.outputs.split_images_output)
+        split_images_input=label_split_data.outputs.split_images_output
+    )
 
     test_step = load_component(source="test/command.yaml")
-    test_data = test_step(model_input=train_data.outputs.model_output,
-                          integration_input=label_split_data.outputs.split_integration_output,
-                          images_input=label_split_data.outputs.split_images_output)
+    test_data = test_step(
+        model_input=train_data.outputs.model_output,
+        integration_input=label_split_data.outputs.split_integration_output,
+        images_input=label_split_data.outputs.split_images_output,
+    )
 
     return {
         "extraction_output": extraction.outputs.images_output,
@@ -94,26 +98,21 @@ def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
 
 
 pipeline_job = azureml_pipeline(
-    pdfs_input_data=Input(
-        path="azureml:cats_dogs_others:1", type=URI_FOLDER
-    ),
-    labels_input_data=Input(
-        path="azureml:cats_dogs_others_labels:1", type=URI_FOLDER
-    )
+    pdfs_input_data=Input(path="azureml:cats_dogs_others:1", type=URI_FOLDER),
+    labels_input_data=Input(path="azureml:cats_dogs_others_labels:1", type=URI_FOLDER),
 )
 
 
 azure_blob = "azureml://datastores/workspaceblobstore/paths/"
 experiment_id = str(uuid.uuid4())
-custom_extraction_path = azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
-pipeline_job.outputs.model_output = Output(
-    type=URI_FOLDER, mode="rw_mount", path=custom_extraction_path
-)
+
 custom_model_path = azure_blob + "models/cats-dogs-others/" + experiment_id + "/"
 pipeline_job.outputs.model_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_model_path
 )
-custom_integration_path = azure_blob + "/integration/cats-dogs-others/" + experiment_id + "/"
+custom_integration_path = (
+    azure_blob + "/integration/cats-dogs-others/" + experiment_id + "/"
+)
 pipeline_job.outputs.integration_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_integration_path
 )
@@ -124,19 +123,25 @@ pipeline_job = ml_client.jobs.create_or_update(
 
 ml_client.jobs.stream(pipeline_job.name)
 
-
-extracted_images_dataset = Data(
-    name="cats-dogs-others-extraction",
-    path=custom_integration_path,
-    type=URI_FOLDER,
-    description="Extracted images for cats and dogs and others",
-    version="1",
-    tags={"source_type": "web", "source": "UCI ML Repo"},
-)
-extracted_images_dataset = ml_client.data.create_or_update(extracted_images_dataset)
-print(
-    f"Dataset with name {extracted_images_dataset.name} was registered to workspace, the dataset version is {extracted_images_dataset.version}"
-)
+if number_datasets < int(extracted_images_dataset_version):
+    custom_extraction_path = (
+        azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
+    )
+    pipeline_job.outputs.model_output = Output(
+        type=URI_FOLDER, mode="rw_mount", path=custom_extraction_path
+    )
+    extracted_images_dataset = Data(
+        name="cats-dogs-others-extraction",
+        path=custom_integration_path,
+        type=URI_FOLDER,
+        description="Extracted images for cats and dogs and others",
+        version="1",
+        tags={"source_type": "web", "source": "UCI ML Repo"},
+    )
+    extracted_images_dataset = ml_client.data.create_or_update(extracted_images_dataset)
+    print(
+        f"Dataset with name {extracted_images_dataset.name} was registered to workspace, the dataset version is {extracted_images_dataset.version}"
+    )
 
 
 model_name = "cats-dogs-others"
@@ -146,15 +151,17 @@ except:
     model_version = "1"
 
 file_model = Model(
-        version=model_version,
-        path=custom_model_path,
-        type=AssetTypes.CUSTOM_MODEL,
-        name=model_name,
-        description="Model created from azureML.",
-    )
+    version=model_version,
+    path=custom_model_path,
+    type=AssetTypes.CUSTOM_MODEL,
+    name=model_name,
+    description="Model created from azureML.",
+)
 saved_model = ml_client.models.create_or_update(file_model)
 
-print(f"Model with name {saved_model.name} was registered to workspace, the model version is {saved_model.version}.")
+print(
+    f"Model with name {saved_model.name} was registered to workspace, the model version is {saved_model.version}."
+)
 
 integration_dataset = Data(
     name="cats-dogs-others-integration",
