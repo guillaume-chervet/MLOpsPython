@@ -57,12 +57,6 @@ cluster_basic = AmlCompute(
 )
 ml_client.begin_create_or_update(cluster_basic).result()
 
-extracted_images_dataset_version = "1"
-extracted_images_dataset_name = "cats-dogs-others-extraction"
-list_datasets = ml_client.data.list(extracted_images_dataset_name)
-number_datasets = len(list(list_datasets))
-# print(f"Number of datasets with name {extracted_images_dataset_name} is {number_datasets}")
-
 
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(
@@ -123,7 +117,12 @@ pipeline_job = ml_client.jobs.create_or_update(
 
 ml_client.jobs.stream(pipeline_job.name)
 
-if number_datasets < int(extracted_images_dataset_version):
+extracted_images_dataset_version = "1"
+extracted_images_dataset_name = "cats-dogs-others-extraction"
+list_datasets = ml_client.data.list(extracted_images_dataset_name)
+version_dataset_extraction = len(list(list_datasets))
+
+if version_dataset_extraction < int(extracted_images_dataset_version):
     custom_extraction_path = (
         azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
     )
@@ -136,7 +135,7 @@ if number_datasets < int(extracted_images_dataset_version):
         type=URI_FOLDER,
         description="Extracted images for cats and dogs and others",
         version="1",
-        tags={"source_type": "web", "source": "UCI ML Repo"},
+        tags={},
     )
     extracted_images_dataset = ml_client.data.create_or_update(extracted_images_dataset)
     print(
