@@ -61,8 +61,8 @@ ml_client.begin_create_or_update(cluster_basic).result()
 extracted_images_dataset_version = "1"
 extracted_images_dataset_name = "cats-dogs-others-extraction"
 list_datasets = ml_client.data.list(extracted_images_dataset_name)
-number_datasets = list_datasets.__len__()
-print(f"Number of datasets with name {extracted_images_dataset_name} is {number_datasets}")
+#number_datasets = list_datasets.__len__()
+#print(f"Number of datasets with name {extracted_images_dataset_name} is {number_datasets}")
 
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(pdfs_input_data: Input(type=URI_FOLDER),
