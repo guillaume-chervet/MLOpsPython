@@ -102,7 +102,7 @@ experiment_id = str(uuid.uuid4())
 custom_extraction_path = (
         azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
 )
-pipeline_job.outputs.model_output = Output(
+pipeline_job.outputs.extraction_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_extraction_path
 )
 custom_model_path = azure_blob + "models/cats-dogs-others/" + experiment_id + "/"
@@ -131,7 +131,7 @@ if version_dataset_extraction < int(extracted_images_dataset_version):
 
     extracted_images_dataset = Data(
         name="cats-dogs-others-extraction",
-        path=custom_integration_path,
+        path=custom_extraction_path,
         type=URI_FOLDER,
         description="Extracted images for cats and dogs and others",
         version="1",

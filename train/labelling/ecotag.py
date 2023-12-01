@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 import aiohttp
-import asyncio
 import os
 
 from aiohttp import FormData
