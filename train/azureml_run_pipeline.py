@@ -97,7 +97,7 @@ pipeline_job = azureml_pipeline(
 )
 
 
-azure_blob = "azureml://datastores/workspaceblobstore/paths/"
+azure_blob = "azureml://datastores/workspaceblobstore/paths"
 experiment_id = str(uuid.uuid4())
 
 custom_model_path = azure_blob + "models/cats-dogs-others/" + experiment_id + "/"
