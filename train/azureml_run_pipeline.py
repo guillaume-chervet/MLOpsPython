@@ -123,7 +123,7 @@ pipeline_job = ml_client.jobs.create_or_update(
 ml_client.jobs.stream(pipeline_job.name)
 
 extracted_images_dataset_version = "1"
-extracted_images_dataset_name = "cats-dogs-others-extraction"
+extracted_images_dataset_name = "cats-dogs-others-extracted"
 list_datasets = ml_client.data.list(extracted_images_dataset_name)
 version_dataset_extraction = len(list(list_datasets))
 
