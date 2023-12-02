@@ -140,8 +140,11 @@ with open(str(BASE_PATH / "hash.txt"), "r") as file:
 
 
 extracted_images_dataset_name = "cats-dogs-others-extracted"
-list_datasets = ml_client.data.list(extracted_images_dataset_name)
-version_dataset_extraction = len(list(list_datasets)) + 1
+try:
+    list_datasets = ml_client.data.list(extracted_images_dataset_name)
+    version_dataset_extraction = len(list(list_datasets)) + 1
+except:
+    version_dataset_extraction = 1
 
 hash_tag_already_exists = False
 for dataset in list_datasets:
