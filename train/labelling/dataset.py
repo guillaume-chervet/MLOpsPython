@@ -4,12 +4,13 @@ from azure.ai.ml import MLClient
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 import azure.ai.ml._artifacts._artifact_utilities as artifact_utils
 
-def download(subscription_id:str,
-             resource_group_name:str,
-             workspace_name:str,
-             dataset_name:str,
-             dataset_version:str,
-            ):
+
+def download(subscription_id: str,
+             resource_group_name: str,
+             workspace_name: str,
+             dataset_name: str,
+             dataset_version: str,
+             ):
     try:
         credential = DefaultAzureCredential()
         # Check if given credential can get token successfully.
@@ -31,5 +32,6 @@ def download(subscription_id:str,
     output_images_directory = BASE_PATH / "dataset"
     if not output_images_directory.exists():
         output_images_directory.mkdir()
-    result = artifact_utils.download_artifact_from_aml_uri(uri = data_info.path, destination = str(output_images_directory), datastore_operation=ml_client.datastores)
+    result = artifact_utils.download_artifact_from_aml_uri(uri=data_info.path, destination=str(output_images_directory),
+                                                           datastore_operation=ml_client.datastores)
     return result

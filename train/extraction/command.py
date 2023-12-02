@@ -1,4 +1,6 @@
 import argparse
+from pathlib import Path
+
 from mlopspython_extraction.extraction import extract_images
 import mlflow
 
@@ -16,7 +18,7 @@ hash_output = args.hash_output
 
 result = extract_images(pdfs_input, images_output)
 computed_hash = hash_dir(images_output)
-with open(str(hash_output / "hash.txt"), "w") as file:
+with open(str(Path(hash_output) / "hash.txt"), "w") as file:
     file.write(computed_hash)
 
 mlflow.log_metric("hash", computed_hash)

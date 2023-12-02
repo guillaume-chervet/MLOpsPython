@@ -1,4 +1,5 @@
 import argparse
+from pathlib import Path
 
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 
@@ -12,6 +13,7 @@ from azure.ai.ml.entities import AmlCompute
 import uuid
 
 import json
+import azure.ai.ml._artifacts._artifact_utilities as artifact_utils
 
 parser = argparse.ArgumentParser("train")
 parser.add_argument("--subscription_id", type=str)
@@ -86,7 +88,7 @@ def azureml_pipeline(
 
     return {
         "extraction_output": extraction.outputs.images_output,
-        "hash_output": extraction.outputs.hash_output,
+        "extraction_hash_output": extraction.outputs.hash_output,
         "model_output": test_data.outputs.model_output,
         "integration_output": test_data.outputs.integration_output,
     }
@@ -106,6 +108,12 @@ custom_extraction_path = (
 pipeline_job.outputs.extraction_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_extraction_path
 )
+custom_extraction_hash_path = (
+        azure_blob + "extraction_hash/cats-dogs-others/" + experiment_id + "/"
+)
+pipeline_job.outputs.extraction_hash_output = Output(
+    type=URI_FOLDER, mode="rw_mount", path=custom_extraction_hash_path
+)
 custom_model_path = azure_blob + "models/cats-dogs-others/" + experiment_id + "/"
 pipeline_job.outputs.model_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_model_path
@@ -122,21 +130,37 @@ pipeline_job = ml_client.jobs.create_or_update(
 )
 
 ml_client.jobs.stream(pipeline_job.name)
+BASE_PATH = Path(__file__).resolve().parent
+artifact_utils.download_artifact_from_aml_uri(uri=custom_extraction_hash_path, destination=str(BASE_PATH),
+                                                       datastore_operation=ml_client.datastores)
 
-extracted_images_dataset_version = "1"
+# lire le fichier hash.txt qui est dans BASE_PATH
+with open(str(BASE_PATH / "hash.txt"), "r") as file:
+    computed_hash = file.read()
+
+
 extracted_images_dataset_name = "cats-dogs-others-extracted"
 list_datasets = ml_client.data.list(extracted_images_dataset_name)
-version_dataset_extraction = len(list(list_datasets))
+version_dataset_extraction = len(list(list_datasets)) + 1
 
-if version_dataset_extraction < int(extracted_images_dataset_version):
+hash_tag_already_exists = False
+for dataset in list_datasets:
+    # parcourir les tags de chaque dataset
+    if "hash" in dataset.tags:
+        extracted_images_dataset_version = dataset.tags["hash"]
+        if extracted_images_dataset_version == computed_hash:
+            hash_tag_already_exists = True
+            break
+
+if not hash_tag_already_exists:
 
     extracted_images_dataset = Data(
         name=extracted_images_dataset_name,
         path=custom_extraction_path,
         type=URI_FOLDER,
         description="Extracted images for cats and dogs and others",
-        version="1",
-        tags={},
+        version=str(version_dataset_extraction),
+        tags={"hash": computed_hash},
     )
     extracted_images_dataset = ml_client.data.create_or_update(extracted_images_dataset)
     print(
