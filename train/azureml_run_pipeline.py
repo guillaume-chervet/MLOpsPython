@@ -143,17 +143,20 @@ extracted_images_dataset_name = "cats-dogs-others-extracted"
 try:
     list_datasets = ml_client.data.list(extracted_images_dataset_name)
     version_dataset_extraction = len(list(list_datasets)) + 1
+
+    hash_tag_already_exists = False
+    for dataset in list_datasets:
+        # parcourir les tags de chaque dataset
+        if "hash" in dataset.tags:
+            extracted_images_dataset_version = dataset.tags["hash"]
+            if extracted_images_dataset_version == computed_hash:
+                hash_tag_already_exists = True
+                break
 except:
     version_dataset_extraction = 1
+    hash_tag_already_exists = False
 
-hash_tag_already_exists = False
-for dataset in list_datasets:
-    # parcourir les tags de chaque dataset
-    if "hash" in dataset.tags:
-        extracted_images_dataset_version = dataset.tags["hash"]
-        if extracted_images_dataset_version == computed_hash:
-            hash_tag_already_exists = True
-            break
+
 
 if not hash_tag_already_exists:
 
