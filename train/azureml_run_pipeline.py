@@ -86,6 +86,7 @@ def azureml_pipeline(
 
     return {
         "extraction_output": extraction.outputs.images_output,
+        "hash_output": extraction.outputs.hash_output,
         "model_output": test_data.outputs.model_output,
         "integration_output": test_data.outputs.integration_output,
     }

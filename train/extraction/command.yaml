@@ -15,7 +15,8 @@ inputs:
 outputs:
   images_output:
     type: uri_folder
-
+  hash_output:
+    type: uri_folder
 environment:
   name: extraction_environment
   build:
@@ -26,4 +27,5 @@ command: >-
   python command.py
   --pdfs_input ${{inputs.pdfs_input}}
   --images_output ${{outputs.images_output}}
+  --hash_output ${{outputs.hash_output}}
 

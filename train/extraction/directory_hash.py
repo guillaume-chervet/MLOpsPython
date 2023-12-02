@@ -3,9 +3,20 @@ import hashlib
 import sys
 
 
+# python 3.11
+# def sha256sum(filename):
+#    with open(filename, 'rb', buffering=0) as file:
+#        return hashlib.file_digest(file, 'sha1').hexdigest()
+
+# Less than python 3.11 < 3
 def sha256sum(filename):
-    with open(filename, 'rb', buffering=0) as file:
-        return hashlib.file_digest(file, 'sha1').hexdigest()
+    h = hashlib.sha256()
+    b = bytearray(128 * 1024)
+    mv = memoryview(b)
+    with open(filename, 'rb', buffering=0) as f:
+        while n := f.readinto(mv):
+            h.update(mv[:n])
+    return h.hexdigest()
 
 
 def hash_dir(dir_path):
