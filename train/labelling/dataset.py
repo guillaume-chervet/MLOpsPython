@@ -29,5 +29,7 @@ def download(subscription_id:str,
 
     BASE_PATH = Path(__file__).resolve().parent
     output_images_directory = BASE_PATH / "dataset"
+    if not output_images_directory.exists():
+        output_images_directory.mkdir()
     result = artifact_utils.download_artifact_from_aml_uri(uri = data_info.path, destination = str(output_images_directory), datastore_operation=ml_client.datastores)
     return result
