@@ -140,24 +140,26 @@ print(f"computed_hash: {computed_hash}")
 extracted_images_dataset_name = "cats-dogs-others-extracted"
 try:
     list_datasets = ml_client.data.list(extracted_images_dataset_name)
-    version_dataset_extraction = len(list(list_datasets)) + 1
-
-    hash_tag_already_exists = False
-    for dataset in list_datasets:
-        print(f"dataset.tags: {str(dataset.version)}")
-        print(dataset.tags)
-        # parcourir les tags de chaque dataset
-        if "hash" in dataset.tags:
-            extracted_images_dataset_version = dataset.tags["hash"]
-            print(f"extracted_images_dataset_version: {extracted_images_dataset_version}")
-            print(f"computed_hash: {computed_hash}")
-            if extracted_images_dataset_version == computed_hash:
-                hash_tag_already_exists = True
-                break
+    list_list_datset = list(list_datasets)
+    version_dataset_extraction = len(list_list_datset) + 1
 except:
+    list_list_datset = []
     version_dataset_extraction = 1
     hash_tag_already_exists = False
     print("No dataset with name cats-dogs-others-extracted")
+
+hash_tag_already_exists = False
+len_dataset = len(list_list_datset)
+if len_dataset > 0:
+    dataset = list_list_datset[len_dataset-1]
+    print(f"dataset.tags: {str(dataset.version)}")
+    print(dataset.tags)
+    if "hash" in dataset.tags:
+        extracted_images_dataset_version = dataset.tags["hash"]
+        print(f"extracted_images_dataset_version: {extracted_images_dataset_version}")
+        print(f"computed_hash: {computed_hash}")
+        if extracted_images_dataset_version == computed_hash:
+            hash_tag_already_exists = True
 
 if not hash_tag_already_exists:
     extracted_images_dataset = Data(
