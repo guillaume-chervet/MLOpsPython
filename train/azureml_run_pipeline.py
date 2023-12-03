@@ -14,16 +14,19 @@ import uuid
 
 import json
 import azure.ai.ml._artifacts._artifact_utilities as artifact_utils
- 
+
 parser = argparse.ArgumentParser("train")
 parser.add_argument("--subscription_id", type=str)
 parser.add_argument("--resource_group_name", type=str)
 parser.add_argument("--workspace_name", type=str)
+parser.add_argument("--tags", type=str, default="{}")
+
 
 args = parser.parse_args()
 subscription_id = args.subscription_id
 resource_group_name = args.resource_group_name
 workspace_name = args.workspace_name
+tags = json.loads(args.tags)
 
 URI_FOLDER = "uri_folder"
 
@@ -61,7 +64,7 @@ ml_client.begin_create_or_update(cluster_basic).result()
 
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(
-        pdfs_input_data: Input(type=URI_FOLDER), labels_input_data: Input(type=URI_FOLDER)
+    pdfs_input_data: Input(type=URI_FOLDER), labels_input_data: Input(type=URI_FOLDER)
 ):
     extraction_step = load_component(source="extraction/command.yaml")
     extraction = extraction_step(pdfs_input=pdfs_input_data)
@@ -101,13 +104,13 @@ pipeline_job = azureml_pipeline(
 azure_blob = "azureml://datastores/workspaceblobstore/paths/"
 experiment_id = str(uuid.uuid4())
 custom_extraction_path = (
-        azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
+    azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
 )
 pipeline_job.outputs.extraction_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_extraction_path
 )
 custom_extraction_hash_path = (
-        azure_blob + "extraction_hash/cats-dogs-others/" + experiment_id + "/"
+    azure_blob + "extraction_hash/cats-dogs-others/" + experiment_id + "/"
 )
 pipeline_job.outputs.extraction_hash_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_extraction_hash_path
@@ -117,20 +120,23 @@ pipeline_job.outputs.model_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_model_path
 )
 custom_integration_path = (
-        azure_blob + "integration/cats-dogs-others/" + experiment_id + "/"
+    azure_blob + "integration/cats-dogs-others/" + experiment_id + "/"
 )
 pipeline_job.outputs.integration_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_integration_path
 )
 
 pipeline_job = ml_client.jobs.create_or_update(
-    pipeline_job, experiment_name="cats_dos_others_pipeline"
+    pipeline_job, experiment_name="cats_dos_others_pipeline", tags=tags
 )
 
 ml_client.jobs.stream(pipeline_job.name)
 BASE_PATH = Path(__file__).resolve().parent
-artifact_utils.download_artifact_from_aml_uri(uri=custom_extraction_hash_path, destination=str(BASE_PATH),
-                                              datastore_operation=ml_client.datastores)
+artifact_utils.download_artifact_from_aml_uri(
+    uri=custom_extraction_hash_path,
+    destination=str(BASE_PATH),
+    datastore_operation=ml_client.datastores,
+)
 
 # lire le fichier hash.txt qui est dans BASE_PATH
 with open(str(BASE_PATH / "hash.txt"), "r") as file:
@@ -151,7 +157,7 @@ except:
 hash_tag_already_exists = False
 len_dataset = len(list_list_datset)
 if len_dataset > 0:
-    dataset = list_list_datset[len_dataset-1]
+    dataset = list_list_datset[len_dataset - 1]
     print(f"dataset.tags: {str(dataset.version)}")
     print(dataset.tags)
     if "hash" in dataset.tags:
@@ -168,7 +174,7 @@ if not hash_tag_already_exists:
         type=URI_FOLDER,
         description="Extracted images for cats and dogs and others",
         version=str(version_dataset_extraction),
-        tags={"hash": computed_hash},
+        tags={"hash": computed_hash, **tags},
     )
     extracted_images_dataset = ml_client.data.create_or_update(extracted_images_dataset)
     print(
@@ -187,6 +193,7 @@ file_model = Model(
     type=AssetTypes.CUSTOM_MODEL,
     name=model_name,
     description="Model created from azureML.",
+    tags=tags,
 )
 saved_model = ml_client.models.create_or_update(file_model)
 
@@ -199,7 +206,7 @@ integration_dataset = Data(
     path=custom_integration_path,
     type=URI_FOLDER,
     description="Integration dataset for cats and dogs and others",
-    tags={"source_type": "web", "source": "UCI ML Repo"},
+    tags=tags,
 )
 integration_dataset = ml_client.data.create_or_update(integration_dataset)
 print(
