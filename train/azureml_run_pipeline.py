@@ -36,7 +36,6 @@ except Exception as ex:
     # Fall back to InteractiveBrowserCredential in case DefaultAzureCredential not work
     credential = InteractiveBrowserCredential()
 
-
 # Get a handle to workspace
 ml_client = MLClient(
     credential=credential,
@@ -62,7 +61,7 @@ ml_client.begin_create_or_update(cluster_basic).result()
 
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(
-    pdfs_input_data: Input(type=URI_FOLDER), labels_input_data: Input(type=URI_FOLDER)
+        pdfs_input_data: Input(type=URI_FOLDER), labels_input_data: Input(type=URI_FOLDER)
 ):
     extraction_step = load_component(source="extraction/command.yaml")
     extraction = extraction_step(pdfs_input=pdfs_input_data)
@@ -99,7 +98,6 @@ pipeline_job = azureml_pipeline(
     labels_input_data=Input(path="azureml:cats_dogs_others_labels:1", type=URI_FOLDER),
 )
 
-
 azure_blob = "azureml://datastores/workspaceblobstore/paths/"
 experiment_id = str(uuid.uuid4())
 custom_extraction_path = (
@@ -119,7 +117,7 @@ pipeline_job.outputs.model_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_model_path
 )
 custom_integration_path = (
-    azure_blob + "integration/cats-dogs-others/" + experiment_id + "/"
+        azure_blob + "integration/cats-dogs-others/" + experiment_id + "/"
 )
 pipeline_job.outputs.integration_output = Output(
     type=URI_FOLDER, mode="rw_mount", path=custom_integration_path
@@ -132,12 +130,12 @@ pipeline_job = ml_client.jobs.create_or_update(
 ml_client.jobs.stream(pipeline_job.name)
 BASE_PATH = Path(__file__).resolve().parent
 artifact_utils.download_artifact_from_aml_uri(uri=custom_extraction_hash_path, destination=str(BASE_PATH),
-                                                       datastore_operation=ml_client.datastores)
+                                              datastore_operation=ml_client.datastores)
 
 # lire le fichier hash.txt qui est dans BASE_PATH
 with open(str(BASE_PATH / "hash.txt"), "r") as file:
     computed_hash = file.read()
-
+print(f"computed_hash: {computed_hash}")
 
 extracted_images_dataset_name = "cats-dogs-others-extracted"
 try:
@@ -146,20 +144,22 @@ try:
 
     hash_tag_already_exists = False
     for dataset in list_datasets:
+        print(f"dataset.tags: {str(dataset.version)}")
+        print(dataset.tags)
         # parcourir les tags de chaque dataset
         if "hash" in dataset.tags:
             extracted_images_dataset_version = dataset.tags["hash"]
+            print(f"extracted_images_dataset_version: {extracted_images_dataset_version}")
+            print(f"computed_hash: {computed_hash}")
             if extracted_images_dataset_version == computed_hash:
                 hash_tag_already_exists = True
                 break
 except:
     version_dataset_extraction = 1
     hash_tag_already_exists = False
-
-
+    print("No dataset with name cats-dogs-others-extracted")
 
 if not hash_tag_already_exists:
-
     extracted_images_dataset = Data(
         name=extracted_images_dataset_name,
         path=custom_extraction_path,
@@ -172,7 +172,6 @@ if not hash_tag_already_exists:
     print(
         f"Dataset with name {extracted_images_dataset.name} was registered to workspace, the dataset version is {extracted_images_dataset.version}"
     )
-
 
 model_name = "cats-dogs-others"
 try:
