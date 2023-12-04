@@ -100,6 +100,7 @@ pipeline_job = azureml_pipeline(
     pdfs_input_data=Input(path="azureml:cats_dogs_others:1", type=URI_FOLDER),
     labels_input_data=Input(path="azureml:cats_dogs_others_labels:1", type=URI_FOLDER),
 )
+pipeline_job.settings.force_rerun = False
 
 azure_blob = "azureml://datastores/workspaceblobstore/paths/"
 experiment_id = str(uuid.uuid4())
