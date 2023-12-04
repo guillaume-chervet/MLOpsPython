@@ -64,7 +64,7 @@ ml_client.begin_create_or_update(cluster_basic).result()
 
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(
-    pdfs_input_data: Input(type=URI_FOLDER), labels_input_data: Input(type=URI_FOLDER)
+    pdfs_input_data: Input(type=AssetTypes.URI_FOLDER), labels_input_data: Input(type=AssetTypes.URI_FOLDER)
 ):
     extraction_step = load_component(source="extraction/command.yaml")
     extraction = extraction_step(pdfs_input=pdfs_input_data)
@@ -97,8 +97,8 @@ def azureml_pipeline(
 
 
 pipeline_job = azureml_pipeline(
-    pdfs_input_data=Input(path="azureml:cats_dogs_others:1", type=URI_FOLDER),
-    labels_input_data=Input(path="azureml:cats_dogs_others_labels:1", type=URI_FOLDER),
+    pdfs_input_data=Input(path="azureml:cats_dogs_others:1", type=AssetTypes.URI_FOLDER),
+    labels_input_data=Input(path="azureml:cats_dogs_others_labels:1", type=AssetTypes.URI_FOLDER),
 )
 pipeline_job.settings.force_rerun = False
 
@@ -194,7 +194,7 @@ file_model = Model(
     type=AssetTypes.CUSTOM_MODEL,
     name=model_name,
     description="Model created from azureML.",
-    tags=tags,
+    tags={**tags},
 )
 saved_model = ml_client.models.create_or_update(file_model)
 
