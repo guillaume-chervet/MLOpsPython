@@ -193,7 +193,7 @@ jobs:
           poetry run python azureml_run_pipeline.py \
             --subscription_id ${{ env.AZURE_SUBSCRIPTION_ID }}  \
             --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
-            --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} 
+            --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} \
             --tags {\"git\":\"${{ github.head_ref }}.${{ github.sha }}\",\"version\":\"${{ needs.tags.outputs.new_version }}\",\"triggering_actor\":\"${{github.triggering_actor}}\"}  > train_output.txt
           cat train_output.txt
       working-directory: train
