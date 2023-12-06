@@ -19,6 +19,7 @@ parser = argparse.ArgumentParser("train")
 parser.add_argument("--subscription_id", type=str)
 parser.add_argument("--resource_group_name", type=str)
 parser.add_argument("--workspace_name", type=str)
+
 parser.add_argument("--tags", type=str, default="{}")
 
 
@@ -26,6 +27,7 @@ args = parser.parse_args()
 subscription_id = args.subscription_id
 resource_group_name = args.resource_group_name
 workspace_name = args.workspace_name
+print(args.tags)
 tags = json.loads(args.tags)
 
 URI_FOLDER = "uri_folder"
