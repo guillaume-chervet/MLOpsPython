@@ -17,6 +17,7 @@ outputs:
     type: uri_folder
   hash_output:
     type: uri_folder
+
 environment:
   name: extraction_environment
   build:

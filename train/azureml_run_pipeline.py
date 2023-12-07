@@ -1,5 +1,4 @@
 import argparse
-from pathlib import Path
 
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 
@@ -10,16 +9,17 @@ from azure.ai.ml.constants import AssetTypes
 from azure.ai.ml.entities import Data
 from azure.ai.ml.entities import AmlCompute
 
+from extraction import register_extracted_dataset
+
 import uuid
 
 import json
-import azure.ai.ml._artifacts._artifact_utilities as artifact_utils
+
 
 parser = argparse.ArgumentParser("train")
 parser.add_argument("--subscription_id", type=str)
 parser.add_argument("--resource_group_name", type=str)
 parser.add_argument("--workspace_name", type=str)
-
 parser.add_argument("--tags", type=str, default="{}")
 
 
@@ -29,8 +29,6 @@ resource_group_name = args.resource_group_name
 workspace_name = args.workspace_name
 print(args.tags)
 tags = json.loads(args.tags)
-
-URI_FOLDER = "uri_folder"
 
 try:
     credential = DefaultAzureCredential()
@@ -66,7 +64,8 @@ ml_client.begin_create_or_update(cluster_basic).result()
 
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(
-    pdfs_input_data: Input(type=AssetTypes.URI_FOLDER), labels_input_data: Input(type=AssetTypes.URI_FOLDER)
+    pdfs_input_data: Input(type=AssetTypes.URI_FOLDER),
+    labels_input_data: Input(type=AssetTypes.URI_FOLDER),
 ):
     extraction_step = load_component(source="extraction/command.yaml")
     extraction = extraction_step(pdfs_input=pdfs_input_data)
@@ -99,8 +98,12 @@ def azureml_pipeline(
 
 
 pipeline_job = azureml_pipeline(
-    pdfs_input_data=Input(path="azureml:cats_dogs_others:1", type=AssetTypes.URI_FOLDER),
-    labels_input_data=Input(path="azureml:cats_dogs_others_labels:1", type=AssetTypes.URI_FOLDER),
+    pdfs_input_data=Input(
+        path="azureml:cats_dogs_others:1", type=AssetTypes.URI_FOLDER
+    ),
+    labels_input_data=Input(
+        path="azureml:cats_dogs_others_labels:1", type=AssetTypes.URI_FOLDER
+    ),
 )
 pipeline_job.settings.force_rerun = False
 
@@ -110,23 +113,23 @@ custom_extraction_path = (
     azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
 )
 pipeline_job.outputs.extraction_output = Output(
-    type=URI_FOLDER, mode="rw_mount", path=custom_extraction_path
+    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_extraction_path
 )
 custom_extraction_hash_path = (
     azure_blob + "extraction_hash/cats-dogs-others/" + experiment_id + "/"
 )
 pipeline_job.outputs.extraction_hash_output = Output(
-    type=URI_FOLDER, mode="rw_mount", path=custom_extraction_hash_path
+    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_extraction_hash_path
 )
 custom_model_path = azure_blob + "models/cats-dogs-others/" + experiment_id + "/"
 pipeline_job.outputs.model_output = Output(
-    type=URI_FOLDER, mode="rw_mount", path=custom_model_path
+    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_model_path
 )
 custom_integration_path = (
     azure_blob + "integration/cats-dogs-others/" + experiment_id + "/"
 )
 pipeline_job.outputs.integration_output = Output(
-    type=URI_FOLDER, mode="rw_mount", path=custom_integration_path
+    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_integration_path
 )
 
 pipeline_job = ml_client.jobs.create_or_update(
@@ -134,55 +137,10 @@ pipeline_job = ml_client.jobs.create_or_update(
 )
 
 ml_client.jobs.stream(pipeline_job.name)
-BASE_PATH = Path(__file__).resolve().parent
-artifact_utils.download_artifact_from_aml_uri(
-    uri=custom_extraction_hash_path,
-    destination=str(BASE_PATH),
-    datastore_operation=ml_client.datastores,
+
+register_extracted_dataset(
+    ml_client, custom_extraction_hash_path, custom_extraction_path, tags
 )
-
-# lire le fichier hash.txt qui est dans BASE_PATH
-with open(str(BASE_PATH / "hash.txt"), "r") as file:
-    computed_hash = file.read()
-print(f"computed_hash: {computed_hash}")
-
-extracted_images_dataset_name = "cats-dogs-others-extracted"
-try:
-    list_datasets = ml_client.data.list(extracted_images_dataset_name)
-    list_list_datset = list(list_datasets)
-    version_dataset_extraction = len(list_list_datset) + 1
-except:
-    list_list_datset = []
-    version_dataset_extraction = 1
-    hash_tag_already_exists = False
-    print("No dataset with name cats-dogs-others-extracted")
-
-hash_tag_already_exists = False
-len_dataset = len(list_list_datset)
-if len_dataset > 0:
-    dataset = list_list_datset[len_dataset - 1]
-    print(f"dataset.tags: {str(dataset.version)}")
-    print(dataset.tags)
-    if "hash" in dataset.tags:
-        extracted_images_dataset_version = dataset.tags["hash"]
-        print(f"extracted_images_dataset_version: {extracted_images_dataset_version}")
-        print(f"computed_hash: {computed_hash}")
-        if extracted_images_dataset_version == computed_hash:
-            hash_tag_already_exists = True
-
-if not hash_tag_already_exists:
-    extracted_images_dataset = Data(
-        name=extracted_images_dataset_name,
-        path=custom_extraction_path,
-        type=URI_FOLDER,
-        description="Extracted images for cats and dogs and others",
-        version=str(version_dataset_extraction),
-        tags={"hash": computed_hash, **tags},
-    )
-    extracted_images_dataset = ml_client.data.create_or_update(extracted_images_dataset)
-    print(
-        f"Dataset with name {extracted_images_dataset.name} was registered to workspace, the dataset version is {extracted_images_dataset.version}"
-    )
 
 model_name = "cats-dogs-others"
 try:
@@ -207,7 +165,7 @@ print(
 integration_dataset = Data(
     name="cats-dogs-others-integration",
     path=custom_integration_path,
-    type=URI_FOLDER,
+    type=AssetTypes.CUSTOM_MODEL,
     description="Integration dataset for cats and dogs and others",
     tags=tags,
 )
