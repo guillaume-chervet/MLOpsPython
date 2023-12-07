@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "labelling"
+version = "0.0.0"
+description = ""
+authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "~3.10"
+mldesigner = "0.1.0b15"
+azure-ai-ml = "1.10.1"
+"azure.identity" = "1.14.0"
+aiohttp = "^3.9.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

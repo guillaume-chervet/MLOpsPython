@@ -130,7 +130,7 @@ jobs:
       run: |
         pipenv install --dev
         pipenv run flake8 .
-' > python-ci.yml
+' > python-main.yml
 ```
 
 Now we can protect your "main" branch on github. Add a security constrain, that your code must pass the CI before merging.
