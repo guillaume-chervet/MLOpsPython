@@ -12,7 +12,7 @@ az login
 gh auth login
 
 # Fork MLOPsPython repository
-gh repo fork https://github.com/guillaume-chervet/MLOpsPythonDemo1 --default-branch-only --fork-name $repositoryName --clone
+gh repo fork https://github.com/guillaume-chervet/MLOpsPython --default-branch-only --fork-name $repositoryName --clone
 cd $repositoryName
 git remote remove upstream
 git push --set-upstream origin main
