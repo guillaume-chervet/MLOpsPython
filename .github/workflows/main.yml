@@ -18,6 +18,7 @@ env:
   DOCKER_IMAGE_NAME: "guillaumechervet/mlopspython"
 
 permissions:
+  id-token: write
   contents: write
 jobs:
   lint:
