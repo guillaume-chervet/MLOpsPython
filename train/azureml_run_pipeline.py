@@ -114,6 +114,7 @@ pipeline_job = ml_client.jobs.create_or_update(
 
 ml_client.jobs.stream(pipeline_job.name)
 
+credential.get_token("https://management.azure.com/.default")
 
 model_name = "cats-dogs-others"
 try:
