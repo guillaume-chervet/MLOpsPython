@@ -10,8 +10,7 @@ env:
   PNPM_VERSION: 8.5.1
   PYTHON_VERSION: 3.10.13
   NODE_VERSION: 18
-  AZURE_RESOURCE_GROUP_NAME: "azure-ml-yola"
-  AZURE_SUBSCRIPTION_ID: "9d42c9d4-85ab-429d-afb4-4d77f309078c"
+  AZURE_RESOURCE_GROUP_NAME: "azure-ml-yolo"
   AZURE_LOCATION: "northeurope"
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-yola"
   AZURE_WEBAPP_NAME: "cats-dogs-yola"
@@ -19,6 +18,7 @@ env:
   DOCKER_IMAGE_NAME: "guillaumechervet/mlopspython"
 
 permissions:
+  id-token: write
   contents: write
 jobs:
   lint:
@@ -146,6 +146,7 @@ jobs:
           fi
   train:
     runs-on: ubuntu-latest
+    environment: MLOpsPython
     needs: tags
     outputs:
       MODEL_VERSION: ${{ steps.train.outputs.MODEL_VERSION }}
@@ -173,7 +174,9 @@ jobs:
     - name: azure login
       uses: azure/login@v1
       with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - name: Run Train Pipeline
       run: |
           poetry install
@@ -191,7 +194,7 @@ jobs:
           cd $cwd
           #poetry run python azureml_run_test.py > train_output.txt
           poetry run python azureml_run_pipeline.py \
-            --subscription_id ${{ env.AZURE_SUBSCRIPTION_ID }}  \
+            --subscription_id ${{ secrets.AZURE_SUBSCRIPTION_ID }}  \
             --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
             --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} > train_output.txt
           cat train_output.txt
@@ -265,7 +268,9 @@ jobs:
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   deploy:
     runs-on: ubuntu-latest
     needs: [tags, build_docker]
@@ -273,7 +278,9 @@ jobs:
     - name: azure login
       uses: azure/login@v1
       with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - name: Deploy container
       run: |
         # https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#az-container-create()
@@ -296,7 +303,9 @@ jobs:
     - name: azure login
       uses: azure/login@v1
       with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - name: Run Integration Test
       working-directory: production/integration
       run: |
