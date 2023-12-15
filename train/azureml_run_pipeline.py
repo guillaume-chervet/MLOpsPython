@@ -91,7 +91,7 @@ def azureml_pipeline(
 
     return {
         "extraction_output": extraction.outputs.images_output,
-        "extraction_hash_output": extraction.outputs.hash_output,
+        #"extraction_hash_output": extraction.outputs.hash_output,
         "model_output": test_data.outputs.model_output,
         "integration_output": test_data.outputs.integration_output,
     }
@@ -111,12 +111,12 @@ custom_extraction_path = (
 pipeline_job.outputs.model_output = Output(
     type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_extraction_path
 )
-custom_extraction_hash_path = (
-    azure_blob + "extraction_hash/cats-dogs-others/" + experiment_id + "/"
-)
-pipeline_job.outputs.extraction_hash_output = Output(
-    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_extraction_hash_path
-)
+#custom_extraction_hash_path = (
+#    azure_blob + "extraction_hash/cats-dogs-others/" + experiment_id + "/"
+#)
+#pipeline_job.outputs.extraction_hash_output = Output(
+#    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_extraction_hash_path
+#)
 
 custom_model_path = azure_blob + "models/cats-dogs-others/" + experiment_id + "/"
 pipeline_job.outputs.model_output = Output(
@@ -133,13 +133,25 @@ pipeline_job = ml_client.jobs.create_or_update(
     pipeline_job, experiment_name="cats_dos_others_pipeline"
 )
 
+import threading
+import time
+
+def get_token():
+    while True:
+        token = credential.get_token("https://management.azure.com/.default")
+        print("Token obtenu:", token.token)
+        time.sleep(60)  # Attendre 60 secondes
+
+token_thread = threading.Thread(target=get_token)
+token_thread.start()
+
 ml_client.jobs.stream(pipeline_job.name)
 
 credential.get_token("https://management.azure.com/.default")
 
-register_extracted_dataset(
-    ml_client, custom_extraction_hash_path, custom_extraction_path, {}
-)
+#register_extracted_dataset(
+#    ml_client, custom_extraction_hash_path, custom_extraction_path, {}
+#)
 
 model_name = "cats-dogs-others"
 try:
