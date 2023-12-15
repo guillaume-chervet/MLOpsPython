@@ -9,7 +9,7 @@ from azure.ai.ml.constants import AssetTypes
 from azure.ai.ml.entities import Data
 from azure.ai.ml.entities import AmlCompute
 
-from extraction import register_extracted_dataset
+from extraction_dataset import register_extracted_dataset
 
 import uuid
 
@@ -152,6 +152,7 @@ file_model = Model(
     path=custom_model_path,
     type=AssetTypes.CUSTOM_MODEL,
     name=model_name,
+    tags={**tags},
     description="Model created from azureML.",
 )
 saved_model = ml_client.models.create_or_update(file_model)
