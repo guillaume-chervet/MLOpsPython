@@ -47,7 +47,7 @@ def register_extracted_dataset(ml_client,
         extracted_images_dataset = Data(
             name=extracted_images_dataset_name,
             path=custom_extraction_path,
-            type=AssetTypes.CUSTOM_MODEL,
+            type=AssetTypes.URI_FOLDER,
             description="Extracted images for cats and dogs and others",
             version=str(version_dataset_extraction),
             tags={"hash": computed_hash, **tags},
