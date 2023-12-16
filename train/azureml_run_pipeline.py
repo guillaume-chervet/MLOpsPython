@@ -65,7 +65,7 @@ ml_client.begin_create_or_update(cluster_basic).result()
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(
     pdfs_input_data: Input(type=AssetTypes.URI_FOLDER),
-    labels_input_data: Input(type=AssetTypes.URI_FOLDER)
+    labels_input_data: Input(type=AssetTypes.URI_FOLDER),
 ):
     extraction_step = load_component(source="extraction/command.yaml")
     extraction = extraction_step(pdfs_input=pdfs_input_data)
@@ -91,15 +91,19 @@ def azureml_pipeline(
 
     return {
         "extraction_output": extraction.outputs.images_output,
-        #"extraction_hash_output": extraction.outputs.hash_output,
+        # "extraction_hash_output": extraction.outputs.hash_output,
         "model_output": test_data.outputs.model_output,
         "integration_output": test_data.outputs.integration_output,
     }
 
 
 pipeline_job = azureml_pipeline(
-    pdfs_input_data=Input(path="azureml:cats_dogs_others:1", type=AssetTypes.URI_FOLDER),
-    labels_input_data=Input(path="azureml:cats_dogs_others_labels:1", type=AssetTypes.URI_FOLDER),
+    pdfs_input_data=Input(
+        path="azureml:cats_dogs_others:1", type=AssetTypes.URI_FOLDER
+    ),
+    labels_input_data=Input(
+        path="azureml:cats_dogs_others_labels:1", type=AssetTypes.URI_FOLDER
+    ),
 )
 
 
@@ -111,12 +115,12 @@ custom_extraction_path = (
 pipeline_job.outputs.model_output = Output(
     type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_extraction_path
 )
-#custom_extraction_hash_path = (
+# custom_extraction_hash_path = (
 #    azure_blob + "extraction_hash/cats-dogs-others/" + experiment_id + "/"
-#)
-#pipeline_job.outputs.extraction_hash_output = Output(
+# )
+# pipeline_job.outputs.extraction_hash_output = Output(
 #    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_extraction_hash_path
-#)
+# )
 
 custom_model_path = azure_blob + "models/cats-dogs-others/" + experiment_id + "/"
 pipeline_job.outputs.model_output = Output(
@@ -136,22 +140,29 @@ pipeline_job = ml_client.jobs.create_or_update(
 import threading
 import time
 
+run_get_token = True
 def get_token():
-    while True:
+    while run_get_token:
         token = credential.get_token("https://management.azure.com/.default")
         print("Token obtenu:", token.token)
         time.sleep(60)  # Attendre 60 secondes
 
+
 token_thread = threading.Thread(target=get_token)
 token_thread.start()
 
-ml_client.jobs.stream(pipeline_job.name)
+def run_pipeline():
+    ml_client.jobs.stream(pipeline_job.name)
+
+pipeline_thread = threading.Thread(target=run_pipeline)
+pipeline_thread.start()
+pipeline_thread.join()
 
 credential.get_token("https://management.azure.com/.default")
 
-#register_extracted_dataset(
+# register_extracted_dataset(
 #    ml_client, custom_extraction_hash_path, custom_extraction_path, {}
-#)
+# )
 
 model_name = "cats-dogs-others"
 try:
@@ -185,6 +196,9 @@ integration_dataset = ml_client.data.create_or_update(integration_dataset)
 print(
     f"Dataset with name {integration_dataset.name} was registered to workspace, the dataset version is {integration_dataset.version}"
 )
+
+run_get_token = False
+token_thread.join()
 
 output_data = {
     "model_version": saved_model.version,
