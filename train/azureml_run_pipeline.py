@@ -143,8 +143,11 @@ import time
 run_get_token = True
 def get_token():
     while run_get_token:
-        token = credential.get_token("https://management.azure.com/.default")
-        print("Token obtenu:", token.token)
+        try:
+            token = credential.get_token("https://management.azure.com/.default")
+            print("Token obtenu:", token.token)
+        except Exception as ex:
+            print(ex)
         time.sleep(60)  # Attendre 60 secondes
 
 
@@ -158,8 +161,10 @@ pipeline_thread = threading.Thread(target=run_pipeline)
 pipeline_thread.start()
 pipeline_thread.join()
 
-credential.get_token("https://management.azure.com/.default")
-
+try:
+    credential.get_token("https://management.azure.com/.default")
+except Exception as ex:
+    print(ex)
 # register_extracted_dataset(
 #    ml_client, custom_extraction_hash_path, custom_extraction_path, {}
 # )
