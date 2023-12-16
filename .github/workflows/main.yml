@@ -15,7 +15,7 @@ env:
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-yola"
   AZURE_WEBAPP_NAME: "cats-dogs-yola"
   DELETE_WEBAPP: "false"
-  DOCKER_IMAGE_NAME: "guillaumechervetlunique/mlopspython"
+  DOCKER_IMAGE_NAME: "guillaumechervet/mlopspython"
 
 permissions:
   id-token: write
@@ -275,6 +275,7 @@ jobs:
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   deploy:
+    environment: MLOpsPython
     runs-on: ubuntu-latest
     needs: [tags, build_docker]
     steps:
@@ -289,6 +290,7 @@ jobs:
         # https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#az-container-create()
         az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} --image docker.io/${{ env.DOCKER_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
   integration_tests:
+    environment: MLOpsPython
     runs-on: ubuntu-latest
     needs: [deploy, train]
     steps:
