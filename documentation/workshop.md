@@ -1,4 +1,4 @@
-# Workshop Cloud Nord
+# Workshop MLOps 
 
 Welcome aboard the MLOpsPython team !
 
@@ -34,9 +34,9 @@ You can also check health check route with HTTP GET:
 
 http://cats-dogs-yolo.northeurope.azurecontainer.io:5000/health
 
-## 2. Fork the project MLOpsPython
+## 3. Initialize your own project
 
-### 2.1. Create your Azure Account
+### 3.1. Create your Azure Account
 
 Important point:
 - About azure coupon:
@@ -53,25 +53,28 @@ https://www.microsoftazurepass.com/?WT.mc_id=DOP-MVP-5003370
 Documentation:
 https://www.microsoftazurepass.com/Home/HowTo?WT.mc_id=DOP-MVP-5003370 
 
-### 2.3. Fork the GitHub project MLOpsPython
+### 3.2. Fork the GitHub project MLOpsPython
 
-Prerequisite to install on your laptop:
+**On Windows**: 
+1. Download https://github.com/guillaume-chervet/MLOpsPython/blob/main/bin/init_repository.ps1 PowerShell Script
+2. Open a PowerShell Terminal then run 
+````ps
+./init_repository.ps1
+````
+3. Go to GitHub Action Tab and activate it !
 
-1. Fork https://github.com/guillaume-chervet/MLOpsPython repository
-2. Go to GitHub Action Tab and activate it !
-3. Clone your new own **MLOpsPython** repository
-
-Je vous mets à disposition les fichiers de script ci-dessous :
-Copier un de ces deux fichiers disponibles ici https://github.com/guillaume-chervet/... chez vous et exécuter le Powershell (.ps1) si vous êtes sous Windows et le bash (.sh) si vous êtes sous linux ou mac.
-
-Il se base sur ce super Article réalisé par Alexandre Nédélec que je remercie : https://www.techwatching.dev/posts/sc...
-
+**On Linux or Mac**:
+1. Download https://github.com/guillaume-chervet/MLOpsPython/blob/main/bin/init_repository.sh Bash Script
+2. Open a Bash Terminal then run
+````bach
+chmod +x ./init_repository.sh
+./init_repository.ps1
+````
 
 
+### 3.3. Adapt GitHub Action Parameters
 
-### 2.6. Adapt GitHub Action Parameters
-
-Inside "./.github/workflows/ci.yml" file
+Inside "./.github/workflows/main.yml" file
 
 ````bash
 
@@ -83,7 +86,7 @@ env:
 
 ````
 
-### 2.7. Run GitHub Action
+### 3.4. Run GitHub Action
 
 Commit and push your code
 
@@ -97,7 +100,7 @@ git push origin main
 
 This will trigger the GitHub Action.
 
-## 3. Getting Started on your laptop
+## 4. Getting Started on your laptop
 
 Follow "Get Started" section to run the project on your laptop :
 
@@ -107,7 +110,7 @@ https://github.com/your-github-login/MLOpsPython
 - Drift dataset: https://github.com/guillaume-chervet/dataset-cats-dogs-others-drift
 - You can test with your own files :)
 
-## 4. First Contribution : Images Labelling
+## 5. First Contribution : Images Labelling
 
 We need you to annotate 200 images of classification of :
 - cat
@@ -123,7 +126,7 @@ https://axaguildev-ecotag.azurewebsites.net/projects/2329f843-fa3d-45df-bec5-08d
 For you culture, Ecotag is an awesome Open Source tool available here :
 https://github.com/AxaGuilDEv/ecotag
 
-## 5. Second Contribution : CleanCode & PullRequest
+## 6. Second Contribution : CleanCode & PullRequest
 
 Our team Kanban:
 
@@ -146,7 +149,7 @@ git commit -m "refactor(myfonctionnality): commit message"
 git push
 ```
 
-## 6. How to check your API result  
+## 7. How to check your API result  
 
 1. Follow "ml-cli" readme and download "ml-cli" version v0.54.2 for your OS https://github.com/AxaFrance/ecotag/blob/master/README-ML-CLI.md
 2. Download https://github.com/guillaume-chervet/dataset-cats-dogs-others-mlcli as a zip and unzip content in "demo" folder
@@ -172,7 +175,7 @@ try {
 ```
 
 
-## 7. More AzureML
+## 8. More AzureML
 
 1. Create a AzureML Compute Instance
 2. Open JupyterLab with Python 3.10 and SDK v2

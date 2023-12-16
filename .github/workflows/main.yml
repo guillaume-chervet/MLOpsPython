@@ -14,7 +14,7 @@ env:
   AZURE_LOCATION: "northeurope"
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-yola"
   AZURE_WEBAPP_NAME: "cats-dogs-yola"
-  DELETE_WEBAPP: "true"
+  DELETE_WEBAPP: "false"
   DOCKER_IMAGE_NAME: "guillaumechervet/mlopspython"
 
 permissions:
