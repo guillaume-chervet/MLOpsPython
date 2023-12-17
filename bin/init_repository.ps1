@@ -12,7 +12,7 @@ az login
 gh auth login
 
 # Fork MLOPsPython repository
-gh repo fork https://github.com/guillaume-chervet/MLOpsPythonDemo1 --default-branch-only --fork-name $repositoryName --clone
+gh repo fork https://github.com/guillaume-chervet/MLOpsPython --default-branch-only --fork-name $repositoryName --clone
 cd $repositoryName
 git remote remove upstream
 git push --set-upstream origin main
@@ -63,9 +63,9 @@ gh secret set DOCKER_USENAME --body "dckr_pat_e2lZ9YgpMt8APE-Qxzn89u6mt28" --env
 
 # Run workflow
 gh workflow enable main.yml
-gh workflow run main.yml
-$runId=$(gh run list --workflow=main.yml --json databaseId -q ".[0].databaseId")
-gh run watch $runId
+#gh workflow run main.yml
+#$runId=$(gh run list --workflow=main.yml --json databaseId -q ".[0].databaseId")
+#gh run watch $runId
 
-# Open the repostory in the browser
+# Open the repository in the browser
 gh repo view -w

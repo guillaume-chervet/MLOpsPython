@@ -14,8 +14,8 @@ env:
   AZURE_LOCATION: "northeurope"
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-yola"
   AZURE_WEBAPP_NAME: "cats-dogs-yola"
-  DELETE_WEBAPP: "true"
-  DOCKER_IMAGE_NAME: "guillaumechervet/mlopspython"
+  DELETE_WEBAPP: "false"
+  DOCKER_IMAGE_NAME: "guillaumechervetlunique/mlopspython"
 
 permissions:
   id-token: write
@@ -196,7 +196,10 @@ jobs:
           poetry run python azureml_run_pipeline.py \
             --subscription_id ${{ secrets.AZURE_SUBSCRIPTION_ID }}  \
             --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
-            --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} > train_output.txt
+            --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} \
+            --location ${{ env.AZURE_LOCATION }} \
+            --tags "{\"triggering_actor\":\"${{github.triggering_actor}}\"}" \
+            > train_output.txt
           cat train_output.txt
       working-directory: train
     - name: download model
@@ -272,6 +275,7 @@ jobs:
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   deploy:
+    environment: MLOpsPython
     runs-on: ubuntu-latest
     needs: [tags, build_docker]
     steps:
@@ -286,6 +290,7 @@ jobs:
         # https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#az-container-create()
         az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} --image docker.io/${{ env.DOCKER_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
   integration_tests:
+    environment: MLOpsPython
     runs-on: ubuntu-latest
     needs: [deploy, train]
     steps:
@@ -312,7 +317,7 @@ jobs:
         poetry install
         az extension add -n ml
         poetry run python azureml_run_pipeline.py \
-            --subscription_id ${{ env.AZURE_SUBSCRIPTION_ID }}  \
+            --subscription_id ${{ secrets.AZURE_SUBSCRIPTION_ID }}  \
             --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
             --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} \
             --experiment_id ${{ needs.train.outputs.EXPERIMENT_ID }} \

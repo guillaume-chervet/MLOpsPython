@@ -62,13 +62,13 @@ gh secret set DOCKER_USENAME --body "dckr_pat_e2lZ9YgpMt8APE-Qxzn89u6mt28" --env
 
 # Run the GitHub workflow
 gh workflow enable main.yml
-gh workflow run main.yml
+#gh workflow run main.yml
 
 # Get the run ID
-runId=$(gh run list --workflow=main.yml --json databaseId -q ".[0].databaseId")
+#runId=$(gh run list --workflow=main.yml --json databaseId -q ".[0].databaseId")
 
 # Watch the run
-gh run watch "$runId"
+#gh run watch "$runId"
 
 # Open the repository in the browser
 gh repo view -w
