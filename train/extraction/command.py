@@ -24,7 +24,8 @@ with open(str(Path(hash_output) / "hash.txt"), "w") as file:
 console_output = f""" 
     number_files_input: {result.number_files_input}
     number_images_output: {result.number_images_output}
-    computed_hash: {computed_hash}"""
+    computed_hash: {computed_hash}
+"""
     
 mlflow.log_metric("number_files_input", result.number_files_input)
 mlflow.log_metric("number_images_output", result.number_images_output)
