@@ -202,15 +202,34 @@ jobs:
             > train_output.txt
           cat train_output.txt
       working-directory: train
+    - name: azure login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - name: Run Train Post Pipeline
+      run: |
+          EXPERIMENT_ID=$(python bin/retrieve_output.py ./train/train_output.txt experiment_id)
+          cd ./train
+          poetry run python azureml_post_pipeline.py \
+            --subscription_id ${{ secrets.AZURE_SUBSCRIPTION_ID }}  \
+            --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
+            --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} \
+            --location ${{ env.AZURE_LOCATION }} \
+            --tags "{\"git\":\"${{ github.head_ref }}.${{ github.sha }}\",\"version\":\"${{ needs.tags.outputs.new_version }}\",\"triggering_actor\":\"${{github.triggering_actor}}\"}" \
+            --experiment_id $EXPERIMENT_ID \
+            > post_train_output.txt
+          cat post_train_output.txt
     - name: download model
       id: train
       run: |
           az extension add -n ml
-          MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
+          MODEL_VERSION=$(python bin/retrieve_output.py ./train/post_train_output.txt model_version)
           echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
-          INTEGRATION_DATASET_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt integration_dataset_version)
+          INTEGRATION_DATASET_VERSION=$(python bin/retrieve_output.py ./train/post_train_output.txt integration_dataset_version)
           echo "INTEGRATION_DATASET_VERSION=$INTEGRATION_DATASET_VERSION" >> $GITHUB_OUTPUT
-          EXPERIMENT_ID=$(python bin/retrieve_output.py ./train/train_output.txt experiment_id)
+          EXPERIMENT_ID=$(python bin/retrieve_output.py ./train/post_train_output.txt experiment_id)
           echo "EXPERIMENT_ID=$EXPERIMENT_ID" >> $GITHUB_OUTPUT
         
           mkdir model
