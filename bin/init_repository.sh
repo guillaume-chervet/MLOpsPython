@@ -31,9 +31,7 @@ gh api --method PUT -H "Accept: application/vnd.github+json" "repos/${repository
 # Retrieve the current subscription and current tenant identifiers using Azure CLI
 subscriptionId=$(az account show --query "id" -o tsv)
 tenantId=$(az account show --query "tenantId" -o tsv)
-credentials=$(az ad sp create-for-rbac --name "mlapp" --role contributor \
-                            --scopes /subscriptions/<subscription-id> \
-                            --sdk-auth)
+credentials=$(az ad sp create-for-rbac --name "mlapp" --role contributor --scopes /subscriptions/$subscriptionId --sdk-auth)
 # Create an App Registration and its associated service principal using Azure CLI
 #appId=$(az ad app create --display-name "GitHub Action OIDC for ${repositoryFullName}" --query "appId" -o tsv)
 #servicePrincipalId=$(az ad sp create --id "$appId" --query "id" -o tsv)
@@ -59,7 +57,8 @@ credentials=$(az ad sp create-for-rbac --name "mlapp" --role contributor \
 #gh secret set AZURE_TENANT_ID --body "$tenantId" --env "$environmentName"
 #gh secret set AZURE_SUBSCRIPTION_ID --body "$subscriptionId" --env "$environmentName"
 #gh secret set AZURE_CLIENT_ID --body "$appId" --env "$environmentName"
-gh secret set AZUREML_CREDENTIALS --body "$credentials" --env "$environmentName"
+json_credentials=$(echo $credentials | jq -c .)
+gh secret set AZUREML_CREDENTIALS --body "$json_credentials" --env "$environmentName"
 gh secret set DOCKER_PASSWORD --body "robertcarry" --env "$environmentName"
 gh secret set DOCKER_USENAME --body "dckr_pat_e2lZ9YgpMt8APE-Qxzn89u6mt28" --env "$environmentName"
 
