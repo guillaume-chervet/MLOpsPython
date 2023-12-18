@@ -138,7 +138,10 @@ pipeline_job = ml_client.jobs.create_or_update(
     pipeline_job, experiment_name="cats_dos_others_pipeline"
 )
 
-ml_client.jobs.stream(pipeline_job.name)
+try:
+    ml_client.jobs.stream(pipeline_job.name)
+except Exception as ex:
+    print(ex)
 
 output_data = {
     "experiment_id": experiment_id,
