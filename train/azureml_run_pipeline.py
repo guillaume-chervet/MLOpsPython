@@ -110,24 +110,24 @@ pipeline_job = azureml_pipeline(
 azure_blob = "azureml://datastores/workspaceblobstore/paths/"
 experiment_id = str(uuid.uuid4())
 custom_extraction_path = (
-    azure_blob + "extraction/cats-dogs-others/" + experiment_id + "/"
+    azure_blob + "cats-dogs-others/" + experiment_id + "/extraction/"
 )
 pipeline_job.outputs.model_output = Output(
     type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_extraction_path
 )
 # custom_extraction_hash_path = (
-#    azure_blob + "extraction_hash/cats-dogs-others/" + experiment_id + "/"
+#    azure_blob + "cats-dogs-others/" + experiment_id + "/extraction_hash/"
 # )
 # pipeline_job.outputs.extraction_hash_output = Output(
 #    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_extraction_hash_path
 # )
 
-custom_model_path = azure_blob + "models/cats-dogs-others/" + experiment_id + "/"
+custom_model_path = azure_blob + "cats-dogs-others/" + experiment_id + "/models/"
 pipeline_job.outputs.model_output = Output(
     type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_model_path
 )
 custom_integration_path = (
-    azure_blob + "/integration/cats-dogs-others/" + experiment_id + "/"
+    azure_blob + "cats-dogs-others/" + experiment_id + "/integration/"
 )
 pipeline_job.outputs.integration_output = Output(
     type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_integration_path
@@ -137,34 +137,8 @@ pipeline_job = ml_client.jobs.create_or_update(
     pipeline_job, experiment_name="cats_dos_others_pipeline"
 )
 
-import threading
-import time
+ml_client.jobs.stream(pipeline_job.name)
 
-run_get_token = True
-def get_token():
-    while run_get_token:
-        try:
-            token = credential.get_token("https://management.azure.com/.default")
-            print("Token obtenu:", token.token)
-        except Exception as ex:
-            print(ex)
-        time.sleep(60)  # Attendre 60 secondes
-
-
-token_thread = threading.Thread(target=get_token)
-token_thread.start()
-
-def run_pipeline():
-    ml_client.jobs.stream(pipeline_job.name)
-
-pipeline_thread = threading.Thread(target=run_pipeline)
-pipeline_thread.start()
-pipeline_thread.join()
-
-try:
-    credential.get_token("https://management.azure.com/.default")
-except Exception as ex:
-    print(ex)
 # register_extracted_dataset(
 #    ml_client, custom_extraction_hash_path, custom_extraction_path, {}
 # )
@@ -180,7 +154,7 @@ file_model = Model(
     path=custom_model_path,
     type=AssetTypes.CUSTOM_MODEL,
     name=model_name,
-    tags={**tags},
+    tags={**tags, "experiment_id": experiment_id},
     description="Model created from azureML.",
 )
 saved_model = ml_client.models.create_or_update(file_model)
@@ -195,15 +169,12 @@ integration_dataset = Data(
     path=custom_integration_path,
     type=AssetTypes.URI_FOLDER,
     description="Integration dataset for cats and dogs and others",
-    tags={**tags},
+    tags={**tags, "experiment_id": experiment_id},
 )
 integration_dataset = ml_client.data.create_or_update(integration_dataset)
 print(
     f"Dataset with name {integration_dataset.name} was registered to workspace, the dataset version is {integration_dataset.version}"
 )
-
-run_get_token = False
-token_thread.join()
 
 output_data = {
     "model_version": saved_model.version,

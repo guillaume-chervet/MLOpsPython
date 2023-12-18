@@ -174,9 +174,7 @@ jobs:
     - name: azure login
       uses: azure/login@v1
       with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: Run Train Pipeline
       run: |
           poetry install
@@ -198,7 +196,7 @@ jobs:
             --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
             --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} \
             --location ${{ env.AZURE_LOCATION }} \
-            --tags "{\"triggering_actor\":\"${{github.triggering_actor}}\"}" \
+            --tags "{\"git\":\"${{ github.head_ref }}.${{ github.sha }}\",\"version\":\"${{ needs.tags.outputs.new_version }}\",\"triggering_actor\":\"${{github.triggering_actor}}\"}" \
             > train_output.txt
           cat train_output.txt
       working-directory: train
@@ -271,9 +269,7 @@ jobs:
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
   deploy:
     environment: MLOpsPython
     runs-on: ubuntu-latest
@@ -282,9 +278,7 @@ jobs:
     - name: azure login
       uses: azure/login@v1
       with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: Deploy container
       run: |
         # https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#az-container-create()
@@ -308,9 +302,7 @@ jobs:
     - name: azure login
       uses: azure/login@v1
       with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: Run Integration Test
       working-directory: production/integration
       run: |
