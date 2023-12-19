@@ -55,7 +55,7 @@ credentials=$(az ad sp create-for-rbac --name "mlapp" --role contributor --scope
 
 # Create GitHub secrets needed for the GitHub Actions using GitHub CLI
 #gh secret set AZURE_TENANT_ID --body "$tenantId" --env "$environmentName"
-#gh secret set AZURE_SUBSCRIPTION_ID --body "$subscriptionId" --env "$environmentName"
+gh secret set AZURE_SUBSCRIPTION_ID --body "$subscriptionId" --env "$environmentName"
 #gh secret set AZURE_CLIENT_ID --body "$appId" --env "$environmentName"
 jsonCredentials=$(echo "$credentials" | jq -c .)
 escapedJsonCredentials=$(echo $jsonCredentials | sed 's/"/\\"/g')
