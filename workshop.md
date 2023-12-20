@@ -59,16 +59,33 @@ https://www.microsoftazurepass.com/Home/HowTo?WT.mc_id=DOP-MVP-5003370
 1. Download https://github.com/guillaume-chervet/MLOpsPython/blob/main/bin/init_repository.ps1 PowerShell Script
 2. Open a PowerShell Terminal then run 
 ````ps
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
 ./init_repository.ps1
 ````
 3. Go to GitHub Action Tab and activate it !
 
-**On Linux or Mac**:
+**On Mac**:
+
+jq and sed are required
 1. Download https://github.com/guillaume-chervet/MLOpsPython/blob/main/bin/init_repository.sh Bash Script
 2. Open a Bash Terminal then run
 ````bach
+brew install jq
 chmod +x ./init_repository.sh
-./init_repository.ps1
+./init_repository.sh
+````
+
+**On Linux(Ubuntu)**:
+
+jq and sed are required
+1. Download https://github.com/guillaume-chervet/MLOpsPython/blob/main/bin/init_repository.sh Bash Script
+2. Open a Bash Terminal then run
+````bach
+sudo apt update
+sudo apt install jq
+sudo apt install sed
+chmod +x ./init_repository.sh
+./init_repository.sh
 ````
 
 
