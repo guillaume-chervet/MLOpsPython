@@ -347,3 +347,19 @@ jobs:
       with:
         name: Publish webapp
         path: ./production/webapp/build
+
+  change_log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Commit and push
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config --global user.name "GitHub"
+          git config --global user.email "github-action@bot.com"
+
+          PROJECT_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit"
+          chmod +x ./bin/generate-changelog.sh
+          ./bin/generate-changelog.sh "$PROJECT_URL"
+          git add ./CHANGELOG.md
+          git commit -m "[skip ci] Generate changelog to version ${{ steps.tag.outputs.new_version }}"
+          git push --set-upstream origin "HEAD:main" --follow-tags -f
