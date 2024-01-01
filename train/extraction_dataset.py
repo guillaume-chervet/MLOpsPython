@@ -8,6 +8,7 @@ def register_extracted_dataset(ml_client,
                                custom_output_path: str,
                                tags: dict):
     BASE_PATH = Path(__file__).resolve().parent
+
     artifact_utils.download_artifact_from_aml_uri(
         uri=custom_output_path + "extraction_hash",
         destination=str(BASE_PATH),
