@@ -1,0 +1,38 @@
+
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+type: command
+
+name: output
+display_name: Output
+description: Aggregate all outputs
+version: 0.0.1
+is_deterministic: true
+
+inputs:
+  extraction_images_input:
+    type: uri_folder
+  extraction_hash_input:
+    type: uri_folder
+  model_input:
+    type: uri_folder
+  integration_input:
+    type: uri_folder
+
+outputs:
+  main_output:
+    type: uri_folder
+
+environment:
+  name: output_environment
+  build:
+    path: ./
+
+code: ./
+command: >-
+  python command.py
+  --extraction_images_input ${{inputs.extraction_hash_input}}
+  --extraction_hash_input ${{inputs.extraction_hash_input}}
+  --model_input ${{inputs.model_input}}
+  --integration_input ${{inputs.integration_input}}
+  --main_output ${{outputs.main_output}}
+
