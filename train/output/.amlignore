@@ -1,0 +1,8 @@
+/tests
+/dataset-cats-dogs-others
+*.sh
+*.yml
+*.yaml
+*.ipynb
+*.lock
+*.toml

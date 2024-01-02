@@ -89,11 +89,16 @@ def azureml_pipeline(
         images_input=label_split_data.outputs.split_images_output,
     )
 
+    output_step = load_component(source="output/command.yaml")
+    output = output_step(
+        extraction_hash_input=extraction.outputs.hash_output,
+        extraction_images_input=extraction.outputs.images_output,
+        model_input=test_data.outputs.model_output,
+        integration_input=test_data.outputs.integration_output,
+    )
+
     return {
-        "extraction_output": extraction.outputs.images_output,
-        # "extraction_hash_output": extraction.outputs.hash_output,
-        "model_output": test_data.outputs.model_output,
-        "integration_output": test_data.outputs.integration_output,
+        "output": output.outputs.main_output,
     }
 
 
@@ -109,39 +114,20 @@ pipeline_job = azureml_pipeline(
 
 azure_blob = "azureml://datastores/workspaceblobstore/paths/"
 experiment_id = str(uuid.uuid4())
-custom_extraction_path = (
-    azure_blob + "cats-dogs-others/" + experiment_id + "/extraction/"
-)
-pipeline_job.outputs.model_output = Output(
-    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_extraction_path
-)
-# custom_extraction_hash_path = (
-#    azure_blob + "cats-dogs-others/" + experiment_id + "/extraction_hash/"
-# )
-# pipeline_job.outputs.extraction_hash_output = Output(
-#    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_extraction_hash_path
-# )
-
-custom_model_path = azure_blob + "cats-dogs-others/" + experiment_id + "/models/"
-pipeline_job.outputs.model_output = Output(
-    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_model_path
-)
-custom_integration_path = (
-    azure_blob + "cats-dogs-others/" + experiment_id + "/integration/"
-)
-pipeline_job.outputs.integration_output = Output(
-    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_integration_path
+custom_output_path = azure_blob + "cats-dogs-others/" + experiment_id + "/"
+pipeline_job.outputs.output = Output(
+    type=AssetTypes.URI_FOLDER, mode="rw_mount", path=custom_output_path
 )
 
 pipeline_job = ml_client.jobs.create_or_update(
-    pipeline_job, experiment_name="cats_dos_others_pipeline"
+    pipeline_job, experiment_name="cats_dos_others_pipeline", tags=tags
 )
 
 ml_client.jobs.stream(pipeline_job.name)
 
-# register_extracted_dataset(
-#    ml_client, custom_extraction_hash_path, custom_extraction_path, {}
-# )
+register_extracted_dataset(
+    ml_client, custom_output_path, {}
+)
 
 model_name = "cats-dogs-others"
 try:
@@ -151,7 +137,7 @@ except:
 
 file_model = Model(
     version=model_version,
-    path=custom_model_path,
+    path=custom_output_path + "model",
     type=AssetTypes.CUSTOM_MODEL,
     name=model_name,
     tags={**tags, "experiment_id": experiment_id},
@@ -166,7 +152,7 @@ print(
 integration_dataset_name = "cats-dogs-others-integration"
 integration_dataset = Data(
     name="cats-dogs-others-integration",
-    path=custom_integration_path,
+    path=custom_output_path + "integration",
     type=AssetTypes.URI_FOLDER,
     description="Integration dataset for cats and dogs and others",
     tags={**tags, "experiment_id": experiment_id},

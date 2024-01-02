@@ -1,0 +1,6 @@
+/tests
+/dataset-cats-dogs-others
+*.ipynb
+*.lock
+*.toml
+*.idea
