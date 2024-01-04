@@ -6,7 +6,7 @@ import random
 
 import numpy as np
 
-random.seed(10)
+random.seed(11)
 
 
 @dataclass

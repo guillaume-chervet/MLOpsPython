@@ -27,22 +27,21 @@ class LabelSplitDataTest(unittest.TestCase):
             output_pdf_directory,
             number_pdfs_integration=1,
         )
-        expected = [
-            "train/cats/cat_b_page1_index0.png",
-            "test/cats/cat_b_page1_index0.png",
-            "evaluate/cats/cat_b_page3_index0.png",
-            "train/dogs/dog_b_page2_index0.png",
-            "test/dogs/dog_b_page4_index0.png",
-            "evaluate/dogs/dog_c_page4_index0.png",
-            "train/others/other_b_page0_index0.png",
-            "test/others/other_b_page2_index0.png",
-            "evaluate/others/other_b_page1_index0.png",
-        ]
+        expected = ['train/cats/cat_b_page3_index0.png',
+                    'test/cats/cat_b_page1_index0.png',
+                    'evaluate/cats/cat_b_page1_index0.png',
+                    'train/dogs/dog_b_page2_index0.png',
+                    'test/dogs/dog_c_page4_index0.png',
+                    'evaluate/dogs/dog_b_page4_index0.png',
+                    'train/others/other_b_page1_index0.png',
+                    'evaluate/others/other_b_page2_index0.png']
+
         for path_result in label_split_data_result.path_results:
             self.assertIn(path_result, expected)
         self.assertEqual(label_split_data_result.number_file_train_by_label, 1)
         self.assertEqual(label_split_data_result.number_file_test_by_label, 1)
         self.assertEqual(label_split_data_result.number_file_evaluate_by_label, 1)
+        self.assertEqual(label_split_data_result.number_labeled_data, 9)
 
 
 if __name__ == "__main__":
