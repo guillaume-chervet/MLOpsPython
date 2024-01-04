@@ -358,4 +358,4 @@ jobs:
           ./bin/generate-changelog.sh "$PROJECT_URL"
           git add ./CHANGELOG.md
           git commit -m "[skip ci] Generate changelog to version ${{ steps.tag.outputs.new_version }}"
-          git push --set-upstream origin "HEAD:main" --follow-tags -f
+          git push -f --set-upstream origin "HEAD:main" --follow-tags 
