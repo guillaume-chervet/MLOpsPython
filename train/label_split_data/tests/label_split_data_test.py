@@ -2,7 +2,7 @@ import shutil
 import unittest
 from pathlib import Path
 
-from label_split_data import label_split_data
+from label_split_data import DataSplit
 
 BASE_PATH = Path(__file__).resolve().parent
 output_images_directory = BASE_PATH / "output_images"
@@ -19,7 +19,8 @@ class LabelSplitDataTest(unittest.TestCase):
             shutil.rmtree(str(output_images_directory))
         if output_pdf_directory.is_dir():
             shutil.rmtree(str(output_pdf_directory))
-        label_split_data_result = label_split_data(
+        data_split = DataSplit()
+        label_split_data_result = data_split.label_split_data(
             input_labels_path,
             input_images_directory,
             input_pdfs_directory,
