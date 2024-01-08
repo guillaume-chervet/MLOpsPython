@@ -2,7 +2,7 @@ import shutil
 import unittest
 from pathlib import Path
 
-from label_split_data import DataSplit
+from label_split_data import DataSplit, LabelSplitDataInput
 
 BASE_PATH = Path(__file__).resolve().parent
 output_images_directory = BASE_PATH / "output_images"
@@ -20,13 +20,19 @@ class LabelSplitDataTest(unittest.TestCase):
         if output_pdf_directory.is_dir():
             shutil.rmtree(str(output_pdf_directory))
         data_split = DataSplit()
-        label_split_data_result = data_split.label_split_data(
+
+        label_split_data_input = LabelSplitDataInput(
             input_labels_path,
             input_images_directory,
             input_pdfs_directory,
             output_images_directory,
             output_pdf_directory,
+            number_image_by_label=3,
             number_pdfs_integration=1,
+        )
+
+        label_split_data_result = data_split.label_split_data(
+            label_split_data_input
         )
         expected = ['train/cats/cat_b_page3_index0.png',
                     'test/cats/cat_b_page1_index0.png',

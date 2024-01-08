@@ -69,51 +69,81 @@ class LabelSplitDataResult:
     number_labeled_data: int
 
 
+@dataclass
+class LabelSplitDataInput:
+    input_labels_path: Path
+    input_images_directory: Path
+    input_pdfs_directory: Path
+    output_images_directory: Path
+    output_integration_directory: Path
+    number_image_by_label: int = 3
+    number_pdfs_integration: int = 100
+    ratio_number_train_image: float = 0.4
+    ratio_number_test_image: float = 0.4
+
+
 class DataSplit:
 
     def __init__(self, data_random: IDataRandom = DataRandom(), data_manager: IDataManager = DataManager()):
         self.data_random = data_random
         self.data_manager = data_manager
 
-
     def label_split_data(
             self,
-            input_labels_path: Path,
-            input_images_directory: Path,
-            input_pdfs_directory: Path,
-            output_images_directory: Path,
-            output_integration_directory: Path,
-            number_image_by_label=3,
-            number_pdfs_integration=100,
-            ratio_number_train_image: float = 0.4,
-            ratio_number_test_image: float = 0.4,
+            input: LabelSplitDataInput
     ) -> LabelSplitDataResult:
+        input_labels_path = input.input_labels_path
+        input_images_directory = input.input_images_directory
+        input_pdfs_directory = input.input_pdfs_directory
+        output_images_directory = input.output_images_directory
+        output_integration_directory = input.output_integration_directory
+        number_image_by_label = input.number_image_by_label
+        number_pdfs_integration = input.number_pdfs_integration
+        ratio_number_train_image = input.ratio_number_train_image
+        ratio_number_test_image = input.ratio_number_test_image
 
         self.data_random.seed(11)
         if ratio_number_test_image + ratio_number_test_image > 1:
             raise Exception("sum of ratio must be inferior or equal to 1")
 
-        pdfs_integration = copy_pdfs_integration(self.data_random, self.data_manager, input_images_directory,
-                                                 input_pdfs_directory,
-                                                 output_integration_directory,
-                                                 number_pdfs_integration)
+        copy_pdfs_integration_input = CopyPdfsIntegrationInput(input_images_directory,
+                                                               input_pdfs_directory,
+                                                               output_integration_directory,
+                                                               number_pdfs_integration)
+
+        pdfs_integration = copy_pdfs_integration(self.data_random, self.data_manager, copy_pdfs_integration_input)
+
+        split_copy_data_input = SplitCopyDataInput(input_images_directory, input_labels_path, number_image_by_label,
+                                                   output_images_directory, pdfs_integration,
+                                                   ratio_number_test_image, ratio_number_train_image)
 
         return split_copy_data(self.data_random,
                                self.data_manager,
-                               input_images_directory,
-                               input_labels_path,
-                               number_image_by_label,
-                               output_images_directory,
-                               pdfs_integration,
-                               ratio_number_test_image,
-                               ratio_number_train_image)
+                               split_copy_data_input)
 
 
-def split_copy_data(data_random: IDataRandom, data_manager: IDataManager, input_images_directory: Path,
-                    input_labels_path: Path, number_image_by_label: int,
-                    output_images_directory: Path,
-                    pdfs_integration: [str], ratio_number_test_image: float,
-                    ratio_number_train_image: float) -> LabelSplitDataResult:
+@dataclass
+class SplitCopyDataInput:
+    input_images_directory: Path
+    input_labels_path: Path
+    number_image_by_label: int
+    output_images_directory: Path
+    pdfs_integration: [str]
+    ratio_number_test_image: float
+    ratio_number_train_image: float
+
+
+def split_copy_data(data_random: IDataRandom,
+                    data_manager: IDataManager,
+                    input: SplitCopyDataInput) -> LabelSplitDataResult:
+    input_images_directory = input.input_images_directory
+    input_labels_path = input.input_labels_path
+    number_image_by_label = input.number_image_by_label
+    output_images_directory = input.output_images_directory
+    pdfs_integration = input.pdfs_integration
+    ratio_number_test_image = input.ratio_number_test_image
+    ratio_number_train_image = input.ratio_number_train_image
+
     data_manager.create_directory(output_images_directory)
     label_data = data_manager.load_json(input_labels_path)
     split_paths = {"cat": [], "dog": [], "other": []}
@@ -130,7 +160,7 @@ def split_copy_data(data_random: IDataRandom, data_manager: IDataManager, input_
     number_file_test = int(number_image_by_label * ratio_number_test_image)
     path_results = []
     for label in labels:
-        if number_image_by_label != len(split_paths[label]):
+        if number_image_by_label > len(split_paths[label]):
             raise Exception("Not enough files for label " + label)
 
         splitted = np.split(
@@ -165,9 +195,22 @@ def split_copy_data(data_random: IDataRandom, data_manager: IDataManager, input_
     )
 
 
-def copy_pdfs_integration(data_random: IDataRandom, data_manager: IDataManager, input_images_directory: Path,
-                          input_pdfs_directory: Path, output_integration_directory: Path,
-                          number_pdfs_integration: int):
+@dataclass
+class CopyPdfsIntegrationInput:
+    input_images_directory: Path
+    input_pdfs_directory: Path
+    output_integration_directory: Path
+    number_pdfs_integration: int
+
+
+def copy_pdfs_integration(data_random: IDataRandom,
+                          data_manager: IDataManager,
+                          input: CopyPdfsIntegrationInput):
+    input_images_directory = input.input_images_directory
+    input_pdfs_directory = input.input_pdfs_directory
+    output_integration_directory = input.output_integration_directory
+    number_pdfs_integration = input.number_pdfs_integration
+
     data_manager.create_directory(output_integration_directory)
     pdfs = data_manager.list_files(input_pdfs_directory, ".pdf")
     data_random.shuffle(pdfs)
