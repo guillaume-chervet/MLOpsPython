@@ -30,7 +30,6 @@ class LabelSplitDataTest(unittest.TestCase):
         data_manager = DataManager()
         data_manager_mock = Mock(IDataManager)
         data_manager_mock.create_directory = Mock()
-        data_manager_mock.copy_directory = Mock()
         data_manager_mock.copy_file = Mock()
         data_manager_mock.list_files = data_manager.list_files
         data_manager_mock.load_json = data_manager.load_json
@@ -64,9 +63,8 @@ class LabelSplitDataTest(unittest.TestCase):
         for path_result in label_split_data_result.path_results:
             self.assertIn(path_result, expected)
 
-        #self.assertEqual(data_manager_mock.create_directory.call_count, 13)
-        #self.assertEqual(data_manager_mock.copy_file.call_count, 12)
-        #self.assertEqual( data_ramdom_mock.shuffle.call_count, 2)
+        data_manager_mock.create_directory.assert_called()
+        data_manager_mock.copy_file.assert_called()
 
         self.assertEqual(label_split_data_result.number_file_train_by_label, 1)
         self.assertEqual(label_split_data_result.number_file_test_by_label, 1)
