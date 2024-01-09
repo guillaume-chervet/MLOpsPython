@@ -59,7 +59,6 @@ class LabelSplitDataTest(unittest.TestCase):
                     'test/others/other_b_page2_index0.png',
                     'evaluate/others/other_a_page0_index0.png']
 
-
         for path_result in label_split_data_result.path_results:
             self.assertIn(path_result, expected)
 
