@@ -1,7 +1,7 @@
 import shutil
 import unittest
 from pathlib import Path
-from unittest.mock import Mock
+from unittest.mock import Mock, MagicMock
 
 from label_split_data import DataSplit, LabelSplitDataInput, IDataRandom, DataRandom, IDataManager, DataManager
 
@@ -24,13 +24,13 @@ class LabelSplitDataTest(unittest.TestCase):
         def shuffle(x):
             return x.reverse()
 
-        data_ramdom_mock = Mock(DataRandom)
+        data_ramdom_mock = MagicMock(DataRandom)
         data_ramdom_mock.shuffle = shuffle
 
         data_manager = DataManager()
-        data_manager_mock = Mock(IDataManager)
-        data_manager_mock.create_directory = Mock()
-        data_manager_mock.copy_file = Mock()
+        data_manager_mock = MagicMock(IDataManager)
+        data_manager_mock.create_directory = MagicMock()
+        data_manager_mock.copy_file = MagicMock()
         data_manager_mock.list_files = data_manager.list_files
         data_manager_mock.load_json = data_manager.load_json
 
