@@ -65,7 +65,6 @@ class LabelSplitDataResult:
     number_file_train_by_label: int
     number_file_test_by_label: int
     number_file_evaluate_by_label: int
-    path_results: list[str | Any]
     number_labeled_data: int
 
 
@@ -158,7 +157,6 @@ def split_copy_data(data_random: IDataRandom,
             split_paths[label].append(filename)
     number_file_train = int(number_image_by_label * ratio_number_train_image)
     number_file_test = int(number_image_by_label * ratio_number_test_image)
-    path_results = []
     for label in labels:
         if number_image_by_label > len(split_paths[label]):
             raise Exception("Not enough files for label " + label)
@@ -183,14 +181,12 @@ def split_copy_data(data_random: IDataRandom,
                 path_result = (
                         split_directory_name + "/" + label + "s" + "/" + output_filename
                 )
-                path_results.append(path_result)
     return LabelSplitDataResult(
         number_file_train_by_label=number_file_train,
         number_file_test_by_label=number_file_test,
         number_file_evaluate_by_label=number_image_by_label
                                       - number_file_train
                                       - number_file_test,
-        path_results=path_results,
         number_labeled_data=len(annotations),
     )
 
