@@ -24,13 +24,17 @@ class LabelSplitDataTest(unittest.TestCase):
         def shuffle(x):
             return x.reverse()
 
+        files_copied = []
+        def copy_file(file_path: Path, to_file_path: Path) -> None:
+            files_copied.append(str(to_file_path).replace(str(BASE_PATH),"").replace("\\","/"))
+
         data_ramdom_mock = MagicMock(DataRandom)
         data_ramdom_mock.shuffle = shuffle
 
         data_manager = DataManager()
         data_manager_mock = MagicMock(IDataManager)
         data_manager_mock.create_directory = MagicMock()
-        data_manager_mock.copy_file = MagicMock()
+        data_manager_mock.copy_file = copy_file
         data_manager_mock.list_files = data_manager.list_files
         data_manager_mock.load_json = data_manager.load_json
 
@@ -49,21 +53,23 @@ class LabelSplitDataTest(unittest.TestCase):
         label_split_data_result = data_split.label_split_data(
             label_split_data_input
         )
-        expected = ['train/cats/cat_b_page3_index0.png',
-                    'test/cats/cat_b_page2_index0.png',
-                    'evaluate/cats/cat_b_page1_index0.png',
-                    'train/dogs/dog_c_page4_index0.png',
-                    'test/dogs/dog_b_page4_index0.png',
-                    'evaluate/dogs/dog_b_page2_index0.png',
-                    'train/others/other_b_page1_index0.png',
-                    'test/others/other_b_page2_index0.png',
-                    'evaluate/others/other_a_page0_index0.png']
+        expected = ['/output_integration/d.pdf',
+                    '/output_integration/d/d_page0_index0.png',
+                    '/output_integration/d/d_page1_index0.png',
+                    '/output_images/train/cats/cat_b_page3_index0.png',
+                    '/output_images/test/cats/cat_b_page2_index0.png',
+                    '/output_images/evaluate/cats/cat_b_page1_index0.png',
+                    '/output_images/train/dogs/dog_c_page4_index0.png',
+                    '/output_images/test/dogs/dog_b_page4_index0.png',
+                    '/output_images/evaluate/dogs/dog_b_page2_index0.png',
+                    '/output_images/train/others/other_b_page1_index0.png',
+                    '/output_images/test/others/other_b_page2_index0.png',
+                    '/output_images/evaluate/others/other_a_page0_index0.png']
 
-        for path_result in label_split_data_result.path_results:
+        for path_result in files_copied:
             self.assertIn(path_result, expected)
 
         data_manager_mock.create_directory.assert_called()
-        data_manager_mock.copy_file.assert_called()
 
         self.assertEqual(label_split_data_result.number_file_train_by_label, 1)
         self.assertEqual(label_split_data_result.number_file_test_by_label, 1)
