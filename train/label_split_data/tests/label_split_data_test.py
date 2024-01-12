@@ -1,7 +1,7 @@
 import shutil
 import unittest
 from pathlib import Path
-from unittest.mock import Mock, MagicMock
+from unittest.mock import MagicMock
 
 from label_split_data import DataSplit, LabelSplitDataInput, IDataRandom, DataRandom, IDataManager, DataManager
 
@@ -25,16 +25,16 @@ class LabelSplitDataTest(unittest.TestCase):
             mypdf = None
             for c in x:
                 if isinstance(c, Path) and str(c).endswith("c.pdf"):
-                    mypdf=c
+                    mypdf = c
             if mypdf is not None:
                 x.remove(mypdf)
                 x.insert(0, mypdf)
-
             return x
 
         files_copied = []
+
         def copy_file(file_path: Path, to_file_path: Path) -> None:
-            files_copied.append(str(to_file_path).replace(str(BASE_PATH),"").replace("\\","/"))
+            files_copied.append(str(to_file_path).replace(str(BASE_PATH), "").replace("\\", "/"))
 
         data_ramdom_mock = MagicMock(DataRandom)
         data_ramdom_mock.shuffle = shuffle
