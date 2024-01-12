@@ -16,7 +16,7 @@ images_output = args.images_output
 hash_output = args.hash_output
 
 extract_images = ExtractImages(DataManager())
-result = extract_images(pdfs_input, images_output)
+result = extract_images.extract_images(pdfs_input, images_output)
 
 computed_hash = hash_dir(images_output)
 with open(str(Path(hash_output) / "hash.txt"), "w") as file:
