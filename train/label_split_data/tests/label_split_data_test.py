@@ -22,7 +22,15 @@ class LabelSplitDataTest(unittest.TestCase):
             shutil.rmtree(str(output_pdf_directory))
 
         def shuffle(x):
-            return x.reverse()
+            mypdf = None
+            for c in x:
+                if isinstance(c, Path) and str(c).endswith("c.pdf"):
+                    mypdf=c
+            if mypdf is not None:
+                x.remove(mypdf)
+                x.insert(0, mypdf)
+
+            return x
 
         files_copied = []
         def copy_file(file_path: Path, to_file_path: Path) -> None:
@@ -53,18 +61,16 @@ class LabelSplitDataTest(unittest.TestCase):
         label_split_data_result = data_split.label_split_data(
             label_split_data_input
         )
-        expected = ['/output_integration/d.pdf',
-                    '/output_integration/d/d_page0_index0.png',
-                    '/output_integration/d/d_page1_index0.png',
-                    '/output_images/train/cats/cat_b_page3_index0.png',
+        expected = ['/output_integration/c.pdf',
+                    '/output_integration/c/c_page4_index0.png',
+                    '/output_images/train/cats/cat_b_page1_index0.png',
                     '/output_images/test/cats/cat_b_page2_index0.png',
-                    '/output_images/evaluate/cats/cat_b_page1_index0.png',
-                    '/output_images/train/dogs/dog_c_page4_index0.png',
+                    '/output_images/evaluate/cats/cat_b_page3_index0.png',
+                    '/output_images/train/dogs/dog_b_page2_index0.png',
                     '/output_images/test/dogs/dog_b_page4_index0.png',
-                    '/output_images/evaluate/dogs/dog_b_page2_index0.png',
-                    '/output_images/train/others/other_b_page1_index0.png',
+                    '/output_images/train/others/other_a_page0_index0.png',
                     '/output_images/test/others/other_b_page2_index0.png',
-                    '/output_images/evaluate/others/other_a_page0_index0.png']
+                    '/output_images/evaluate/others/other_b_page1_index0.png']
 
         for path_result in files_copied:
             self.assertIn(path_result, expected)
