@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 import mlflow
-from label_split_data import label_split_data
+from label_split_data import DataSplit, LabelSplitDataInput
 
 parser = argparse.ArgumentParser("label_split_data")
 parser.add_argument("--labels_input", type=str)
@@ -27,7 +27,8 @@ params = {"number_file_by_label": number_file_by_label, "ratio_train": ratio_tra
 
 mlflow.log_params(params)
 labels_files_path = Path(labels_input) / "cats_dogs_others_classification-annotations.json"
-label_split_data_result = label_split_data(
+
+label_split_data_input = LabelSplitDataInput(
     labels_files_path,
     Path(images_input),
     Path(pdfs_input),
@@ -37,6 +38,11 @@ label_split_data_result = label_split_data(
     number_pdfs_integration,
     ratio_train,
     ratio_test,
+)
+
+data_split = DataSplit()
+label_split_data_result = data_split.label_split_data(
+    label_split_data_input
 )
 mlflow.log_metric("number_file_train_by_label", label_split_data_result.number_file_train_by_label)
 mlflow.log_metric("number_file_test_by_label", label_split_data_result.number_file_test_by_label)
