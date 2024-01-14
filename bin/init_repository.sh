@@ -57,9 +57,8 @@ credentials=$(az ad sp create-for-rbac --name "mlapp" --role contributor --scope
 #gh secret set AZURE_TENANT_ID --body "$tenantId" --env "$environmentName"
 gh secret set AZURE_SUBSCRIPTION_ID --body "$subscriptionId" --env "$environmentName"
 #gh secret set AZURE_CLIENT_ID --body "$appId" --env "$environmentName"
-jsonCredentials=$(echo "$credentials" | jq -c .)
-escapedJsonCredentials=$(echo $jsonCredentials | sed 's/"/\\"/g' | sed 's/\\\\"/\\"/g')
-echo escapedJsonCredentials
+escapedJsonCredentials=$(echo "$credentials" | jq -c @json)
+echo "Escaped JSON Credentials: $escapedJsonCredentials"
 gh secret set AZURE_CREDENTIALS --body "$escapedJsonCredentials" --env "$environmentName"
 gh secret set DOCKER_PASSWORD --body "robertcarry" --env "$environmentName"
 gh secret set DOCKER_USENAME --body "dckr_pat_e2lZ9YgpMt8APE-Qxzn89u6mt28" --env "$environmentName"
