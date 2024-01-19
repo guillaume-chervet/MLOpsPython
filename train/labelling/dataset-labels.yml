@@ -1,4 +1,3 @@
-
 $schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
 
 # Supported paths include:
@@ -9,6 +8,4 @@ $schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
 type: uri_folder
 name: cats_dogs_others_labels
 description: Cats Dogs and Others Labels
-path: ./dataset-cats-dogs-others-labels
-
-
+path: ./labels

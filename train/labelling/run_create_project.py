@@ -1,6 +1,5 @@
 import argparse
 import asyncio
-from pathlib import Path
 
 from dataset import download
 from ecotag import create_project, Project, Label, Dataset, ApiInformation, create_dataset
@@ -12,6 +11,7 @@ parser.add_argument("--resource_group_name", type=str)
 parser.add_argument("--workspace_name", type=str)
 parser.add_argument("--dataset_version", type=str)
 parser.add_argument("--dataset_name", type=str)
+parser.add_argument("--api_url", type=str)
 
 args = parser.parse_args()
 subscription_id = args.subscription_id
@@ -20,12 +20,12 @@ workspace_name = args.workspace_name
 jwt_token = args.jwt_token
 dataset_version = args.dataset_version
 dataset_name = args.dataset_name
+api_url = args.api_url
 
 async def main():
 
     dataset_path = download(subscription_id, resource_group_name, workspace_name, dataset_name, dataset_version)
 
-    api_url = 'http://localhost:5010/api/server'
     api_information = ApiInformation(api_url=api_url, jwt_token=jwt_token)
 
     dataset = Dataset(dataset_name='cats_dogs_others_v'+dataset_version,
