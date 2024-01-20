@@ -12,9 +12,10 @@ from ecotag import (
     create_dataset,
     download_annotations,
 )
+from requests_oauth2client import OAuth2Client
 
 parser = argparse.ArgumentParser("download_labels");
-parser.add_argument("--jwt_token", type=str)
+parser.add_argument("--jwt_token", type=str, default="")
 parser.add_argument("--project_name", type=str)
 parser.add_argument("--api_url", type=str)
 
@@ -23,6 +24,16 @@ jwt_token = args.jwt_token
 project_name = args.project_name
 api_url = args.api_url
 
+
+
+
+oauth2client = OAuth2Client(
+    token_endpoint="https://demo.duendesoftware.com",
+    auth=("m2m", "secret"),
+)
+token = oauth2client.client_credentials(scope="api")
+
+print(token)
 
 async def main():
     base_path = Path(__file__).resolve().parent

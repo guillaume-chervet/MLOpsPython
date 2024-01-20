@@ -65,6 +65,8 @@ echo $jsonCredentials
 gh secret set AZURE_CREDENTIALS --body "$jsonCredentials" --env "$environmentName"
 gh secret set DOCKER_PASSWORD --body "robertcarry" --env "$environmentName"
 gh secret set DOCKER_USENAME --body "dckr_pat_e2lZ9YgpMt8APE-Qxzn89u6mt28" --env "$environmentName"
+$git_token=$(gh auth token)
+gh secret set GIT_TOKEN --body "$git_token" --env "$environmentName"
 
 # Run workflow
 gh workflow enable main.yml

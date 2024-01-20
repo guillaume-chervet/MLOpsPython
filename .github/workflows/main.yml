@@ -341,9 +341,11 @@ jobs:
   change_log:
     runs-on: ubuntu-latest
     needs: [ integration_tests ]
+    environment: MLOpsPython
     steps:
       - uses: actions/checkout@v3
         with:
+          token: ${{ secrets.GIT_TOKEN }}
           fetch-depth: 0
       - name: Commit and push
         if: github.ref == 'refs/heads/main'
