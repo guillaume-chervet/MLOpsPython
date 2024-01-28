@@ -26,13 +26,13 @@ You can download some sample .pdf from here :
 https://github.com/guillaume-chervet/dataset-cats-dogs-others
 
 Use Postman to call the API with HTTP POST:
-- http://cats-dogs-yolo.northeurope.azurecontainer.io:5000/upload
+- http://cats-dogs-yolu.northeurope.azurecontainer.io:5000/upload
   - type: form-data
   - key: file 
 
 You can also check health check route with HTTP GET:
 
-http://cats-dogs-yolo.northeurope.azurecontainer.io:5000/health
+http://cats-dogs-yolu.northeurope.azurecontainer.io:5000/health
 
 ## 3. Initialize your own project
 
@@ -122,6 +122,9 @@ This will trigger the GitHub Action.
 Follow "Get Started" section to run the project on your laptop :
 
 https://github.com/your-github-login/MLOpsPython
+
+Run the web interface and the API from docker-compose, then you can play with it.
+
 
 - Pdfs dataset: https://github.com/guillaume-chervet/dataset-cats-dogs-others
 - Drift dataset: https://github.com/guillaume-chervet/dataset-cats-dogs-others-drift
