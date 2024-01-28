@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.9.0
+
+- [e37d822](/e37d8223cf359530a3ab7dc66427ebaae4f670a0) - feat(workshop): update for next course, 2024-01-28 by *Guillaume Chervet*
+
+
 ## v0.8.3
 
 
@@ -331,10 +336,5 @@
 ## v0.0.12
 
 - [e6c8958](/e6c8958cb30fcceb43c2303862ff07604e65ff92) - Update python-ci.yml, 2023-04-12 by *Guillaume Chervet*
-
-
-## v0.0.11
-
-- [ad34b82](/ad34b82f6246cabd2463490b64a66f4e13a21114) - Update python-ci.yml, 2023-04-12 by *Guillaume Chervet*
 
 
