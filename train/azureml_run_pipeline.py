@@ -1,5 +1,6 @@
 import argparse
 
+import asyncio
 from azure.identity import DefaultAzureCredential, InteractiveBrowserCredential
 
 from azure.ai.ml import MLClient, Input, Output, load_component
@@ -10,6 +11,8 @@ from azure.ai.ml.entities import Data
 from azure.ai.ml.entities import AmlCompute
 
 from extraction_dataset import register_extracted_dataset
+from create_labelling_project import DownloadAndCreateLabellingProject, download_and_create_labelling_project
+
 
 import uuid
 
@@ -125,9 +128,28 @@ pipeline_job = ml_client.jobs.create_or_update(
 
 ml_client.jobs.stream(pipeline_job.name)
 
-register_extracted_dataset(
-    ml_client, custom_output_path, {}
+registered_dataset = register_extracted_dataset(
+    ml_client,
+    custom_output_path,
+    {**tags, experiment_id: experiment_id},
 )
+
+if registered_dataset is not None:
+    create_project = DownloadAndCreateLabellingProject(
+        subscription_id=subscription_id,
+        resource_group_name=resource_group_name,
+        workspace_name=workspace_name,
+    )
+
+    async def execute_async():
+        await download_and_create_labelling_project(
+            registered_dataset.dataset_version,
+            registered_dataset.dataset_name,
+            create_project,
+        )
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(execute_async())
 
 model_name = "cats-dogs-others"
 try:

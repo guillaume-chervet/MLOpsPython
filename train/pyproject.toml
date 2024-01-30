@@ -6,9 +6,10 @@ authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "~3.10"
-mldesigner = "0.1.0b15"
-azure-ai-ml = "1.10.1"
-"azure.identity" = "1.14.0"
+mldesigner = "0.1.0b17"
+azure-ai-ml = "1.12.1"
+"azure.identity" = "1.15.0"
+ecotag-sdk="0.1.2"
 
 [build-system]
 requires = ["poetry-core"]

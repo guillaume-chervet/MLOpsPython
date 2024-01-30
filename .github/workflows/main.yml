@@ -10,10 +10,10 @@ env:
   PNPM_VERSION: 8.5.1
   PYTHON_VERSION: 3.10.13
   NODE_VERSION: 18
-  AZURE_RESOURCE_GROUP_NAME: "azure-ml-yolu"
+  AZURE_RESOURCE_GROUP_NAME: "azure-ml-yolw"
   AZURE_LOCATION: "northeurope"
-  AZURE_ML_WORKSPACE_NAME: "cats-dogs-yolu"
-  AZURE_WEBAPP_NAME: "cats-dogs-yolu"
+  AZURE_ML_WORKSPACE_NAME: "cats-dogs-yolw"
+  AZURE_WEBAPP_NAME: "cats-dogs-yolw"
   DELETE_WEBAPP: "false"
   DOCKER_IMAGE_NAME: "guillaumechervetlunique/mlopspython"
 
@@ -171,26 +171,14 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: Run Train Pipeline
       run: |
-          poetry install
-          az extension add -n ml
-          az group create --name ${{ env.AZURE_RESOURCE_GROUP_NAME }} --location ${{ env.AZURE_LOCATION }}
-          az ml workspace create -n ${{ env.AZURE_ML_WORKSPACE_NAME }} -g ${{ env.AZURE_RESOURCE_GROUP_NAME }} 
-          cwd=$(pwd)
-          cd ./extraction
-          chmod +x ./init_dataset.sh 
-          ./init_dataset.sh ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} 
-          cd $cwd
-          cd ./label_split_data
-          chmod +x ./init_dataset.sh
-          ./init_dataset.sh ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }}
-          cd $cwd
-          #poetry run python azureml_run_test.py > train_output.txt
-          poetry run python azureml_run_pipeline.py \
-            --subscription_id ${{ secrets.AZURE_SUBSCRIPTION_ID }}  \
-            --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
-            --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} \
-            --location ${{ env.AZURE_LOCATION }} \
-            --tags "{\"git\":\"${{ github.head_ref }}.${{ github.sha }}\",\"version\":\"${{ needs.tags.outputs.new_version }}\",\"triggering_actor\":\"${{github.triggering_actor}}\"}" \
+          chmod +x ./setup_AzureML.sh
+          ./setup_AzureML.sh ${{ secrets.AZURE_SUBSCRIPTION_ID }} ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} ${{ env.AZURE_LOCATION }}
+          chmod +x ./run_AzureML.sh
+          ./run_AzureML.sh ${{ secrets.AZURE_SUBSCRIPTION_ID }} \
+              ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
+              ${{ env.AZURE_ML_WORKSPACE_NAME }} \
+              ${{ env.AZURE_LOCATION }} \
+              "{\"git_head_ref\":\"${{ github.head_ref }}\",\"git\":\"${{ github.head_ref }}.${{ github.sha }}\",\"version\":\"${{ needs.tags.outputs.new_version }}\",\"triggering_actor\":\"${{github.triggering_actor}}\"}"
             > train_output.txt
           cat train_output.txt
       working-directory: train
