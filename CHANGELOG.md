@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.2
+
+- [ac70bcc](/ac70bcc40f83b48b5dc08142ba34571e22d45856) - fix(webapp): fix docker build, 2024-01-31 by *Guillaume Chervet*
+
+
 ## v0.10.1
 
 - [5b6e309](/5b6e309ea7fcc2cbbc7e7eb83e1901ab7af588af) - fix(script): Update init_repository.sh (#32), 2024-01-31 by *Guillaume Chervet*
@@ -331,10 +336,5 @@
 - [c1f07f9](/c1f07f941feb4f5fcc7f376cc878589064ce3ebe) - test build a updatepackages, 2023-04-13 by *Guillaume Chervet*
 - [ca68ce9](/ca68ce9a2965fc55f013ddd7c19e14e154a0f4e8) - test build a updatepackages, 2023-04-12 by *Guillaume Chervet*
 - [06a8e27](/06a8e273768aafe225f0796b7abb7f12f46281d8) - updateupdate, 2023-04-13 by *Guillaume Chervet*
-
-
-## v0.0.14
-
-- [5b3857b](/5b3857b7722959e62bd3e303aede3819da48e8fd) - Update docker.yml, 2023-04-12 by *Guillaume Chervet*
 
 
