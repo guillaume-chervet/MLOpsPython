@@ -26,7 +26,7 @@ number_pdfs_integration = 100
 params = {"number_file_by_label": number_file_by_label, "ratio_train": ratio_train, "ratio_test": ratio_test}
 
 mlflow.log_params(params)
-labels_files_path = Path(labels_input) / "cats_dogs_others_classification-annotations.json"
+labels_files_path = Path(labels_input) / "cats-dogs-others-classification-annotations.json"
 
 label_split_data_input = LabelSplitDataInput(
     labels_files_path,

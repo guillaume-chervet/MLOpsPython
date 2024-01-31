@@ -26,13 +26,13 @@ You can download some sample .pdf from here :
 https://github.com/guillaume-chervet/dataset-cats-dogs-others
 
 Use Postman to call the API with HTTP POST:
-- http://cats-dogs-yolu.northeurope.azurecontainer.io:5000/upload
+- http://cats-dogs-yolw.northeurope.azurecontainer.io:5000/upload
   - type: form-data
   - key: file 
 
 You can also check health check route with HTTP GET:
 
-http://cats-dogs-yolu.northeurope.azurecontainer.io:5000/health
+http://cats-dogs-yolw.northeurope.azurecontainer.io:5000/health
 
 ## 3. Initialize your own project
 
@@ -121,7 +121,7 @@ This will trigger the GitHub Action.
 
 Follow "Get Started" section to run the project on your laptop :
 
-https://github.com/your-github-login/MLOpsPython
+https://github.com/your-github-login/MLOpsPythonWorkshop
 
 Run the web interface and the API from docker-compose, then you can play with it.
 
@@ -193,7 +193,6 @@ try {
     rawBodyOutput = rawBodyInput;
 }
 ```
-
 
 ## 8. More AzureML
 
