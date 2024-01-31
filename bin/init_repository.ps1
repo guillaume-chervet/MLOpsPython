@@ -30,7 +30,7 @@ gh api --method PUT -H "Accept: application/vnd.github+json" repos/${repositoryF
 # Retrieve the current subscription and current tenant identifiers
 $subscriptionId=$(az account show --query "id" -o tsv)
 $tenantId=$(az account show --query "tenantId" -o tsv)
-$credentials=$(az ad sp create-for-rbac --name "mlapp1" --role contributor --scopes /subscriptions/$subscriptionId --sdk-auth | Out-String)
+$credentials=$(az ad sp create-for-rbac --name "mlapp" --role contributor --scopes /subscriptions/$subscriptionId --sdk-auth | Out-String)
 # Create an App Registration and its associated service principal
 #$appId=$(az ad app create --display-name "GitHub Action OIDC for ${repositoryFullName}" --query "appId" -o tsv)
 #$servicePrincipalId=$(az ad sp create --id $appId --query "id" -o tsv)
@@ -60,7 +60,7 @@ $credentials=$(az ad sp create-for-rbac --name "mlapp1" --role contributor --sco
 #gh secret set AZURE_TENANT_ID --body $tenantId --env $environmentName
 gh secret set AZURE_SUBSCRIPTION_ID --body $subscriptionId --env $environmentName
 #gh secret set AZURE_CLIENT_ID --body $appId --env $environmentName
-$jsonCredentials = ($credentials | ConvertFrom-Json | ConvertTo-Json -Compress).Replace("`"", "\`"")
+$jsonCredentials=($credentials | ConvertFrom-Json | ConvertTo-Json -Compress).Replace("`"", "\`"")
 echo $jsonCredentials
 gh secret set AZURE_CREDENTIALS --body "$jsonCredentials" --env "$environmentName"
 gh secret set DOCKER_PASSWORD --body "dckr_pat_e2lZ9YgpMt8APE-Qxzn89u6mt28" --env "$environmentName"
