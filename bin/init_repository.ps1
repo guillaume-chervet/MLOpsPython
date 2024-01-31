@@ -63,8 +63,8 @@ gh secret set AZURE_SUBSCRIPTION_ID --body $subscriptionId --env $environmentNam
 $jsonCredentials = ($credentials | ConvertFrom-Json | ConvertTo-Json -Compress).Replace("`"", "\`"")
 echo $jsonCredentials
 gh secret set AZURE_CREDENTIALS --body "$jsonCredentials" --env "$environmentName"
-gh secret set DOCKER_PASSWORD --body "robertcarry" --env "$environmentName"
-gh secret set DOCKER_USERNAME --body "dckr_pat_e2lZ9YgpMt8APE-Qxzn89u6mt28" --env "$environmentName"
+gh secret set DOCKER_PASSWORD --body "dckr_pat_d2kuglX-xWIZdHo4IQG1pd6w3S0" --env "$environmentName"
+gh secret set DOCKER_USERNAME --body "zapazo" --env "$environmentName"
 
 # Run workflow
 gh workflow enable main.yml
