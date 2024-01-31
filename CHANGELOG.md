@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.10.1
+
+- [5b6e309](/5b6e309ea7fcc2cbbc7e7eb83e1901ab7af588af) - fix(script): Update init_repository.sh (#32), 2024-01-31 by *Guillaume Chervet*
+
+
+## v0.10.0
+
+- [324a9ea](/324a9eab82627f09ccdd8df2da046507126d5bac) - feat(workshop): update for next course (#31), 2024-01-31 by *Guillaume Chervet*
+
+
 ## v0.9.0
 
 - [e37d822](/e37d8223cf359530a3ab7dc66427ebaae4f670a0) - feat(workshop): update for next course, 2024-01-28 by *Guillaume Chervet*
@@ -326,15 +336,5 @@
 ## v0.0.14
 
 - [5b3857b](/5b3857b7722959e62bd3e303aede3819da48e8fd) - Update docker.yml, 2023-04-12 by *Guillaume Chervet*
-
-
-## v0.0.13
-
-- [da715bb](/da715bbc1395276d448dbeb1e9660081d21f8bbb) - Update docker.yml, 2023-04-12 by *Guillaume Chervet*
-
-
-## v0.0.12
-
-- [e6c8958](/e6c8958cb30fcceb43c2303862ff07604e65ff92) - Update python-ci.yml, 2023-04-12 by *Guillaume Chervet*
 
 
