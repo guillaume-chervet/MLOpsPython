@@ -254,7 +254,7 @@ jobs:
   deploy:
     environment: MLOpsPython
     runs-on: ubuntu-latest
-    needs: [tags, build_docker_api]
+    needs: [tags, build_docker_api, build_docker_webapp]
     steps:
     - name: azure login
       uses: azure/login@v1
@@ -301,7 +301,7 @@ jobs:
           if [ "${{ env.DELETE_WEBAPP }}" = "true" ]; then
             az container delete --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --yes
           fi
-  webapp:
+  webapp_unit_tests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -314,11 +314,12 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '18'
-    - name: Build webapp
+    - name: Install dependencies > UnitTest > Build
       working-directory: production/webapp
       run: |
-        npm ci
-        npm run build
+         npm ci
+         npm run coverage
+         npm run build
     - name: Upload WebApp Build Artifact
       uses: actions/upload-artifact@v2
       with:
