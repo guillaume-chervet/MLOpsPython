@@ -44,7 +44,7 @@ jobs:
         file : ${{ inputs.image_file }}
         build-args: ${{ inputs.image_build_args }}
         push: true
-        tags: ${{ inputs.image_name }}:${{ inputs.image_version }},${{ inputs.image_name }}:latest
+        tags: ${{ inputs.image_name }}:latest,${{ inputs.image_name }}:${{ inputs.image_version }}
         labels: ${{ steps.meta.outputs.labels }}
 
     - name: Build and push Docker image
