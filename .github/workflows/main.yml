@@ -305,6 +305,8 @@ jobs:
   webapp_unit_tests:
     runs-on: ubuntu-latest
     environment: MLOpsPython
+    outputs:
+      DOCKER_WEBAPP_IMAGE_NAME: ${{ env.DOCKER_WEBAPP_IMAGE_NAME }}
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
@@ -328,10 +330,10 @@ jobs:
         name: Publish webapp
         path: ./production/webapp/build
   build_docker_webapp:
-    needs: [webapp, tags]
+    needs: [webapp_unit_tests, tags]
     uses: ./.github/workflows/docker.yml
     with:
-      image_name: ${{ env.DOCKER_WEBAPP_IMAGE_NAME }}
+      image_name: ${{ needs.webapp_unit_tests.outputs.DOCKER_WEBAPP_IMAGE_NAME }}
       image_version: ${{ needs.tags.outputs.new_version }}
       image_build_args: ""
       image_context: ./production/webapp
