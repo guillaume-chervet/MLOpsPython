@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.10.5
+
+- [6e79693](/6e796936bbc8c4fef90127f51c2946406b2a1421) - fix(webapp): build webapp latest, 2024-02-04 by *Guillaume Chervet*
+
+
+## v0.10.4
+
+- [a523eba](/a523eba742dedc2decab30de5a318199c77318d9) - fix(webapp): build webapp latest first, 2024-02-04 by *Guillaume Chervet*
+
+
+## v0.10.3
+
+- [eeb3019](/eeb301948c4c894960d869a2088e9203dd65767c) - fix(webapp): build webapp (#34), 2024-02-04 by *Guillaume Chervet*
+
+
 ## v0.10.2
 
 - [ac70bcc](/ac70bcc40f83b48b5dc08142ba34571e22d45856) - fix(webapp): fix docker build, 2024-01-31 by *Guillaume Chervet*
@@ -319,22 +334,5 @@
 ## v0.0.18
 
 - [c2ed120](/c2ed1208728e5c3305460cc8bc53594da54a62e5) - Update python-ci.yml, 2023-04-13 by *Guillaume Chervet*
-
-
-## v0.0.17
-
-- [65e457c](/65e457ca3846898587425b4170052e86e3b50c49) - test build a updatepackages, 2023-04-13 by *Guillaume Chervet*
-
-
-## v0.0.16
-
-- [d8e2f96](/d8e2f96e6345ff1e88f0926c80ebc84820657147) - Update python-ci.yml, 2023-04-13 by *Guillaume Chervet*
-
-
-## v0.0.15
-
-- [c1f07f9](/c1f07f941feb4f5fcc7f376cc878589064ce3ebe) - test build a updatepackages, 2023-04-13 by *Guillaume Chervet*
-- [ca68ce9](/ca68ce9a2965fc55f013ddd7c19e14e154a0f4e8) - test build a updatepackages, 2023-04-12 by *Guillaume Chervet*
-- [06a8e27](/06a8e273768aafe225f0796b7abb7f12f46281d8) - updateupdate, 2023-04-13 by *Guillaume Chervet*
 
 
