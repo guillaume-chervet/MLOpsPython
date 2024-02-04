@@ -15,7 +15,8 @@ env:
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-yolw"
   AZURE_WEBAPP_NAME: "cats-dogs-yolw"
   DELETE_WEBAPP: "false"
-  DOCKER_IMAGE_NAME: "guillaumechervetlunique/mlopspython"
+  DOCKER_API_IMAGE_NAME: "guillaumechervetlunique/mlopspython-api"
+  DOCKER_WEBAPP_IMAGE_NAME: "guillaumechervetlunique/mlopspython-webapp"
 
 permissions:
   id-token: write
@@ -148,7 +149,7 @@ jobs:
       EXPERIMENT_ID: ${{ steps.train.outputs.EXPERIMENT_ID }}
       AZURE_RESOURCE_GROUP_NAME: ${{ env.AZURE_RESOURCE_GROUP_NAME }}
       AZURE_ML_WORKSPACE_NAME: ${{ env.AZURE_ML_WORKSPACE_NAME }}
-      DOCKER_IMAGE_NAME: ${{ env.DOCKER_IMAGE_NAME }}
+      DOCKER_API_IMAGE_NAME: ${{ env.DOCKER_API_IMAGE_NAME }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -239,7 +240,7 @@ jobs:
     needs: [train, tags]
     uses: ./.github/workflows/docker_with_model.yml
     with:
-      image_name: ${{ needs.train.outputs.DOCKER_IMAGE_NAME }}
+      image_name: ${{ needs.train.outputs.DOCKER_API_IMAGE_NAME }}
       image_version: ${{ needs.tags.outputs.new_version }}
       image_build_args: ""
       image_context: ./production/api
@@ -263,7 +264,7 @@ jobs:
     - name: Deploy container
       run: |
         # https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#az-container-create()
-        az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} --image docker.io/${{ env.DOCKER_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
+        az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} --image docker.io/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
   integration_tests:
     environment: MLOpsPython
     runs-on: ubuntu-latest
@@ -303,6 +304,7 @@ jobs:
           fi
   webapp_unit_tests:
     runs-on: ubuntu-latest
+    environment: MLOpsPython
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
@@ -329,7 +331,7 @@ jobs:
     needs: [webapp, tags]
     uses: ./.github/workflows/docker.yml
     with:
-      image_name: mlopspython-webapp
+      image_name: ${{ env.DOCKER_WEBAPP_IMAGE_NAME }}
       image_version: ${{ needs.tags.outputs.new_version }}
       image_build_args: ""
       image_context: ./production/webapp
