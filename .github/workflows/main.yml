@@ -96,15 +96,15 @@ jobs:
     - name: Run unit tests Extraction
       working-directory: train/extraction
       run: |
-        poetry lock
-        poetry install
-        #poetry run coverage run -m unittest tests.extraction_test
-        #poetry run coverage report
+        # poetry lock
+        poetry install --no-root
+        poetry run coverage run -m unittest tests.extraction_test
+        poetry run coverage report
     - name: Run unit tests Label Split Data
       working-directory: train/label_split_data
       run: |
-        poetry lock
-        poetry install 
+        # poetry lock
+        poetry install poetry install --no-root
         poetry run coverage run -m unittest tests.label_split_data_test
         poetry run coverage report
     #- name: Run unit tests Train
