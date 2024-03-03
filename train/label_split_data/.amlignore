@@ -3,6 +3,4 @@
 *.yml
 *.yaml
 *.ipynb
-*.lock
-*.toml
 /dataset-cats-dogs-others-labels

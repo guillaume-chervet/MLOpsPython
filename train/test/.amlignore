@@ -3,5 +3,3 @@
 *.yml
 *.yaml
 *.ipynb
-*.lock
-*.toml
