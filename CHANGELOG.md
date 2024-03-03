@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.10.9
+
+- [d852028](/d85202890ef6e8f96a40560b6eafb6709910bcff) - Update README.md, 2024-02-09 by *Guillaume Chervet*
+
+
+## v0.10.8
+
+- [2645d9b](/2645d9bb781426b6bf6948bbb4b0420c97c7524b) - Update README.md, 2024-02-09 by *Guillaume Chervet*
+
+
+## v0.10.7
+
+- [db2b71e](/db2b71e85bf5000523af803dd0a20e03ec06bded) - Update README.md, 2024-02-09 by *Guillaume Chervet*
+
+
+## v0.10.6
+
+- [1f0f9dc](/1f0f9dc48903ba29f951d9d6d3786b88cf545dca) - Update README.md, 2024-02-09 by *Guillaume Chervet*
+
+
 ## v0.10.5
 
 - [6e79693](/6e796936bbc8c4fef90127f51c2946406b2a1421) - fix(webapp): build webapp latest, 2024-02-04 by *Guillaume Chervet*
@@ -311,28 +331,5 @@
 ## v0.0.22
 
 - [eb54553](/eb54553e08a859c91f7d8b2dba242210a7cc47b6) - updateupdate, 2023-04-14 by *Guillaume Chervet*
-
-
-## v0.0.21
-
-- [71ad2c6](/71ad2c68fe7c449e723ea95105e859b5b219720c) - test build a updatepackages, 2023-04-14 by *Guillaume Chervet*
-
-
-## v0.0.20
-
-- [e64ca5d](/e64ca5dd5ee0b35c53fbd3e0a73ba492d54fc27c) - Update python-ci.yml, 2023-04-14 by *Guillaume Chervet*
-
-
-## v0.0.19
-
-- [abd10dd](/abd10ddd416435509d61c07e028d68d49a7611d9) - Update python-ci.yml, 2023-04-13 by *Guillaume Chervet*
-- [987cfbd](/987cfbd9b7074a9796bbb5191d2d2f3c8a578892) - Update python-ci.yml, 2023-04-13 by *Guillaume Chervet*
-- [f42a3ac](/f42a3ac7674362e50aad1ca83de5c069e709d95a) - Update python-ci.yml, 2023-04-13 by *Guillaume Chervet*
-- [ed0fb0e](/ed0fb0eb2d4cc1e8287e560a296939a586ee88bf) - Update python-ci.yml, 2023-04-13 by *Guillaume Chervet*
-
-
-## v0.0.18
-
-- [c2ed120](/c2ed1208728e5c3305460cc8bc53594da54a62e5) - Update python-ci.yml, 2023-04-13 by *Guillaume Chervet*
 
 

@@ -1,4 +1,4 @@
-# MLOpsPython is life
+# MLOpsPython
 A real demo of Deep Learning project with preprocessing from development to production using code, ops and Machine Learning best practices. Production is a real time REST API.
 
 ![project_workflow.png](documentation%2Fproject_workflow.png)
