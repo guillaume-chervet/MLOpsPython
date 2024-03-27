@@ -18,7 +18,7 @@ pdfs_input = args.pdfs_input
 split_images_output = args.split_images_output
 split_integration_output = args.split_integration_output
 
-number_file_by_label = 100
+number_file_by_label = 1000
 ratio_train: float = 0.7
 ratio_test: float = 0.2
 number_pdfs_integration = 100

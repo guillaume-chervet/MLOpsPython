@@ -29,5 +29,4 @@ mlflow.tensorflow.autolog()
 result = run_test_harness(Path(split_images_input), Path(model_output), batch_size, epochs)
 
 mlflow.log_image(Image.open(result.summary_image_path) , "figure.png")
-mlflow.log_metric("number_files_input", result.number_files_input)
-mlflow.log_metric("number_images_output", result.number_images_output)
+mlflow.log_metric("evaluate_accuracy_percentage", result.evaluate_accuracy_percentage)
