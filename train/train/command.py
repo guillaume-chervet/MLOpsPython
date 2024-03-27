@@ -1,6 +1,9 @@
 import argparse
 from pathlib import Path
+
 import mlflow
+from PIL import Image
+
 from train import run_test_harness
 
 parser = argparse.ArgumentParser("train")
@@ -15,7 +18,7 @@ model_output = args.model_output
 
 
 batch_size = 64
-epochs = 3
+epochs = 20
 params = {
     "batch_size": batch_size,
     "epochs": epochs,
@@ -23,7 +26,8 @@ params = {
 mlflow.log_params(params)
 
 mlflow.tensorflow.autolog()
-run_test_harness(Path(split_images_input), Path(model_output), batch_size, epochs)
-# mlflow.log_figure()
-# mlflow.log_metric("number_files_input", result.number_files_input)
-# mlflow.log_metric("number_images_output", result.number_images_output)
+result = run_test_harness(Path(split_images_input), Path(model_output), batch_size, epochs)
+
+mlflow.log_image(Image.open(result.summary_image_path) , "figure.png")
+mlflow.log_metric("number_files_input", result.number_files_input)
+mlflow.log_metric("number_images_output", result.number_images_output)
