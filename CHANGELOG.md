@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.12.0
+
+- [53f3ccd](/53f3ccd523397fd8a066dc7fe6cdb809cf209ddd) - feat(train): train 1000 files, 2024-03-27 by *Guillaume Chervet*
+
+
+## v0.11.0
+
+- [ee070f7](/ee070f7b36c615a123a3cf937cc2725b93e9b1f0) - feat(train): update epoch, 2024-03-27 by *Guillaume Chervet*
+
+
+## v0.10.10
+
+- [188c5a7](/188c5a7e0262ec5cae4c18f5c5fdf2d9674fe915) - doc(readme): update title, 2024-03-03 by *Guillaume Chervet*
+- [675fbaa](/675fbaad166e72a5da4cf31ef28c73839cee10ca) - doc(readme): update title, 2024-02-09 by *Guillaume Chervet*
+
+
 ## v0.10.9
 
 - [d852028](/d85202890ef6e8f96a40560b6eafb6709910bcff) - Update README.md, 2024-02-09 by *Guillaume Chervet*
@@ -316,20 +332,5 @@
 ## v0.0.25
 
 - [d4d10c1](/d4d10c1492d0c09864c66e758445d9cf34461cce) - Update requirements.txt, 2023-04-14 by *Guillaume Chervet*
-
-
-## v0.0.24
-
-- [ab3a770](/ab3a7709dc216bee56f03c7171b678aae054ef22) - Update python-ci.yml, 2023-04-14 by *Guillaume Chervet*
-
-
-## v0.0.23
-
-- [7151bf6](/7151bf6ae415c25b3b303fbb0a052f28e4ec9e63) - updateupdate, 2023-04-14 by *Guillaume Chervet*
-
-
-## v0.0.22
-
-- [eb54553](/eb54553e08a859c91f7d8b2dba242210a7cc47b6) - updateupdate, 2023-04-14 by *Guillaume Chervet*
 
 
