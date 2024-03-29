@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.13.0
+
+- [72e44c1](/72e44c19aa79c4287ca96fc66b675f39bb7d280a) - feat(train): remove dropout, 2024-03-28 by *Guillaume Chervet*
+
+
 ## v0.12.0
 
 - [53f3ccd](/53f3ccd523397fd8a066dc7fe6cdb809cf209ddd) - feat(train): train 1000 files, 2024-03-27 by *Guillaume Chervet*
@@ -327,10 +332,5 @@
 - [7071b26](/7071b269f8aa6868e873d685801142b15f824b99) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
 - [41277d2](/41277d2fbf2c0fe9c57c15591bef58658f5b412d) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
 - [4ebe3d8](/4ebe3d84d8b844d3f4dad9bd9e88b3ce883dfc35) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-
-
-## v0.0.25
-
-- [d4d10c1](/d4d10c1492d0c09864c66e758445d9cf34461cce) - Update requirements.txt, 2023-04-14 by *Guillaume Chervet*
 
 
