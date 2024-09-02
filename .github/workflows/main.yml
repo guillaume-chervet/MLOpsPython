@@ -186,9 +186,13 @@ jobs:
       id: train
       run: |
           az extension add -n ml
+          echo "here"
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
+          echo "here1"
           echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
+          
           INTEGRATION_DATASET_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt integration_dataset_version)
+          echo "here2"
           echo "INTEGRATION_DATASET_VERSION=$INTEGRATION_DATASET_VERSION" >> $GITHUB_OUTPUT
           EXPERIMENT_ID=$(python bin/retrieve_output.py ./train/train_output.txt experiment_id)
           echo "EXPERIMENT_ID=$EXPERIMENT_ID" >> $GITHUB_OUTPUT
@@ -197,7 +201,9 @@ jobs:
           rm -r model
           mkdir model
           cd model
+          echo "here3"
           az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}
+          echo "here4"
           # find files recursively and copy them to the current directory root
           find ./ -name '*.keras' -exec cp "{}" ./  \;
           find ./ -name '*.json' -exec cp "{}" ./  \;

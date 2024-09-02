@@ -18,7 +18,7 @@ model_output = args.model_output
 
 
 batch_size = 64
-epochs = 20
+epochs = 2
 params = {
     "batch_size": batch_size,
     "epochs": epochs,
