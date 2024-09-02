@@ -1,5 +1,6 @@
 # https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-to-classify-photos-of-dogs-and-cats/
 from dataclasses import dataclass
+
 # vgg16 model used for transfer learning on the dogs and cats dataset
 from pathlib import Path
 
@@ -22,21 +23,23 @@ def define_model():
         layer.trainable = False
     # add new classifier layers
     output = model.layers[-1].output
-    #drop1 = keras.layers.Dropout(0.2)(output)
+    # drop1 = keras.layers.Dropout(0.2)(output)
     flat1 = Flatten()(output)
     class1 = Dense(64, activation="relu", kernel_initializer="he_uniform")(flat1)
-    #class2 = Dense(42, activation="relu", kernel_initializer="he_uniform")(class1)
+    # class2 = Dense(42, activation="relu", kernel_initializer="he_uniform")(class1)
     output = Dense(3, activation="sigmoid")(class1)
     # define new model
     model = Model(inputs=model.inputs, outputs=output)
     # compile model
-    #opt = SGD(lr=0.0002, momentum=0.8)
-    #model.compile(
+    # opt = SGD(lr=0.0002, momentum=0.8)
+    # model.compile(
     #    optimizer=opt, loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True), metrics=["accuracy"]
-    #)
-    model.compile(optimizer='adam',
-              loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-              metrics=['accuracy'])
+    # )
+    model.compile(
+        optimizer="adam",
+        loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+        metrics=["accuracy"],
+    )
     return model
 
 
@@ -58,6 +61,7 @@ def summarize_diagnostics(history, output_directory: Path):
     pyplot.close()
     return plot_filepath
 
+
 @dataclass
 class ModelResult:
     evaluate_accuracy_percentage: int
@@ -66,7 +70,9 @@ class ModelResult:
 
 
 # run the test harness for evaluating a model
-def run_test_harness(input_directory: Path, output_directory: Path, batch_size=64, epochs=7) -> ModelResult:
+def run_test_harness(
+    input_directory: Path, output_directory: Path, batch_size=64, epochs=7
+) -> ModelResult:
     Path(output_directory).mkdir(parents=True, exist_ok=True)
     # define model
     model = define_model()
@@ -79,15 +85,16 @@ def run_test_harness(input_directory: Path, output_directory: Path, batch_size=6
         str(input_directory / "train"),
         class_mode="binary",
         batch_size=batch_size,
-        target_size=(224, 224)
+        target_size=(224, 224),
     )
     validation_it = datagen.flow_from_directory(
         str(input_directory / "evaluate"),
         class_mode="binary",
         batch_size=batch_size,
-        target_size=(224, 224)
+        target_size=(224, 224),
     )
     # fit model
+    callback = keras.callbacks.EarlyStopping(monitor="loss")
     history = model.fit_generator(
         train_it,
         steps_per_epoch=len(train_it),
@@ -95,10 +102,14 @@ def run_test_harness(input_directory: Path, output_directory: Path, batch_size=6
         validation_steps=len(validation_it),
         epochs=epochs,
         verbose=1,
+        callbacks=[callback],
     )
     # test model
     evaluate_it = datagen.flow_from_directory(
-        str(input_directory / "test"), class_mode="binary", batch_size=batch_size, target_size=(224, 224)
+        str(input_directory / "test"),
+        class_mode="binary",
+        batch_size=batch_size,
+        target_size=(224, 224),
     )
     _, acc = model.evaluate_generator(evaluate_it, steps=len(evaluate_it), verbose=1)
     evaluate_accuracy_percentage = acc * 100.0
