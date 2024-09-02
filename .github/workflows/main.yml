@@ -189,7 +189,7 @@ jobs:
     - name: download model
       id: train
       run: |
-          az extension add -n ml
+          az extension add -n ml --allow-preview false --yes
           echo "here"
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
           echo "here1"
@@ -206,6 +206,7 @@ jobs:
           mkdir model
           cd model
           echo "here3 $EXPERIMENT_ID $MODEL_VERSION"
+          echo "az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}"
           az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}
           echo "here4"
           # find files recursively and copy them to the current directory root
