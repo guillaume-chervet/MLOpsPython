@@ -43,6 +43,8 @@ def execute_model_and_generate_integration_test_data(
             "prediction_truth": prediction_truth,
             "values": model_result["values"],
         }
+        logger.info(f"Result for {path}: ")
+        logger.info(result)
         results.append(result)
     statistics["total"] = statistics["ok"] + statistics["ko"]
 
