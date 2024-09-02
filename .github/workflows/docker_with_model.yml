@@ -64,7 +64,7 @@ jobs:
 
     - name: download model
       run: |
-        az extension add -n ml
+        az extension add -n ml  --allow-preview false --yes
         MODEL_VERSION=${{ inputs.model_version }}
         RESOURCE_GROUP=${{ inputs.resource_group }}
         WORKSPACE_NAME=${{ inputs.workspace_name }}
