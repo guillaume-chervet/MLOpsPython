@@ -94,7 +94,10 @@ def run_test_harness(
         target_size=(224, 224),
     )
     # fit model
-    callback = keras.callbacks.EarlyStopping(monitor="loss")
+    model_path = output_directory / "final_model.keras"
+    callback = keras.callbacks.ModelCheckpoint(
+            filepath=model_path,
+            save_best_only=True)
     history = model.fit_generator(
         train_it,
         steps_per_epoch=len(train_it),
@@ -116,6 +119,5 @@ def run_test_harness(
     print("> %.3f" % (evaluate_accuracy_percentage))
     # learning curves
     summary_image_path = summarize_diagnostics(history, output_directory)
-    model_path = output_directory / "final_model.keras"
-    model.save(str(model_path))
+    #model.save(str(model_path))
     return ModelResult(evaluate_accuracy_percentage, summary_image_path, model_path)
