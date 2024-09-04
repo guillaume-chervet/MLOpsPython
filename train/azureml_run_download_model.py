@@ -11,6 +11,7 @@ parser.add_argument("--resource_group_name", type=str)
 parser.add_argument("--workspace_name", type=str)
 parser.add_argument("--location", type=str)
 parser.add_argument("--version", type=str, default="1")
+parser.add_argument("--download_path", type=str, default="./")
 
 args = parser.parse_args()
 subscription_id = args.subscription_id
@@ -18,6 +19,7 @@ resource_group_name = args.resource_group_name
 workspace_name = args.workspace_name
 location = args.location
 version = args.version
+download_path = args.download_path
 
 try:
     credential = DefaultAzureCredential()
@@ -38,6 +40,5 @@ ml_client = MLClient(
 )
 
 model_name = 'cats-dogs-others'
-download_path = './'
 
 ml_client.models.download(name=model_name, version=version, download_path=download_path)
