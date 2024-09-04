@@ -150,6 +150,7 @@ jobs:
       AZURE_RESOURCE_GROUP_NAME: ${{ env.AZURE_RESOURCE_GROUP_NAME }}
       AZURE_ML_WORKSPACE_NAME: ${{ env.AZURE_ML_WORKSPACE_NAME }}
       DOCKER_API_IMAGE_NAME: ${{ env.DOCKER_API_IMAGE_NAME }}
+      AZURE_LOCATION: ${{ env.AZURE_LOCATION }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -252,10 +253,12 @@ jobs:
       model_version: ${{ needs.train.outputs.MODEL_VERSION }}
       resource_group: ${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
       workspace_name: ${{ needs.train.outputs.AZURE_ML_WORKSPACE_NAME }}
+      location: ${{ needs.train.outputs.AZURE_LOCATION }}
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   deploy:
     environment: MLOpsPython
     runs-on: ubuntu-latest

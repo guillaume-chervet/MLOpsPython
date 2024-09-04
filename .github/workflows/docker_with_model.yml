@@ -27,12 +27,17 @@ on:
       workspace_name:
         required: true
         type: string
+      location:
+        required: true
+        type: string
     secrets:
       DOCKER_USERNAME:
         required: true
       DOCKER_PASSWORD:
         required: true
       AZURE_CREDENTIALS:
+        required: true
+      AZURE_SUBSCRIPTION_ID:
         required: true
 jobs:
   build:
@@ -70,7 +75,7 @@ jobs:
         DOWNLOAD_PATH=production/api/core/model
         cd train
         chmod +x ./run_download_model.sh
-        ./run_download_model.sh $MODEL_VERSION ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} ${{ env.AZURE_LOCATION }} ${{ secrets.AZURE_SUBSCRIPTION_ID }} $DOWNLOAD_PATH
+        ./run_download_model.sh $MODEL_VERSION $RESOURCE_GROUP $WORKSPACE_NAME ${{ env.AZURE_LOCATION }} ${{ secrets.AZURE_SUBSCRIPTION_ID }} $DOWNLOAD_PATH
         cd production/api/core/model
         # az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group $RESOURCE_GROUP --workspace-name $WORKSPACE_NAME
         # find files recursively and copy them to the current directory root
