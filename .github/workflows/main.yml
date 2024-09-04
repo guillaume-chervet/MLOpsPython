@@ -209,8 +209,8 @@ jobs:
           cd model
           az ml model list --name cats-dogs-others --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}
           echo "here3 $EXPERIMENT_ID $MODEL_VERSION"
-          chmod +x ./train/run_download_model.sh
-          ./train/run_download_model.sh $MODEL_VERSION ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }}
+          chmod +x ./run_download_model.sh
+          ./run_download_model.sh $MODEL_VERSION ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }}
           
           
           echo "az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}"
