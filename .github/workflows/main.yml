@@ -182,42 +182,24 @@ jobs:
               "{\"git_head_ref\":\"${{ github.head_ref }}\",\"git\":\"${{ github.head_ref }}.${{ github.sha }}\",\"version\":\"${{ needs.tags.outputs.new_version }}\",\"triggering_actor\":\"${{github.triggering_actor}}\"}" > train_output.txt
           cat train_output.txt
       working-directory: train
-    - name: azure login
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - name: download model
       id: train
       run: |
-          az extension add -n ml --allow-preview false --yes
-          echo "here"
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
-          echo "here1"
-          echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
-          
+          echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT          
           INTEGRATION_DATASET_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt integration_dataset_version)
-          echo "here2"
           echo "INTEGRATION_DATASET_VERSION=$INTEGRATION_DATASET_VERSION" >> $GITHUB_OUTPUT
           EXPERIMENT_ID=$(python bin/retrieve_output.py ./train/train_output.txt experiment_id)
           echo "EXPERIMENT_ID=$EXPERIMENT_ID" >> $GITHUB_OUTPUT
-        
           mkdir model
           rm -r model
           mkdir model
           cd model
-          az ml model list --name cats-dogs-others --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}
-          echo "here3 $EXPERIMENT_ID $MODEL_VERSION"
           DOWNLOAD_PATH=$PWD
           cd ..
           cd train
           chmod +x ./run_download_model.sh
           ./run_download_model.sh $MODEL_VERSION ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} ${{ env.AZURE_LOCATION }} ${{ secrets.AZURE_SUBSCRIPTION_ID }} $DOWNLOAD_PATH
-          
-          echo "az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}"
-          #az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}
-          echo "here4"
           cd ..
           cd model
           # find files recursively and copy them to the current directory root
