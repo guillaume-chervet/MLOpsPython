@@ -218,6 +218,8 @@ jobs:
           echo "az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}"
           #az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}
           echo "here4"
+          cd ..
+          cd model
           # find files recursively and copy them to the current directory root
           find ./ -name '*.keras' -exec cp "{}" ./  \;
           find ./ -name '*.json' -exec cp "{}" ./  \;
