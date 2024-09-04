@@ -12,9 +12,3 @@ poetry run python azureml_run_download_model.py \
     --location "$AZURE_LOCATION" \
     --version "$MODEL_VERSION" \
     --download_path "$DOWNLOAD_PATH"
-
-#az ml model download --name cats-dogs-others  \
-#    --version "$MODEL_VERSION"  \
-#    --resource-group "$AZURE_RESOURCE_GROUP_NAME" \
-#    --workspace-name "$AZURE_ML_WORKSPACE_NAME" \
-#    --stage "Development"

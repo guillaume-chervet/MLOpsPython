@@ -209,7 +209,7 @@ jobs:
           cd model
           az ml model list --name cats-dogs-others --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}
           echo "here3 $EXPERIMENT_ID $MODEL_VERSION"
-          $DOWNLOAD_PATH = $PWD
+          DOWNLOAD_PATH=$PWD
           cd ..
           cd train
           chmod +x ./run_download_model.sh
