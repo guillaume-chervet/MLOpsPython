@@ -17,6 +17,7 @@ env:
   DELETE_WEBAPP: "false"
   DOCKER_API_IMAGE_NAME: "guillaumechervetlunique/mlopspython-api"
   DOCKER_WEBAPP_IMAGE_NAME: "guillaumechervetlunique/mlopspython-webapp"
+  DOCKER_REGISTRY: "ghcr.io"
 
 permissions:
   id-token: write
@@ -254,9 +255,10 @@ jobs:
       resource_group: ${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
       workspace_name: ${{ needs.train.outputs.AZURE_ML_WORKSPACE_NAME }}
       location: ${{ needs.train.outputs.AZURE_LOCATION }}
+      docker_registry: ${{ env.DOCKER_REGISTRY }}
     secrets:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: ${{ github.actor }}
+      DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   deploy:
@@ -271,7 +273,7 @@ jobs:
     - name: Deploy container
       run: |
         # https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#az-container-create()
-        az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} --image docker.io/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
+        az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} --image ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
   integration_tests:
     environment: MLOpsPython
     runs-on: ubuntu-latest
@@ -345,9 +347,10 @@ jobs:
       image_build_args: ""
       image_context: ./production/webapp
       image_file: "./production/webapp/Dockerfile"
+      docker_registry: ${{ env.DOCKER_REGISTRY }}
     secrets:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: ${{ github.actor }}
+      DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
   change_log:
     runs-on: ubuntu-latest
