@@ -15,8 +15,8 @@ env:
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-gui"
   AZURE_WEBAPP_NAME: "cats-dogs-gui"
   DELETE_WEBAPP: "false"
-  DOCKER_API_IMAGE_NAME: "guillaumechervetlunique/mlopspython-api"
-  DOCKER_WEBAPP_IMAGE_NAME: "guillaumechervetlunique/mlopspython-webapp"
+  DOCKER_API_IMAGE_NAME: "guillaume-chervet/mlopspython-api"
+  DOCKER_WEBAPP_IMAGE_NAME: "guillaume-chervet/mlopspython-webapp"
   DOCKER_REGISTRY: "ghcr.io"
 
 permissions:
@@ -360,7 +360,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GIT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
       - name: Commit and push
         if: github.ref == 'refs/heads/main'
