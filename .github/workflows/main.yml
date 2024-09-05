@@ -152,6 +152,7 @@ jobs:
       AZURE_ML_WORKSPACE_NAME: ${{ env.AZURE_ML_WORKSPACE_NAME }}
       DOCKER_API_IMAGE_NAME: ${{ env.DOCKER_API_IMAGE_NAME }}
       AZURE_LOCATION: ${{ env.AZURE_LOCATION }}
+      DOCKER_REGISTRY: ${{ env.DOCKER_REGISTRY }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -255,7 +256,7 @@ jobs:
       resource_group: ${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
       workspace_name: ${{ needs.train.outputs.AZURE_ML_WORKSPACE_NAME }}
       location: ${{ needs.train.outputs.AZURE_LOCATION }}
-      docker_registry: ${{ env.DOCKER_REGISTRY }}
+      docker_registry: ${{ needs.train.outputs.DOCKER_REGISTRY }}
     secrets:
       DOCKER_USERNAME: ${{ github.actor }}
       DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
