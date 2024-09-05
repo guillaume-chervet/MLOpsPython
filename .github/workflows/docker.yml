@@ -29,6 +29,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     environment: MLOpsPython
     steps:
     - uses: actions/checkout@v3
