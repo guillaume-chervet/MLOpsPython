@@ -340,7 +340,7 @@ jobs:
         name: Publish webapp
         path: ./production/webapp/build
   build_docker_webapp:
-    needs: [webapp_unit_tests, tags]
+    needs: [webapp_unit_tests, tags, train]
     uses: ./.github/workflows/docker.yml
     with:
       image_name: ${{ needs.webapp_unit_tests.outputs.DOCKER_WEBAPP_IMAGE_NAME }}
@@ -348,7 +348,7 @@ jobs:
       image_build_args: ""
       image_context: ./production/webapp
       image_file: "./production/webapp/Dockerfile"
-      docker_registry: ${{ env.DOCKER_REGISTRY }}
+      docker_registry: ${{ needs.train.outputs.DOCKER_REGISTRY }}
     secrets:
       DOCKER_USERNAME: ${{ github.actor }}
       DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
