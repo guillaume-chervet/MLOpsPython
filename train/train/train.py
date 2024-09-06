@@ -98,7 +98,7 @@ def run_test_harness(
     callback_model_checkpoint = keras.callbacks.ModelCheckpoint(
             filepath=model_path,
             save_best_only=True)
-    callback_early_stopping = keras.callbacks.EarlyStopping(monitor='loss', patience = 2)
+    callback_early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience = 2)
     history = model.fit_generator(
         train_it,
         steps_per_epoch=len(train_it),
