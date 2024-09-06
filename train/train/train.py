@@ -95,9 +95,10 @@ def run_test_harness(
     )
     # fit model
     model_path = output_directory / "final_model.keras"
-    callback = keras.callbacks.ModelCheckpoint(
+    callback_model_checkpoint = keras.callbacks.ModelCheckpoint(
             filepath=model_path,
             save_best_only=True)
+    callback_early_stopping = keras.callbacks.EarlyStopping(monitor='loss', patience = 2)
     history = model.fit_generator(
         train_it,
         steps_per_epoch=len(train_it),
@@ -105,7 +106,7 @@ def run_test_harness(
         validation_steps=len(validation_it),
         epochs=epochs,
         verbose=1,
-        callbacks=[callback],
+        callbacks=[callback_model_checkpoint, callback_early_stopping],
     )
     # test model
     evaluate_it = datagen.flow_from_directory(
