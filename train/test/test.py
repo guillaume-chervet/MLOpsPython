@@ -16,6 +16,7 @@ def execute_model_and_generate_integration_test_data(
     model_output_directory: Path,
     integration_output_directory: Path,
 ):
+    logger = logging.getLogger("test")
     model_path = input_model_directory / model_name
     model = Inference(logging, str(model_path))
 
@@ -25,7 +26,11 @@ def execute_model_and_generate_integration_test_data(
     for path in tests_directory.glob("**/*"):
         if path.is_dir():
             continue
+        # keep only files with .png extension
+        if path.suffix != ".png":
+            continue
         model_result = model.execute(str(path))
+        logger.info(f"Prediction for {path}: {model_result}")
 
         prediction = model_result["prediction"]
         prediction_truth = path.parent.name.lower().replace("s", "")
@@ -38,6 +43,8 @@ def execute_model_and_generate_integration_test_data(
             "prediction_truth": prediction_truth,
             "values": model_result["values"],
         }
+        logger.info(f"Result for {path}: ")
+        logger.info(result)
         results.append(result)
     statistics["total"] = statistics["ok"] + statistics["ko"]
 

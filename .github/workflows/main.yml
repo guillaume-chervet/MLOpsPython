@@ -10,17 +10,20 @@ env:
   PNPM_VERSION: 8.5.1
   PYTHON_VERSION: 3.10.13
   NODE_VERSION: 18
-  AZURE_RESOURCE_GROUP_NAME: "azure-ml-yolw"
+  AZURE_RESOURCE_GROUP_NAME: "azure-ml-gui"
   AZURE_LOCATION: "northeurope"
-  AZURE_ML_WORKSPACE_NAME: "cats-dogs-yolw"
-  AZURE_WEBAPP_NAME: "cats-dogs-yolw"
+  AZURE_ML_WORKSPACE_NAME: "cats-dogs-gui"
+  AZURE_WEBAPP_NAME: "cats-dogs-gui"
   DELETE_WEBAPP: "false"
-  DOCKER_API_IMAGE_NAME: "guillaumechervetlunique/mlopspython-api"
-  DOCKER_WEBAPP_IMAGE_NAME: "guillaumechervetlunique/mlopspython-webapp"
+  DOCKER_API_IMAGE_NAME: "mlopspython-api"
+  DOCKER_REPOSITORY: ${{ github.repository_owner }}
+  DOCKER_WEBAPP_IMAGE_NAME: "mlopspython-webapp"
+  DOCKER_REGISTRY: "ghcr.io"
 
 permissions:
   id-token: write
   contents: write
+  packages: write
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -149,7 +152,9 @@ jobs:
       EXPERIMENT_ID: ${{ steps.train.outputs.EXPERIMENT_ID }}
       AZURE_RESOURCE_GROUP_NAME: ${{ env.AZURE_RESOURCE_GROUP_NAME }}
       AZURE_ML_WORKSPACE_NAME: ${{ env.AZURE_ML_WORKSPACE_NAME }}
-      DOCKER_API_IMAGE_NAME: ${{ env.DOCKER_API_IMAGE_NAME }}
+      DOCKER_API_IMAGE_NAME: ${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_API_IMAGE_NAME }}
+      AZURE_LOCATION: ${{ env.AZURE_LOCATION }}
+      DOCKER_REGISTRY: ${{ env.DOCKER_REGISTRY }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -185,19 +190,23 @@ jobs:
     - name: download model
       id: train
       run: |
-          az extension add -n ml
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
-          echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
+          echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT          
           INTEGRATION_DATASET_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt integration_dataset_version)
           echo "INTEGRATION_DATASET_VERSION=$INTEGRATION_DATASET_VERSION" >> $GITHUB_OUTPUT
           EXPERIMENT_ID=$(python bin/retrieve_output.py ./train/train_output.txt experiment_id)
           echo "EXPERIMENT_ID=$EXPERIMENT_ID" >> $GITHUB_OUTPUT
-        
           mkdir model
           rm -r model
           mkdir model
           cd model
-          az ml model download --name cats-dogs-others --version $MODEL_VERSION --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME }} --workspace-name ${{ env.AZURE_ML_WORKSPACE_NAME }}
+          DOWNLOAD_PATH=$PWD
+          cd ..
+          cd train
+          chmod +x ./run_download_model.sh
+          ./run_download_model.sh $MODEL_VERSION ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} ${{ env.AZURE_LOCATION }} ${{ secrets.AZURE_SUBSCRIPTION_ID }} $DOWNLOAD_PATH
+          cd ..
+          cd model
           # find files recursively and copy them to the current directory root
           find ./ -name '*.keras' -exec cp "{}" ./  \;
           find ./ -name '*.json' -exec cp "{}" ./  \;
@@ -248,10 +257,13 @@ jobs:
       model_version: ${{ needs.train.outputs.MODEL_VERSION }}
       resource_group: ${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
       workspace_name: ${{ needs.train.outputs.AZURE_ML_WORKSPACE_NAME }}
+      location: ${{ needs.train.outputs.AZURE_LOCATION }}
+      docker_registry: ${{ needs.train.outputs.DOCKER_REGISTRY }}
     secrets:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: ${{ github.actor }}
+      DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   deploy:
     environment: MLOpsPython
     runs-on: ubuntu-latest
@@ -264,7 +276,7 @@ jobs:
     - name: Deploy container
       run: |
         # https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#az-container-create()
-        az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} --image docker.io/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
+        az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} --image ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
   integration_tests:
     environment: MLOpsPython
     runs-on: ubuntu-latest
@@ -306,7 +318,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: MLOpsPython
     outputs:
-      DOCKER_WEBAPP_IMAGE_NAME: ${{ env.DOCKER_WEBAPP_IMAGE_NAME }}
+      DOCKER_WEBAPP_IMAGE_NAME: ${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_WEBAPP_IMAGE_NAME }}
     steps:
     - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
@@ -330,7 +342,7 @@ jobs:
         name: Publish webapp
         path: ./production/webapp/build
   build_docker_webapp:
-    needs: [webapp_unit_tests, tags]
+    needs: [webapp_unit_tests, tags, train]
     uses: ./.github/workflows/docker.yml
     with:
       image_name: ${{ needs.webapp_unit_tests.outputs.DOCKER_WEBAPP_IMAGE_NAME }}
@@ -338,9 +350,10 @@ jobs:
       image_build_args: ""
       image_context: ./production/webapp
       image_file: "./production/webapp/Dockerfile"
+      docker_registry: ${{ needs.train.outputs.DOCKER_REGISTRY }}
     secrets:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: ${{ github.actor }}
+      DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
   change_log:
     runs-on: ubuntu-latest
@@ -349,7 +362,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GIT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
       - name: Commit and push
         if: github.ref == 'refs/heads/main'

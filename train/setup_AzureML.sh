@@ -8,7 +8,7 @@ AZURE_LOCATION=$4 #az account list-locations -o table
 # Initialize Azure ML Workspace
 az account set --subscription "$AZURE_SUBSCRIPTION_ID"
 az group create --name "$AZURE_RESOURCE_GROUP_NAME" --location "$AZURE_LOCATION"
-az extension add -n ml
+az extension add -n ml --allow-preview false --yes
 # shellcheck disable=SC2086
 az ml workspace create -n "$AZURE_ML_WORKSPACE_NAME" -g $AZURE_RESOURCE_GROUP_NAME
 
