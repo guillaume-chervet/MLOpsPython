@@ -1,11 +1,26 @@
-FROM python:3.10.13
+FROM python:3.10.13 AS base
 
-COPY pyproject.toml .
-COPY poetry.lock .
+FROM base AS builder
 
-RUN python -m pip install --upgrade pip
-RUN python -m pip install poetry --user
-RUN python -m poetry export --format=requirements.txt > requirements.txt
-RUN python -m pip install -r requirements.txt --no-cache-dir
+WORKDIR /app
 
-CMD ["bash"]
+ENV PATH=/root/.local/bin:$PATH \
+    POETRY_VERSION=1.8.3
+
+RUN pip install --user "poetry==${POETRY_VERSION}"
+RUN python -m venv /venv
+
+COPY poetry.lock pyproject.toml ./
+
+# --sync            Synchronize the environment with the locked packages and the specified groups
+# --no-directory    Do not install any directory path dependencies; useful to install dependencies without source code
+# -n                Do not ask any interactive question.
+RUN . /venv/bin/activate && poetry install -n --sync --no-directory --no-root
+
+
+FROM base AS final
+RUN useradd -r newuser
+USER newuser
+ENV PATH=/venv/bin:${PATH}
+
+COPY --from=builder /venv /venv
