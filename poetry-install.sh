@@ -1,4 +1,3 @@
-#!/bin/bash sh
 cwd=$(pwd)
 
 function add_dependency {
