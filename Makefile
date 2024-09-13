@@ -1,5 +1,4 @@
-install_mode=${1:-poetry}
-download_model_version=${2:-none}
+download_model_version=${1:-none}
 
 if [ $download_model_version != 'none' ]; then
 	# Download the model from here :
@@ -11,12 +10,6 @@ if [ $download_model_version != 'none' ]; then
 fi
 
 
-if [ $install_mode = 'pip' ]; then
-  echo "Installing with pip (degraded mode)"
-  chmod +x pip-install.sh
-  ./pip-install.sh
-else
-  echo "Installing with poetry (default mode)"
-  chmod +x poetry-install.sh
-  ./poetry-install.sh
-fi
+echo "Installing with poetry (default mode)"
+chmod +x poetry-install.sh
+./poetry-install.sh
