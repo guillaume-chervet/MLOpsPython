@@ -17,41 +17,45 @@ function add_dependencies {
 
 add_dependencies
 
+POETRY_VERSION=1.8.3
+python -m pip install --upgrade pip
+python -m pip install --user "poetry==$POETRY_VERSION"
+
 python -m pip install -e packages/inference
 cd packages/inference/
-poetry install
-poetry build
+python -m poetry install
+python -m poetry build
 cd $cwd
 
 python -m pip install -e packages/extraction
 cd packages/extraction/
-poetry install
-poetry build
+python -m poetry install
+python -m poetry build
 cd $cwd
 
 cd train
-poetry install --no-root
+python -m poetry install --no-root
 cd $cwd
 
 cd train/extraction
-poetry install --no-root
+python -m poetry install --no-root
 
 cd $cwd
 cd train/test
-poetry install --no-root
+python -m poetry install --no-root
 
 cd $cwd
 cd train/train
-poetry install --no-root
+python -m poetry install --no-root
 
 cd $cwd
 cd train/label_split_data
-poetry install --no-root
+python -m poetry install --no-root
 
 cd $cwd
 cd production/api
-poetry install --no-root
+python -m poetry install --no-root
 
 cd $cwd
 cd production/integration
-poetry install --no-root
+python -m poetry install --no-root
