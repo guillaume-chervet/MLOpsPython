@@ -1,4 +1,2 @@
 /tests
 *.ipynb
-*.lock
-*.toml
