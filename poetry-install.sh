@@ -11,6 +11,8 @@ function add_dependency {
 function add_dependencies {
     add_dependency "packages/inference/" "production/api/packages"
     add_dependency "packages/extraction/" "production/api/packages"
+    add_dependency "packages/extraction/" "train/extraction/packages"
+    add_dependency "packages/inference/" "train/test/packages"
 }
 
 add_dependencies
