@@ -21,11 +21,13 @@ python -m pip install -e packages/inference
 cd packages/inference/
 poetry install
 poetry build
+cd $cwd
 
 python -m pip install -e packages/extraction
 cd packages/extraction/
 poetry install
 poetry build
+cd $cwd
 
 cd train
 poetry install --no-root
