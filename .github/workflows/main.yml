@@ -212,7 +212,7 @@ jobs:
           find ./ -name '*.json' -exec cp "{}" ./  \;
           rm -r ./cats-dogs-others
     - name: Upload Model Build Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Publish model
         path: ./model
@@ -337,7 +337,7 @@ jobs:
          npm run coverage
          npm run build
     - name: Upload WebApp Build Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Publish webapp
         path: ./production/webapp/build
