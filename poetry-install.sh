@@ -9,8 +9,8 @@ function add_dependency {
 }
 
 function add_dependencies {
-    add_dependency "packages/inference/" "production/api/packages"
-    add_dependency "packages/extraction/" "production/api/packages"
+    add_dependency "packages/mlopspython-inference/" "production/api/packages"
+    add_dependency "packages/mlopspython-extraction/" "production/api/packages"
 }
 
 add_dependencies
@@ -19,12 +19,12 @@ POETRY_VERSION=1.8.3
 python -m pip install --upgrade pip
 python -m pip install --user "poetry==$POETRY_VERSION"
 
-cd packages/inference/
+cd packages/mlopspython-inference/
 python -m poetry install
 python -m poetry build
 cd $cwd
 
-cd packages/extraction/
+cd packages/mlopspython-extraction/
 python -m poetry install
 python -m poetry build
 cd $cwd

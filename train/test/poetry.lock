@@ -1922,7 +1922,7 @@ tensorflow-io-gcs-filesystem = "0.27.0"
 
 [package.source]
 type = "directory"
-url = "../../packages/inference"
+url = "../../packages/mlopspython-inference"
 
 [[package]]
 name = "msal"
@@ -3459,4 +3459,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.10"
-content-hash = "be30de5fbe2b5dbf7a37ff7bb0c8e0f23fcaeb6bfe7505cb47113dbf0100ea08"
+content-hash = "a6658c36fa601bd2924bfde78d34cb6a49aa221b0116906337c1d6dd18728055"

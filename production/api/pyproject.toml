@@ -18,8 +18,8 @@ uvicorn = "0.23.2"
 python-multipart = "0.0.6"
 pillow = "10.0.1"
 ml-dtypes = "0.4.1"
-mlopspython-inference = {path = "packages/inference", develop = true}
-mlopspython-extraction = {path = "packages/extraction", develop = true }
+mlopspython-inference = {path = "packages/mlopspython-inference", develop = true}
+mlopspython-extraction = {path = "packages/mlopspython-extraction", develop = true }
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.3.1"
