@@ -11,8 +11,6 @@ function add_dependency {
 function add_dependencies {
     add_dependency "packages/inference/" "production/api/packages"
     add_dependency "packages/extraction/" "production/api/packages"
-    add_dependency "packages/extraction/" "train/extraction/packages"
-    add_dependency "packages/inference/" "train/test/packages"
 }
 
 add_dependencies
@@ -21,13 +19,11 @@ POETRY_VERSION=1.8.3
 python -m pip install --upgrade pip
 python -m pip install --user "poetry==$POETRY_VERSION"
 
-python -m pip install -e packages/inference
 cd packages/inference/
 python -m poetry install
 python -m poetry build
 cd $cwd
 
-python -m pip install -e packages/extraction
 cd packages/extraction/
 python -m poetry install
 python -m poetry build

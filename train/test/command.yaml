@@ -28,6 +28,8 @@ environment:
     path: ./
 
 code: ./
+additional_includes:
+   - "../../packages/inference"
 command: >-
   python command.py
   --model_input ${{inputs.model_input}}

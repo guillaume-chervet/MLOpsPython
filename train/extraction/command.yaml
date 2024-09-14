@@ -24,6 +24,8 @@ environment:
     path: ./
 
 code: ./
+additional_includes:
+   - "../../packages/extraction"
 command: >-
   python command.py
   --pdfs_input ${{inputs.pdfs_input}}

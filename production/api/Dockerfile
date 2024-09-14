@@ -1,20 +1,42 @@
-FROM python:3.10.13
+# Étape 1 : Image de construction
+FROM python:3.10.13 as builder
 
+# Définir le répertoire de travail
 WORKDIR /app
+
+# Installer Poetry
+ENV POETRY_VERSION=1.8.3
+RUN pip install "poetry==${POETRY_VERSION}"
+
+# Copier le code de l'application
 COPY . /app
 
-ENV PATH=/root/.local/bin:$PATH \
-    POETRY_VERSION=1.8.3
+# Configurer Poetry pour utiliser un environnement virtuel dans le projet
+RUN poetry config virtualenvs.in-project true
 
-RUN pip install --user "poetry==${POETRY_VERSION}"
-RUN python -m venv /venv
-RUN pip install poetry && poetry install --no-root --only main
+# Installer les dépendances sans installer le package racine
+RUN poetry install --no-root --only main
 
-# --sync            Synchronize the environment with the locked packages and the specified groups
-# --no-directory    Do not install any directory path dependencies; useful to install dependencies without source code
-# -n                Do not ask any interactive question.
-RUN . /venv/bin/activate && poetry install -n --sync --no-directory --no-root
+# Étape 2 : Image finale
+FROM python:3.10-slim
 
-ENV PATH=/venv/bin:${PATH}
+# Créer un utilisateur non-root
+RUN useradd -ms /bin/bash newuser
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Copier l'application et l'environnement virtuel depuis l'image de construction
+COPY --from=builder /app /app
+
+# Changer le propriétaire du répertoire de l'application
+RUN chown -R newuser:newuser /app
+
+# Passer à l'utilisateur non-root
+USER newuser
+
+# Ajouter l'environnement virtuel au PATH
+ENV PATH="/app/.venv/bin:${PATH}"
+
+# Démarrer l'application
+CMD ["python", "./main.py"]
