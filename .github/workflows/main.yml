@@ -69,13 +69,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install --user poetry
     - name: Run unit tests Packages Extraction
-      working-directory: packages/extraction
+      working-directory: packages/mlopspython-extraction
       run: |
         poetry install
         poetry run coverage run -m unittest tests.extraction_tests
         poetry run coverage report
     - name: Run unit tests Packages Inference
-      working-directory: packages/inference
+      working-directory: packages/mlopspython-inference
       run: |
         poetry install
         #poetry run coverage run -m unittest tests.inference_tests
