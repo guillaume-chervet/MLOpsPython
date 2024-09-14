@@ -1,4 +1,3 @@
-version: '4.12'
 
 services:
   api:
@@ -9,7 +8,7 @@ services:
     restart: "no"
     user: "1001001"
     ports:
-      - 8000:5000
+      - "8000:5000"
   web:
     build:
       context: ./webapp
@@ -18,4 +17,4 @@ services:
     restart: "no"
     #user: "1001001"
     ports:
-      - 4000:80
+      - "4000:80"
