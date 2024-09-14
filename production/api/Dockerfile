@@ -1,12 +1,12 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
+FROM python:3.10.13
+
 WORKDIR /app
+COPY . /app
+#COPY pyproject.toml poetry.lock /app/
 
-COPY . .
+RUN pip install poetry && poetry install --no-root --only main
 
-ENV POETRY_VERSION=1.8.3
 
-RUN python -m pip install --upgrade pip
-RUN python -m pip install --user "poetry==${POETRY_VERSION}"
-RUN python -m poetry install -n --sync --no-directory --no-root
+EXPOSE 8000
 
-CMD ["python", "-m", "poetry", "run", "python", "index.py"]
+CMD ["uvicorn", "index:app", "--host", "0.0.0.0", "--port", "5000"]
