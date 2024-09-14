@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.13.3
+
+- [97e79d3](/97e79d3d9339995f65f34239a4687f9a5a6575d3) - fix(ci): GITHUB_TOKEN cannot force push, 2024-09-08 by *Guillaume Chervet*
+
+
+## v0.13.2
+
+
+
+## v0.13.1
+
+- [7b782c6](/7b782c6fe5181953f08beb0f7cc8668899f63ec7) - refactor(all): update for course september 2024 (#37), 2024-09-08 by *Guillaume Chervet*
+
+
 ## v0.13.0
 
 - [72e44c1](/72e44c19aa79c4287ca96fc66b675f39bb7d280a) - feat(train): remove dropout, 2024-03-28 by *Guillaume Chervet*
@@ -307,30 +321,5 @@
 ## v0.0.29
 
 - [324b881](/324b8819f2c9c432c6a27b0a4972854ed175b6b0) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-
-
-## v0.0.28
-
-- [b97195c](/b97195c70edb95873b3b5305c547b9bc298d710c) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-
-
-## v0.0.27
-
-- [9252579](/9252579d7f34f73a2ee661b183a0594b8f0fde83) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-
-
-## v0.0.26
-
-- [2320e8a](/2320e8a20cf18bc6b11e295325007aff41a84ee9) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-- [08b615c](/08b615ceabec2cd6488bc25e1274733bf1644cbb) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-- [cb9ba8c](/cb9ba8c20081dbf393d0cf426d01e30f69d9f5af) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-- [be74e42](/be74e4264cc1f3eb121e5b7ba5477412e4802360) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-- [d4b88cb](/d4b88cb56e09303c048905f01841ece9c7258690) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-- [73461e0](/73461e0828d58332b94629e53d65f10fc9b2fc81) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-- [e164ce7](/e164ce72f6882cd2beb3e377bff4d3df9586df2a) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-- [2961614](/2961614e51ad8fc511fe5ed2009e2bfa03d23f48) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-- [7071b26](/7071b269f8aa6868e873d685801142b15f824b99) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-- [41277d2](/41277d2fbf2c0fe9c57c15591bef58658f5b412d) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-- [4ebe3d8](/4ebe3d84d8b844d3f4dad9bd9e88b3ce883dfc35) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
 
 
