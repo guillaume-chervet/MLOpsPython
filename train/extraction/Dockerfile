@@ -10,7 +10,9 @@ ENV PATH=/root/.local/bin:$PATH \
 RUN pip install --user "poetry==${POETRY_VERSION}"
 RUN python -m venv /venv
 
-COPY poetry.lock pyproject.toml ./
+COPY ./ ./
+
+RUN ls -la
 
 # --sync            Synchronize the environment with the locked packages and the specified groups
 # --no-directory    Do not install any directory path dependencies; useful to install dependencies without source code
