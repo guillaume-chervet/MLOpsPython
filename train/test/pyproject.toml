@@ -17,7 +17,7 @@ mlflow = "2.7.1"
 azureml-mlflow = "1.53.0"
 azure-ai-ml = "1.10.1"
 ml-dtypes = "0.4.1"
-mlopspython-inference = {path = "../../packages/mlopspython-inference", develop = true}
+mlopspython_inference = {path = "../../packages/mlopspython-inference", develop = true}
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.3.1"
