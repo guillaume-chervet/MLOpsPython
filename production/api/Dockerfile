@@ -1,5 +1,5 @@
 # Étape 1 : Image de construction
-FROM python:3.10.13 as builder
+FROM python:3.10.15 AS builder
 
 # Définir le répertoire de travail
 WORKDIR /app
@@ -18,7 +18,7 @@ RUN poetry config virtualenvs.in-project true
 RUN poetry install --no-root --only main
 
 # Étape 2 : Image finale
-FROM python:3.10-slim
+FROM python:3.10.15-slim
 
 # Créer un utilisateur non-root
 RUN useradd -ms /bin/bash newuser
