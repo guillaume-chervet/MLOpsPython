@@ -25,7 +25,7 @@ environment:
 
 code: ./
 additional_includes:
-   - "../../packages/mlopspython-extraction"
+   - "../../packages/mlopspython-extraction/mlopspython_extraction"
 command: >-
   python command.py
   --pdfs_input ${{inputs.pdfs_input}}

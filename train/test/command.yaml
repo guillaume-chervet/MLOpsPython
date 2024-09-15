@@ -29,7 +29,7 @@ environment:
 
 code: ./
 additional_includes:
-   - "../../packages/mlopspython-inference"
+   - "../../packages/mlopspython-inference/mlopspython_inference"
 command: >-
   python command.py
   --model_input ${{inputs.model_input}}
