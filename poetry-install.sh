@@ -49,9 +49,14 @@ cd train/label_split_data
 python -m poetry install --no-root
 
 cd $cwd
+cd train/output
+python -m poetry install --no-root
+
+cd $cwd
 cd production/api
 python -m poetry install --no-root
 
 cd $cwd
 cd production/integration
 python -m poetry install --no-root
+
