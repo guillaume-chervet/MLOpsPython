@@ -50,7 +50,7 @@ jobs:
       packages: write
     environment: MLOpsPython
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v4
     - name: Free disk space on Ubuntu runner 🔧
       uses: kfir4444/free-disk-space@main
       with:
