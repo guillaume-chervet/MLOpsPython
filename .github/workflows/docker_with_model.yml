@@ -50,17 +50,22 @@ jobs:
       packages: write
     environment: MLOpsPython
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v4
     - name: Free disk space on Ubuntu runner 🔧
       uses: kfir4444/free-disk-space@main
       with:
-        # frees about 6 GB, warning: may remove required tools
+        # this might remove tools that are actually needed,
+        # if set to "true" but frees about 6 GB
         tool-cache: false
+        
+        # all of these default to true, but feel free to set to
+        # "false" if necessary for your workflow
         android: true
-        dotnet: true
-        haskell: true
-        large-packages: true
-        swap-storage: true
+        dotnet: false
+        haskell: false
+        large-packages: false
+        docker-images: false
+        swap-storage: false
 
     - name: Set up Python 3.11
       uses: actions/setup-python@v3
@@ -115,7 +120,7 @@ jobs:
 
     - name: Build and push Docker image
       if: github.ref == 'refs/heads/main'
-      uses: docker/build-push-action@v3
+      uses: docker/build-push-action@v4
       with:
         context: ${{ inputs.image_context }}
         file : ${{ inputs.image_file }}
@@ -126,7 +131,7 @@ jobs:
 
     - name: Build and push Docker image
       if: github.ref != 'refs/heads/main'
-      uses: docker/build-push-action@v3
+      uses: docker/build-push-action@v4
       with:
         context: ${{ inputs.image_context }}
         file : ${{ inputs.image_file }}
