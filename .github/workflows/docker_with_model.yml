@@ -50,7 +50,17 @@ jobs:
       packages: write
     environment: MLOpsPython
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
+    - name: Free disk space on Ubuntu runner 🔧
+      uses: kfir4444/free-disk-space@main
+      with:
+        # frees about 6 GB, warning: may remove required tools
+        tool-cache: false
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        swap-storage: true
 
     - name: Set up Python 3.11
       uses: actions/setup-python@v3
