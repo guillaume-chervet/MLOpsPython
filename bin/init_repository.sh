@@ -60,8 +60,6 @@ gh secret set AZURE_SUBSCRIPTION_ID --body "$subscriptionId" --env "$environment
 escapedJsonCredentials=$(echo "$credentials" | jq -c @json)
 echo "Escaped JSON Credentials: $escapedJsonCredentials"
 gh secret set AZURE_CREDENTIALS --body "$escapedJsonCredentials" --env "$environmentName"
-gh secret set DOCKER_PASSWORD --body "dckr_pat_e2lZ9YgpMt8APE-Qxzn89u6mt28" --env "$environmentName"
-gh secret set DOCKER_USERNAME --body "robertcarry" --env "$environmentName"
 git_token=$(gh auth token)
 gh secret set GIT_TOKEN --body "$git_token" --env "$environmentName"
 

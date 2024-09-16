@@ -99,7 +99,6 @@ env:
   AZURE_RESOURCE_GROUP_NAME: "azure-ml-<your-name>"
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-<your-name>"
   AZURE_WEBAPP_NAME: "cats-dogs-<your-name>"
-  DOCKER_IMAGE_NAME: "robertcarry/mlopspython-<your-name>"
 
 ````
 

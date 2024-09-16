@@ -1,7 +1,42 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
+# Étape 1 : Image de construction
+FROM python:3.10.15 AS builder
+
+# Définir le répertoire de travail
 WORKDIR /app
 
-COPY . .
-RUN python -m pip install --no-cache-dir --upgrade  -r requirements.txt
-ENV PATH ${APP_ROOT}/.local/bin:${PATH}
-CMD ["python", "index.py"]
+# Installer Poetry
+ENV POETRY_VERSION=1.8.3
+RUN pip install "poetry==${POETRY_VERSION}"
+
+# Copier le code de l'application
+COPY . /app
+
+# Configurer Poetry pour utiliser un environnement virtuel dans le projet
+RUN poetry config virtualenvs.in-project true
+
+# Installer les dépendances sans installer le package racine
+RUN poetry install --no-root --only main
+
+# Étape 2 : Image finale
+FROM python:3.10.15-slim
+
+# Créer un utilisateur non-root
+RUN useradd -ms /bin/bash newuser
+
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Copier l'application et l'environnement virtuel depuis l'image de construction
+COPY --from=builder /app /app
+
+# Changer le propriétaire du répertoire de l'application
+RUN chown -R newuser:newuser /app
+
+# Passer à l'utilisateur non-root
+USER newuser
+
+# Ajouter l'environnement virtuel au PATH
+ENV PATH="/app/.venv/bin:${PATH}"
+
+# Démarrer l'application
+CMD ["python", "./main.py"]
