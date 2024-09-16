@@ -1,2 +1,0 @@
-pymupdf==1.23.3 ; python_version >= "3.8" and python_version < "3.11"
-pymupdfb==1.23.3 ; python_version >= "3.8" and python_version < "3.11"
