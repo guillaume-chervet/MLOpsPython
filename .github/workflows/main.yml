@@ -28,7 +28,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: dorny/paths-filter@v2
       id: filter_python
       with:
@@ -59,7 +59,7 @@ jobs:
   packages_unit_tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v3
       with:
@@ -83,7 +83,7 @@ jobs:
   train_unit_tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v3
       with:
@@ -127,7 +127,7 @@ jobs:
     outputs:
       new_version: ${{ steps.tag.outputs.new_version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Bump version and push tag
         id: tag_version
         if: github.ref == 'refs/heads/main'
@@ -156,7 +156,7 @@ jobs:
       AZURE_LOCATION: ${{ env.AZURE_LOCATION }}
       DOCKER_REGISTRY: ${{ env.DOCKER_REGISTRY }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: Set up Python ${{ env.PYTHON_VERSION }}
@@ -282,7 +282,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [deploy, train]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ env.PYTHON_VERSION }}
       uses: actions/setup-python@v3
       with:
@@ -320,7 +320,7 @@ jobs:
     outputs:
       DOCKER_WEBAPP_IMAGE_NAME: ${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_WEBAPP_IMAGE_NAME }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: dorny/paths-filter@v2
       id: filter_webapp
       with:
@@ -360,7 +360,7 @@ jobs:
     needs: [ integration_tests ]
     environment: MLOpsPython
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GIT_TOKEN }}
           fetch-depth: 0
