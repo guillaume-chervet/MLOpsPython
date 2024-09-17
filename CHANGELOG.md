@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.13.7
+
+- [b5818a0](/b5818a03a74110584d286b5884557b19d6b2b4cd) - refactor(poetry) : use package local reference (#39), 2024-09-16 by *Guillaume Chervet*
+
+
+## v0.13.6
+
+- [b9e814d](/b9e814d67fac17d7c480cd1aef149c6104d08876) - Update docker_with_model.yml (#40), 2024-09-16 by *Guillaume Chervet*
+
+
+## v0.13.5
+
+- [22c04ad](/22c04ad1b2415f82f4451bb423ef59c346fd6734) - Update docker_with_model.yml, 2024-09-16 by *Guillaume Chervet*
+
+
+## v0.13.4
+
+- [ff244bf](/ff244bf6a98d30acd4ef3d479bede9c573a237c9) - refactor(poetry) : use package local reference (#39), 2024-09-16 by *Guillaume Chervet*
+
+
 ## v0.13.3
 
 - [97e79d3](/97e79d3d9339995f65f34239a4687f9a5a6575d3) - fix(ci): GITHUB_TOKEN cannot force push, 2024-09-08 by *Guillaume Chervet*
@@ -300,26 +320,5 @@
 ## v0.0.33
 
 - [422bcdd](/422bcdd125d82cb812f8b600468e2b15f906b2e7) - test build a updatepackages, 2023-05-16 by *Guillaume Chervet*
-
-
-## v0.0.32
-
-- [504e4e3](/504e4e37af76d8ac07cb8a94bdad1106dc54be5c) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-
-
-## v0.0.31
-
-- [f385229](/f385229a02323fb02e2b0181fa7b4e3552c6aceb) - Merge remote-tracking branch 'origin/main', 2023-05-15 by *Guillaume Chervet*
-- [1b6e611](/1b6e611f0ddc18ce04ee247f9c664fa126008240) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
-
-
-## v0.0.30
-
-- [ee73de2](/ee73de2151420ab60e9178aa47b5fbbf09e5d56e) - updateupdate, 2023-05-15 by *Guillaume Chervet*
-
-
-## v0.0.29
-
-- [324b881](/324b8819f2c9c432c6a27b0a4972854ed175b6b0) - test build a updatepackages, 2023-05-15 by *Guillaume Chervet*
 
 
