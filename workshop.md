@@ -26,17 +26,21 @@ You can download some sample .pdf from here :
 https://github.com/guillaume-chervet/dataset-cats-dogs-others
 
 Use Postman to call the API with HTTP POST:
-- http://cats-dogs-yolw.northeurope.azurecontainer.io:5000/upload
+- http://cats-dogs-guil.northeurope.azurecontainer.io:5000/upload
   - type: form-data
   - key: file 
 
 You can also check health check route with HTTP GET:
 
-http://cats-dogs-yolw.northeurope.azurecontainer.io:5000/health
+http://cats-dogs-guil.northeurope.azurecontainer.io:5000/health
 
 ## 3. Initialize your own project
 
-### 3.1. Create your Azure Account
+### 3.1. Create your Azure Account (For student)
+
+Subscribe to Azure with your student email : https://azure.microsoft.com/fr-fr/free/students/?WT.mc_id=DOP-MVP-5003370
+
+### 3.2. Create your Azure Account (Azure Pass)
 
 Important point:
 - About azure coupon:
@@ -98,7 +102,7 @@ Inside "./.github/workflows/main.yml" file
 env:
   AZURE_RESOURCE_GROUP_NAME: "azure-ml-<your-name>"
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-<your-name>"
-  AZURE_WEBAPP_NAME: "cats-dogs-<your-name>"
+  AZURE_API_NAME: "cats-dogs-<your-name>"
 
 ````
 

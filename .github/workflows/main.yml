@@ -10,10 +10,10 @@ env:
   PNPM_VERSION: 8.5.1
   PYTHON_VERSION: 3.10.15
   NODE_VERSION: 18
-  AZURE_RESOURCE_GROUP_NAME: "azure-ml-gui"
+  AZURE_RESOURCE_GROUP_NAME: "azure-ml-guil"
   AZURE_LOCATION: "northeurope"
-  AZURE_ML_WORKSPACE_NAME: "cats-dogs-gui"
-  AZURE_WEBAPP_NAME: "cats-dogs-gui"
+  AZURE_ML_WORKSPACE_NAME: "cats-dogs-guil"
+  AZURE_API_NAME: "cats-dogs-guil"
   DELETE_WEBAPP: "false"
   DOCKER_API_IMAGE_NAME: "mlopspython-api"
   DOCKER_REPOSITORY: ${{ github.repository_owner }}
@@ -276,7 +276,7 @@ jobs:
     - name: Deploy container
       run: |
         # https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#az-container-create()
-        az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} --image ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
+        az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_API_NAME }} --dns-name-label ${{ env.AZURE_API_NAME }} --image ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
   integration_tests:
     environment: MLOpsPython
     runs-on: ubuntu-latest
@@ -307,12 +307,12 @@ jobs:
             --experiment_id ${{ needs.train.outputs.EXPERIMENT_ID }} \
             --integration_dataset_name "cats-dogs-others-integration" \
             --integration_dataset_version ${{ needs.train.outputs.INTEGRATION_DATASET_VERSION }} \
-            --url "http://${{ env.AZURE_WEBAPP_NAME }}.${{ env.AZURE_LOCATION }}.azurecontainer.io:5000/upload" > integration_output.txt 
+            --url "http://${{ env.AZURE_API_NAME }}.${{ env.AZURE_LOCATION }}.azurecontainer.io:5000/upload" > integration_output.txt 
         cat integration_output.txt
     - name: Delete Environment
       run: |
           if [ "${{ env.DELETE_WEBAPP }}" = "true" ]; then
-            az container delete --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --yes
+            az container delete --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_API_NAME }} --yes
           fi
   webapp_unit_tests:
     runs-on: ubuntu-latest
