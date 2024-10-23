@@ -36,7 +36,12 @@ http://cats-dogs-yolw.northeurope.azurecontainer.io:5000/health
 
 ## 3. Initialize your own project
 
-### 3.1. Create your Azure Account
+### 3.1 Create your Azure Account (For Student)
+
+Use your email student :
+- https://azure.microsoft.com/fr-fr/free/students/?WT.mc_id=DOP-MVP-5003370
+
+### 3.1. Create your Azure Account 
 
 Important point:
 - About azure coupon:
