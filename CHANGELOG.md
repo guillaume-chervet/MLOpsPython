@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.13.11
+
+- [c0aa2a2](/c0aa2a2df938e49f477e01d161634040037ff047) - chore(all): lowercase docker repository (#42), 2024-10-23 by *Guillaume Chervet*
+
+
 ## v0.13.10
 
 - [c8f0b41](/c8f0b4182231025940541518214bf7529ea8199a) - doc: Update workshop.md (#41), 2024-10-23 by *Guillaume Chervet*
@@ -314,10 +319,5 @@
 - [186cb74](/186cb74493dbef59c88a4f1d2e59b7227c82903e) - [no ci] docs: adjust sentences summit.md, 2023-05-16 by *Guillaume Chervet*
 - [7aee73b](/7aee73bb729ebcfa16fa0542284b309f4ee2b1ae) - docs: adjust sentences summit.md, 2023-05-16 by *Guillaume Chervet*
 - [8865838](/8865838693299c0fe6b08036d5062ef4ded70928) - docs: adjust sentences summit.md, 2023-05-16 by *Guillaume Chervet*
-
-
-## v0.0.36
-
-- [ed70752](/ed70752eaddcbb56516974005e4857e031e746a2) - chore(all): set up ci/cd, 2023-01-29 by *Guillaume Chervet*
 
 
