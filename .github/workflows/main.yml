@@ -358,6 +358,7 @@ jobs:
       image_context: ./production/webapp
       image_file: "./production/webapp/Dockerfile"
       docker_registry: ${{ needs.train.outputs.DOCKER_REGISTRY }}
+      docker_repository: ${{ needs.train.outputs.DOCKER_REPOSITORY }}
     secrets:
       DOCKER_USERNAME: ${{ github.actor }}
       DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
