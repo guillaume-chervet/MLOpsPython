@@ -152,10 +152,16 @@ jobs:
       EXPERIMENT_ID: ${{ steps.train.outputs.EXPERIMENT_ID }}
       AZURE_RESOURCE_GROUP_NAME: ${{ env.AZURE_RESOURCE_GROUP_NAME }}
       AZURE_ML_WORKSPACE_NAME: ${{ env.AZURE_ML_WORKSPACE_NAME }}
-      DOCKER_API_IMAGE_NAME: ${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_API_IMAGE_NAME }}
+      DOCKER_API_IMAGE_NAME: ${{ env.DOCKER_API_IMAGE_NAME }}
       AZURE_LOCATION: ${{ env.AZURE_LOCATION }}
       DOCKER_REGISTRY: ${{ env.DOCKER_REGISTRY }}
+      DOCKER_REPOSITORY: ${{ steps.docker-repository.outputs.DOCKER_REPOSITORY }}
     steps:
+    - name: Lower Case Docker Repository
+      id: docker-repository
+      run: |
+        DOCKER_REPOSITORY=$(echo "${{ env.DOCKER_REPOSITORY }}" | tr '[:upper:]' '[:lower:]')
+        echo "DOCKER_REPOSITORY=$DOCKER_REPOSITORY" >> $GITHUB_OUTPUT
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
@@ -259,6 +265,7 @@ jobs:
       workspace_name: ${{ needs.train.outputs.AZURE_ML_WORKSPACE_NAME }}
       location: ${{ needs.train.outputs.AZURE_LOCATION }}
       docker_registry: ${{ needs.train.outputs.DOCKER_REGISTRY }}
+      docker_repository: ${{ needs.train.outputs.DOCKER_REPOSITORY }}
     secrets:
       DOCKER_USERNAME: ${{ github.actor }}
       DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
