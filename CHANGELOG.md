@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.13.10
+
+- [c8f0b41](/c8f0b4182231025940541518214bf7529ea8199a) - doc: Update workshop.md (#41), 2024-10-23 by *Guillaume Chervet*
+
+
+## v0.13.9
+
+
+
+## v0.13.8
+
+- [e3a5dab](/e3a5daba8b2e1024fd6930d8c6e1a2eab400d67e) - fix(all): clean, 2024-10-22 by *Guillaume Chervet*
+
+
 ## v0.13.7
 
 - [b5818a0](/b5818a03a74110584d286b5884557b19d6b2b4cd) - refactor(poetry) : use package local reference (#39), 2024-09-16 by *Guillaume Chervet*
@@ -305,20 +319,5 @@
 ## v0.0.36
 
 - [ed70752](/ed70752eaddcbb56516974005e4857e031e746a2) - chore(all): set up ci/cd, 2023-01-29 by *Guillaume Chervet*
-
-
-## v0.0.35
-
-- [9c52d90](/9c52d9043863d4119050062704742ac73ec10266) - test build a packages, 2023-03-17 by *Guillaume Chervet*
-
-
-## v0.0.34
-
-- [7186ce5](/7186ce5c7b90f30e1558e5434c6041ea0b999f1d) - test build a updatepackages, 2023-04-11 by *Guillaume Chervet*
-
-
-## v0.0.33
-
-- [422bcdd](/422bcdd125d82cb812f8b600468e2b15f906b2e7) - test build a updatepackages, 2023-05-16 by *Guillaume Chervet*
 
 
