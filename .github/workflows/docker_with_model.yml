@@ -33,6 +33,9 @@ on:
       docker_registry:
         required: true
         type: string
+      docker_repository:
+        required: true
+        type: string
     secrets:
       DOCKER_USERNAME:
         required: true
@@ -126,7 +129,7 @@ jobs:
         file : ${{ inputs.image_file }}
         build-args: ${{ inputs.image_build_args }}
         push: true
-        tags: ${{ inputs.docker_registry }}/${{ inputs.image_name }}:latest,${{ inputs.docker_registry }}/${{ inputs.image_name }}:${{ inputs.image_version }}
+        tags: ${{ inputs.docker_registry }}/${{ inputs.docker_repository }}/${{ inputs.image_name }}:latest,${{ inputs.docker_registry }}/${{ inputs.docker_repository }}/${{ inputs.image_name }}:${{ inputs.image_version }}
         labels: ${{ steps.meta.outputs.labels }}
 
     - name: Build and push Docker image
@@ -137,6 +140,6 @@ jobs:
         file : ${{ inputs.image_file }}
         build-args: ${{ inputs.image_build_args }}
         push: true
-        tags: ${{ inputs.docker_registry }}/${{ inputs.image_name }}:${{ inputs.image_version }}
+        tags: ${{ inputs.docker_registry }}/${{ inputs.docker_repository }}/${{ inputs.image_name }}:${{ inputs.image_version }}
         labels: ${{ steps.meta.outputs.labels }}
 
