@@ -29,11 +29,15 @@ WORKDIR /app
 # Copier l'application et l'environnement virtuel depuis l'image de construction
 COPY --from=builder /app /app
 
+RUN ls -la /app/core/model
+
 # Changer le propriétaire du répertoire de l'application
 RUN chown -R newuser:newuser /app
 
 # Passer à l'utilisateur non-root
 USER newuser
+
+RUN ls -la /app/core/model
 
 # Ajouter l'environnement virtuel au PATH
 ENV PATH="/app/.venv/bin:${PATH}"
