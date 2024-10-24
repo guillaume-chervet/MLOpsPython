@@ -17,12 +17,14 @@ main_output = args.main_output
 
 
 def copy_files(input_path: str, output_path: str):
+    print(f"Copying files from {input_path} to {output_path}")
     path_source = Path(input_path)
     path_destination = Path(output_path)
 
     path_destination.mkdir(parents=True, exist_ok=True)
 
     for file in path_source.glob("*"):
+        print(f"Copying {file.name}")
         if file.is_file():
             with file.open("rb") as f_source:
                 content = f_source.read()
@@ -33,4 +35,5 @@ def copy_files(input_path: str, output_path: str):
 copy_files(extraction_images_input, str(Path(main_output) / "extraction_images"))
 copy_files(extraction_hash_input, str(Path(main_output) / "extraction_hash"))
 copy_files(model_input, str(Path(main_output) / "model"))
-copy_files(integration_input, str(Path(main_output) / "integration"))
+copy_files(str(Path(integration_input) / "ground_truth"), str(Path(main_output) / "integration" / "ground_truth"))
+copy_files(str(Path(integration_input) / "mlcli"), str(Path(main_output) / "integration" / "mlcli"))
