@@ -35,4 +35,5 @@ def copy_files(input_path: str, output_path: str):
 copy_files(extraction_images_input, str(Path(main_output) / "extraction_images"))
 copy_files(extraction_hash_input, str(Path(main_output) / "extraction_hash"))
 copy_files(model_input, str(Path(main_output) / "model"))
-copy_files(integration_input, str(Path(main_output) / "integration"))
+copy_files(str(integration_input / "ground_truth"), str(Path(main_output) / "integration" / "ground_truth"))
+copy_files(str(integration_input / "mlcli"), str(Path(main_output) / "integration" / "mlcli"))
