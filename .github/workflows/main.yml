@@ -274,7 +274,7 @@ jobs:
   deploy:
     environment: MLOpsPython
     runs-on: ubuntu-latest
-    needs: [tags, build_docker_api, build_docker_webapp]
+    needs: [tags, train, build_docker_api, build_docker_webapp]
     steps:
     - name: azure login
       uses: azure/login@v1
