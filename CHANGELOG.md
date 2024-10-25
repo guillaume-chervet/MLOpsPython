@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.13.13
+
+- [8ebe81d](/8ebe81d514152b2c5569ea817d469d1d1285e3d6) - fix(webapp): docker build bad uri, 2024-10-25 by *Guillaume Chervet*
+
+
+## v0.13.12
+
+- [065993b](/065993ba060fa5299b292930c243672dba0dc758) - fix(pipeline): docker model missing + integration data missing in output (#43), 2024-10-24 by *Guillaume Chervet*
+
+
 ## v0.13.11
 
 - [c0aa2a2](/c0aa2a2df938e49f477e01d161634040037ff047) - chore(all): lowercase docker repository (#42), 2024-10-23 by *Guillaume Chervet*
@@ -305,19 +315,5 @@
 - [216857d](/216857d8f221512285265f1b6039f8772c1ed973) - [no ci] fix(webapp): add serviceworker to gitignore, 2023-05-22 by *Guillaume Chervet*
 - [cd424ae](/cd424ae5eb4fa205f37fecb8d2b79a20fcb82580) - [no ci] docs(summit): add docker fallback, 2023-05-22 by *Guillaume Chervet*
 - [9fb5ea0](/9fb5ea0eb089f25f92feb643bab337806a38662d) - [no ci] docs(summit): fix download model dir, 2023-05-22 by *Guillaume Chervet*
-
-
-## v0.0.38
-
-- [3d0cd6f](/3d0cd6f91c1cd7c0cd8529118c8e817fadcf8a44) - fix(production): fix import, 2023-05-22 by *Guillaume Chervet*
-- [c4c1b3e](/c4c1b3e1b5e5950e837c185861c967e07660efb3) - [no ci] fix(docker): remove obsolete dependencies, 2023-05-22 by *Guillaume Chervet*
-
-
-## v0.0.37
-
-- [4de5e24](/4de5e249c39e620770c196a96319785419c914fc) - [noci] docs: add chmod command to summit.md, 2023-05-22 by *Guillaume Chervet*
-- [186cb74](/186cb74493dbef59c88a4f1d2e59b7227c82903e) - [no ci] docs: adjust sentences summit.md, 2023-05-16 by *Guillaume Chervet*
-- [7aee73b](/7aee73bb729ebcfa16fa0542284b309f4ee2b1ae) - docs: adjust sentences summit.md, 2023-05-16 by *Guillaume Chervet*
-- [8865838](/8865838693299c0fe6b08036d5062ef4ded70928) - docs: adjust sentences summit.md, 2023-05-16 by *Guillaume Chervet*
 
 
