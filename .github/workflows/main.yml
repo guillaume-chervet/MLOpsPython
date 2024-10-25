@@ -326,7 +326,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: MLOpsPython
     outputs:
-      DOCKER_WEBAPP_IMAGE_NAME: ${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_WEBAPP_IMAGE_NAME }}
+      DOCKER_WEBAPP_IMAGE_NAME: ${{ env.DOCKER_WEBAPP_IMAGE_NAME }}
     steps:
     - uses: actions/checkout@v4
     - uses: dorny/paths-filter@v2
