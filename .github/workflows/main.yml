@@ -10,10 +10,10 @@ env:
   PNPM_VERSION: 8.5.1
   PYTHON_VERSION: 3.10.15
   NODE_VERSION: 18
-  AZURE_RESOURCE_GROUP_NAME: "azure-ml-baptiste"
+  AZURE_RESOURCE_GROUP_NAME: "azure-ml-bapt"
   AZURE_LOCATION: "northeurope"
-  AZURE_ML_WORKSPACE_NAME: "cats-dogs-baptiste"
-  AZURE_WEBAPP_NAME: "cats-dogs-baptiste"
+  AZURE_ML_WORKSPACE_NAME: "cats-dogs-bapt"
+  AZURE_WEBAPP_NAME: "cats-dogs-bapt"
   DELETE_WEBAPP: "false"
   DOCKER_API_IMAGE_NAME: "mlopspython-api"
   DOCKER_REPOSITORY: ${{ github.repository_owner }}
