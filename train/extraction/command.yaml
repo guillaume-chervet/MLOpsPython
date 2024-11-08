@@ -4,12 +4,12 @@ type: command
 
 name: extraction
 display_name: Extraction
-description: Extract images from pdfs
+description: Extract images from videos
 version: 0.0.1
 is_deterministic: true
 
 inputs:
-  pdfs_input:
+  trailers_input:
     type: uri_folder
 
 outputs:
@@ -28,7 +28,7 @@ additional_includes:
    - "../../packages/mlopspython-extraction/mlopspython_extraction"
 command: >-
   python command.py
-  --pdfs_input ${{inputs.pdfs_input}}
+  --trailers_input ${{inputs.trailers_input}}
   --images_output ${{outputs.images_output}}
   --hash_output ${{outputs.hash_output}}
 

@@ -6,7 +6,7 @@ from label_split_data import DataSplit, LabelSplitDataInput
 parser = argparse.ArgumentParser("label_split_data")
 parser.add_argument("--labels_input", type=str)
 parser.add_argument("--images_input", type=str)
-parser.add_argument("--pdfs_input", type=str)
+parser.add_argument("--trailers_input", type=str)
 parser.add_argument("--split_images_output", type=str)
 parser.add_argument("--split_integration_output", type=str)
 
@@ -14,7 +14,7 @@ parser.add_argument("--split_integration_output", type=str)
 args = parser.parse_args()
 labels_input = args.labels_input
 images_input = args.images_input
-pdfs_input = args.pdfs_input
+trailers_input = args.trailers_input
 split_images_output = args.split_images_output
 split_integration_output = args.split_integration_output
 
@@ -31,7 +31,7 @@ labels_files_path = Path(labels_input) / "cats-dogs-others-classification-annota
 label_split_data_input = LabelSplitDataInput(
     labels_files_path,
     Path(images_input),
-    Path(pdfs_input),
+    Path(trailers_input),
     Path(split_images_output),
     Path(split_integration_output),
     number_file_by_label,

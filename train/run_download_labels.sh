@@ -1,6 +1,6 @@
 resource_group=$1
 workspace_name=$2
-dataset_name=cats_dogs_others_labels
+dataset_name=movie-trailer-labels
 dataset_version=1
 
 echo "Init labels dataset"
@@ -11,7 +11,7 @@ if [ $RESULT -eq 0 ]; then
 else
   echo "Dataset not found so create it"
   poetry run python run_download_labels.py \
-    --project_name "cats_dogs_others_classification" \
+    --project_name "triple-a-project" \
     --api_url "https://axaguildev-ecotag.azurewebsites.net/api/server"
 
   az ml data create -f dataset-labels.yml --resource-group $resource_group --workspace-name $workspace_name

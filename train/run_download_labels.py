@@ -12,7 +12,7 @@ from ecotag_sdk.ecotag import (
 parser = argparse.ArgumentParser("download_labels")
 parser.add_argument("--access_token", type=str, default="")
 parser.add_argument(
-    "--project_name", type=str, default="cats_dogs_others_classification"
+    "--project_name", type=str, default="triple-a-project"
 )
 parser.add_argument(
     "--api_url",
@@ -42,7 +42,7 @@ if access_token == "":
 async def main():
     base_path = Path(__file__).resolve().parent
     dataset_path = base_path / "labels"
-    filename = "cats-dogs-others-classification-annotations.json"
+    filename = "movie-trailer-annotations.json"
     dataset_path.mkdir(exist_ok=True)
 
     api_information = ApiInformation(api_url=api_url, access_token=access_token)

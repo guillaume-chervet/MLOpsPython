@@ -67,16 +67,16 @@ ml_client.begin_create_or_update(cluster_basic).result()
 
 @pipeline(default_compute=cluster_name)
 def azureml_pipeline(
-    pdfs_input_data: Input(type=AssetTypes.URI_FOLDER),
+    trailers_input_data: Input(type=AssetTypes.URI_FOLDER),
     labels_input_data: Input(type=AssetTypes.URI_FOLDER),
 ):
     extraction_step = load_component(source="extraction/command.yaml")
-    extraction = extraction_step(pdfs_input=pdfs_input_data)
+    extraction = extraction_step(trailers_input=trailers_input_data)
 
     label_split_data_step = load_component(source="label_split_data/command.yaml")
     label_split_data = label_split_data_step(
         labels_input=labels_input_data,
-        pdfs_input=pdfs_input_data,
+        trailers_input=trailers_input_data,
         images_input=extraction.outputs.images_output,
     )
 

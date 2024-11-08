@@ -72,7 +72,7 @@ class LabelSplitDataResult:
 class LabelSplitDataInput:
     input_labels_path: Path
     input_images_directory: Path
-    input_pdfs_directory: Path
+    input_trailers_directory: Path
     output_images_directory: Path
     output_integration_directory: Path
     number_image_by_label: int = 3
@@ -93,7 +93,7 @@ class DataSplit:
     ) -> LabelSplitDataResult:
         input_labels_path = input.input_labels_path
         input_images_directory = input.input_images_directory
-        input_pdfs_directory = input.input_pdfs_directory
+        input_trailers_directory = input.input_trailers_directory
         output_images_directory = input.output_images_directory
         output_integration_directory = input.output_integration_directory
         number_image_by_label = input.number_image_by_label
@@ -105,15 +105,15 @@ class DataSplit:
         if ratio_number_test_image + ratio_number_test_image > 1:
             raise Exception("sum of ratio must be inferior or equal to 1")
 
-        copy_pdfs_integration_input = CopyPdfsIntegrationInput(input_images_directory,
-                                                               input_pdfs_directory,
+        copy_trailers_integration_input = CopyPdfsIntegrationInput(input_images_directory,
+                                                               input_trailers_directory,
                                                                output_integration_directory,
                                                                number_pdfs_integration)
 
-        pdfs_integration = copy_pdfs_integration(self.data_random, self.data_manager, copy_pdfs_integration_input)
+        trailers_integration = copy_pdfs_integration(self.data_random, self.data_manager, copy_trailers_integration_input)
 
         split_copy_data_input = SplitCopyDataInput(input_images_directory, input_labels_path, number_image_by_label,
-                                                   output_images_directory, pdfs_integration,
+                                                   output_images_directory, trailers_integration,
                                                    ratio_number_test_image, ratio_number_train_image)
 
         return split_copy_data(self.data_random,
@@ -127,7 +127,7 @@ class SplitCopyDataInput:
     input_labels_path: Path
     number_image_by_label: int
     output_images_directory: Path
-    pdfs_integration: [str]
+    trailers_integration: [str]
     ratio_number_test_image: float
     ratio_number_train_image: float
 
@@ -139,14 +139,14 @@ def split_copy_data(data_random: IDataRandom,
     input_labels_path = input.input_labels_path
     number_image_by_label = input.number_image_by_label
     output_images_directory = input.output_images_directory
-    pdfs_integration = input.pdfs_integration
+    trailers_integration = input.trailers_integration
     ratio_number_test_image = input.ratio_number_test_image
     ratio_number_train_image = input.ratio_number_train_image
 
     data_manager.create_directory(output_images_directory)
     label_data = data_manager.load_json(input_labels_path)
-    split_paths = {"cat": [], "dog": [], "other": []}
-    labels = ["cat", "dog", "other"]
+    split_paths = {"arme": [], "agression": [], "alcool": [], "tout public": []}
+    labels = ["arme", "agression", "alcool", "tout public"]
     split_directory_names = ["train", "test", "evaluate"]
     annotations = label_data["annotations"]
     data_random.shuffle(annotations)
@@ -171,8 +171,8 @@ def split_copy_data(data_random: IDataRandom,
             )
             data_manager.create_directory(labels_directory)
             for filename in splitted[split_directory_names.index(split_directory_name)]:
-                image_pdf_name = filename.split("_")[0]
-                if image_pdf_name + ".pdf" in pdfs_integration:
+                image_trailer_name = filename.split("_")[0]
+                if image_trailer_name + ".mp4" in trailers_integration:
                     continue
                 output_filename = label + "_" + filename
                 destination_path = labels_directory / output_filename
@@ -194,38 +194,38 @@ def split_copy_data(data_random: IDataRandom,
 @dataclass
 class CopyPdfsIntegrationInput:
     input_images_directory: Path
-    input_pdfs_directory: Path
+    input_trailers_directory: Path
     output_integration_directory: Path
-    number_pdfs_integration: int
+    number_trailers_integration: int
 
 
 def copy_pdfs_integration(data_random: IDataRandom,
                           data_manager: IDataManager,
                           input: CopyPdfsIntegrationInput):
     input_images_directory = input.input_images_directory
-    input_pdfs_directory = input.input_pdfs_directory
+    input_trailers_directory = input.input_trailers_directory
     output_integration_directory = input.output_integration_directory
-    number_pdfs_integration = input.number_pdfs_integration
+    number_trailers_integration = input.number_trailers_integration
 
     data_manager.create_directory(output_integration_directory)
-    pdfs = data_manager.list_files(input_pdfs_directory, ".pdf")
-    data_random.shuffle(pdfs)
+    trailers = data_manager.list_files(input_trailers_directory, ".mp4")
+    data_random.shuffle(trailers)
 
-    images = data_manager.list_files(input_images_directory, ".png")
+    images = data_manager.list_files(input_images_directory, ".jpeg")
 
-    if len(pdfs) > number_pdfs_integration:
-        pdfs = pdfs[:number_pdfs_integration]
-    pdf_output_directory = output_integration_directory
+    if len(trailers) > number_trailers_integration:
+        trailers = trailers[:number_trailers_integration]
+    trailer_output_directory = output_integration_directory
 
-    pdfs_integration = []
-    for pdf in pdfs:
-        pdfs_integration.append(pdf.name)
-        data_manager.copy_file(pdf, pdf_output_directory / pdf.name)
+    trailers_integration = []
+    for trailer in trailers:
+        trailers_integration.append(trailer.name)
+        data_manager.copy_file(trailer, trailer_output_directory / trailer.name)
     for image_path in images:
-        image_pdf_name = image_path.name.split("_")[0]
-        if image_pdf_name + ".pdf" not in pdfs_integration:
+        image_trailer_name = image_path.name.split("_")[0]
+        if image_trailer_name + ".mp4" not in trailers_integration:
             continue
-        data_manager.create_directory(pdf_output_directory / image_pdf_name)
-        image_output_path = pdf_output_directory / image_pdf_name / image_path.name
+        data_manager.create_directory(trailer_output_directory / image_trailer_name)
+        image_output_path = trailer_output_directory / image_trailer_name / image_path.name
         data_manager.copy_file(image_path, image_output_path)
-    return pdfs_integration
+    return trailers_integration

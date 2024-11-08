@@ -6,6 +6,6 @@ $schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
 # ADLS gen2: abfss://<file_system>@<account_name>.dfs.core.windows.net/<path>/
 # Datastore: azureml://datastores/<data_store_name>/paths/<path>
 type: uri_folder
-name: cats_dogs_others_labels
-description: Cats Dogs and Others Labels
-path: ./dataset-cats-dogs-others-labels
+name: movie-trailers-labels
+description: Movie trailer Labels
+path: ./movie-trailer-dataset
