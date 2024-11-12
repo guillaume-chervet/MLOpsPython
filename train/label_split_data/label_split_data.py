@@ -110,7 +110,7 @@ class DataSplit:
                                                                output_integration_directory,
                                                                number_pdfs_integration)
 
-        trailers_integration = copy_pdfs_integration(self.data_random, self.data_manager, copy_trailers_integration_input)
+        trailers_integration = copy_trailers_integration(self.data_random, self.data_manager, copy_trailers_integration_input)
 
         split_copy_data_input = SplitCopyDataInput(input_images_directory, input_labels_path, number_image_by_label,
                                                    output_images_directory, trailers_integration,
@@ -199,7 +199,7 @@ class CopyPdfsIntegrationInput:
     number_trailers_integration: int
 
 
-def copy_pdfs_integration(data_random: IDataRandom,
+def copy_trailers_integration(data_random: IDataRandom,
                           data_manager: IDataManager,
                           input: CopyPdfsIntegrationInput):
     input_images_directory = input.input_images_directory
@@ -211,7 +211,7 @@ def copy_pdfs_integration(data_random: IDataRandom,
     trailers = data_manager.list_files(input_trailers_directory, ".mp4")
     data_random.shuffle(trailers)
 
-    images = data_manager.list_files(input_images_directory, ".jpeg")
+    images = data_manager.list_files(input_images_directory, ".jpg")
 
     if len(trailers) > number_trailers_integration:
         trailers = trailers[:number_trailers_integration]

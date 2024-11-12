@@ -1,5 +1,6 @@
 import shutil
 import unittest
+import json
 from pathlib import Path
 from unittest.mock import MagicMock
 
@@ -11,7 +12,17 @@ output_pdf_directory = BASE_PATH / "output_integration"
 input_directory = BASE_PATH / "input"
 input_images_directory = input_directory / "images"
 input_labels_path = input_directory / "labels" / "labels.json"
-input_pdfs_directory = input_directory / "pdfs"
+input_pdfs_directory = input_directory / "trailers"
+
+with open(input_labels_path, "w") as f:
+    labels_data = json.load(f)
+
+#def extract_expected_paths(labels_data):
+#    expected_paths = []
+#    for item in labels_data:
+#        filename = item.get("filename")
+#        if filename:
+
 
 
 class LabelSplitDataTest(unittest.TestCase):
@@ -22,13 +33,13 @@ class LabelSplitDataTest(unittest.TestCase):
             shutil.rmtree(str(output_pdf_directory))
 
         def shuffle(x):
-            mypdf = None
+            mytrailer = None
             for c in x:
-                if isinstance(c, Path) and str(c).endswith("c.pdf"):
-                    mypdf = c
-            if mypdf is not None:
-                x.remove(mypdf)
-                x.insert(0, mypdf)
+                if isinstance(c, Path) and str(c).endswith(".mp4"):
+                    mytrailer = c
+            if mytrailer is not None:
+                x.remove(mytrailer)
+                x.insert(0, mytrailer)
             return x
 
         files_copied = []

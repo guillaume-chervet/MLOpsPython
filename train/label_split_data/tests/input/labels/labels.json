@@ -1,56 +1,615 @@
 {
   "annotations": [
     {
-      "fileName": "a_page0_index0.png",
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1533.jpg",
       "annotation": {
-        "label": "other"
-      }
-    },{
-      "fileName": "b_page2_index0.png",
-      "annotation": {
-        "label": "other"
+        "label": "tout-public"
       }
     },
     {
-      "fileName": "b_page1_index0.png",
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2409.jpg",
       "annotation": {
-        "label": "other"
+        "label": "tout-public"
       }
     },
     {
-      "fileName": "b_page1_index0.png",
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2190.jpg",
       "annotation": {
-        "label": "cat"
+        "label": "tout-public"
       }
     },
     {
-      "fileName": "b_page2_index0.png",
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1825.jpg",
       "annotation": {
-        "label": "cat"
+        "label": "tout-public"
       }
     },
     {
-      "fileName": "b_page2_index0.png",
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2628.jpg",
       "annotation": {
-        "label": "dog"
+        "label": "tout-public"
       }
     },
     {
-      "fileName": "b_page3_index0.png",
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1460.jpg",
       "annotation": {
-        "label": "cat"
+        "label": "tout-public"
       }
     },
     {
-      "fileName": "b_page4_index0.png",
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_3504.jpg",
       "annotation": {
-        "label": "dog"
+        "label": "tout-public"
       }
     },
     {
-      "fileName": "c_page4_index0.png",
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0219.jpg",
       "annotation": {
-        "label": "dog"
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2263.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0730.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0803.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2044.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2774.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0073.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_3358.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0584.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2336.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2920.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_3139.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_3431.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1606.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_3577.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2701.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1898.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0949.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_3212.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2555.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2993.jpg",
+      "annotation": {
+        "label": "agression"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1971.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_3285.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_3650.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0876.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1387.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0146.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_3066.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1241.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2117.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1168.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0511.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1752.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2482.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1022.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1679.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0292.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0365.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_2847.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0000.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1314.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0438.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_0657.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Mad MaxFury Road - Official Retaliate Trailer (HD)_image_1095.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0094.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0893.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_2068.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1598.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0987.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1551.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0282.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_2162.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0799.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0846.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1222.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1645.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_2209.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1410.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1786.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1927.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0188.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_2021.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1833.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1739.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0235.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0423.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1504.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1175.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0658.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1692.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0141.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1457.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0517.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0752.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0940.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1974.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_2115.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_2256.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1880.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1081.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0564.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1034.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1269.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0470.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0047.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0000.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0329.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0611.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0705.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_2303.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1316.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_0376.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1128.jpg",
+      "annotation": {
+        "label": "arme"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_1363.jpg",
+      "annotation": {
+        "label": "tout-public"
+      }
+    },
+    {
+      "fileName": "Pulp Fiction  Official Trailer (HD) - John TravoltaUma Thurman_ Samuel L. Jackson  MIRAMAX_image_2350.jpg",
+      "annotation": {
+        "label": "tout-public"
       }
     }
   ]
