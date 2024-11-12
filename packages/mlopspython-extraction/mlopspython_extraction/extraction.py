@@ -36,7 +36,7 @@ def extract_images_stream(trailer_path) -> Iterable[ImageResult]:
         if i % interval == 0:
             image = reader.get_data(i)
             image_bytes_io = BytesIO()
-            imageio.imwrite(image_bytes_io, image, format="jpeg")
+            imageio.imwrite(image_bytes_io, image, format="jpg")
             image_bytes_io.seek(0)
 
             yield ImageResult(image_bytes_io, 0, i)
@@ -81,8 +81,10 @@ class ExtractImages:
         self.data_manager = data_manager
 
     def extract_images(self, trailers_directory_path: str, images_directory_path: str) -> ExtractImagesResult:
+        print("[DEBUG] Extracting images from trailers")
         manager = self.data_manager
         trailers = manager.get_movie_trailers(trailers_directory_path)
+        print("[DEBUG] Found {0} trailers".format(len(trailers)))
         manager.create_directory(images_directory_path)
         number_images_output = 0
         for trailer_path in trailers:
