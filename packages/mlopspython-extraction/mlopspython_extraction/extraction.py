@@ -64,12 +64,6 @@ class IDataManager(ABC):
 
 class DataManager(IDataManager):
     def get_movie_trailers(self, trailers_directory_path: str) -> List[Path]:
-        print("[DEBUG] Getting movie trailers")
-        print("[DEBUG] trailers_directory_path: {0}".format(trailers_directory_path))
-        print("[DEBUG] trailers_directory_path type: {0}".format(type(trailers_directory_path)))
-        print("[DEBUG] trailers_directory_path isdir: {0}".format(Path(trailers_directory_path).is_dir()))
-        print("DEBUG] trailers_directory_path exists: {0}".format(Path(trailers_directory_path).exists()))
-        print("[DEBUG] trailers_directory_path iterdir: {0}".format([mt for mt in Path(trailers_directory_path).iterdir()]))
         trailers = [mt for mt in Path(trailers_directory_path).iterdir() if mt.is_file() and mt.suffix == ".mp4"]
         trailers.sort()
         return trailers
@@ -87,7 +81,6 @@ class ExtractImages:
         self.data_manager = data_manager
 
     def extract_images(self, trailers_directory_path: str, images_directory_path: str) -> ExtractImagesResult:
-        print("[DEBUG] Extracting images from trailers")
         manager = self.data_manager
         trailers = manager.get_movie_trailers(trailers_directory_path)
         print("[DEBUG] Found {0} trailers".format(len(trailers)))
@@ -96,6 +89,7 @@ class ExtractImages:
         for trailer_path in trailers:
             for image_stream in extract_images_stream(trailer_path):
                 filename = "{0}_image{1}.png".format(trailer_path.stem, str(image_stream.index_image))
+                print("[DEBUG] Saving image {0}".format(filename))
                 number_images_output = number_images_output + 1
                 manager.save_image(image_stream.image_bytes_io, str(Path(images_directory_path) / filename))
 
