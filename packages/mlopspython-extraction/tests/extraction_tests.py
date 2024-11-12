@@ -25,6 +25,7 @@ class TestExtraction(unittest.TestCase):
         data_manager_mock.create_directory.assert_called_once_with(output_directory_str)
 
         save_image_call = data_manager_mock.save_image.call_args_list
+        print("[DEBUG] test_trailers_images_should_be_extracted------")
         print("[DEBUG] save_image_call: {0}".format(save_image_call))
         self.assertTrue(save_image_call[0].args[1].endswith("_image0.jpg"))
         self.assertTrue(save_image_call[1].args[1].endswith("_image50.jpg"))
