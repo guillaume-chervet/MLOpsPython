@@ -64,6 +64,12 @@ class IDataManager(ABC):
 
 class DataManager(IDataManager):
     def get_movie_trailers(self, trailers_directory_path: str) -> List[Path]:
+        print("[DEBUG] Getting movie trailers")
+        print("[DEBUG] trailers_directory_path: {0}".format(trailers_directory_path))
+        print("[DEBUG] trailers_directory_path type: {0}".format(type(trailers_directory_path)))
+        print("[DEBUG] trailers_directory_path isdir: {0}".format(Path(trailers_directory_path).is_dir()))
+        print("DEBUG] trailers_directory_path exists: {0}".format(Path(trailers_directory_path).exists()))
+        print("[DEBUG] trailers_directory_path iterdir: {0}".format([mt for mt in Path(trailers_directory_path).iterdir()]))
         trailers = [mt for mt in Path(trailers_directory_path).iterdir() if mt.is_file() and mt.suffix == ".mp4"]
         trailers.sort()
         return trailers
