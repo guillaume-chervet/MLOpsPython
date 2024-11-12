@@ -71,6 +71,7 @@ jobs:
     - name: Run unit tests Packages Extraction
       working-directory: packages/mlopspython-extraction
       run: |
+        poetry lock
         poetry install
         poetry run coverage run -m unittest tests.extraction_tests
         poetry run coverage report
