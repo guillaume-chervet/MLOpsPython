@@ -10,9 +10,9 @@ input_directory = BASE_PATH / "input"
 
 
 class TestExtraction(unittest.TestCase):
-    def test_pdfs_images_should_be_extracted(self):
+    def test_trailers_images_should_be_extracted(self):
         data_manager_mock = Mock(IDataManager)
-        data_manager_mock.get_pdf_files = DataManager().get_pdf_files
+        data_manager_mock.get_movie_trailers = DataManager().get_movie_trailers
         data_manager_mock.save_image = Mock()
         data_manager_mock.create_directory = Mock()
 
@@ -25,9 +25,9 @@ class TestExtraction(unittest.TestCase):
         data_manager_mock.create_directory.assert_called_once_with(output_directory_str)
 
         save_image_call = data_manager_mock.save_image.call_args_list
-        self.assertTrue(save_image_call[0].args[1].endswith("a_page0_index0.png"))
-        self.assertTrue(save_image_call[1].args[1].endswith("a_page1_index0.png"))
-        self.assertTrue(save_image_call[2].args[1].endswith("b_page0_index0.png"))
+        self.assertTrue(save_image_call[0].args[1].endswith("_image0.jpg"))
+        self.assertTrue(save_image_call[1].args[1].endswith("_image50.jpg"))
+        self.assertTrue(save_image_call[2].args[1].endswith("_image100.jpg"))
 
 
 if __name__ == "__main__":

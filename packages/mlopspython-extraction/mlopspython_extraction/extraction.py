@@ -39,9 +39,7 @@ def extract_images_stream(trailer_path) -> Iterable[ImageResult]:
             imageio.imwrite(image_bytes_io, image, format="jpeg")
             image_bytes_io.seek(0)
 
-            yield ImageResult(image_bytes_io, i, 0)
-
-
+            yield ImageResult(image_bytes_io, 0, i)
 
 
 @dataclass
@@ -89,8 +87,7 @@ class ExtractImages:
         number_images_output = 0
         for trailer_path in trailers:
             for image_stream in extract_images_stream(trailer_path):
-                filename = "{0}_page{1}_index{2}.png".format(trailer_path.stem, str(image_stream.index_page),
-                                                             str(image_stream.index_image))
+                filename = "{0}_image{1}.png".format(trailer_path.stem, str(image_stream.index_image))
                 number_images_output = number_images_output + 1
                 manager.save_image(image_stream.image_bytes_io, str(Path(images_directory_path) / filename))
 
