@@ -10,8 +10,8 @@ if [ $RESULT -eq 0 ]; then
   echo "Dataset already exist"
 else
   echo "Dataset not found so create it"
-  git clone https://github.com/guillaume-chervet/dataset-cats-dogs-others-labels
-  rm -rf dataset-cats-dogs-others-labels/.git
+  git clone https://github.com/Marius-courquin/triple-a-labels
+  rm -rf triple-a-labels/.git
   az ml data create -f movie-trailer-dataset-labels.yml --resource-group $resource_group --workspace-name $workspace_name
 
 fi
