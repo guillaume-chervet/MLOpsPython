@@ -1,26 +1,21 @@
-FROM python:3.10.15 AS base
-
-FROM base AS builder
-
+FROM python:3.10.15 AS builder
 WORKDIR /app
+SHELL ["/bin/bash", "-lc"]
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:${PATH}"
 
-ENV PATH=/root/.local/bin:$PATH \
-    POETRY_VERSION=1.8.3
+COPY pyproject.toml uv.lock* ./
+COPY train/output/pyproject.toml train/output/pyproject.toml
 
-RUN pip install --user "poetry==${POETRY_VERSION}"
-RUN python -m venv /venv
+WORKDIR /app/train/output
+RUN uv sync --no-dev
 
-COPY poetry.lock pyproject.toml ./
+COPY train/output/ ./
 
-# --sync            Synchronize the environment with the locked packages and the specified groups
-# --no-directory    Do not install any directory path dependencies; useful to install dependencies without source code
-# -n                Do not ask any interactive question.
-RUN . /venv/bin/activate && poetry install -n --sync --no-directory --no-root && poetry run pip install setuptools
-
-
-FROM base AS final
+FROM python:3.10.15-slim AS final
+WORKDIR /app
 RUN useradd -r newuser
+COPY --from=builder /app/train/output/.venv /app/.venv
+COPY --from=builder /app/train/output/ ./
 USER newuser
-ENV PATH=/venv/bin:${PATH}
-
-COPY --from=builder /venv /venv
+ENV PATH="/app/.venv/bin:${PATH}"

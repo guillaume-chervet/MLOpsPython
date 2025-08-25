@@ -1,16 +1,16 @@
-[tool.poetry]
+[project]
 name = "pipeline"
 version = "0.0.0"
 description = ""
-authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
-
-[tool.poetry.dependencies]
-python = "~3.10"
-mldesigner = "0.1.0b17"
-azure-ai-ml = "1.12.1"
-"azure.identity" = "1.15.0"
-ecotag-sdk="0.1.2"
+authors = [{ name = "Guillaume Chervet", email = "guillaume.chervet@gmail.com" }]
+requires-python = ">=3.10,<3.11"
+dependencies = [
+  "mldesigner==0.1.0b17",
+  "azure-ai-ml==1.12.1",
+  "ecotag-sdk==0.1.2",
+  "azure.identity==1.15.0",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

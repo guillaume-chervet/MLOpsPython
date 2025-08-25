@@ -1,42 +1,36 @@
-# Étape 1 : Image de construction
+# --------- builder ----------
 FROM python:3.10.15 AS builder
-
-# Définir le répertoire de travail
 WORKDIR /app
 
-# Installer Poetry
-ENV POETRY_VERSION=1.8.3
-RUN pip install "poetry==${POETRY_VERSION}"
+SHELL ["/bin/bash", "-lc"]
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:${PATH}"
 
-# Copier le code de l'application
-COPY . /app
+# Copie minimale pour résoudre les deps + path locals
+COPY pyproject.toml uv.lock* ./
+COPY packages/ packages/
+COPY production/api/pyproject.toml production/api/pyproject.toml
+COPY production/api/packages/ production/api/packages/
 
-# Configurer Poetry pour utiliser un environnement virtuel dans le projet
-RUN poetry config virtualenvs.in-project true
+WORKDIR /app/production/api
+RUN uv sync --no-dev
 
-# Installer les dépendances sans installer le package racine
-RUN poetry install --no-root --only main
+# Copier le reste du code de l'API (si nécessaire)
+COPY production/api/ ./
 
-# Étape 2 : Image finale
+# --------- final ----------
 FROM python:3.10.15-slim
+WORKDIR /app
 
-# Créer un utilisateur non-root
+# Utilisateur non-root
 RUN useradd -ms /bin/bash newuser
 
-# Définir le répertoire de travail
-WORKDIR /app
+# Env virtuel prêt
+COPY --from=builder /app/production/api/.venv /app/.venv
+COPY --from=builder /app/production/api/ ./
 
-# Copier l'application et l'environnement virtuel depuis l'image de construction
-COPY --from=builder /app /app
-
-# Changer le propriétaire du répertoire de l'application
 RUN chown -R newuser:newuser /app
-
-# Passer à l'utilisateur non-root
 USER newuser
 
-# Ajouter l'environnement virtuel au PATH
 ENV PATH="/app/.venv/bin:${PATH}"
-
-# Démarrer l'application
 CMD ["python", "./main.py"]

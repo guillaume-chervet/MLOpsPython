@@ -1,21 +1,24 @@
-[tool.poetry]
+[project]
 name = "mlopspython-inference"
 version = "0.0.0"
 description = ""
-authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
 readme = "README.md"
+authors = [{ name = "Guillaume Chervet", email = "guillaume.chervet@gmail.com" }]
+requires-python = ">=3.8,<3.11"
+dependencies = [
+  "opencv-contrib-python-headless==4.8.0.76",
+  "keras==2.12.0",
+  "tensorflow==2.12.0",
+  "tensorflow-io-gcs-filesystem==0.27.0",
+  "pillow==10.0.1",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.8,<3.11"
-opencv-contrib-python-headless = "4.8.0.76"
-keras = "2.12.0"
-tensorflow = "2.12.0"
-tensorflow-io-gcs-filesystem = "0.27.0"
-pillow = "10.0.1"
+[tool.hatch.build.targets.wheel]
+packages = ["mlopspython_inference"]
 
-[tool.poetry.group.dev.dependencies]
-coverage = "^7.3.1"
+[dependency-groups]
+dev = ["coverage>=7.3.1,<8"]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
