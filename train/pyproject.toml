@@ -5,10 +5,10 @@ description = ""
 authors = [{ name = "Guillaume Chervet", email = "guillaume.chervet@gmail.com" }]
 requires-python = ">=3.10,<3.11"
 dependencies = [
-  "mldesigner==0.1.0b17",
-  "azure-ai-ml==1.12.1",
+  "mldesigner==0.1.0b20",
+  "azure-ai-ml==1.28.1",
   "ecotag-sdk==0.1.2",
-  "azure.identity==1.15.0"
+  "azure.identity==1.24.0"
 ]
 
 [tool.uv]

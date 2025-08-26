@@ -15,7 +15,7 @@ dependencies = [
   "uvicorn==0.23.2",
   "python-multipart==0.0.6",
   "pillow==10.0.1",
-  "ml-dtypes==0.4.1",
+  "ml-dtypes==0.5.3",
   "mlopspython-inference",
   "mlopspython-extraction",
 ]
