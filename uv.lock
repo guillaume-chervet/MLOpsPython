@@ -1323,6 +1323,11 @@ dependencies = [
     { name = "pymupdf" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "coverage" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "azure-ai-ml", specifier = "==1.12.1" },
@@ -1333,6 +1338,9 @@ requires-dist = [
     { name = "mlopspython-extraction", editable = "packages/mlopspython-extraction" },
     { name = "pymupdf", specifier = "==1.23.3" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "coverage", specifier = ">=7.3.1,<8" }]
 
 [[package]]
 name = "msal"
@@ -1583,12 +1591,20 @@ dependencies = [
     { name = "mldesigner" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "coverage" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "azure-ai-ml", specifier = "==1.12.1" },
     { name = "azure-identity", specifier = "==1.15.0" },
     { name = "mldesigner", specifier = "==0.1.0b17" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "coverage", specifier = ">=7.3.1,<8" }]
 
 [[package]]
 name = "platformdirs"

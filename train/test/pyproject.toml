@@ -19,6 +19,7 @@ dependencies = [
   "mlopspython-inference",
 ]
 
+
 [tool.uv.sources]
 mlopspython-inference = { path = "../../packages/mlopspython-inference", editable = true }
 

@@ -10,6 +10,10 @@ dependencies = [
   "azure.identity==1.15.0",
 ]
 
+
+[dependency-groups]
+dev = ["coverage>=7.3.1,<8"]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
