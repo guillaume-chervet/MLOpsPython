@@ -1,9 +1,11 @@
+#!/usr/bin/env bash
 # ./setup_AzureML.sh <AZURE_SUBSCRIPTION_ID> <AZURE_RESOURCE_GROUP_NAME> <AZURE_ML_WORKSPACE_NAME> <AZURE_LOCATION>
-AZURE_SUBSCRIPTION_ID=$1 #az account list
+set -euo pipefail
+
+AZURE_SUBSCRIPTION_ID=$1
 AZURE_RESOURCE_GROUP_NAME=$2
 AZURE_ML_WORKSPACE_NAME=$3
-AZURE_LOCATION=$4 #az account list-locations -o table
-
+AZURE_LOCATION=$4
 
 # Initialize Azure ML Workspace
 az account set --subscription "$AZURE_SUBSCRIPTION_ID"
@@ -17,7 +19,7 @@ cwd=$(pwd)
 cd ./extraction
 chmod +x ./init_dataset.sh
 ./init_dataset.sh "$AZURE_RESOURCE_GROUP_NAME" "$AZURE_ML_WORKSPACE_NAME"
-cd $cwd
+cd "$cwd"
 
 # Initialize Azure ML Labels Dataset
 chmod +x ./run_download_labels.sh
