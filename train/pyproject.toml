@@ -9,6 +9,7 @@ dependencies = [
   "azure-ai-ml==1.12.1",
   "ecotag-sdk==0.1.2",
   "azure.identity==1.15.0",
+  "marshmallow<4"
 ]
 
 [tool.uv]

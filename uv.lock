@@ -65,7 +65,7 @@ wheels = [
 [[package]]
 name = "api"
 version = "0.0.0"
-source = { editable = "production/api" }
+source = { virtual = "production/api" }
 dependencies = [
     { name = "fastapi" },
     { name = "keras" },
@@ -556,7 +556,7 @@ wheels = [
 [[package]]
 name = "extraction"
 version = "0.0.0"
-source = { editable = "train/output" }
+source = { virtual = "train/output" }
 dependencies = [
     { name = "azure-ai-ml" },
     { name = "azure-identity" },
@@ -990,7 +990,7 @@ wheels = [
 [[package]]
 name = "label-split-data"
 version = "0.0.0"
-source = { editable = "train/label_split_data" }
+source = { virtual = "train/label_split_data" }
 dependencies = [
     { name = "azure-ai-ml" },
     { name = "azureml-mlflow" },
@@ -1139,7 +1139,7 @@ wheels = [
 [[package]]
 name = "mlcli"
 version = "0.0.0"
-source = { editable = "production/integration/mlcli" }
+source = { virtual = "production/integration/mlcli" }
 dependencies = [
     { name = "azure-ai-ml" },
     { name = "azureml-mlflow" },
@@ -1312,7 +1312,7 @@ dev = [{ name = "coverage", specifier = ">=7.3.1,<8" }]
 [[package]]
 name = "mlopspython-train-extraction"
 version = "0.0.0"
-source = { editable = "train/extraction" }
+source = { virtual = "train/extraction" }
 dependencies = [
     { name = "azure-ai-ml" },
     { name = "azureml-mlflow" },
@@ -1584,7 +1584,7 @@ wheels = [
 [[package]]
 name = "pipeline"
 version = "0.0.0"
-source = { editable = "production/integration" }
+source = { virtual = "production/integration" }
 dependencies = [
     { name = "azure-ai-ml" },
     { name = "azure-identity" },
@@ -2200,7 +2200,7 @@ wheels = [
 [[package]]
 name = "test"
 version = "0.0.0"
-source = { editable = "train/test" }
+source = { virtual = "train/test" }
 dependencies = [
     { name = "azure-ai-ml" },
     { name = "azureml-mlflow" },
@@ -2271,7 +2271,7 @@ wheels = [
 [[package]]
 name = "train"
 version = "0.0.0"
-source = { editable = "train/train" }
+source = { virtual = "train/train" }
 dependencies = [
     { name = "azure-ai-ml" },
     { name = "azureml-mlflow" },
