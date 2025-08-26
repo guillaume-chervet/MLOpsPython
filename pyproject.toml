@@ -15,6 +15,9 @@ dev = [
 
 [tool.uv]
 package = false
+constraint-dependencies = [
+  "marshmallow<4",
+]
 
 [build-system]
 requires = ["hatchling"]

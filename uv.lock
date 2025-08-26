@@ -22,6 +22,7 @@ members = [
     "test",
     "train",
 ]
+constraints = [{ name = "marshmallow", specifier = "<4" }]
 
 [[package]]
 name = "absl-py"
