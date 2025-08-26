@@ -16,7 +16,7 @@ dev = [
 [tool.uv]
 package = false
 constraint-dependencies = [
-  "marshmallow<4",
+  "marshmallow==3.21.3"
 ]
 
 [build-system]
