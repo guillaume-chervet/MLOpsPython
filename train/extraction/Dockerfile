@@ -6,7 +6,6 @@ ENV PATH="/root/.local/bin:${PATH}"
 
 # Manifeste + deps locales
 COPY pyproject.toml uv.lock* ./
-COPY packages/ packages/
 COPY train/extraction/pyproject.toml train/extraction/pyproject.toml
 
 WORKDIR /app/train/extraction

@@ -5,7 +5,6 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/root/.local/bin:${PATH}"
 
 COPY pyproject.toml uv.lock* ./
-COPY packages/ packages/
 COPY train/test/pyproject.toml train/test/pyproject.toml
 
 WORKDIR /app/train/test
