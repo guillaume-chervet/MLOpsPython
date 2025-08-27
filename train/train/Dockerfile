@@ -5,17 +5,11 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/root/.local/bin:${PATH}"
 
 COPY pyproject.toml uv.lock* ./
-COPY train/train/pyproject.toml train/train/pyproject.toml
-
-WORKDIR /app/train/train
 RUN uv sync --no-dev
 
-COPY train/train/ ./
-
-FROM python:3.10.15-slim AS final
-WORKDIR /app
+FROM base AS final
 RUN useradd -r newuser
-COPY --from=builder /app/train/train/.venv /app/.venv
-COPY --from=builder /app/train/train/ ./
 USER newuser
-ENV PATH="/app/.venv/bin:${PATH}"
+ENV PATH=/venv/bin:${PATH}
+
+COPY --from=builder /venv /venv
