@@ -8,7 +8,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/root/.local/bin:${PATH}"
 
 COPY pyproject.toml uv.lock* ./
-RUN uv venv && . /venv/bin/activate && uv sync --no-dev
+RUN uv venv && source .venv/bin/activate && uv sync --no-dev
 
 FROM base AS final
 RUN useradd -r newuser
