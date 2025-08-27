@@ -1,23 +1,18 @@
-FROM python:3.10.15 AS builder
+FROM python:3.10.15 AS base
+
+FROM base AS builder
+
 WORKDIR /app
 SHELL ["/bin/bash", "-lc"]
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/root/.local/bin:${PATH}"
 
-# Manifeste + deps locales
 COPY pyproject.toml uv.lock* ./
-COPY train/extraction/pyproject.toml train/extraction/pyproject.toml
+RUN uv venv && . /venv/bin/activate && uv sync --no-dev
 
-WORKDIR /app/train/extraction
-RUN uv sync --no-dev
-
-# Code
-COPY train/extraction/ ./
-
-FROM python:3.10.15-slim AS final
-WORKDIR /app
+FROM base AS final
 RUN useradd -r newuser
-COPY --from=builder /app/train/extraction/.venv /app/.venv
-COPY --from=builder /app/train/extraction/ ./
 USER newuser
-ENV PATH="/app/.venv/bin:${PATH}"
+ENV PATH=/venv/bin:${PATH}
+
+COPY --from=builder /venv /venv
