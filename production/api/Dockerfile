@@ -12,7 +12,7 @@ COPY packages/ packages/
 COPY production/api/pyproject.toml production/api/pyproject.toml
 
 WORKDIR /app/production/api
-RUN uv sync --no-dev
+RUN uv venv && source .venv/bin/activate && uv sync --no-dev
 
 # Copier le reste du code de l'API (si nécessaire)
 COPY production/api/ ./

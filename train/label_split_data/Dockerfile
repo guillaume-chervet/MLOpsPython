@@ -16,7 +16,7 @@ COPY train/label_split_data/pyproject.toml train/label_split_data/pyproject.toml
 
 # 2) Installer dans le sous-projet
 WORKDIR /app/train/label_split_data
-RUN uv sync --no-dev
+RUN uv venv && source .venv/bin/activate && uv sync --no-dev
 
 # 3) Copier le code (optionnel si déjà fait)
 COPY train/label_split_data/ ./
