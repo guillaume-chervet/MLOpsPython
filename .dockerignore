@@ -9,3 +9,5 @@
 
 # Garder le dossier du composant
 !train/**
+!production/api/**
+!production/integration/**

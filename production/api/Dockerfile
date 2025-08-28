@@ -10,7 +10,6 @@ ENV PATH="/root/.local/bin:${PATH}"
 COPY pyproject.toml uv.lock* ./
 COPY packages/ packages/
 COPY production/api/pyproject.toml production/api/pyproject.toml
-COPY production/api/packages/ production/api/packages/
 
 WORKDIR /app/production/api
 RUN uv sync --no-dev
