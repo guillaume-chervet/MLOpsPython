@@ -25,7 +25,8 @@ outputs:
 environment:
   name: test_environment
   build:
-    path: ./
+    path: ../../
+    dockerfile_path: train/test/Dockerfile
 
 code: ./
 additional_includes:

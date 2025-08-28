@@ -1,4 +1,3 @@
-
 $schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
 type: command
 
@@ -21,14 +20,13 @@ outputs:
 environment:
   name: extraction_environment
   build:
-    path: ./
+    path: ../../
+    dockerfile_path: train/extraction/Dockerfile
 
 code: ./
-additional_includes:
-   - "../../packages/mlopspython-extraction/mlopspython_extraction"
+
 command: >-
   python command.py
   --pdfs_input ${{inputs.pdfs_input}}
   --images_output ${{outputs.images_output}}
   --hash_output ${{outputs.hash_output}}
-

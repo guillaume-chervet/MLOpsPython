@@ -25,7 +25,8 @@ outputs:
 environment:
   name: label_split_data_environment
   build:
-    path: ./
+    path: ../../
+    dockerfile_path: train/label_split_data/Dockerfile
 
 code: ./
 command: >-

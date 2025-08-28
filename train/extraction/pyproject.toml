@@ -21,8 +21,6 @@ package = false
 [dependency-groups]
 dev = ["coverage>=7.3.1,<8"]
 
-[tool.uv.sources]
-mlopspython-extraction = { path = "../../packages/mlopspython-extraction", editable = true }
 
 [build-system]
 requires = ["hatchling"]
