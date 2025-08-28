@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [{ name = "Guillaume Chervet", email = "guillaume.chervet@gmail.com" }]
 requires-python = ">=3.10,<3.11"
 dependencies = [
-  "pymupdf==1.23.3",
+  "pymupdf==1.25.4",
   "keras==2.12.0",
   "tensorflow==2.12.0",
   "fastapi==0.95.0",
@@ -19,10 +19,6 @@ dependencies = [
   "mlopspython-inference",
   "mlopspython-extraction",
 ]
-
-[tool.uv.sources]
-mlopspython-inference = { workspace = true }
-mlopspython-extraction = { workspace = true }
 
 [dependency-groups]
 dev = ["coverage>=7.3.1,<8"]

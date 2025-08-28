@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [{ name = "Guillaume Chervet", email = "guillaume.chervet@gmail.com" }]
 requires-python = ">=3.10,<3.11"
 dependencies = [
-  "pymupdf==1.23.3",
+  "pymupdf==1.25.4",
   "mlopspython-extraction",
   "mldesigner==0.1.0b20",
   "mlflow==2.22.1",

@@ -11,7 +11,10 @@ dependencies = []
 dev = [
   "black==23.9.1",
   "flake8==6.1.0",
+  "coverage>=7.3.1,<8"
 ]
+
+
 
 [tool.uv]
 package = false
@@ -31,4 +34,6 @@ mlopspython-inference = { workspace = true }
 members = [
   "packages/*",
   "train/*",
+  "production/api",
+  "production/integration/*",
 ]

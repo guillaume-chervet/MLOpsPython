@@ -121,14 +121,14 @@ jobs:
       - name: Unit tests - Extraction (train/extraction)
         working-directory: train/extraction
         run: |
-          uv sync --group dev
+          #uv sync --group dev
           # uv run coverage run -m unittest tests.extraction_test
           # uv run coverage report
 
       - name: Unit tests - Label Split Data (train/label_split_data)
         working-directory: train/label_split_data
         run: |
-          uv sync --group dev
+          #uv sync --group dev
           uv run coverage run -m unittest tests.label_split_data_test
           uv run coverage report
 
