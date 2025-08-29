@@ -15,6 +15,9 @@ dependencies = [
   "ml-dtypes==0.5.3",
 ]
 
+[tool.uv.sources]
+mlopspython-extraction = { path = "../../packages/mlopspython-extraction", editable=true}
+
 [tool.uv]
 package = false
 

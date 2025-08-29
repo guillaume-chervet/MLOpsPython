@@ -20,6 +20,10 @@ dependencies = [
   "mlopspython-extraction",
 ]
 
+[tool.uv.sources]
+mlopspython-inference = { path = "../../packages/mlopspython-inference", editable=true}
+mlopspython-extraction = { path = "../../packages/mlopspython-extraction", editable=true}
+
 [dependency-groups]
 dev = ["coverage>=7.3.1,<8"]
 
