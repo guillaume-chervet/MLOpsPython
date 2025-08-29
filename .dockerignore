@@ -11,3 +11,5 @@
 !train/**
 !production/api/**
 !production/integration/**
+
+**/.venv
