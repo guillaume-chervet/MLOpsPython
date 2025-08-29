@@ -85,6 +85,8 @@ jobs:
       - name: Test Packages Extraction
         working-directory: packages/mlopspython-extraction
         run: |
+          uv venv 
+          source .venv/bin/activate
           uv sync --group dev
           uv run coverage run -m unittest tests.extraction_tests
           uv run coverage report
@@ -92,6 +94,8 @@ jobs:
       - name: Test Packages Inference
         working-directory: packages/mlopspython-inference
         run: |
+          uv venv 
+          source .venv/bin/activate
           uv sync --group dev
           # uv run coverage run -m unittest tests.inference_tests
           # uv run coverage report
@@ -121,6 +125,8 @@ jobs:
       - name: Unit tests - Extraction (train/extraction)
         working-directory: train/extraction
         run: |
+          uv venv 
+          source .venv/bin/activate
           uv sync --group dev
           uv run coverage run -m unittest tests.extraction_test
           uv run coverage report
@@ -128,6 +134,8 @@ jobs:
       - name: Unit tests - Label Split Data (train/label_split_data)
         working-directory: train/label_split_data
         run: |
+          uv venv 
+          source .venv/bin/activate
           uv sync --group dev
           uv run coverage run -m unittest tests.label_split_data_test
           uv run coverage report
