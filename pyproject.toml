@@ -4,7 +4,7 @@ version = "0.0.0"
 description = ""
 readme = "README.md"
 authors = [{ name = "Guillaume Chervet", email = "guillaume.chervet@gmail.com" }]
-requires-python = ">=3.10,<3.11"
+requires-python = ">=3.8.1,<3.11"
 dependencies = [
     "mlopspython-extraction",
     "mlopspython-inference"
@@ -30,3 +30,4 @@ build-backend = "uv_build"
 [tool.uv.sources]
 mlopspython-extraction = { path = "packages/mlopspython-extraction", editable = true}
 mlopspython-inference = { path = "packages/mlopspython-inference", editable = true}
+mlopspython_train_extraction = { path = "train/extraction", editable = true}
