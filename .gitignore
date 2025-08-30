@@ -1,3 +1,4 @@
 .idea
 /get-pip.py
 .venv
+**/.coverage
