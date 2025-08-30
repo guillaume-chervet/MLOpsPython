@@ -55,7 +55,10 @@ jobs:
           uv --version
 
       - name: Sync dev dependencies (root)
-        run: uv sync --group dev
+        run: | 
+          uv venv 
+          source .venv/bin/activate
+          uv sync --group dev
 
       - name: Format with Black
         run: |

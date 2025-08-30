@@ -17,7 +17,7 @@ if [ "${download_model_version}" != "none" ]; then
 fi
 
 echo ">> Installing with uv (workspace)"
-chmod +x poetry-install.sh
-./poetry-install.sh
+chmod +x uv-install.sh
+./uv-install.sh
 
 echo ">> Done."
