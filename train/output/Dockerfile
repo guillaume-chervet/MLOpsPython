@@ -16,7 +16,7 @@ COPY train/output/pyproject.toml train/output/pyproject.toml
 
 # 2) Installer dans le sous-projet
 WORKDIR /app/train/output
-RUN uv venv && source .venv/bin/activate && uv sync --no-dev
+RUN uv venv && source .venv/bin/activate && uv sync --no-editable --no-dev
 
 # 3) Copier le code (optionnel si déjà fait)
 COPY train/output/ ./

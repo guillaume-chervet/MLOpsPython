@@ -24,7 +24,7 @@ environment:
 
 code: ./
 command: >-
-  uv run python command.py
+  python command.py
   --split_images_input ${{inputs.split_images_input}}
   --model_output ${{outputs.model_output}}
 

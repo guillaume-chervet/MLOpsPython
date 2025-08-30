@@ -30,7 +30,7 @@ environment:
 
 code: ./
 command: >-
-  uv run python command.py
+  python command.py
   --extraction_images_input ${{inputs.extraction_hash_input}}
   --extraction_hash_input ${{inputs.extraction_hash_input}}
   --model_input ${{inputs.model_input}}

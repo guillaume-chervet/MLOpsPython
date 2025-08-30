@@ -17,7 +17,7 @@ COPY train/extraction/pyproject.toml train/extraction/pyproject.toml
 
 # 2) Installer dans le sous-projet
 WORKDIR /app/train/extraction
-RUN uv venv && source .venv/bin/activate && uv sync --no-dev
+RUN uv venv && source .venv/bin/activate && uv sync --no-editable --no-dev
 
 # 3) Copier le code (optionnel si déjà fait)
 COPY train/extraction/ ./

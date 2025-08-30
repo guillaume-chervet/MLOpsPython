@@ -26,7 +26,7 @@ environment:
 code: ./
 
 command: >-
-  uv run python command.py
+  python command.py
   --pdfs_input ${{inputs.pdfs_input}}
   --images_output ${{outputs.images_output}}
   --hash_output ${{outputs.hash_output}}

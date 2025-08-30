@@ -30,7 +30,7 @@ environment:
 
 code: ./
 command: >-
-  uv run python command.py
+  python command.py
   --labels_input ${{inputs.labels_input}}
   --images_input ${{inputs.images_input}}
   --pdfs_input ${{inputs.pdfs_input}}

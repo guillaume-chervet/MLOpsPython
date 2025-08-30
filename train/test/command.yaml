@@ -32,7 +32,7 @@ code: ./
 additional_includes:
    - "../../packages/mlopspython-inference/mlopspython_inference"
 command: >-
-  uv run python command.py
+  python command.py
   --model_input ${{inputs.model_input}}
   --images_input ${{inputs.images_input}}
   --integration_input ${{inputs.integration_input}}
