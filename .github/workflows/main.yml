@@ -308,7 +308,7 @@ jobs:
       image_name: ${{ needs.train.outputs.DOCKER_API_IMAGE_NAME }}
       image_version: ${{ needs.tags.outputs.new_version }}
       image_build_args: ""
-      image_context: ./production/api
+      image_context: "."
       image_file: "./production/api/Dockerfile"
       model_version: ${{ needs.train.outputs.MODEL_VERSION }}
       resource_group: ${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
