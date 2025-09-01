@@ -1,37 +1,22 @@
-# ------------ base -------------
-FROM python:3.10.15 AS base
+FROM python:3.10 AS base
 
-# ------------ builder -----------
 FROM base AS builder
+
 WORKDIR /app
-SHELL ["/bin/bash", "-lc"]
 
-# uv
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/root/.local/bin:${PATH}"
+RUN pip install uv
 
-# 1) Copier les manifestes NÉCESSAIRES depuis la RACINE
-COPY pyproject.toml uv.lock* ./
-COPY packages/ packages/
-COPY train/test/pyproject.toml train/test/pyproject.toml
+COPY ./ /app/
 
-# 2) Installer dans le sous-projet
-WORKDIR /app/train/test
-RUN uv venv && source .venv/bin/activate && uv sync --no-editable --no-dev
+RUN uv venv
+RUN . .venv/bin/activate
 
-# 3) Copier le code (optionnel si déjà fait)
-COPY train/test/ ./
+RUN export UV_HTTP_TIMEOUT=300 && uv sync --no-editable
 
-# ------------ final -------------
+
 FROM base AS final
-WORKDIR /app
 RUN useradd -r newuser
 USER newuser
-ENV PATH="/app/train/test/.venv/bin:${PATH}"
+ENV PATH=/.venv/bin:${PATH}
 
-# On ne copie que l'env et le code du sous-projet
-COPY --from=builder /app/train/test/.venv /app/train/test/.venv
-COPY --from=builder /app/train/test/ /app/train/test/
-
-# Point d’entrée — adapte si nécessaire
-WORKDIR /app/train/test
+COPY --from=builder /app/.venv /.venv

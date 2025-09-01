@@ -19,8 +19,7 @@ outputs:
 environment:
   name: train_environment
   build:
-    path: ../../
-    dockerfile_path: train/train/Dockerfile
+    path: ./
 
 code: ./
 command: >-
