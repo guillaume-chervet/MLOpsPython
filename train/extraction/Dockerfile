@@ -1,22 +1,31 @@
-FROM python:3.10 AS base
+FROM python:3.10 AS builder
 
-FROM base AS builder
+ENV DEBIAN_FRONTEND=noninteractive \
+    VIRTUAL_ENV=/opt/venv \
+    UV_HTTP_TIMEOUT=300
+
+RUN python -m pip install -U pip && pip install uv
+
+RUN uv venv "$VIRTUAL_ENV"
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+WORKDIR /workspace
+
+COPY . /workspace/projects/step
+
+COPY packages /workspace/packages
+WORKDIR /workspace/projects/step
+RUN uv sync --no-editable --frozen
+
+FROM python:3.10 AS final
+ENV VIRTUAL_ENV=/opt/venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+COPY --from=builder $VIRTUAL_ENV $VIRTUAL_ENV
 
 WORKDIR /app
+COPY --from=builder /workspace/projects/step ./
 
-RUN pip install uv
+RUN useradd -r appuser
+USER appuser
 
-COPY ./ /app/
-
-RUN uv venv
-RUN . .venv/bin/activate
-
-RUN export UV_HTTP_TIMEOUT=300 && uv sync --no-editable
-
-
-FROM base AS final
-RUN useradd -r newuser
-USER newuser
-ENV PATH=/.venv/bin:${PATH}
-
-COPY --from=builder /app/.venv /.venv
