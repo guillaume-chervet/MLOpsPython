@@ -340,7 +340,10 @@ jobs:
             --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} \
             --image ${{ env.DOCKER_REGISTRY }}/${{ needs.train.outputs.DOCKER_REPOSITORY }}/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} \
             --ports 5000 \
-            --os-type Linux
+            --os-type Linux \
+            --cpu 1 \
+            --memory 1 
+          
 
   integration_tests:
     environment: MLOpsPython
