@@ -29,24 +29,38 @@ additional_includes:
 code: ./
 
 command: >
-  python -m pip install -U pip uv
+  set -euo pipefail
+
+  # 1) Installer pip à jour + uv (PAS "venv")
+  python -m pip install --upgrade pip uv
+
+  # 2) Créer le venv géré par uv (pas besoin de "source")
   uv venv
 
-  # Recrée ../../packages si nécessaire
+  # 3) Recréer l'arbo pour les deps path ../../packages/...
   mkdir -p ../../packages
 
-  # Copier tous les packages inclus (ex: packages/mlopspython-*)
-  for pkg_path in $(find ./packages -mindepth 1 -maxdepth 1 -type d 2>/dev/null || true); do
-    pkg_name=$(basename "$pkg_path")
-    echo "→ Copie de $pkg_name"
-    mkdir -p "../../packages/$pkg_name"
-    cp -a "$pkg_path"/. "../../packages/$pkg_name/"
-  done
+  # 4) Copier TOUS les sous-dossiers de ./packages/ s'il existe
+  if [ -d "./packages" ]; then
+    # boucle robuste même si vide
+    for d in ./packages/*; do
+      [ -d "$d" ] || continue
+      name="$(basename "$d")"
+      echo "→ Copie du package: $name"
+      rm -rf "../../packages/$name"
+      cp -a "$d" "../../packages/$name"
+    done
+  else
+    echo "ℹ️ Aucun dossier ./packages — copie ignorée."
+  fi
 
-  # Installer les dépendances (et le projet lui-même en non-editable)
+  # 5) Installer les deps (au choix)
+  # - Installe deps + projet en non-editable :
   UV_HTTP_TIMEOUT=300 uv sync --no-editable
+  # - (ou) seulement les deps, sans le projet :
+  # UV_HTTP_TIMEOUT=300 uv sync --no-install
 
-  # Lancer le script dans le venv sans source
+  # 6) Lancer ton script dans le venv créé par uv
   uv run python command.py \
     --pdfs_input ${{inputs.pdfs_input}} \
     --images_output ${{outputs.images_output}} \
