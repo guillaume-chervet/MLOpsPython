@@ -29,8 +29,6 @@ environment:
 
 code: ./
 
-additional_includes:
-   - "../../packages/mlopspython-extraction/mlopspython_extraction"
 command: >-
   python command.py
   --extraction_images_input ${{inputs.extraction_hash_input}}

@@ -1,5 +1,5 @@
 /tests
-/dataset-cats-dogs-others
+/.venv
 *.sh
 *.yml
 *.yaml
