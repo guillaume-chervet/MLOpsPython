@@ -23,17 +23,31 @@ environment:
     path: ./
 
 additional_includes:
-   - "../../packages/mlopspython-extraction"
+   - "../../packages"
 
 
 code: ./
 
 command:
-  #python -m pip install -U pip uv
-  #uv venv
-  #UV_HTTP_TIMEOUT=300
-  #uv sync --no-editable
-  python command.py
-  --pdfs_input ${{inputs.pdfs_input}}
-  --images_output ${{outputs.images_output}}
-  --hash_output ${{outputs.hash_output}}
+  python -m pip install -U pip uv
+  uv venv
+
+  # Recrée ../../packages si nécessaire
+  mkdir -p ../../packages
+
+  # Copier tous les packages inclus (ex: packages/mlopspython-*)
+  for pkg_path in $(find ./packages -mindepth 1 -maxdepth 1 -type d 2>/dev/null || true); do
+    pkg_name=$(basename "$pkg_path")
+    echo "→ Copie de $pkg_name"
+    mkdir -p "../../packages/$pkg_name"
+    cp -a "$pkg_path"/. "../../packages/$pkg_name/"
+  done
+
+  # Installer les dépendances (et le projet lui-même en non-editable)
+  UV_HTTP_TIMEOUT=300 uv sync --no-editable
+
+  # Lancer le script dans le venv sans source
+  uv run python command.py \
+    --pdfs_input ${{inputs.pdfs_input}} \
+    --images_output ${{outputs.images_output}} \
+    --hash_output ${{outputs.hash_output}}
