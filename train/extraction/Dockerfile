@@ -1,3 +1,5 @@
+FROM python:3.10 AS builder
+
 # Copie tout le contexte dans /app
 COPY . /app
 
