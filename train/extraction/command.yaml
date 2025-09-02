@@ -29,11 +29,11 @@ additional_includes:
 code: ./
 
 command:
-  python -m pip install -U pip uv
-  uv venv
-  UV_HTTP_TIMEOUT=300
-  uv sync --no-editable
-  uv run python command.py
+  #python -m pip install -U pip uv
+  #uv venv
+  #UV_HTTP_TIMEOUT=300
+  #uv sync --no-editable
+  python command.py
   --pdfs_input ${{inputs.pdfs_input}}
   --images_output ${{outputs.images_output}}
   --hash_output ${{outputs.hash_output}}
