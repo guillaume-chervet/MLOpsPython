@@ -28,7 +28,7 @@ additional_includes:
 
 code: ./
 
-command:
+command: >
   python -m pip install -U pip uv
   uv venv
 
