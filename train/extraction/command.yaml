@@ -23,7 +23,7 @@ environment:
     path: ./
 
 additional_includes:
-   - "../../packages/mlopspython-extraction/mlopspython_extraction"
+   - "../../packages/mlopspython-extraction"
 
 
 code: ./
