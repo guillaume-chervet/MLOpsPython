@@ -31,36 +31,27 @@ code: ./
 command: >
   set -euo pipefail
 
-  # 1) Installer pip à jour + uv (PAS "venv")
+  # 1) Outils d'install
   python -m pip install --upgrade pip uv
-
-  # 2) Créer le venv géré par uv (pas besoin de "source")
   uv venv
 
-  # 3) Recréer l'arbo pour les deps path ../../packages/...
-  mkdir -p ../../packages
+  # 2) Recréer une copie du projet dans ./train/step SANS le dossier packages/
+  mkdir -p train/step
+  # Copie tous les éléments top-level sauf 'packages' et 'train' (pour éviter la récursion)
+  find . -mindepth 1 -maxdepth 1 \
+      ! -name packages \
+      ! -name train \
+      -exec cp -a {} ./train/step/ \;
 
-  # 4) Copier TOUS les sous-dossiers de ./packages/ s'il existe
-  if [ -d "./packages" ]; then
-    # boucle robuste même si vide
-    for d in ./packages/*; do
-      [ -d "$d" ] || continue
-      name="$(basename "$d")"
-      echo "→ Copie du package: $name"
-      rm -rf "../../packages/$name"
-      cp -a "$d" "../../packages/$name"
-    done
-  else
-    echo "ℹ️ Aucun dossier ./packages — copie ignorée."
-  fi
+  # 3) Se placer dans la copie; ../../packages -> ./packages
+  cd train/step
 
-  # 5) Installer les deps (au choix)
-  # - Installe deps + projet en non-editable :
-  UV_HTTP_TIMEOUT=300 uv sync --no-editable
-  # - (ou) seulement les deps, sans le projet :
-  # UV_HTTP_TIMEOUT=300 uv sync --no-install
+  # 4) Installer les dépendances
+  #    Choisis l’une des deux lignes:
+  UV_HTTP_TIMEOUT=300 uv sync --no-editable         # deps + projet en non-editable
+  # UV_HTTP_TIMEOUT=300 uv sync --no-install        # seulement les deps (équiv. poetry --no-root)
 
-  # 6) Lancer ton script dans le venv créé par uv
+  # 5) Lancer le script via le venv géré par uv (pas besoin de "source")
   uv run python command.py \
     --pdfs_input ${{inputs.pdfs_input}} \
     --images_output ${{outputs.images_output}} \
