@@ -28,7 +28,7 @@ additional_includes:
 
 code: ./
 
-command: >-
+command: |
   set -euo pipefail
 
   # 1) Outils d'install
