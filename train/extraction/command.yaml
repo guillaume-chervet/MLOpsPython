@@ -28,8 +28,12 @@ additional_includes:
 
 code: ./
 
-command: >-
-  python command.py
+command:
+  python -m pip install -U pip && pip install uv
+  uv venv 
+  source .venv/bin/activate
+  uv sync --no-dev --no-editable
+  uv run python command.py
   --pdfs_input ${{inputs.pdfs_input}}
   --images_output ${{outputs.images_output}}
   --hash_output ${{outputs.hash_output}}
