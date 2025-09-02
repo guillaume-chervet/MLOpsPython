@@ -10,7 +10,10 @@ TAGS=${5:-"{}"}
 
 # S'assurer que les deps du projet "train" sont installées
 cd "$(dirname "$0")"   # -> train/
-uv sync --no-dev
+python -m pip install -U pip && pip install uv
+uv venv
+source .venv/bin/activate
+uv sync --no-dev --no-editable
 
 uv run python azureml_run_pipeline.py \
   --subscription_id "$AZURE_SUBSCRIPTION_ID" \

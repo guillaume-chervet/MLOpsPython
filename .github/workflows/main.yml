@@ -214,10 +214,10 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
           uv --version
 
-      - name: Build packages (Makefile)
-        run: |
-          chmod +x ./Makefile || true
-          ./Makefile || true
+     # - name: Build packages (Makefile)
+      #  run: |
+      #    chmod +x ./Makefile || true
+      #    ./Makefile || true
 
       - name: azure login
         uses: azure/login@v1
