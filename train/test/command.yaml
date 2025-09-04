@@ -30,7 +30,7 @@ environment:
 code: ./
 
 additional_includes:
-   - "../../packages"
+   - "../../packages/mlopspython-inference"
 
 command: |
   set -euo pipefail
