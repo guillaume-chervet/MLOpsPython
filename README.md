@@ -14,7 +14,7 @@ Requirements, Download and install:
 - Postman: https://www.postman.com/downloads/
 - NodeJS 18.x: https://nodejs.org/en/download/
 
-On windows your have to use "GitBash" only because all commands are linux bash commands.
+> **On windows** your have to use "GitBash" only because all commands are linux bash commands.
 ```sh
 git clone https://www.github.com/guillaume-chervet/MLOpsPython
 

@@ -39,6 +39,8 @@ command: |
   uv venv
 
   mkdir -p train/step
+  mkdir -p packages
+  mv ./mlopspython-inference ./packages
 
   # Copie tout sauf "packages" et "train"
   sh -c 'find . -mindepth 1 -maxdepth 1 \

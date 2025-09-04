@@ -23,7 +23,7 @@ environment:
     path: ./
 
 additional_includes:
-   - "../../packages"
+   - "../../packages/mlopspython-extraction"
 
 
 code: ./
@@ -35,6 +35,8 @@ command: |
   uv venv
 
   mkdir -p train/step
+  mkdir -p packages
+  mv ./mlopspython-extraction ./packages
 
   # Copie tout sauf "packages" et "train"
   sh -c 'find . -mindepth 1 -maxdepth 1 \
