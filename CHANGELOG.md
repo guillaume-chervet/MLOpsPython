@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.14.0
+
+- [6738751](/67387516f7fb3864c00f7b767976d05533f032c1) - feat(all): uv instead of poetry (#45) (release), 2025-09-05 by *Guillaume Chervet*
+
+
 ## v0.13.13
 
 - [8ebe81d](/8ebe81d514152b2c5569ea817d469d1d1285e3d6) - fix(webapp): docker build bad uri, 2024-10-25 by *Guillaume Chervet*
@@ -305,15 +310,5 @@
 ## v0.0.40
 
 - [8b451f2](/8b451f204893f95d1682a308c157ccdcf325ea00) - chore(summit): upgrade ci, 2023-05-22 by *Guillaume Chervet*
-
-
-## v0.0.39
-
-- [52023ae](/52023aeea9ce5476b97e308e2ddfa36d2ec68747) - docs(summit): fix typo, 2023-05-22 by *Guillaume Chervet*
-- [ad25d2d](/ad25d2dc3deb0e3a8391a9e5150ff69f23f10ff5) - [no ci] fix(production): fix docker build, 2023-05-22 by *Guillaume Chervet*
-- [8610592](/861059261a29e1a5c3f2da335be9fc720fd5c226) - [no ci] fix(production): update tests to output diff, 2023-05-22 by *Guillaume Chervet*
-- [216857d](/216857d8f221512285265f1b6039f8772c1ed973) - [no ci] fix(webapp): add serviceworker to gitignore, 2023-05-22 by *Guillaume Chervet*
-- [cd424ae](/cd424ae5eb4fa205f37fecb8d2b79a20fcb82580) - [no ci] docs(summit): add docker fallback, 2023-05-22 by *Guillaume Chervet*
-- [9fb5ea0](/9fb5ea0eb089f25f92feb643bab337806a38662d) - [no ci] docs(summit): fix download model dir, 2023-05-22 by *Guillaume Chervet*
 
 
