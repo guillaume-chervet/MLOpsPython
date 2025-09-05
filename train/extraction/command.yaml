@@ -1,4 +1,3 @@
-
 $schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
 type: command
 
@@ -23,12 +22,33 @@ environment:
   build:
     path: ./
 
-code: ./
 additional_includes:
-   - "../../packages/mlopspython-extraction/mlopspython_extraction"
-command: >-
-  python command.py
-  --pdfs_input ${{inputs.pdfs_input}}
-  --images_output ${{outputs.images_output}}
-  --hash_output ${{outputs.hash_output}}
+   - "../../packages/mlopspython-extraction"
 
+
+code: ./
+
+command: |
+  set -euo pipefail
+
+  python -m pip install --upgrade pip uv
+  uv venv
+
+  mkdir -p train/step
+  mkdir -p packages
+  mv ./mlopspython-extraction ./packages
+
+  # Copie tout sauf "packages" et "train"
+  sh -c 'find . -mindepth 1 -maxdepth 1 \
+      ! -name packages \
+      ! -name train \
+      -exec cp -a {} ./train/step/ \;'
+
+  cd train/step
+
+  UV_HTTP_TIMEOUT=300 uv sync --no-editable
+
+  uv run python command.py \
+    --pdfs_input ${{inputs.pdfs_input}} \
+    --images_output ${{outputs.images_output}} \
+    --hash_output ${{outputs.hash_output}}

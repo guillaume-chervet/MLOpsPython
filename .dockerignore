@@ -1,0 +1,15 @@
+# Ignorer tout sauf ce qui est utile pour build extraction
+*
+
+# Garder les manifests racine
+!pyproject.toml
+!README.md
+!uv.lock
+!packages/**
+
+# Garder le dossier du composant
+!train/**
+!production/api/**
+!production/integration/**
+
+**/.venv

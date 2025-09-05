@@ -1,4 +1,5 @@
 /tests
+/.venv
 *.sh
 *.yml
 *.yaml

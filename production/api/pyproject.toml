@@ -1,29 +1,35 @@
-[tool.poetry]
+[project]
 name = "api"
 version = "0.0.0"
 description = ""
-authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
 readme = "README.md"
-packages = [{ include = "*.py" }]
+authors = [{ name = "Guillaume Chervet", email = "guillaume.chervet@gmail.com" }]
+requires-python = ">=3.10,<3.11"
+dependencies = [
+  "pymupdf==1.25.4",
+  "keras==2.12.0",
+  "tensorflow==2.12.0",
+  "fastapi==0.95.0",
+  "opencv-contrib-python-headless==4.8.0.76",
+  "tensorflow-io-gcs-filesystem==0.27.0",
+  "uvicorn==0.23.2",
+  "python-multipart==0.0.6",
+  "pillow==10.0.1",
+  "ml-dtypes==0.5.3",
+  "mlopspython-inference",
+  "mlopspython-extraction",
+]
 
-[tool.poetry.dependencies]
-python = "~3.10"
-pymupdf = "1.23.3"
-keras = "2.12.0"
-tensorflow = "2.12.0"
-fastapi = "0.95.0"
-opencv-contrib-python-headless = "4.8.0.76"
-tensorflow-io-gcs-filesystem = "0.27.0"
-uvicorn = "0.23.2"
-python-multipart = "0.0.6"
-pillow = "10.0.1"
-ml-dtypes = "0.4.1"
-mlopspython-inference = {path = "packages/mlopspython-inference", develop = true}
-mlopspython-extraction = {path = "packages/mlopspython-extraction", develop = true }
+[tool.uv.sources]
+mlopspython-inference = { path = "../../packages/mlopspython-inference", editable=true}
+mlopspython-extraction = { path = "../../packages/mlopspython-extraction", editable=true}
 
-[tool.poetry.group.dev.dependencies]
-coverage = "^7.3.1"
+[dependency-groups]
+dev = ["coverage>=7.3.1,<8"]
+
+[tool.uv]
+package = false
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

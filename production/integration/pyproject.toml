@@ -1,15 +1,22 @@
-[tool.poetry]
+[project]
 name = "pipeline"
 version = "0.0.0"
 description = ""
-authors = ["Guillaume Chervet <guillaume.chervet@gmail.com>"]
+authors = [{ name = "Guillaume Chervet", email = "guillaume.chervet@gmail.com" }]
+requires-python = ">=3.10,<3.11"
+dependencies = [
+  "mldesigner==0.1.0b20",
+  "azure-ai-ml==1.28.1",
+  "azure.identity==1.24.0",
+]
 
-[tool.poetry.dependencies]
-python = "~3.10"
-mldesigner = "0.1.0b15"
-azure-ai-ml = "1.10.1"
-"azure.identity" = "1.14.0"
+
+[dependency-groups]
+dev = ["coverage>=7.3.1,<8"]
+
+[tool.uv]
+package = false
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

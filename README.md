@@ -1,3 +1,4 @@
+
 # MLOpsPython
 A real demo of Deep Learning project with preprocessing from development to production using code, ops and Machine Learning best practices. Production is a real time REST API.
 
@@ -10,10 +11,10 @@ Requirements, Download and install:
 - Python 3.10 : https://www.python.org/downloads/
 - Git: https://git-scm.com/downloads
 - Docker-desktop: https://www.docker.com/products/docker-desktop/
-- Postman: https://www.postman.com/downloads/
+- Bruno: https://www.usebruno.com/
 - NodeJS 18.x: https://nodejs.org/en/download/
 
-On windows your have to use "GitBash" only because all commands are linux bash commands.
+> **On windows** your have to use "GitBash" only because all commands are linux bash commands.
 ```sh
 git clone https://www.github.com/guillaume-chervet/MLOpsPython
 

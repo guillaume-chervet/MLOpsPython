@@ -1,3 +1,4 @@
 /tests
 /dataset-cats-dogs-others
 *.ipynb
+/.venv

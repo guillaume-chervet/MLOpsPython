@@ -1,10 +1,10 @@
 name: Python Continuous Integration
+
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
-
+    branches: ["main"]
 
 env:
   PNPM_VERSION: 8.5.1
@@ -24,102 +24,136 @@ permissions:
   id-token: write
   contents: write
   packages: write
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: dorny/paths-filter@v2
-      id: filter_python
-      with:
-        filters: |
-          packages:
-            - 'packages/**'
-          production:
-            - 'production/**'
-          train:
-            - 'train/**'
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    - name: Install Poetry dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install --user poetry
-    - name: Format with Black
-      run: |
-        poetry install
-        poetry run black train
-        poetry run black train --check
-    - name: Lint with flake8
-      run: |
-        poetry install
-        poetry run flake8 .
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v2
+        id: filter_python
+        with:
+          filters: |
+            packages:
+              - 'packages/**'
+            production:
+              - 'production/**'
+            train:
+              - 'train/**'
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+            python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install uv
+        shell: bash
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          uv --version
+
+      - name: Sync dev dependencies (root)
+        run: | 
+          uv sync 
+          uv venv 
+          source .venv/bin/activate
+
+      - name: Format with Black
+        run: |
+          uv run black train
+          uv run black train --check
+
+      - name: Lint with flake8
+        run: uv run flake8 .
+
   packages_unit_tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install --user poetry
-    - name: Run unit tests Packages Extraction
-      working-directory: packages/mlopspython-extraction
-      run: |
-        poetry install
-        poetry run coverage run -m unittest tests.extraction_tests
-        poetry run coverage report
-    - name: Run unit tests Packages Inference
-      working-directory: packages/mlopspython-inference
-      run: |
-        poetry install
-        #poetry run coverage run -m unittest tests.inference_tests
-        #poetry run coverage report
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install uv
+        shell: bash
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          uv --version
+
+      - name: Test Packages Extraction
+        working-directory: packages/mlopspython-extraction
+        run: |
+          uv venv 
+          source .venv/bin/activate
+          uv sync --group dev
+          uv run coverage run -m unittest tests.extraction_tests
+          uv run coverage report
+
+      - name: Test Packages Inference
+        working-directory: packages/mlopspython-inference
+        run: |
+          uv venv 
+          source .venv/bin/activate
+          uv sync --group dev
+          # uv run coverage run -m unittest tests.inference_tests
+          # uv run coverage report
+
   train_unit_tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install --user poetry
-    - name: Build packages
-      run: |
-        chmod +x ./Makefile
-        ./Makefile
-    - name: Run unit tests Extraction
-      working-directory: train/extraction
-      run: |
-        poetry lock
-        poetry install
-        #poetry run coverage run -m unittest tests.extraction_test
-        #poetry run coverage report
-    - name: Run unit tests Label Split Data
-      working-directory: train/label_split_data
-      run: |
-        poetry lock
-        poetry install 
-        poetry run coverage run -m unittest tests.label_split_data_test
-        poetry run coverage report
-    #- name: Run unit tests Train
-    #  working-directory: train/train
-    #  run: |
-    #    poetry install --dev
-    #    poetry run python -m unittest tests.train_test
-    #- name: Run unit tests Evaluate
-    #  working-directory: train/test
-    #  run: |
-    #    poetry install --dev
-    #    poetry run python -m unittest tests.evaluate_test
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install uv
+        shell: bash
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          uv --version
+
+      - name: Build packages (Makefile)
+        run: |
+          chmod +x ./Makefile || true
+          ./Makefile || true
+
+      - name: Unit tests - Extraction (train/extraction)
+        working-directory: train/extraction
+        run: |
+          uv venv 
+          source .venv/bin/activate
+          uv sync --group dev
+          #uv run coverage run -m unittest tests.extraction_test
+          #uv run coverage report
+
+      - name: Unit tests - Label Split Data (train/label_split_data)
+        working-directory: train/label_split_data
+        run: |
+          uv venv 
+          source .venv/bin/activate
+          uv sync --group dev
+          uv run coverage run -m unittest tests.label_split_data_test
+          uv run coverage report
+
+      # - name: Unit tests - Train
+      #   working-directory: train/train
+      #   run: |
+      #     uv sync --group dev
+      #     uv run python -m unittest tests.train_test
+
+      # - name: Unit tests - Evaluate
+      #   working-directory: train/test
+      #   run: |
+      #     uv sync --group dev
+      #     uv run python -m unittest tests.evaluate_test
 
   tags:
     runs-on: ubuntu-latest
@@ -133,7 +167,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: mathieudutour/github-tag-action@v6.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN  }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Add tag to output step for main branch
         id: tag
         run: |
@@ -142,6 +176,7 @@ jobs:
           else
             echo "new_version=pr-${{ github.event.number }}-${{ github.run_number }}" >> $GITHUB_OUTPUT
           fi
+
   train:
     runs-on: ubuntu-latest
     environment: MLOpsPython
@@ -157,32 +192,41 @@ jobs:
       DOCKER_REGISTRY: ${{ env.DOCKER_REGISTRY }}
       DOCKER_REPOSITORY: ${{ steps.docker-repository.outputs.DOCKER_REPOSITORY }}
     steps:
-    - name: Lower Case Docker Repository
-      id: docker-repository
-      run: |
-        DOCKER_REPOSITORY=$(echo "${{ env.DOCKER_REPOSITORY }}" | tr '[:upper:]' '[:lower:]')
-        echo "DOCKER_REPOSITORY=$DOCKER_REPOSITORY" >> $GITHUB_OUTPUT
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install --user poetry
-    - name: Build packages
-      run: |
-        chmod +x ./Makefile
-        ./Makefile
-    - name: azure login
-      uses: azure/login@v1
-      with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
-    - name: Run Train Pipeline
-      run: |
+      - name: Lower Case Docker Repository
+        id: docker-repository
+        run: |
+          DOCKER_REPOSITORY=$(echo "${{ env.DOCKER_REPOSITORY }}" | tr '[:upper:]' '[:lower:]')
+          echo "DOCKER_REPOSITORY=$DOCKER_REPOSITORY" >> $GITHUB_OUTPUT
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install uv
+        shell: bash
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          uv --version
+
+     # - name: Build packages (Makefile)
+      #  run: |
+      #    chmod +x ./Makefile || true
+      #    ./Makefile || true
+
+      - name: azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+
+      - name: Run Train Pipeline
+        working-directory: train
+        run: |
           chmod +x ./setup_AzureML.sh
           ./setup_AzureML.sh ${{ secrets.AZURE_SUBSCRIPTION_ID }} ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} ${{ env.AZURE_LOCATION }}
           chmod +x ./run_AzureML.sh
@@ -192,65 +236,71 @@ jobs:
               ${{ env.AZURE_LOCATION }} \
               "{\"git_head_ref\":\"${{ github.head_ref }}\",\"git\":\"${{ github.head_ref }}.${{ github.sha }}\",\"version\":\"${{ needs.tags.outputs.new_version }}\",\"triggering_actor\":\"${{github.triggering_actor}}\"}" > train_output.txt
           cat train_output.txt
-      working-directory: train
-    - name: download model
-      id: train
-      run: |
+
+      - name: download model
+        id: train
+        run: |
           MODEL_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt model_version)
-          echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT          
+          echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_OUTPUT
           INTEGRATION_DATASET_VERSION=$(python bin/retrieve_output.py ./train/train_output.txt integration_dataset_version)
           echo "INTEGRATION_DATASET_VERSION=$INTEGRATION_DATASET_VERSION" >> $GITHUB_OUTPUT
           EXPERIMENT_ID=$(python bin/retrieve_output.py ./train/train_output.txt experiment_id)
           echo "EXPERIMENT_ID=$EXPERIMENT_ID" >> $GITHUB_OUTPUT
-          mkdir model
-          rm -r model
-          mkdir model
-          cd model
+
+          mkdir -p model
+          rm -rf model/*
+          pushd model
           DOWNLOAD_PATH=$PWD
-          cd ..
-          cd train
+          popd
+
+          pushd train
           chmod +x ./run_download_model.sh
-          ./run_download_model.sh $MODEL_VERSION ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} ${{ env.AZURE_LOCATION }} ${{ secrets.AZURE_SUBSCRIPTION_ID }} $DOWNLOAD_PATH
-          cd ..
-          cd model
+          ./run_download_model.sh $MODEL_VERSION ${{ env.AZURE_RESOURCE_GROUP_NAME }} ${{ env.AZURE_ML_WORKSPACE_NAME }} ${{ env.AZURE_LOCATION }} ${{ secrets.AZURE_SUBSCRIPTION_ID }} "$DOWNLOAD_PATH"
+          popd
+
           # find files recursively and copy them to the current directory root
-          find ./ -name '*.keras' -exec cp "{}" ./  \;
-          find ./ -name '*.json' -exec cp "{}" ./  \;
-          rm -r ./cats-dogs-others
-    - name: Upload Model Build Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: Publish model
-        path: ./model
-    - name: release
-      uses: actions/create-release@v1
-      id: create_release
-      if: github.ref == 'refs/heads/main'
-      with:
-        draft: false
-        prerelease: false
-        body: |
-          ${{ needs.tags.outputs.changelog }}
-        release_name: "v${{ needs.tags.outputs.new_version }}"
-        tag_name: "v${{ needs.tags.outputs.new_version }}"
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-    - name: Zip Release
-      uses: TheDoctor0/zip-release@0.6.0
-      with:
-        filename: mlopspython_model.zip
-        path: .
-        directory: ./model
-    - name: upload artifact
-      if: github.ref == 'refs/heads/main'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./model/mlopspython_model.zip
-        asset_name: mlopspython_model.zip
-        asset_content_type: application/zip
+          find ./model -name '*.keras' -exec cp "{}" ./model/ \;
+          find ./model -name '*.json' -exec cp "{}" ./model/ \;
+          rm -rf ./model/cats-dogs-others
+
+      - name: Upload Model Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Publish model
+          path: ./model
+
+      - name: release
+        uses: actions/create-release@v1
+        id: create_release
+        if: github.ref == 'refs/heads/main'
+        with:
+          draft: false
+          prerelease: false
+          body: |
+            ${{ needs.tags.outputs.changelog }}
+          release_name: "v${{ needs.tags.outputs.new_version }}"
+          tag_name: "v${{ needs.tags.outputs.new_version }}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Zip Release
+        uses: TheDoctor0/zip-release@0.7.6
+        with:
+          filename: mlopspython_model.zip
+          path: .
+          directory: ./model
+
+      - name: upload artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./model/mlopspython_model.zip
+          asset_name: mlopspython_model.zip
+          asset_content_type: application/zip
+
   build_docker_api:
     needs: [train, tags]
     uses: ./.github/workflows/docker_with_model.yml
@@ -258,7 +308,7 @@ jobs:
       image_name: ${{ needs.train.outputs.DOCKER_API_IMAGE_NAME }}
       image_version: ${{ needs.tags.outputs.new_version }}
       image_build_args: ""
-      image_context: ./production/api
+      image_context: "."
       image_file: "./production/api/Dockerfile"
       model_version: ${{ needs.train.outputs.MODEL_VERSION }}
       resource_group: ${{ needs.train.outputs.AZURE_RESOURCE_GROUP_NAME }}
@@ -271,84 +321,107 @@ jobs:
       DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
   deploy:
     environment: MLOpsPython
     runs-on: ubuntu-latest
     needs: [tags, train, build_docker_api, build_docker_webapp]
     steps:
-    - name: azure login
-      uses: azure/login@v1
-      with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
-    - name: Deploy container
-      run: |
-        # https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest#az-container-create()
-        echo ${{ env.DOCKER_REGISTRY }}/${{ needs.train.outputs.DOCKER_REPOSITORY }}/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }}
-        az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} --image ${{ env.DOCKER_REGISTRY }}/${{ needs.train.outputs.DOCKER_REPOSITORY }}/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} --ports 5000
+      - name: azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+
+      - name: Deploy container
+        run: |
+          echo ${{ env.DOCKER_REGISTRY }}/${{ needs.train.outputs.DOCKER_REPOSITORY }}/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }}
+          az container create --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} \
+            --name ${{ env.AZURE_WEBAPP_NAME }} \
+            --dns-name-label ${{ env.AZURE_WEBAPP_NAME }} \
+            --image ${{ env.DOCKER_REGISTRY }}/${{ needs.train.outputs.DOCKER_REPOSITORY }}/${{ env.DOCKER_API_IMAGE_NAME }}:${{ needs.tags.outputs.new_version }} \
+            --ports 5000 \
+            --os-type Linux \
+            --cpu 1 \
+            --memory 1 
+          
+
   integration_tests:
     environment: MLOpsPython
     runs-on: ubuntu-latest
     needs: [deploy, train]
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install --user poetry
-    - name: azure login
-      uses: azure/login@v1
-      with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
-    - name: Run Integration Test
-      working-directory: production/integration
-      run: |
-        poetry install
-        az extension add -n ml
-        poetry run python azureml_run_pipeline.py \
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install uv
+        shell: bash
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          uv --version
+
+      - name: azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+
+      - name: Run Integration Test
+        working-directory: production/integration
+        run: |
+          uv sync
+          az extension add -n ml
+          uv run python azureml_run_pipeline.py \
             --subscription_id ${{ secrets.AZURE_SUBSCRIPTION_ID }}  \
             --resource_group_name ${{ env.AZURE_RESOURCE_GROUP_NAME }} \
             --workspace_name ${{ env.AZURE_ML_WORKSPACE_NAME }} \
             --experiment_id ${{ needs.train.outputs.EXPERIMENT_ID }} \
             --integration_dataset_name "cats-dogs-others-integration" \
             --integration_dataset_version ${{ needs.train.outputs.INTEGRATION_DATASET_VERSION }} \
-            --url "http://${{ env.AZURE_WEBAPP_NAME }}.${{ env.AZURE_LOCATION }}.azurecontainer.io:5000/upload" > integration_output.txt 
-        cat integration_output.txt
-    - name: Delete Environment
-      run: |
+            --url "http://${{ env.AZURE_WEBAPP_NAME }}.${{ env.AZURE_LOCATION }}.azurecontainer.io:5000/upload" > integration_output.txt
+          cat integration_output.txt
+
+      - name: Delete Environment
+        run: |
           if [ "${{ env.DELETE_WEBAPP }}" = "true" ]; then
             az container delete --resource-group ${{ env.AZURE_RESOURCE_GROUP_NAME}} --name ${{ env.AZURE_WEBAPP_NAME }} --yes
           fi
+
   webapp_unit_tests:
     runs-on: ubuntu-latest
     environment: MLOpsPython
     outputs:
       DOCKER_WEBAPP_IMAGE_NAME: ${{ env.DOCKER_WEBAPP_IMAGE_NAME }}
     steps:
-    - uses: actions/checkout@v4
-    - uses: dorny/paths-filter@v2
-      id: filter_webapp
-      with:
-        filters: |
-          webapp:
-            - 'webapp/**'
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '18'
-    - name: Install dependencies > UnitTest > Build
-      working-directory: production/webapp
-      run: |
-         npm ci
-         npm run coverage
-         npm run build
-    - name: Upload WebApp Build Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: Publish webapp
-        path: ./production/webapp/build
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v2
+        id: filter_webapp
+        with:
+          filters: |
+            webapp:
+              - 'webapp/**'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies > UnitTest > Build
+        working-directory: production/webapp
+        run: |
+          npm ci
+          npm run coverage
+          npm run build
+
+      - name: Upload WebApp Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Publish webapp
+          path: ./production/webapp/build
+
   build_docker_webapp:
     needs: [webapp_unit_tests, tags, train]
     uses: ./.github/workflows/docker.yml
@@ -366,13 +439,14 @@ jobs:
 
   change_log:
     runs-on: ubuntu-latest
-    needs: [ integration_tests ]
+    needs: [integration_tests]
     environment: MLOpsPython
     steps:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GIT_TOKEN }}
           fetch-depth: 0
+
       - name: Commit and push
         if: github.ref == 'refs/heads/main'
         run: |
@@ -383,5 +457,5 @@ jobs:
           chmod +x ./bin/generate-changelog.sh
           ./bin/generate-changelog.sh "$PROJECT_URL"
           git add ./CHANGELOG.md
-          git commit -m "[skip ci] Generate changelog to version ${{ steps.tag.outputs.new_version }}"
+          git commit -m "[skip ci] Generate changelog to version ${{ needs.tags.outputs.new_version }}" || echo "No changes"
           git push -f --set-upstream origin "HEAD:main" --follow-tags

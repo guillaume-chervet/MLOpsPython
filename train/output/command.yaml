@@ -28,6 +28,7 @@ environment:
     path: ./
 
 code: ./
+
 command: >-
   python command.py
   --extraction_images_input ${{inputs.extraction_hash_input}}
