@@ -1,116 +1,110 @@
-# https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-to-classify-photos-of-dogs-and-cats/
 from dataclasses import dataclass
-
-# vgg16 model used for transfer learning on the dogs and cats dataset
 from pathlib import Path
 
-from matplotlib import pyplot
-from keras.applications.vgg16 import VGG16
-from keras.models import Model
-from keras.layers import Dense
-from keras.layers import Flatten
-from tensorflow.keras.optimizers import SGD
+import tensorflow as tf
 import keras
-from keras.preprocessing.image import ImageDataGenerator
+from keras.applications.vgg16 import VGG16, preprocess_input
+from keras.layers import Dense, Flatten
+from keras.models import Model
+from matplotlib import pyplot as plt
 
 
-# define cnn model
-def define_model():
-    # load model
-    model = VGG16(include_top=False, input_shape=(224, 224, 3))
-    # mark loaded layers as not trainable
-    for layer in model.layers:
+def define_model(num_classes: int = 3) -> Model:
+    base = VGG16(include_top=False, input_shape=(224, 224, 3))
+    for layer in base.layers:
         layer.trainable = False
-    # add new classifier layers
-    output = model.layers[-1].output
-    flat1 = Flatten()(output)
-    output = Dense(3, activation="sigmoid")(flat1)
-    # define new model
-    model = Model(inputs=model.inputs, outputs=output)
+
+    x = base.output
+    x = Flatten()(x)
+    outputs = Dense(num_classes, activation="softmax")(x)
+
+    model = Model(inputs=base.inputs, outputs=outputs)
     model.compile(
         optimizer="adam",
-        loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+        loss=keras.losses.SparseCategoricalCrossentropy(from_logits=False),
         metrics=["accuracy"],
     )
     return model
 
 
-# plot diagnostic learning curves
-def summarize_diagnostics(history, output_directory: Path):
-    # plot loss
-    pyplot.subplot(211)
-    pyplot.title("Cross Entropy Loss")
-    pyplot.plot(history.history["loss"], color="blue", label="train")
-    pyplot.plot(history.history["val_loss"], color="orange", label="test")
-    # plot accuracy
-    pyplot.subplot(212)
-    pyplot.title("Classification Accuracy")
-    pyplot.plot(history.history["accuracy"], color="blue", label="train")
-    pyplot.plot(history.history["val_accuracy"], color="orange", label="test")
-    # save plot to file
+def _make_ds(dirpath: Path, batch_size: int, shuffle: bool) -> tf.data.Dataset:
+    ds = keras.utils.image_dataset_from_directory(
+        directory=str(dirpath),
+        labels="inferred",
+        label_mode="int",          # sparse labels
+        image_size=(224, 224),
+        batch_size=batch_size,
+        shuffle=shuffle,
+        seed=1337,
+    )
+    autotune = tf.data.AUTOTUNE
+    # VGG16 preprocess (soustraction des moyennes ImageNet, etc.)
+    ds = ds.map(lambda x, y: (preprocess_input(tf.cast(x, tf.float32)), y),
+                num_parallel_calls=autotune)
+    return ds.prefetch(autotune)
+
+
+def summarize_diagnostics(history, output_directory: Path) -> Path:
+    plt.figure(figsize=(8, 6))
+    plt.subplot(2, 1, 1)
+    plt.title("Cross Entropy Loss")
+    plt.plot(history.history["loss"], label="train")
+    plt.plot(history.history["val_loss"], label="val")
+    plt.legend()
+    plt.subplot(2, 1, 2)
+    plt.title("Classification Accuracy")
+    plt.plot(history.history["accuracy"], label="train")
+    plt.plot(history.history["val_accuracy"], label="val")
+    plt.legend()
     plot_filepath = output_directory / "model_plot.png"
-    pyplot.savefig(plot_filepath)
-    pyplot.close()
+    plt.tight_layout()
+    plt.savefig(plot_filepath)
+    plt.close()
     return plot_filepath
 
 
 @dataclass
 class ModelResult:
-    evaluate_accuracy_percentage: int
+    evaluate_accuracy_percentage: float
     summary_image_path: Path
     model_path: Path
 
 
-# run the test harness for evaluating a model
 def run_test_harness(
-    input_directory: Path, output_directory: Path, batch_size=64, epochs=7
+    input_directory: Path, output_directory: Path, batch_size: int = 64, epochs: int = 7
 ) -> ModelResult:
-    Path(output_directory).mkdir(parents=True, exist_ok=True)
-    # define model
-    model = define_model()
-    # create data generator
-    datagen = ImageDataGenerator(featurewise_center=True)
-    # specify imagenet mean values for centering
-    datagen.mean = [123.68, 116.779, 103.939]
-    # prepare iterator
-    train_it = datagen.flow_from_directory(
-        str(input_directory / "train"),
-        class_mode="binary",
-        batch_size=batch_size,
-        target_size=(224, 224),
-    )
-    validation_it = datagen.flow_from_directory(
-        str(input_directory / "evaluate"),
-        class_mode="binary",
-        batch_size=batch_size,
-        target_size=(224, 224),
-    )
-    # fit model
-    model_path = output_directory / "final_model.keras"
-    callback_model_checkpoint = keras.callbacks.ModelCheckpoint(
-            filepath=model_path,
-            save_best_only=True)
-    callback_early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', patience = 3)
-    history = model.fit_generator(
-        train_it,
-        steps_per_epoch=len(train_it),
-        validation_data=validation_it,
-        validation_steps=len(validation_it),
+    output_directory.mkdir(parents=True, exist_ok=True)
+
+    # jeux de données
+    train_ds = _make_ds(input_directory / "train", batch_size, shuffle=True)
+    val_ds   = _make_ds(input_directory / "evaluate", batch_size, shuffle=False)
+    test_ds  = _make_ds(input_directory / "test", batch_size, shuffle=False)
+
+    # inférer nb classes à partir du dataset
+    num_classes = len(train_ds.element_spec[1].shape) if False else None  # placeholder
+    # plus simple: lire depuis la structure de dossiers
+    class_names = keras.utils.get_file  # dummy to avoid linter (we compute below)
+    # On peut récupérer depuis l'itérateur (plus fiable):
+    #   Keras ne fournit pas class_names directement pour tf.data, donc on lit le dossier.
+    classes = sorted([p.name for p in (input_directory / "train").iterdir() if p.is_dir()])
+    model = define_model(num_classes=len(classes))
+
+    callbacks = [
+        keras.callbacks.ModelCheckpoint(filepath=output_directory / "final_model.keras",
+                                        save_best_only=True, monitor="val_loss"),
+        keras.callbacks.EarlyStopping(monitor="val_loss", patience=3, restore_best_weights=True),
+    ]
+
+    history = model.fit(
+        train_ds,
+        validation_data=val_ds,
         epochs=epochs,
         verbose=1,
-        callbacks=[callback_model_checkpoint, callback_early_stopping],
+        callbacks=callbacks,
     )
-    # test model
-    evaluate_it = datagen.flow_from_directory(
-        str(input_directory / "test"),
-        class_mode="binary",
-        batch_size=batch_size,
-        target_size=(224, 224),
-    )
-    _, acc = model.evaluate_generator(evaluate_it, steps=len(evaluate_it), verbose=1)
-    evaluate_accuracy_percentage = acc * 100.0
-    print("> %.3f" % (evaluate_accuracy_percentage))
-    # learning curves
+
+    loss, acc = model.evaluate(test_ds, verbose=1)
+    evaluate_accuracy_percentage = float(acc) * 100.0
+
     summary_image_path = summarize_diagnostics(history, output_directory)
-    #model.save(str(model_path))
-    return ModelResult(evaluate_accuracy_percentage, summary_image_path, model_path)
+    return ModelResult(evaluate_accuracy_percentage, summary_image_path, output_directory / "final_model.keras")

@@ -15,6 +15,8 @@ fi
 
 uv --version
 
+uv python install 3.12
+
 # 2) Verrouiller et installer les deps du workspace
 #    - à la racine: pyproject + [tool.uv.workspace]
 echo ">> uv lock (root)"
