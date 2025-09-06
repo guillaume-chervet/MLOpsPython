@@ -3,7 +3,7 @@ name = "pipeline"
 version = "0.0.0"
 description = ""
 authors = [{ name = "Guillaume Chervet", email = "guillaume.chervet@gmail.com" }]
-requires-python = ">=3.10,<3.11"
+requires-python = ">=3.11,<3.12"
 dependencies = [
   "mldesigner==0.1.0b20",
   "azure-ai-ml==1.28.1",

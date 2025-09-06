@@ -1,22 +1,40 @@
-FROM python:3.10 AS base
+FROM python:3.11 AS base
 
 FROM base AS builder
-
 WORKDIR /app
 
-RUN pip install uv
+# uv
+RUN pip install --no-cache-dir uv
 
+# copier le projet
 COPY ./ /app/
 
+# créer l'environnement
 RUN uv venv
-RUN . .venv/bin/activate
+# (ne rien "activer" dans une étape RUN, ça n'a pas d'effet persistant)
 
-RUN export UV_HTTP_TIMEOUT=300 && uv sync --no-editable
+# respecter timeouts réseau en build
+ENV UV_HTTP_TIMEOUT=300
+RUN uv sync --no-editable
 
-
+# ---- final ----
 FROM base AS final
-RUN useradd -r newuser
-USER newuser
-ENV PATH=/.venv/bin:${PATH}
 
+# Créer un utilisateur AVEC home pour éviter les pb de cache Matplotlib/Fontconfig
+RUN useradd -m -r -d /home/newuser newuser
+
+# venv au PATH + backends headless
+ENV PATH=/.venv/bin:${PATH} \
+    MPLBACKEND=Agg \
+    MPLCONFIGDIR=/home/newuser/.config/matplotlib \
+    XDG_CACHE_HOME=/home/newuser/.cache
+
+# Copier le venv
 COPY --from=builder /app/.venv /.venv
+
+# Pré-créer les dossiers de cache/config et donner les droits
+RUN mkdir -p /home/newuser/.config/matplotlib /home/newuser/.cache && \
+    chown -R newuser:newuser /home/newuser /.venv
+
+USER newuser
+WORKDIR /app
