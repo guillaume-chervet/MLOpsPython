@@ -4,7 +4,7 @@ version = "0.0.0"
 description = ""
 readme = "README.md"
 authors = [{ name = "Guillaume Chervet", email = "guillaume.chervet@gmail.com" }]
-requires-python = ">=3.10,<3.11"
+requires-python = ">=3.11,<3.12"
 dependencies = [
     "mlopspython-extraction",
     "mlopspython-inference"
@@ -22,6 +22,12 @@ package = false
 constraint-dependencies = [
   "marshmallow==3.21.3"
 ]
+required-environments = [
+  "platform_system == 'Windows' and python_version >= '3.11'",
+  "platform_system == 'Linux' and python_version >= '3.11'",
+  "platform_system == 'Darwin' and python_version >= '3.11'",
+]
+
 
 [build-system]
 requires = ["uv_build>=0.8.13,<0.9.0"]
@@ -30,4 +36,3 @@ build-backend = "uv_build"
 [tool.uv.sources]
 mlopspython-extraction = { path = "packages/mlopspython-extraction", editable = true}
 mlopspython-inference = { path = "packages/mlopspython-inference", editable = true}
-mlopspython_train_extraction = { path = "train/extraction", editable = true}
