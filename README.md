@@ -21,7 +21,7 @@ git clone https://www.github.com/guillaume-chervet/MLOpsPython
 cd MLOpsPython
 chmod +x Makefile
 # If you have poetry installed
-./Makefile 0.13.3
+./Makefile 0.14.5
 
 cd production
 docker-compose up

@@ -4,17 +4,18 @@ version = "0.0.0"
 description = ""
 readme = "README.md"
 authors = [{ name = "Guillaume Chervet", email = "guillaume.chervet@gmail.com" }]
-requires-python = ">=3.10,<3.11"
+requires-python = ">=3.11,<3.12"
 dependencies = [
   "pymupdf==1.25.4",
-  "keras==2.12.0",
-  "tensorflow==2.12.0",
+  "tensorflow==2.20.*",
+  "keras==3.*",
+  "pillow>=10,<11",
+  "tensorflow-io-gcs-filesystem; platform_system != 'Windows'",
+     "numpy>=1.26,<2",
   "fastapi==0.95.0",
   "opencv-contrib-python-headless==4.8.0.76",
-  "tensorflow-io-gcs-filesystem==0.27.0",
   "uvicorn==0.23.2",
   "python-multipart==0.0.6",
-  "pillow==10.0.1",
   "ml-dtypes==0.5.3",
   "mlopspython-inference",
   "mlopspython-extraction",
@@ -29,6 +30,11 @@ dev = ["coverage>=7.3.1,<8"]
 
 [tool.uv]
 package = false
+required-environments = [
+  "platform_system == 'Windows' and python_version >= '3.11'",
+  "platform_system == 'Linux' and python_version >= '3.11'",
+  "platform_system == 'Darwin' and python_version >= '3.11'",
+]
 
 [build-system]
 requires = ["hatchling"]
