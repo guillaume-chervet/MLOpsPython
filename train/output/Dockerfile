@@ -1,4 +1,4 @@
-FROM python:3.10 AS base
+FROM python:3.11 AS base
 
 FROM base AS builder
 
@@ -11,7 +11,7 @@ COPY ./ /app/
 RUN uv venv
 RUN . .venv/bin/activate
 
-RUN export UV_HTTP_TIMEOUT=300 && uv sync --no-editable
+RUN export UV_HTTP_TIMEOUT=300 && uv sync --no-editable --frozen
 
 
 FROM base AS final

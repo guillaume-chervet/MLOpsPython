@@ -1,5 +1,5 @@
 # --------- builder ----------
-FROM python:3.10.15 AS builder
+FROM python:3.11.9 AS builder
 WORKDIR /app
 
 SHELL ["/bin/bash", "-lc"]
@@ -10,15 +10,15 @@ ENV PATH="/root/.local/bin:${PATH}"
 COPY pyproject.toml uv.lock* ./
 COPY packages/ packages/
 COPY production/api/pyproject.toml production/api/pyproject.toml
+COPY production/api/uv.lock production/api/uv.lock
 
 WORKDIR /app/production/api
-RUN uv venv && source .venv/bin/activate && uv sync --no-dev
+RUN uv venv && source .venv/bin/activate && uv sync --no-dev --frozen --no-editable
 
-# Copier le reste du code de l'API (si nécessaire)
 COPY production/api/ ./
 
 # --------- final ----------
-FROM python:3.10.15-slim
+FROM python:3.11.9-slim
 WORKDIR /app
 
 # Utilisateur non-root
@@ -27,6 +27,7 @@ RUN useradd -ms /bin/bash newuser
 # Env virtuel prêt
 COPY --from=builder /app/production/api/.venv /app/.venv
 COPY --from=builder /app/production/api/ ./
+COPY --from=builder /app/packages /app/packages
 
 RUN chown -R newuser:newuser /app
 USER newuser
