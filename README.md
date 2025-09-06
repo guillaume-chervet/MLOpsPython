@@ -8,7 +8,7 @@ A real demo of Deep Learning project with preprocessing from development to prod
 
 Requirements, Download and install:
 - Pycharm: https://www.jetbrains.com/pycharm/
-- Python 3.10 : https://www.python.org/downloads/
+- Python 3.11 : https://www.python.org/downloads/
 - Git: https://git-scm.com/downloads
 - Docker-desktop: https://www.docker.com/products/docker-desktop/
 - Bruno: https://www.usebruno.com/
@@ -21,7 +21,7 @@ git clone https://www.github.com/guillaume-chervet/MLOpsPython
 cd MLOpsPython
 chmod +x Makefile
 # If you have poetry installed
-./Makefile 0.13.3
+./Makefile 0.14.5
 
 cd production
 docker-compose up

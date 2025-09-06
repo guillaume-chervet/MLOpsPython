@@ -10,7 +10,7 @@ You will contribute to the MLOpsPython project.
 - github cli https://cli.github.com
 
 - Pycharm (https://www.jetbrains.com/pycharm/)
-- Download and install python 3.10.x on your laptop. 
+- Download and install python 3.11.x on your laptop. 
 https://www.python.org/downloads/
 - Discord (https://discord.com/)
   - Connect to **MTG Lille** (Microsoft Tech Community) to chat with the team : https://discord.com/invite/z5XHgeuNMM 
