@@ -90,18 +90,16 @@ jobs:
         run: |
           uv venv 
           source .venv/bin/activate
-          uv sync --group dev
-          uv run coverage run -m unittest tests.extraction_tests
-          uv run coverage report
+          uv sync --group dev --frozen
+          uv run pytest --cov=mlopspython_extraction --cov-report=term-missing
 
       - name: Test Packages Inference
         working-directory: packages/mlopspython-inference
         run: |
           uv venv 
           source .venv/bin/activate
-          uv sync --group dev
-          # uv run coverage run -m unittest tests.inference_tests
-          # uv run coverage report
+          uv sync --group dev --frozen
+          # uv run pytest --maxfail=1 --disable-warnings
 
   train_unit_tests:
     runs-on: ubuntu-latest
@@ -131,29 +129,27 @@ jobs:
           uv venv 
           source .venv/bin/activate
           uv sync --group dev
-          #uv run coverage run -m unittest tests.extraction_test
-          #uv run coverage report
+          #uv run pytest --cov=extraction --cov-report=term-missing
 
       - name: Unit tests - Label Split Data (train/label_split_data)
         working-directory: train/label_split_data
         run: |
           uv venv 
           source .venv/bin/activate
-          uv sync --group dev
-          uv run coverage run -m unittest tests.label_split_data_test
-          uv run coverage report
+          uv sync --group dev --frozen
+          uv run pytest --cov=label_split_data --cov-report=term-missing
 
       # - name: Unit tests - Train
       #   working-directory: train/train
       #   run: |
-      #     uv sync --group dev
-      #     uv run python -m unittest tests.train_test
+      #     uv sync --group dev --frozen
+      #     uv run pytest --maxfail=1 --disable-warnings
 
       # - name: Unit tests - Evaluate
       #   working-directory: train/test
       #   run: |
-      #     uv sync --group dev
-      #     uv run python -m unittest tests.evaluate_test
+      #     uv sync --group dev --frozen
+      #     uv run pytest --maxfail=1 --disable-warnings
 
   tags:
     runs-on: ubuntu-latest

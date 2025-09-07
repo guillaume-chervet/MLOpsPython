@@ -366,7 +366,10 @@ dependencies = [
 requires-dist = [{ name = "pymupdf", specifier = "==1.25.4" }]
 
 [package.metadata.requires-dev]
-dev = [{ name = "coverage", specifier = ">=7.3.1,<8" }]
+dev = [
+    { name = "pytest", specifier = ">=8.0" },
+    { name = "pytest-cov", specifier = ">=5.0" },
+]
 
 [[package]]
 name = "mlopspython-inference"
@@ -392,7 +395,10 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "coverage", specifier = ">=7.3.1,<8" }]
+dev = [
+    { name = "pytest", specifier = ">=8.0" },
+    { name = "pytest-cov", specifier = ">=5.0" },
+]
 
 [[package]]
 name = "mypy-extensions"
