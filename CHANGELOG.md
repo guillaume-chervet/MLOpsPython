@@ -1,5 +1,50 @@
 # Changelog
 
+## v0.14.9
+
+- [bf0f2cf](/bf0f2cf514d0fa45bd726f33084a4a046d08b313) - chore(all): upgrade to python 3.11, 2025-09-06 by *Guillaume Chervet*
+
+
+## v0.14.8
+
+- [a464cf4](/a464cf4faf9be685ccb212156cba97d8e5b32aba) - chore(all): upgrade to python 3.11, 2025-09-06 by *Guillaume Chervet*
+
+
+## v0.14.7
+
+- [f8525c2](/f8525c2ff617ea61840d716464660126b753d9ca) - chore(all): upgrade to python 3.11, 2025-09-06 by *Guillaume Chervet*
+
+
+## v0.14.6
+
+- [425efe3](/425efe370318d120f8cff0d033d32c8e3f509057) - chore(all): upgrade to python 3.11, 2025-09-06 by *Guillaume Chervet*
+
+
+## v0.14.5
+
+- [697a6a7](/697a6a755f424a3e8bbcfeb08b265ae204d117e9) - chore(all): upgrade to python 3.11, 2025-09-06 by *Guillaume Chervet*
+
+
+## v0.14.4
+
+- [01708e5](/01708e551f08955c5976d8c3c747d43f394de93a) - chore(all): upgrade to python 3.11, 2025-09-06 by *Guillaume Chervet*
+
+
+## v0.14.3
+
+- [0b9f9d0](/0b9f9d0a59f33a8c69becfdb17cbca4c038e0207) - chore(all): upgrade to python 3.11, 2025-09-06 by *Guillaume Chervet*
+
+
+## v0.14.2
+
+- [fa34997](/fa34997261b5063ffaf835c30c7f832a7c047f41) - chore(all): upgrade to python 3.11, 2025-09-06 by *Guillaume Chervet*
+
+
+## v0.14.1
+
+- [ac9efb7](/ac9efb7deccd9fe2dfc6310a9116a3ddb15c8749) - chore(all): upgrade to python 3.11, 2025-09-06 by *Guillaume Chervet*
+
+
 ## v0.14.0
 
 - [6738751](/67387516f7fb3864c00f7b767976d05533f032c1) - feat(all): uv instead of poetry (#45) (release), 2025-09-05 by *Guillaume Chervet*
@@ -246,69 +291,5 @@
 ## v0.2.0
 
 - [4d51e08](/4d51e086848555a53de4a5a54979229dafe75a34) - feat(env): create infra automatically (#17), 2023-10-06 by *Guillaume Chervet*
-
-
-## vpr-17
-
-- [b9bfe30](/b9bfe305971e199aeb19e119ccf1c50d6fb37edf) - Merge 9b73aa03712f1f67e8da9b436b58db448f7c90d2 into 4299d5b0778f983d3b2a0c58851dc0036f8ed93c, 2023-09-18 by *Guillaume Chervet*
-- [9b73aa0](/9b73aa03712f1f67e8da9b436b58db448f7c90d2) - feat(env): create infra automatically, 2023-09-18 by *Guillaume Chervet*
-- [b1cc201](/b1cc2012ee5de4474c3bfc27e11624a1da233b7f) - feat(env): create infra automatically, 2023-09-18 by *Guillaume Chervet*
-- [60d5207](/60d52074e95d63bc3c2e73f0a0bc11921eb0331e) - feat(env): create infra automatically, 2023-09-18 by *Guillaume Chervet*
-
-
-## v0.1.2
-
-- [4299d5b](/4299d5b0778f983d3b2a0c58851dc0036f8ed93c) - refactor(extraction): code lint (#16), 2023-06-12 by *Guillaume Chervet*
-- [e9962ce](/e9962ced2d9d548b1a024356acab745f6df33c2b) - [no ci] docs(all): re-organize documentation, 2023-06-05 by *Guillaume Chervet*
-- [225d515](/225d515946e59833721cbf3cb85cb8e8851ef164) - fix(webapp): update npm, 2023-06-02 by *Guillaume Chervet*
-- [dff88f5](/dff88f5b7bc98d8a97a1cbc7cce27ca39d505de5) - [no ci] docs(all): update getStarted, 2023-06-02 by *Guillaume Chervet*
-- [d3f7836](/d3f7836f0b1fa7dddf2114da3dd1afe4354c3b81) - [no ci] docs(all): update readme.md, 2023-05-31 by *Guillaume Chervet*
-- [f3ba549](/f3ba5493fe38ba61ed984bb3f99b5cd98092d5e4) - [no ci] docs(all): update Summit.md, 2023-05-25 by *Guillaume Chervet*
-- [fd2cf10](/fd2cf10a1aa41f140c65af8324a33c86a1a692fd) - [no ci] docs(all): update readme.md, 2023-05-24 by *Guillaume Chervet*
-
-
-## v0.1.1
-
-- [1fd9aea](/1fd9aeaab9ebcbebebe6d5f6d3a6c8c868a2f7b7) - fix(webapp): update npm, 2023-06-02 by *Guillaume Chervet*
-- [60f8746](/60f8746cbac42cdec421e871a183ef486e0ad21f) - [no ci] update getStarted, 2023-06-02 by *Guillaume Chervet*
-- [dfb64f9](/dfb64f9d17f43799e95b2c4d83e5a39aa56e9e81) - [no ci] update readme.md, 2023-05-31 by *Guillaume Chervet*
-
-
-## vpr-13
-
-- [6c1b134](/6c1b1349b8907bf86988bc778741fa8d59b44539) - Merge 895293ae619f39d4ba5adc9081ba68ff659209ee into 68ca2854a0da8ae5bc336f2363b733f2a43a8eaf, 2023-05-30 by *antoinelrnld*
-- [895293a](/895293ae619f39d4ba5adc9081ba68ff659209ee) - docs(readme): fix typo, 2023-05-30 by *Antoine Lernould*
-
-
-## vpr-12
-
-- [9716069](/9716069ccd8adc47ca3b3f9514d6173aff497e63) - Merge aa02274cd70d45280c8f2b99ae4d715c66b6c20f into 68ca2854a0da8ae5bc336f2363b733f2a43a8eaf, 2023-05-25 by *Guillaume Chervet*
-- [aa02274](/aa02274cd70d45280c8f2b99ae4d715c66b6c20f) - refactor(evaluate): type output, 2023-05-25 by *Guillaume Chervet*
-- [68ca285](/68ca2854a0da8ae5bc336f2363b733f2a43a8eaf) - [no ci] Update Summit.md, 2023-05-25 by *Guillaume Chervet*
-
-
-## vpr-9
-
-- [b06f014](/b06f014f7ccbd5176ad0112dbf664751181906c5) - Merge d9b26c278f2e40373d909f428fa73cbd51180ad3 into 8b1c847c67ea520fffdcef7199026d7d662566e3, 2023-05-24 by *Guillaume Chervet*
-- [d9b26c2](/d9b26c278f2e40373d909f428fa73cbd51180ad3) - refactor(evaluate): type output, 2023-05-24 by *Guillaume Chervet*
-- [fc31ee8](/fc31ee87b86b0da76260df839ec3370fbe5ae585) - refactor(evaluate): test, 2023-05-24 by *Guillaume Chervet*
-
-
-## vpr-11
-
-- [aab522a](/aab522a63c8d0b492860283877b44512a5903ec6) - Merge 41e410083bde2f6dee32b6a61ea679f00f85c486 into 8b1c847c67ea520fffdcef7199026d7d662566e3, 2023-05-24 by *Guillaume Chervet*
-- [41e4100](/41e410083bde2f6dee32b6a61ea679f00f85c486) - refactor(evaluate): type output, 2023-05-24 by *Guillaume Chervet*
-- [8b1c847](/8b1c847c67ea520fffdcef7199026d7d662566e3) - [no ci] update readme.md, 2023-05-24 by *Guillaume Chervet*
-
-
-## v0.1.0
-
-- [2f90295](/2f902959a2b2de7bb25fed298dbcf8c9f3afb32c) - feat(train): add simple mlflow output, 2023-05-24 by *Guillaume Chervet*
-- [13ba04b](/13ba04bad43e3b66152861b3fb54bc0cd550e495) - [no ci] readme add some detrails, 2023-05-24 by *Guillaume Chervet*
-
-
-## v0.0.40
-
-- [8b451f2](/8b451f204893f95d1682a308c157ccdcf325ea00) - chore(summit): upgrade ci, 2023-05-22 by *Guillaume Chervet*
 
 
