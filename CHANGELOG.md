@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.14.10
+
+- [a0310e2](/a0310e2f8248704ee42c0b776c3dcf16a9b5db7a) - refactore(all): switch to pyttest (#46), 2025-09-08 by *Guillaume Chervet*
+
+
 ## v0.14.9
 
 - [bf0f2cf](/bf0f2cf514d0fa45bd726f33084a4a046d08b313) - chore(all): upgrade to python 3.11, 2025-09-06 by *Guillaume Chervet*
@@ -286,10 +291,5 @@
 ## v0.2.1
 
 - [3997017](/3997017790f048e512b0b012f347138ed6110147) - fix: api requirements.txt doesn't work on MacOs (#19), 2023-10-11 by *Ca.phe*
-
-
-## v0.2.0
-
-- [4d51e08](/4d51e086848555a53de4a5a54979229dafe75a34) - feat(env): create infra automatically (#17), 2023-10-06 by *Guillaume Chervet*
 
 
