@@ -26,13 +26,13 @@ You can download some sample .pdf from here :
 https://github.com/guillaume-chervet/dataset-cats-dogs-others
 
 Use Postman to call the API with HTTP POST:
-- http://cats-dogs-yolw.northeurope.azurecontainer.io:5000/upload
+- http://cats-dogs-gui.northeurope.azurecontainer.io:5000/upload
   - type: form-data
   - key: file 
 
 You can also check health check route with HTTP GET:
 
-http://cats-dogs-yolw.northeurope.azurecontainer.io:5000/health
+http://cats-dogs-gui.northeurope.azurecontainer.io:5000/health
 
 ## 3. Initialize your own project
 

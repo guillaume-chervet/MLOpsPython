@@ -1,77 +1,193 @@
-# Script based on https://www.techwatching.dev/posts/scripting-azure-ready-github-repository/
-#.\init_repository.sh "MLOpsPythonMyDemo" "MLOpsPython"
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Définir les paramètres avec des valeurs par défaut
+# Usage:
+#   ./init_repository.sh "MLOpsPythonMyDemo" "MLOpsPython" "optional-tenant-id"
+# Defaults:
 repositoryName="${1:-MLOpsPythonWorkshop}"
 environmentName="${2:-MLOpsPython}"
+preferredTenantId="${3:-}"
 
-# Authenticate using Azure CLI (az) and GitHub CLI (gh)
-az login
+sourceRepo="guillaume-chervet/MLOpsPython"
+
+# ----- helpers -----
+get_default_branch() {
+  # prints the default branch name for the current repo (assumes 'origin' exists)
+  local line
+  if line="$(git remote show origin 2>/dev/null | grep 'HEAD branch')"; then
+    echo "${line##*: }" | xargs
+  else
+    echo "main"
+  fi
+}
+
+ensure_azure_login() {
+  # uses $preferredTenantId (may be empty)
+  echo "Checking Azure login..."
+
+  if ! az account show >/dev/null 2>&1; then
+    echo "Not logged in. Running 'az login --allow-no-subscriptions'..."
+    az login --allow-no-subscriptions >/dev/null
+  fi
+
+  if [[ -n "$preferredTenantId" ]]; then
+    echo "Using provided tenantId: $preferredTenantId"
+    if ! az login --tenant "$preferredTenantId" --allow-no-subscriptions >/dev/null 2>&1; then
+      echo "Login to provided tenant failed. Forcing re-auth with device code..."
+      az logout >/dev/null 2>&1 || true
+      az login --tenant "$preferredTenantId" --allow-no-subscriptions --use-device-code >/dev/null
+    fi
+    echo "$preferredTenantId"
+    return 0
+  fi
+
+  local firstTenantId=""
+  if ! firstTenantId="$(az account tenant list --query "[0].tenantId" -o tsv 2>/dev/null)"; then
+    firstTenantId=""
+  fi
+
+  if [[ -z "$firstTenantId" ]]; then
+    echo "Unable to list tenants (token may be expired). Forcing re-auth..."
+    az logout >/dev/null 2>&1 || true
+    az login --allow-no-subscriptions --use-device-code >/dev/null
+    firstTenantId="$(az account tenant list --query "[0].tenantId" -o tsv)"
+  fi
+
+  if [[ -z "$firstTenantId" ]]; then
+    echo "ERROR: Impossible de récupérer un tenant via 'az account tenant list'."
+    echo "Exécute manuellement :"
+    echo '  az logout'
+    echo '  az login --tenant "<TON_TENANT_ID>" --scope "https://management.core.windows.net//.default"'
+    echo "Puis relance le script."
+    exit 1
+  fi
+
+  if ! az login --tenant "$firstTenantId" --allow-no-subscriptions >/dev/null 2>&1; then
+    echo "Login to discovered tenant failed. Forcing device-code auth..."
+    az logout >/dev/null 2>&1 || true
+    az login --tenant "$firstTenantId" --allow-no-subscriptions --use-device-code >/dev/null
+  fi
+
+  echo "$firstTenantId"
+}
+
+get_first_subscription_for_tenant() {
+  local tenant="$1"
+  local sid=""
+  sid="$(az account list --query "[?tenantId=='$tenant' && isDefault] | [0].id" -o tsv)"
+  if [[ -z "$sid" ]]; then
+    sid="$(az account list --query "[?tenantId=='$tenant'] | [0].id" -o tsv)"
+  fi
+  if [[ -n "$sid" ]]; then
+    az account set --subscription "$sid" >/dev/null
+    echo "Using tenant: $tenant and subscription: $sid"
+  else
+    echo "No subscription found for tenant $tenant. Continuing (some operations require a subscription)."
+  fi
+  echo "$sid"
+}
+
+# ----- Azure login / tenant + subscription -----
+tenantId="$(ensure_azure_login)"
+subscriptionId="$(get_first_subscription_for_tenant "$tenantId")"
+
+# ----- GitHub auth -----
+echo "GitHub CLI authentication..."
 gh auth login
 
-# Fork MLOpsPython repository
-gh repo fork https://github.com/guillaume-chervet/MLOpsPython --default-branch-only --fork-name "$repositoryName" --clone
+# ----- Try fork, else fallback to 'create new repo and push source' -----
+echo "Forking repo and setting remotes..."
+forkOk=true
+if ! gh repo fork "https://github.com/$sourceRepo" --default-branch-only --fork-name "$repositoryName" --clone; then
+  forkOk=false
+fi
 
-# Change directory to the local repository
+if [[ "$forkOk" != "true" || ! -d "$repositoryName" ]]; then
+  echo "Fork failed or target directory missing. Falling back to 'create new repo and push source'..."
+
+  ghLogin="$(gh api user --jq .login)"
+  if [[ -z "$ghLogin" ]]; then
+    echo "ERROR: Unable to get GitHub login via 'gh api user'."
+    exit 1
+  fi
+
+  echo "Creating new repository '$ghLogin/$repositoryName'..."
+  gh repo create "$ghLogin/$repositoryName" --private --disable-wiki --confirm
+
+  tmpdir="$(mktemp -d)"
+  git clone "https://github.com/$sourceRepo" "$tmpdir" >/dev/null
+
+  pushd "$tmpdir" >/dev/null
+  defaultBranch="$(get_default_branch)"
+  git remote remove origin >/dev/null 2>&1 || true
+  git remote add origin "https://github.com/$ghLogin/$repositoryName.git"
+  git push -u origin --all
+  git push --tags
+  popd >/dev/null
+
+  if [[ -d "$repositoryName" ]]; then
+    echo "Target folder '$repositoryName' already exists locally; skipping move."
+  else
+    mv "$tmpdir" "$repositoryName"
+  fi
+fi
+
 cd "$repositoryName"
 
-# Remove the upstream remote and set the upstream to the main branch
-git remote remove upstream
-git push --set-upstream origin main
+# Remove 'upstream' if exists (ignore errors)
+git remote remove upstream >/dev/null 2>&1 || true
 
-# Retrieve the repository full name (org/repo)
-repositoryFullName=$(gh repo view --json nameWithOwner -q ".nameWithOwner")
+repoDefaultBranch="$(get_default_branch)"
+git push --set-upstream origin "$repoDefaultBranch"
 
-# Set the default repository
+# Repo nameWithOwner (org/repo)
+repositoryFullName="$(gh repo view --json nameWithOwner -q ".nameWithOwner")"
 gh repo set-default "https://github.com/${repositoryFullName}"
 
 # Create environment
+echo "Creating environment '$environmentName'..."
 gh api --method PUT -H "Accept: application/vnd.github+json" "repos/${repositoryFullName}/environments/${environmentName}"
 
-# Retrieve the current subscription and current tenant identifiers using Azure CLI
-subscriptionId=$(az account show --query "id" -o tsv)
-tenantId=$(az account show --query "tenantId" -o tsv)
-credentials=$(az ad sp create-for-rbac --name "mlapp" --role contributor --scopes "/subscriptions/$subscriptionId" --sdk-auth)
-# Create an App Registration and its associated service principal using Azure CLI
-#appId=$(az ad app create --display-name "GitHub Action OIDC for ${repositoryFullName}" --query "appId" -o tsv)
-#servicePrincipalId=$(az ad sp create --id "$appId" --query "id" -o tsv)
+# ----- Azure SP + Secrets -----
+# Re-check subscriptionId if empty
+if [[ -z "${subscriptionId:-}" ]]; then
+  subscriptionId="$(az account show --query "id" -o tsv 2>/dev/null || true)"
+fi
 
-# Assign the contributor role to the service principal on the subscription using Azure CLI
-#az role assignment create --role contributor --subscription "$subscriptionId" --assignee-object-id "$servicePrincipalId" --assignee-principal-type ServicePrincipal --scope "/subscriptions/$subscriptionId"
+credentials="{}"
+if [[ -n "${subscriptionId:-}" ]]; then
+  echo "Creating Service Principal (Contributor) scoped to subscription..."
+  spName="mlapp-${repositoryName}-$(date +%Y%m%d%H%M%S)"
+  # create-for-rbac outputs JSON
+  credentials="$(az ad sp create-for-rbac --name "$spName" --role contributor --scopes "/subscriptions/$subscriptionId" --sdk-auth)"
+else
+  echo "No subscription => skipping SP creation (AZURE_CREDENTIALS will be '{}')."
+fi
 
-# Prepare parameters for federated credentials
-#parametersJson='{
-#    "name": "'"$environmentName"'",
-#    "issuer": "https://token.actions.githubusercontent.com",
-#    "subject": "repo:'"$repositoryFullName"':environment:'"$environmentName"'",
-#    "description": "Development",
-#    "audiences": [
-#        "api://AzureADTokenExchange"
-#    ]
-#}'
+# Secrets
+if [[ -n "${tenantId:-}" ]]; then
+  echo "Setting AZURE_TENANT_ID..."
+  printf "%s" "$tenantId" | gh secret set AZURE_TENANT_ID --env "$environmentName" --body -
+fi
 
-# Create federated credentials using Azure CLI
-#az ad app federated-credential create --id "$appId" --parameters "$parametersJson"
+if [[ -n "${subscriptionId:-}" ]]; then
+  echo "Setting AZURE_SUBSCRIPTION_ID..."
+  printf "%s" "$subscriptionId" | gh secret set AZURE_SUBSCRIPTION_ID --env "$environmentName" --body -
+fi
 
-# Create GitHub secrets needed for the GitHub Actions using GitHub CLI
-#gh secret set AZURE_TENANT_ID --body "$tenantId" --env "$environmentName"
-gh secret set AZURE_SUBSCRIPTION_ID --body "$subscriptionId" --env "$environmentName"
-#gh secret set AZURE_CLIENT_ID --body "$appId" --env "$environmentName"
-escapedJsonCredentials=$(echo "$credentials" | jq -c @json)
-echo "Escaped JSON Credentials: $escapedJsonCredentials"
-gh secret set AZURE_CREDENTIALS --body "$escapedJsonCredentials" --env "$environmentName"
-git_token=$(gh auth token)
-gh secret set GIT_TOKEN --body "$git_token" --env "$environmentName"
+echo "Setting AZURE_CREDENTIALS..."
+# Ensure minified JSON and send via STDIN (avoid quoting issues)
+jsonCredentials="$(printf "%s" "$credentials" | jq -c '.')"
+printf "%s" "$jsonCredentials" | gh secret set AZURE_CREDENTIALS --env "$environmentName" --body -
 
-# Run the GitHub workflow
+echo "Setting GIT_TOKEN..."
+git_token="$(gh auth token)"
+printf "%s" "$git_token" | gh secret set GIT_TOKEN --env "$environmentName" --body -
+
+# Enable workflow
+echo "Enabling workflow main.yml..."
 gh workflow enable main.yml
-#gh workflow run main.yml
 
-# Get the run ID
-#runId=$(gh run list --workflow=main.yml --json databaseId -q ".[0].databaseId")
-
-# Watch the run
-#gh run watch "$runId"
-
-# Open the repository in the browser
+# Open repo
+echo "Opening repository page..."
 gh repo view -w
