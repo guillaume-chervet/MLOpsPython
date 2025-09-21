@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.14.11
+
+- [ecfae26](/ecfae26c4f796ee80fbb3f6dfdf7809682667f6a) - fix(workshop): update to make it works in 2025, 2025-09-20 by *Guillaume Chervet*
+
+
 ## v0.14.10
 
 - [a0310e2](/a0310e2f8248704ee42c0b776c3dcf16a9b5db7a) - refactore(all): switch to pyttest (#46), 2025-09-08 by *Guillaume Chervet*
@@ -286,10 +291,5 @@
 ## v0.3.0
 
 - [e4c1a89](/e4c1a8948c9772d64526e4f954b3712d130a99fb) - feat(workshop): create cloud nord workshop (#18), 2023-10-11 by *Guillaume Chervet*
-
-
-## v0.2.1
-
-- [3997017](/3997017790f048e512b0b012f347138ed6110147) - fix: api requirements.txt doesn't work on MacOs (#19), 2023-10-11 by *Ca.phe*
 
 
