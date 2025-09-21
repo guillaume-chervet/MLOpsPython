@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.15.0
+
+- [33b1b92](/33b1b929acd5a50d6ef9f7f4c377de34cdd8c234) - Merge branch 'main' of https://www.github.com/guillaume-chervet/MLOpsPython, 2025-09-21 by *Guillaume Chervet*
+- [21f73c4](/21f73c48109465fe269583828b3f12e432ca4a6b) - feat(workshop): add library workshop, 2025-09-21 by *Guillaume Chervet*
+
+
 ## v0.14.11
 
 - [ecfae26](/ecfae26c4f796ee80fbb3f6dfdf7809682667f6a) - fix(workshop): update to make it works in 2025, 2025-09-20 by *Guillaume Chervet*
@@ -286,10 +292,5 @@
 ## v0.3.1
 
 - [fb2f4e2](/fb2f4e24ee6ab0c920c94b70d88d4392e7ee9063) - docs(workshop): Update workshop_cloud_nord.md, 2023-10-12 by *Guillaume Chervet*
-
-
-## v0.3.0
-
-- [e4c1a89](/e4c1a8948c9772d64526e4f954b3712d130a99fb) - feat(workshop): create cloud nord workshop (#18), 2023-10-11 by *Guillaume Chervet*
 
 
