@@ -11,14 +11,15 @@ env:
   PYTHON_VERSION: 3.11
   NODE_VERSION: 18
   AZURE_LOCATION: "northeurope"
-  AZURE_RESOURCE_GROUP_NAME: "azure-ml-gui"
-  AZURE_ML_WORKSPACE_NAME: "cats-dogs-gui"
-  AZURE_WEBAPP_NAME: "cats-dogs-gui"
+  AZURE_RESOURCE_GROUP_NAME: "azure-ml-adele"
+  AZURE_ML_WORKSPACE_NAME: "cats-dogs-adele"
+  AZURE_WEBAPP_NAME: "cats-dogs-adele"
   DELETE_WEBAPP: "false"
   DOCKER_API_IMAGE_NAME: "mlopspython-api"
   DOCKER_REPOSITORY: ${{ github.repository_owner }}
   DOCKER_WEBAPP_IMAGE_NAME: "mlopspython-webapp"
   DOCKER_REGISTRY: "ghcr.io"
+
 
 permissions:
   id-token: write
