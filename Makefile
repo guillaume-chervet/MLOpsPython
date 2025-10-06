@@ -16,6 +16,7 @@ else
   download_model_version="${download_model_version:-none}"
 fi
 
+
 # Le reste des arguments (ou la variable UV_ARGS) sera passé à uv-install.sh
 UV_ARGS="${UV_ARGS:-}"
 if (( $# > 0 )); then
