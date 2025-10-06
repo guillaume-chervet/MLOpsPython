@@ -10,10 +10,10 @@ env:
   PNPM_VERSION: 8.5.1
   PYTHON_VERSION: 3.11
   NODE_VERSION: 18
-  AZURE_LOCATION: "swedencentral"
-  AZURE_RESOURCE_GROUP_NAME: "azure-ml-kyllianc"
-  AZURE_ML_WORKSPACE_NAME: "cats-dogs-kyllianc"
-  AZURE_WEBAPP_NAME: "cats-dogs-kyllianc"
+  AZURE_LOCATION: "northeurope"
+  AZURE_RESOURCE_GROUP_NAME: "azure-ml-kyllian"
+  AZURE_ML_WORKSPACE_NAME: "cats-dogs-kyllian"
+  AZURE_WEBAPP_NAME: "cats-dogs-kyllian"
   DELETE_WEBAPP: "false"
   DOCKER_API_IMAGE_NAME: "mlopspython-api"
   DOCKER_REPOSITORY: ${{ github.repository_owner }}
