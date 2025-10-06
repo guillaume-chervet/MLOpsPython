@@ -10,7 +10,7 @@ env:
   PNPM_VERSION: 8.5.1
   PYTHON_VERSION: 3.11
   NODE_VERSION: 18
-  AZURE_LOCATION: "northeurope"
+  AZURE_LOCATION: "swedencentral"
   AZURE_RESOURCE_GROUP_NAME: "azure-ml-gui-theo-colin-1"
   AZURE_ML_WORKSPACE_NAME: "cats-dogs-gui-theo-colin-1"
   AZURE_WEBAPP_NAME: "cats-dogs-gui-theo-colin-1"
