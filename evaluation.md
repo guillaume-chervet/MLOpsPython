@@ -31,13 +31,13 @@ The project must:
 
 | Item | Description | Points |
 |------|--------------|--------|
-| Teamwork, Clean Code, Pull Requests, linked commits and cards | Proper commit history | **1** |
-| Unit-tested preprocessing phase |  | **1** |
-| AI training phase |  | **1** |
-| Annotation phase |  | **2** |
-| Real-time API deployed in an environment |  | **2** |
-| Automated integration tests |  | **2** |
-| Final Presentation (5 minutes) |  | **3** |
+| Teamwork, Clean Code, Pull Requests, linked commits and cards | Proper commit history | **1**  |
+| Unit-tested preprocessing phase |  | **2**  |
+| AI training phase |  | **1**  |
+| Annotation phase |  | **2**  |
+| Real-time API deployed in an environment |  | **2**  |
+| Automated integration tests |  | **2**  |
+| Final Presentation (5 minutes) |  | **2**  |
 
 ---
 
