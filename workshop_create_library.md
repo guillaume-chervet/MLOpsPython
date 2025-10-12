@@ -3,6 +3,13 @@
 uv init --package mon_package
 cd mon_package
 
+For linux/macos :
+
+source .venv/bin/activate
+For windows:
+
+.venv\Scripts\activate
+
 # Runtime dependencies (example)
 uv add httpx
 
@@ -18,10 +25,10 @@ uv run black . --check
 uv run black .
 
 
+
 # Run tests & code coverage
 uv run pytest -q
-uv run pytest --cov=mon_package --cov-report=term-missing --cov-report=html
-
+uv run pytest -q uv run pytest --cov=mon_package --cov-report=term-missing --cov-report=html
 
 # Build wheel + sdist
 uv build
