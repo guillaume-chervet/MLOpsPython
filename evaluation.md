@@ -1,10 +1,10 @@
 # Evaluation Notes
 
 - **Project:** 12 points  
-- **In-class follow-up:** 8 points  
-  - MLOps Lab Work → link to personal GitHub  
-  - UV Library Publication → link to PyPI library  
-
+- **In-class follow-up:** 8 points
+  - UV Library Publication → link to PyPI library → 3 points 
+  - Dependency Injection for Inference → link to personal GitHub → 3 points
+  - MLOps Lab Work → link to personal GitHub → 2 points
 ---
 
 ## Startup Project with High Added Value (topic of your choice)
