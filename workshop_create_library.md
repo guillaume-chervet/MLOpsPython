@@ -4,10 +4,9 @@ uv init --package mon_package
 cd mon_package
 
 For linux/macos :
+source .venv/bin/
 
-source .venv/bin/activate
 For windows:
-
 .venv\Scripts\activate
 
 # Runtime dependencies (example)

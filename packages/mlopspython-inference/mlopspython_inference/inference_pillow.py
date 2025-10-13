@@ -23,10 +23,22 @@ def load_image(filename: str|BytesIO):
 BASE_PATH = Path(__file__).resolve().parent
 
 
-class Inference:
-    def __init__(self, logging, model_path: str):
-        self.logger = logging.getLogger(__name__)
+class IModel():
+    def predict(self, img) -> np.ndarray:
+        pass
+
+class ModelPillow(IModel):
+    def __init__(self, model_path: str):
         self.model = load_model(model_path)
+
+    def predict(self, img) -> np.ndarray:
+        return self.model.predict(img)
+
+
+class Inference:
+    def __init__(self, logging, model: IModel):
+        self.logger = logging.getLogger(__name__)
+        self.model = model
 
     def execute(self, filepath:str|BytesIO):
         img = load_image(filepath)
