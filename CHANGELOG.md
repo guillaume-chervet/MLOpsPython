@@ -1,5 +1,25 @@
 # Changelog
 
+## v0.15.4
+
+- [6b286d3](/6b286d3574cedda3e4fe75f7b39af8c27769544c) - Merge branch 'main' of https://www.github.com/guillaume-chervet/MLOpsPython, 2025-10-13 by *Guillaume Chervet*
+
+
+## v0.15.3
+
+- [001baa4](/001baa419309edc6c84a4dae1dfa2e99bb3c75b5) - doc(evaluation): add evaluation.md, 2025-10-12 by *Guillaume Chervet*
+
+
+## v0.15.2
+
+- [1f4ebf7](/1f4ebf7243d71e42666297bc032251776dd9f911) - doc(evaluation): add evaluation.md, 2025-10-12 by *Guillaume Chervet*
+
+
+## v0.15.1
+
+- [b7edb55](/b7edb551645e123b271e11f667439a7ad3edbfe3) - doc(evaluation): add evaluation.md, 2025-10-12 by *Guillaume Chervet*
+
+
 ## v0.15.0
 
 - [33b1b92](/33b1b929acd5a50d6ef9f7f4c377de34cdd8c234) - Merge branch 'main' of https://www.github.com/guillaume-chervet/MLOpsPython, 2025-09-21 by *Guillaume Chervet*
@@ -272,25 +292,5 @@
 ## v0.5.0
 
 - [66e00cf](/66e00cfe0662fda811f84209545eecd9044e583d) - feat(workshop): switch ci to oidc tokens (#23), 2023-12-13 by *Guillaume Chervet*
-
-
-## v0.4.0
-
-- [315e72c](/315e72ca2469df17729820fcd6e1f2ef23091268) - feat(workshop): create microsoft workshop, 2023-11-24 by *Guillaume Chervet*
-
-
-## v0.3.3
-
-- [6de6e5e](/6de6e5e90c8df00578d5883cea64480d38422290) - fix: Using pip instead of poetry to init the project was causing errors (#22), 2023-10-31 by *antoinelrnld*
-
-
-## v0.3.2
-
-- [14037bc](/14037bc8cd6b65eb5dca74e00da729272ae43e2e) - fix(train): azure cluster name (#21), 2023-10-21 by *Guillaume Chervet*
-
-
-## v0.3.1
-
-- [fb2f4e2](/fb2f4e24ee6ab0c920c94b70d88d4392e7ee9063) - docs(workshop): Update workshop_cloud_nord.md, 2023-10-12 by *Guillaume Chervet*
 
 
