@@ -12,6 +12,7 @@ COPY packages/ packages/
 COPY production/api/pyproject.toml production/api/pyproject.toml
 COPY production/api/uv.lock production/api/uv.lock
 
+
 WORKDIR /app/production/api
 RUN uv venv && source .venv/bin/activate && uv sync --no-dev --frozen --no-editable
 
