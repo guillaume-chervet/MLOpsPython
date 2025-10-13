@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.15.4
+
+- [6b286d3](/6b286d3574cedda3e4fe75f7b39af8c27769544c) - Merge branch 'main' of https://www.github.com/guillaume-chervet/MLOpsPython, 2025-10-13 by *Guillaume Chervet*
+
+
 ## v0.15.3
 
 - [001baa4](/001baa419309edc6c84a4dae1dfa2e99bb3c75b5) - doc(evaluation): add evaluation.md, 2025-10-12 by *Guillaume Chervet*
@@ -287,10 +292,5 @@
 ## v0.5.0
 
 - [66e00cf](/66e00cfe0662fda811f84209545eecd9044e583d) - feat(workshop): switch ci to oidc tokens (#23), 2023-12-13 by *Guillaume Chervet*
-
-
-## v0.4.0
-
-- [315e72c](/315e72ca2469df17729820fcd6e1f2ef23091268) - feat(workshop): create microsoft workshop, 2023-11-24 by *Guillaume Chervet*
 
 
