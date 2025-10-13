@@ -11,9 +11,9 @@ env:
   PYTHON_VERSION: 3.11
   NODE_VERSION: 18
   AZURE_LOCATION: "northeurope"
-  AZURE_RESOURCE_GROUP_NAME: "azure-ml-gui"
-  AZURE_ML_WORKSPACE_NAME: "cats-dogs-gui"
-  AZURE_WEBAPP_NAME: "cats-dogs-gui"
+  AZURE_RESOURCE_GROUP_NAME: "azure-ml-guigui"
+  AZURE_ML_WORKSPACE_NAME: "cats-dogs-guigui"
+  AZURE_WEBAPP_NAME: "cats-dogs-guigui"
   DELETE_WEBAPP: "false"
   DOCKER_API_IMAGE_NAME: "mlopspython-api"
   DOCKER_REPOSITORY: ${{ github.repository_owner }}
